@@ -1,0 +1,39 @@
+ T1 anon select progress                  | denied: permission denied for table progress
+ T1 anon save_progress                    | denied: permission denied for function save_progress
+ T1 anon delete_my_account                | denied: permission denied for function delete_my_account
+ T1 anon select admins                    | denied: permission denied for table admins
+ T2 A first save base0                    | {"ok": true, "version": 1}
+ T2 A save base0 again (conflict)         | {"ok": false, "data": {"x": 1}, "version": 1, "conflict": true, "updated_at": "2026-10-28T01:57:11.94+00:00"}
+ T2 A save base1 -> v2                    | {"ok": true, "version": 2}
+ T2 A save stale base1 (conflict v2)      | {"ok": false, "data": {"x": 3}, "version": 2, "conflict": true, "updated_at": "2026-10-28T01:57:11.951+00:00"}
+ T2 A save base99 (conflict)              | {"ok": false, "data": {"x": 3}, "version": 2, "conflict": true, "updated_at": "2026-10-28T01:57:11.951+00:00"}
+ T2 A read own row                        | {"x": 3} v2
+ T5 array payload                         | rejected: p_data must be a JSON object
+ T5 null payload                          | rejected: p_data must be a JSON object
+ T5 9MB payload                           | rejected: payload too large (max 8 MB)
+ T3 B sees A rows? (count)                | 0
+ T3 B direct UPDATE                       | denied: permission denied for table progress
+ T3 B direct INSERT as A                  | denied: permission denied for table progress
+ T3 B direct DELETE                       | denied: permission denied for table progress
+ T4 B no row, base5 -> conflict null      | {"ok": false, "data": null, "version": 0, "conflict": true}
+ T4 B first save base0                    | {"ok": true, "version": 1}
+ T3 B RPC only touches B (B version)      | 1
+ T3 A row untouched (superuser view)      | {"x": 3} v2
+ T6 non-admin is_admin()                  | false
+ T6 non-admin admins rows                 | 0
+ T6 non-admin storage rows                | 0
+ T6 self-promote INSERT admins            | denied: permission denied for table admins
+ T6 admin is_admin()                      | true
+ T6 admin sees own admin rows             | 1
+ T6 admin storage rows (dev-addon only)   | dev-addon/dev-addon.js
+ T6 B still blocked from storage          | 0
+ T7 A progress rows after delete          | 0
+ T7 A auth.users rows after delete        | 0
+ T7 A admins rows after delete (cascade)  | 0
+ T7 B untouched                           | 1
+ T7 stale JWT save after delete           | rejected: insert or update on table "progress" violates foreign key constraint "progress_user_id_fkey"
+ T8 search_path pinned: delete_my_account | search_path="" secdef=true
+ T8 search_path pinned: is_admin          | search_path="" secdef=true
+ T8 search_path pinned: save_progress     | search_path="" secdef=true
+ T8 RLS enabled admins                    | true
+ T8 RLS enabled progress                  | true

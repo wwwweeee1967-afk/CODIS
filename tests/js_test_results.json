@@ -1,0 +1,355 @@
+{
+ "file": "C:\\Users\\DAAMS911`\\Downloads\\CODIS_PROJECT\\CODIS_PROJECT\\app\\CODIS_FINAL.html",
+ "total": 87,
+ "failures": 0,
+ "results": [
+  {
+   "name": "missing config -> code missing",
+   "pass": true
+  },
+  {
+   "name": "url only -> incomplete",
+   "pass": true
+  },
+  {
+   "name": "garbage url -> url",
+   "pass": true
+  },
+  {
+   "name": "http remote url rejected",
+   "pass": true
+  },
+  {
+   "name": "url with path rejected",
+   "pass": true
+  },
+  {
+   "name": "valid anon JWT accepted",
+   "pass": true
+  },
+  {
+   "name": "trailing slash normalised",
+   "pass": true
+  },
+  {
+   "name": "local http://localhost url accepted",
+   "pass": true
+  },
+  {
+   "name": "service_role JWT rejected",
+   "pass": true
+  },
+  {
+   "name": "sb_secret_ key rejected",
+   "pass": true
+  },
+  {
+   "name": "sb_publishable_ key accepted",
+   "pass": true
+  },
+  {
+   "name": "garbage key rejected",
+   "pass": true
+  },
+  {
+   "name": "file:// page rejected (OAuth cannot return)",
+   "pass": true
+  },
+  {
+   "name": "error messages never contain the key",
+   "pass": true
+  },
+  {
+   "name": "PKCE S256 challenge matches RFC 7636 vector",
+   "pass": true
+  },
+  {
+   "name": "jwt decoder handles all padding cases",
+   "pass": true
+  },
+  {
+   "name": "config via <meta> tags works",
+   "pass": true
+  },
+  {
+   "name": "OVERRIDE takes priority over <meta>",
+   "pass": true
+  },
+  {
+   "name": "no config: not configured, reason shown",
+   "pass": true
+  },
+  {
+   "name": "no config: no gate, no network (app usable as guest)",
+   "pass": true
+  },
+  {
+   "name": "no config: signIn shows explicit Arabic error, no redirect",
+   "pass": true
+  },
+  {
+   "name": "service_role key: refused, never used for network",
+   "pass": true
+  },
+  {
+   "name": "file:// : disabled with explanation, no gate",
+   "pass": true
+  },
+  {
+   "name": "guest mode: no gate, no network",
+   "pass": true
+  },
+  {
+   "name": "configured + not guest + no session: gate shown",
+   "pass": true
+  },
+  {
+   "name": "signIn redirects exactly once",
+   "pass": true
+  },
+  {
+   "name": "authorize endpoint + provider=google + flow_type=pkce",
+   "pass": true
+  },
+  {
+   "name": "code_challenge_method=s256",
+   "pass": true
+  },
+  {
+   "name": "stored verifier: 43-128 chars base64url, hashes to challenge",
+   "pass": true
+  },
+  {
+   "name": "redirect_to = origin + path (no query/hash)",
+   "pass": true
+  },
+  {
+   "name": "double-click does not start a second redirect",
+   "pass": true
+  },
+  {
+   "name": "callback: code exchanged exactly once",
+   "pass": true
+  },
+  {
+   "name": "callback: URL cleaned (code removed)",
+   "pass": true
+  },
+  {
+   "name": "callback: user loaded from session",
+   "pass": true
+  },
+  {
+   "name": "callback: verifier consumed",
+   "pass": true
+  },
+  {
+   "name": "guest progress migrated to the account (server row v1)",
+   "pass": true
+  },
+  {
+   "name": "status synced, meta.base=1 dirty=false",
+   "pass": true
+  },
+  {
+   "name": "guest flag cleared; gate hidden",
+   "pass": true
+  },
+  {
+   "name": "replayed code with no verifier: NOT exchanged, explicit message",
+   "pass": true
+  },
+  {
+   "name": "tokens injected in URL fragment are ignored (no session fixation)",
+   "pass": true
+  },
+  {
+   "name": "stale (>10 min) verifier rejected",
+   "pass": true
+  },
+  {
+   "name": "page reload with valid session: restored, no token calls",
+   "pass": true
+  },
+  {
+   "name": "reload: status synced",
+   "pass": true
+  },
+  {
+   "name": "user cancellation: friendly message, no session, URL cleaned",
+   "pass": true
+  },
+  {
+   "name": "after cancel: gate shown (no loop)",
+   "pass": true
+  },
+  {
+   "name": "map: provider not enabled",
+   "pass": true
+  },
+  {
+   "name": "map: bad Google secret",
+   "pass": true
+  },
+  {
+   "name": "map: redirect not allowed",
+   "pass": true
+  },
+  {
+   "name": "Google provider disabled in Supabase: explicit error, NO redirect to raw JSON page",
+   "pass": true
+  },
+  {
+   "name": "rejected anon key: explicit error, no redirect",
+   "pass": true
+  },
+  {
+   "name": "server unreachable at sign-in: explicit error, no redirect",
+   "pass": true
+  },
+  {
+   "name": "restore: device data replaced by the account snapshot",
+   "pass": true
+  },
+  {
+   "name": "restore: page reload triggered once (guarded)",
+   "pass": true
+  },
+  {
+   "name": "restore: meta base=server version, clean",
+   "pass": true
+  },
+  {
+   "name": "2nd device reload: in sync, no further reload",
+   "pass": true
+  },
+  {
+   "name": "expired access token refreshed once at boot",
+   "pass": true
+  },
+  {
+   "name": "rotated refresh token persisted",
+   "pass": true
+  },
+  {
+   "name": "refresh rejected: status expired + gate shown (no redirect loop)",
+   "pass": true
+  },
+  {
+   "name": "expired session did NOT touch local progress",
+   "pass": true
+  },
+  {
+   "name": "parallel requests share ONE refresh (token rotation safe)",
+   "pass": true
+  },
+  {
+   "name": "offline: status offline, progress kept locally & still dirty",
+   "pass": true
+  },
+  {
+   "name": "offline: automatic retry scheduled (not dropped)",
+   "pass": true
+  },
+  {
+   "name": "back online: saved, version incremented, local==cloud",
+   "pass": true
+  },
+  {
+   "name": "device A saved first (server advanced)",
+   "pass": true
+  },
+  {
+   "name": "conflict detected & user asked (no silent merge)",
+   "pass": true
+  },
+  {
+   "name": "chose device copy: pushed on top of server version",
+   "pass": true
+  },
+  {
+   "name": "overwritten account copy kept as local backup",
+   "pass": true
+  },
+  {
+   "name": "chose account copy: device replaced with server data + reload",
+   "pass": true
+  },
+  {
+   "name": "logout: server session revoked",
+   "pass": true
+  },
+  {
+   "name": "logout: session + local private data cleared, reload",
+   "pass": true
+  },
+  {
+   "name": "after logout: gate shown, no authenticated state",
+   "pass": true
+  },
+  {
+   "name": "login as different account: signed in as U2",
+   "pass": true
+  },
+  {
+   "name": "U1 private data NOT visible to U2 (local)",
+   "pass": true
+  },
+  {
+   "name": "U1 private data NOT written to U2 account (server)",
+   "pass": true
+  },
+  {
+   "name": "owner mismatch: previous account data NOT pushed to the new account",
+   "pass": true
+  },
+  {
+   "name": "owner mismatch: unsynced data stashed for its owner, device wiped, reload",
+   "pass": true
+  },
+  {
+   "name": "missing RPC: Arabic setup hint, status error, NO auto-retry loop",
+   "pass": true
+  },
+  {
+   "name": "missing table on read: Arabic setup hint, no retry loop",
+   "pass": true
+  },
+  {
+   "name": "RLS/permission denied: explicit message, no retry loop",
+   "pass": true
+  },
+  {
+   "name": "5xx: transient — retry scheduled, local data kept",
+   "pass": true
+  },
+  {
+   "name": "non-admin: not admin, add-on storage never requested",
+   "pass": true
+  },
+  {
+   "name": "non-admin direct download of private add-on blocked by server (404)",
+   "pass": true
+  },
+  {
+   "name": "admin (server-verified): add-on loaded",
+   "pass": true
+  },
+  {
+   "name": "server failure: NOT reported as success, session & data kept, error shown",
+   "pass": true
+  },
+  {
+   "name": "deletion succeeds: server identity + data removed",
+   "pass": true
+  },
+  {
+   "name": "deletion: local session and app data wiped",
+   "pass": true
+  },
+  {
+   "name": "deleted account's still-valid JWT cannot recreate data",
+   "pass": true
+  }
+ ]
+}
