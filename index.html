@@ -4351,6 +4351,14 @@ html[data-view="store"] .sidebar{ opacity:0; visibility:hidden; pointer-events:n
 .cs-bar{ width:min(180px,calc(46 * var(--vw))); height:3px; margin-top:16px; border-radius:2px; background:rgb(var(--aqua-rgb) / .16); overflow:hidden; direction:rtl; opacity:0; animation:csText calc(340ms * var(--k)) var(--ease) calc(500ms * var(--k)) forwards; }
 .cs-bar i{ display:block; width:100%; height:100%; background:var(--aqua); transform:scaleX(var(--p,0)); transform-origin:right center; transition:transform 180ms var(--ease); }
 .cs-bar[data-state="warn"] i{ background:var(--gold); }
+.cs-status{ margin-top:12px; min-height:18px; max-width:min(280px,calc(70 * var(--vw))); text-align:center; font-size:12.5px; color:var(--text-2); opacity:0; animation:csText calc(340ms * var(--k)) var(--ease) calc(560ms * var(--k)) forwards; }
+.cs-fail{ margin-top:16px; max-width:min(300px,calc(78 * var(--vw))); text-align:center; font-size:13px; color:var(--text); }
+.cs-fail[hidden]{ display:none; }
+.cs-fail p{ margin:0 0 10px; }
+.cs-fail .cs-btns{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.cs-fail button{ min-height:44px; padding:0 16px; border-radius:12px; border:1px solid var(--glass-border); background:var(--glass-strong); color:var(--text); font:inherit; font-weight:600; cursor:pointer; }
+.cs-fail button.is-main{ background:var(--aqua); color:var(--bg); border-color:transparent; }
+@media (prefers-reduced-motion:reduce){ .cs-status{ opacity:1; animation:none; } }
 @media (prefers-reduced-motion:reduce){ .cs-bar{ opacity:1; animation:none; } .cs-bar i{ transition:none; } }
 
 /* CODIS-MOBILE: المتجر صفحة كاملة داخل .main (لا طبقة fixed داخل حاوية تمرير — iOS لا يثبّتها). باقي محتوى .main يختفي، و.main هو المُمرِّر */
@@ -4399,6 +4407,8 @@ html, body, body *{ touch-action:pan-x pan-y; }
   <div class="cs-tag" dir="ltr">COMFORTABLE DISCIPLINE</div>
   <div class="cs-line" aria-hidden="true"></div>
   <div class="cs-bar" id="cs-bar" role="progressbar" aria-label="تقدّم تجهيز التطبيق" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+  <div class="cs-status" id="cs-status" role="status" aria-live="polite">جارٍ التجهيز…</div>
+  <div class="cs-fail" id="cs-fail" hidden><p id="cs-fail-msg"></p><div class="cs-btns"><button type="button" class="is-main" id="cs-retry">إعادة المحاولة</button><button type="button" id="cs-go">المتابعة على أي حال</button></div></div>
   </div>
 </div>
 <script>
@@ -4422,6 +4432,15 @@ html, body, body *{ touch-action:pan-x pan-y; }
     b.firstElementChild.style.setProperty('--p', p);
     b.setAttribute('aria-valuenow', String(Math.round(p * 100)));
     if(warn) b.setAttribute('data-state', 'warn');
+  };
+  window.codisBootStatus = function(txt){ var s = document.getElementById('cs-status'); if(s && txt) s.textContent = txt; };
+  /* مرحلة أساسية فشلت: لا كشف صامت. رسالة واضحة + إعادة تحميل، أو متابعة بقرار المستخدم */
+  window.codisBootFail = function(names, go){
+    var f = document.getElementById('cs-fail'), m = document.getElementById('cs-fail-msg'); if(!f){ go(); return; }
+    window.clearTimeout(window.codisStartupTimer); if(window.codisBootStatus) window.codisBootStatus('تعذّر إكمال التجهيز');
+    m.textContent = 'تعذّر تجهيز جزء أساسي من التطبيق (' + names.join('، ') + '). بياناتك لم تُمَس.'; f.hidden = false;
+    document.getElementById('cs-retry').onclick = function(){ location.reload(); };
+    document.getElementById('cs-go').onclick = function(){ f.hidden = true; go(); };
   };
   window.codisReveal = function(){
     var el = document.getElementById('codis-startup');
@@ -5771,6 +5790,12 @@ function normalizeData(d, isFresh){
   /* سجل النتائج — إضافة فقط: يُسقَط أي سجل تالف ولا يُمس السليم */
   if(!d.outcomeLedger || typeof d.outcomeLedger !== 'object' || Array.isArray(d.outcomeLedger)) d.outcomeLedger = {};
   Object.keys(d.outcomeLedger).forEach(k=>{ const e = d.outcomeLedger[k]; if(!e || typeof e !== 'object' || (e.kind !== 'reward' && e.kind !== 'punish' && !(e.kind === 'neutral' && (e.scope === 'weekly' || e.scope === 'monthly'))) || typeof e.item !== 'string') delete d.outcomeLedger[k]; });
+  { const ap = d.adminPower, ao = d.adminOverrides, okId = k=>/^[a-z0-9_.]{1,60}$/i.test(k), co = {}, bo = {}, keep = {};
+    if(ap && ap.keep && typeof ap.keep === 'object' && !Array.isArray(ap.keep)) Object.keys(ap.keep).forEach(k=>{ if(okId(k) && ap.keep[k] === true) keep[k] = true; });
+    d.adminPower = { off:!!(ap && ap.off === true), keep:keep };
+    if(ao && ao.constants && typeof ao.constants === 'object' && !Array.isArray(ao.constants)) Object.keys(ao.constants).forEach(k=>{ const v = ao.constants[k]; if(okId(k) && typeof v === 'number' && isFinite(v)) co[k] = v; });
+    if(ao && ao.boxes && typeof ao.boxes === 'object' && !Array.isArray(ao.boxes)) Object.keys(ao.boxes).forEach(k=>{ const p = ao.boxes[k] && ao.boxes[k].pm; if(/^bx[1-9]$/.test(k) && Array.isArray(p) && p.length <= 60 && p.every(x=>typeof x === 'number' && isFinite(x) && x >= 0)) bo[k] = { pm:p }; });
+    d.adminOverrides = { constants:co, boxes:bo }; }   /* CODIS-POWER: تُقرأ فقط حين يكون المطوّر موثَّقاً */
   d.adminGrantsApplied = Array.isArray(d.adminGrantsApplied) ? d.adminGrantsApplied.filter(x=>typeof x === 'string').slice(-2000) : [];   /* CODIS-ADMIN */
   { const cs = d.closedSeen, nowI = new Date().toISOString(), okT = x=>typeof x === 'string' && !isNaN(Date.parse(x)); d.closedSeen = { sold:(cs && okT(cs.sold)) ? cs.sold : nowI, used:(cs && okT(cs.used)) ? cs.used : nowI }; }   /* CODIS-PERF: آخر مشاهدة لكل عرض (المباعة/المستخدمة) */
   d.holidayCardLog = holidayNormalizeLog(d.holidayCardLog);   // سجل المهام المكتملة ببطاقة شراء يوم عطلة — إضافة فقط
@@ -6317,7 +6342,7 @@ function econScopeOfRoom(room){ return room === 'weekly' ? 'weekly' : room === '
 /* سعر البكج النهائي الثابت من النموذج (عدد صحيح ≥ 1)، و0 = مستوى مجهول/غير متاح. مصدر وحيد للسعر المعروض والمخصوم — بلا أي معادلة خصم */
 function econBoxPrice(id){
   const p = Number((econModel().boxPrices || {})[id]);
-  return (isFinite(p) && p >= 1) ? Math.round(p) : 0;
+  return (isFinite(p) && p >= 1) ? Math.max(1, Math.round(CodisLimits.num('box.price.' + id, Math.round(p)))) : 0;   /* CODIS-POWER: سعر يحدده المطوّر */
 }
 function econCoinFor(rarityId, scope){ const m = econModel(); return Math.round(m.unit * (m.ladder[rarityId] || 1) * (m.scale[scope] || 1)); }
 function econBypassFor(severity, scope){ const m = econModel(); return Math.round(m.unit * m.severity[econNormSeverity(severity, 'MEDIUM')] * (m.scale[scope] || 1) * m.bypassPercent / 100); }   /* الضرب بأعداد صحيحة ثم /100: بلا خطأ عشري في نصف الكوين */
@@ -6707,6 +6732,31 @@ const CodisRewardEngine = (function(){
   return { roll, commit, rollPenalty, commitPenalty, explain, setRng, pityState, pick:weightedPick };
 })();
 
+/* ================= CODIS-POWER: حساب المطوّر بلا قيود =================
+   القاعدة الدائمة: أي حد/سقف/شرط/فحص رصيد يقيّد المستخدم يمر عبر CodisLimits (bypass للمنع الصارم، num للثوابت، afford لفحص الرصيد).
+   المطوّر الموثَّق (CodisAccount.isAdmin: الخادم سمح بقراءة public.admins وتنزيل الإضافة الخاصة) يُعفى تلقائياً، وغيره لا يتأثر. */
+const CodisLimits = (function(){
+  const REG = {}, CONST = {};
+  const verified = ()=>{ try{ return CodisAccount.isAdmin() === true; }catch(e){ return false; } };   /* قبل تهيئة الحساب = ليس مطوّراً */
+  function on(){ if(!verified()) return false; const p = data && data.adminPower; return !(p && p.off === true); }
+  function bypass(id){
+    if(!on()) return false;
+    const p = data.adminPower; if(p && p.keep && p.keep[id] === true) return false;   /* المطوّر قد يُبقي قيداً بعينه */
+    const r = REG[id] || (REG[id] = { id:id, label:id, uses:0 }); r.uses++; return true;
+  }
+  function afford(have, need, id){ return Number(have) >= Number(need) || bypass(id || 'buy.insufficient'); }
+  function num(id, normal){
+    if(!on()) return normal;
+    const c = data.adminOverrides && data.adminOverrides.constants;
+    return (c && typeof c[id] === 'number' && isFinite(c[id])) ? c[id] : normal;
+  }
+  function reg(id, label, normal){ REG[id] = Object.assign(REG[id] || { id:id, uses:0 }, { label:label }); if(normal !== undefined) CONST[id] = { id:id, label:label, normal:normal }; }
+  return { on, verified, bypass, afford, num, reg, registry:()=>Object.keys(REG).map(k=>REG[k]), constants:()=>Object.keys(CONST).map(k=>CONST[k]) };
+})();
+[['wallet.nonnegative', 'الرصيد لا ينزل تحت الصفر'], ['buy.insufficient', 'فحص كفاية الرصيد عند الشراء'], ['holiday.weekly', 'حدّ شراء بطاقات العطلة الأسبوعي'],
+ ['holiday.expireduse', 'منع استخدام بطاقة عطلة منتهية'], ['sell.unsellable', 'منع بيع مكافأة بقيمة تساوي أو تفوق شراءها'], ['box.empty', 'البكج «غير متاح» عندما لا فئات مؤهلة'],
+ ['box.rtpGate', 'بوابة العائد المتوقع للبكج'], ['box.prune', 'قصّ سجل البكجات المفتوحة عند 100']].forEach(a=>CodisLimits.reg(a[0], a[1]));
+
 const CodisWallet = (function(){
   function balance(){ return data.wallet.balance; }
   /* الحركة الوحيدة المسموحة للرصيد: تُسجَّل بالدفتر. تمنع الرصيد السالب وتكرار (type + referenceId). تعمل داخل transact فقط */
@@ -6715,7 +6765,12 @@ const CodisWallet = (function(){
     amount = Math.trunc(Number(amount));
     if(!isFinite(amount) || amount === 0) return null;
     const w = data.wallet;
-    if(w.balance + amount < 0) return null;
+    if(w.balance + amount < 0){
+      if(!CodisLimits.bypass('wallet.nonnegative')) return null;
+      const need = -(w.balance + amount);   /* المطوّر: تُسجَّل تعبئة صريحة بالدفتر ثم تمر العملية — الرصيد لا يصير سالباً والدفتر يبقى متّسقاً */
+      w.balance += need; w.lifetimeEarned += need;
+      w.transactions.push({ id:econUid('tx'), type:'ADMIN_ADJUSTMENT', amount:need, reason:'تعبئة تلقائية — صلاحية المطوّر', source:'admin', referenceId:'', createdAt:econNowIso() });
+    }
     if(referenceId && w.transactions.some(t=>t.type === type && t.referenceId === referenceId)) return null;
     const tx = { id:econUid('tx'), type:type, amount:amount, reason:String(reason || ''), source:String(source || ''), referenceId:String(referenceId || ''), createdAt:econNowIso() };
     if(meta) tx.meta = meta;
@@ -6750,7 +6805,13 @@ const CodisWallet = (function(){
   function applySilver(type, amount, reason, source, referenceId, meta){
     if(econSilverTxTypes().indexOf(type) === -1) return null;
     amount = Math.trunc(Number(amount)); if(!isFinite(amount) || amount === 0) return null;
-    const s = silverW(); if(s.balance + amount < 0) return null;
+    const s = silverW();
+    if(s.balance + amount < 0){
+      if(!CodisLimits.bypass('wallet.nonnegative')) return null;
+      const need = -(s.balance + amount);
+      s.balance += need; s.lifetimeEarned += need;
+      s.transactions.push({ id:econUid('stx'), type:'ADMIN_GRANT', currency:'SILVER', amount:need, reason:'تعبئة تلقائية — صلاحية المطوّر', source:'admin', referenceId:'', createdAt:econNowIso() });
+    }
     if(referenceId && s.transactions.some(t=>t.type === type && t.referenceId === referenceId)) return null;
     const tx = { id:econUid('stx'), type:type, currency:'SILVER', amount:amount, reason:String(reason || ''), source:String(source || ''), referenceId:String(referenceId || ''), createdAt:econNowIso() };
     if(meta) tx.meta = meta;
@@ -6928,7 +6989,7 @@ const CodisCosmetics = (function(){
   function buy(id){
     const d = def(id); if(!d) return { ok:false, reason:'invalid' };
     if(owns(id)) return { ok:false, reason:'owned' };
-    const bal = CodisWallet.silverBalance(); if(bal < d.silver) return { ok:false, reason:'insufficient', need:d.silver - bal, price:d.silver };
+    const bal = CodisWallet.silverBalance(); if(!CodisLimits.afford(bal, d.silver)) return { ok:false, reason:'insufficient', need:d.silver - bal, price:d.silver };
     return CodisWallet.transact([], ()=>{
       if(rec(d.id)) return { ok:false, reason:'owned' };
       const tx = CodisWallet.applySilver('PURCHASE_COSMETIC', -d.silver, 'شراء ' + d.name, 'store', 'cosmetic|' + d.id, { name:d.name, cosmetic:d.id, card:d.card });
@@ -6957,13 +7018,13 @@ const CodisCosmetics = (function(){
    • G = قيمة البطاقة بالكوين من مصدرها الوحيد (CodisPasses.price / CodisHolidayCards.price)، والمكافأة S = floor(G × 1.5) فضة. تُزال البطاقة وتُضاف الفضة بمعاملة واحدة، ومرجع المعاملة dismantle|نوع|uid فلا تتكرر. */
 const CodisDismantle = (function(){
   const RATE = 1.5, EXPIRED_SILVER = 25;   /* CODIS-PERF: البطاقة المنتهية تُفكَّك بـ25 فضة ثابتة */
-  function reward(g){ g = Number(g); return (isFinite(g) && g > 0) ? Math.floor(g * RATE) : 0; }
+  function reward(g){ g = Number(g); return (isFinite(g) && g > 0) ? Math.floor(g * CodisLimits.num('dismantle.rate', RATE)) : 0; }
   function target(kind, uid){
     if(kind === 'pass'){ const p = CodisPasses.get(uid); return (p && p.status === 'owned') ? { rec:p, name:CodisPasses.label(p), gold:CodisPasses.price(p), list:CodisPasses.all } : null; }
     if(kind === 'holiday'){
       const H = CodisHolidayCards, c = H.get(uid), d = c ? H.def(c.kind) : null; if(!c || !d) return null;
       if(H.isUsable(c)) return { rec:c, name:d.name, gold:H.price(c.kind), list:()=>data.inventory.holidayCards };
-      if(c.status === 'expired' || (c.status === 'owned' && H.timeExpired(c))) return { rec:c, name:d.name, gold:0, fixed:EXPIRED_SILVER, expired:true, list:()=>data.inventory.holidayCards };
+      if(c.status === 'expired' || (c.status === 'owned' && H.timeExpired(c))) return { rec:c, name:d.name, gold:0, fixed:Math.max(1, Math.trunc(CodisLimits.num('dismantle.expiredSilver', EXPIRED_SILVER))), expired:true, list:()=>data.inventory.holidayCards };
       return null;
     }
     return null;
@@ -7082,7 +7143,7 @@ const CodisEconomy = (function(){
     const cost = Math.max(0, Math.trunc(Number(e.bypassCost) || 0));
     if(choice === 'bypass'){
       if(cost <= 0) return { ok:false, reason:'nobypass' };
-      if(CodisWallet.balance() < cost) return { ok:false, reason:'insufficient', need:cost - CodisWallet.balance() };
+      if(!CodisLimits.afford(CodisWallet.balance(), cost)) return { ok:false, reason:'insufficient', need:cost - CodisWallet.balance() };
     }
     return CodisWallet.transact([e], ()=>{
       if(choice === 'bypass'){
@@ -7241,7 +7302,7 @@ const CodisEconomy = (function(){
     if(!item || !item.enabled || !rar) return { ok:false, reason:'unavailable' };
     const price = storePrice(item);
     if(!(price > 0)) return { ok:false, reason:'unavailable' };
-    if(CodisWallet.balance() < price) return { ok:false, reason:'insufficient', need:price - CodisWallet.balance(), price:price };
+    if(!CodisLimits.afford(CodisWallet.balance(), price)) return { ok:false, reason:'insufficient', need:price - CodisWallet.balance(), price:price };
     return CodisWallet.transact([], ()=>{
       const tx = CodisWallet.apply('PURCHASE_REWARD', -price, 'شراء مكافأة ' + item.rarity, 'store', 'purchase|' + item.id + '|' + econUid('p'), { rewardId:item.id, name:item.name, rarity:item.rarity });
       if(!tx) return { ok:false, reason:'tx' };
@@ -7260,7 +7321,7 @@ const CodisEconomy = (function(){
     if(it.status === 'sold') return { ok:false, reason:'sold' };
     if(it.status !== 'owned') return { ok:false, reason:'used' };
     const value = CodisInventory.sellValue(it);
-    if(!(value > 0) || value >= it.coinValue) return { ok:false, reason:'unsellable' };
+    if((!(value > 0) || value >= it.coinValue) && !(value > 0 && CodisLimits.bypass('sell.unsellable'))) return { ok:false, reason:'unsellable' };
     return { ok:true, it:it, value:value };
   }
   function sellApply(uid){   /* داخل CodisWallet.transact فقط */
@@ -7360,6 +7421,7 @@ const CodisHolidayCards = (function(){
   const limited = kind=>{ const d = def(kind); return !!d && d.weeklyBuyLimit; };
   function storeLocked(kind){
     const wk = currentWeekId(), bw = buyWeeks();
+    if(CodisLimits.bypass('holiday.weekly')) return false;
     if(kind !== undefined) return limited(kind) && !!bw[buyKey(kind, wk)];
     const ks = kinds().filter(limited); return ks.length > 0 && ks.every(k=>!!bw[buyKey(k, wk)]);
   }
@@ -7380,11 +7442,11 @@ const CodisHolidayCards = (function(){
   function buy(kind){
     const d = def(kind); if(!d) return { ok:false, reason:'unavailable' };
     const key = buyKey(kind, currentWeekId());
-    if(d.weeklyBuyLimit && buyWeeks()[key]) return { ok:false, reason:'weeklimit' };
+    if(d.weeklyBuyLimit && buyWeeks()[key] && !CodisLimits.bypass('holiday.weekly')) return { ok:false, reason:'weeklimit' };
     const p = price(kind); if(!(p > 0)) return { ok:false, reason:'unavailable' };
-    if(CodisWallet.balance() < p) return { ok:false, reason:'insufficient', need:p - CodisWallet.balance(), price:p };
+    if(!CodisLimits.afford(CodisWallet.balance(), p)) return { ok:false, reason:'insufficient', need:p - CodisWallet.balance(), price:p };
     return CodisWallet.transact([], ()=>{
-      if(d.weeklyBuyLimit && buyWeeks()[key]) return { ok:false, reason:'weeklimit' };
+      if(d.weeklyBuyLimit && buyWeeks()[key] && !CodisLimits.bypass('holiday.weekly')) return { ok:false, reason:'weeklimit' };
       const tx = CodisWallet.apply('PURCHASE_HOLIDAY_CARD', -p, 'شراء ' + d.name, 'store', 'hcard|' + kind + '|' + econUid('h'), { name:d.name, kind:kind });
       if(!tx) return { ok:false, reason:'tx' };
       if(d.weeklyBuyLimit){ buyWeeks()[key] = tx.id; pruneBuyWeeks(); }   /* سجل الشراء الأسبوعي يُكتب بنفس المعاملة: لا يُمحى بالاستخدام أو الانتهاء ويُستعاد مع الرصيد عند الفشل */
@@ -7440,15 +7502,15 @@ const CodisHolidayCards = (function(){
     const c = get(uid);
     if(!c || c.kind !== kind) return { ok:false, reason:'notowned' };
     if(c.status === 'used') return { ok:false, reason:'used' };
-    if(c.status === 'expired' || timeExpired(c)){ sweepAndSave(); return { ok:false, reason:'expired' }; }
-    if(c.status !== 'owned') return { ok:false, reason:'used' };
+    if((c.status === 'expired' || timeExpired(c)) && !CodisLimits.bypass('holiday.expireduse')){ sweepAndSave(); return { ok:false, reason:'expired' }; }
+    if(c.status !== 'owned' && !(c.status === 'expired' && CodisLimits.bypass('holiday.expireduse'))) return { ok:false, reason:'used' };
     const ctx = planContext(); if(!ctx) return { ok:false, reason:'noplan' };
     const bad = typeof h.check === 'function' ? h.check(ctx, day, c) : null;
     if(bad) return { ok:false, reason:bad };
     return planTransact(ctx, ()=>{
       const q = get(uid);
       if(!q || q.kind !== kind || q.status !== 'owned') return { ok:false, reason:'changed' };
-      if(timeExpired(q)) return { ok:false, reason:'expired' };
+      if(timeExpired(q) && !CodisLimits.bypass('holiday.expireduse')) return { ok:false, reason:'expired' };
       const now = econNowIso(), r = h.apply(ctx, q, day, now) || {};
       if(r.ok === false) return r;
       syncHabitDays(ctx);
@@ -7546,15 +7608,17 @@ const CodisBoxes = (function(){
     { id:'bx4', name:'بكج ذهبي',    tone:'s',  tilt:2.2 },
     { id:'bx5', name:'بكج خرافي',   tone:'ss', tilt:3.0 }
   ];
-  const PRICE_FACTOR = 0.85, KEEP_OPENED = 100;
+  const PRICE_FACTOR = 0.85, KEEP_OPENED_N = 100;
   /* تسعير الصناديق منتج مستقل: أساسه boxWeight (50/30/15/4/1) وهامش boxMarkup (×1.4) من النموذج الثابت، فلا يتغيّر سعر أي صندوق ولا توفّر أي مستوى عند تعديل احتمالات سحب المكافآت أو سعر شراء المكافأة الفردية */
   const BOX_MARKUP = econModel().boxMarkup;
   function boxWeight(r){ const w = Number(r.boxWeight); return w > 0 ? w : 0; }
   /* CODIS-BOXES-V3 — الحد الأدنى لقيمة الجائزة لكل مستوى (شامل: القيمة >= الحد). القيمة = valueOf(x): نفس الحقل الذي يصنّف به المحرك الجوائز أصلاً (قيمة الاستبدال بالكوين للمكافأة، وسعر بطاقة التجاوز/العطلة/الكيس/المظهر).
      البرونزي بلا حد (سلوكه كما كان تماماً). يُطبَّق قبل تجميع الفئات داخل classes() فتتبعه كل النتائج تلقائياً: effective() ← الاحتمالات المعروضة والمسحوبة (roll) ← التوفّر (فارغ = غير متاح بسلوكه المعتاد) ← الإحصاءات. لا يغيّر أسعار الصناديق. */
   const MIN_VALUE = Object.freeze({ bx1:0, bx2:50, bx3:90, bx4:165, bx5:245 });
-  function minValue(id){ const v = Number(MIN_VALUE[id]); return v > 0 ? v : 0; }
-  const VALUE_SPAN = 50, MAX_PRIZE_X = 12, MAX_RTP = 0.95, MAX_PWIN = 0.6;   /* أقصى فرق بالفئة · أعلى جائزة × السعر · أعلى عائد متوقع مسموح قبل اعتبار البكج غير متاح */
+  function minValue(id){ const v = Number(CodisLimits.num('box.minValue.' + id, MIN_VALUE[id])); return v > 0 ? v : 0; }
+  const VALUE_SPAN_N = 50, MAX_PRIZE_X_N = 12, MAX_RTP_N = 0.95, MAX_PWIN_N = 0.6;   /* القيم العادية؛ المطوّر يعدّلها من اللوحة (CODIS-POWER) */
+  const lim = {}; ['VALUE_SPAN', 'MAX_PRIZE_X', 'MAX_RTP', 'MAX_PWIN'].forEach(k=>{ const id = 'box.' + k, nv = { VALUE_SPAN:VALUE_SPAN_N, MAX_PRIZE_X:MAX_PRIZE_X_N, MAX_RTP:MAX_RTP_N, MAX_PWIN:MAX_PWIN_N }[k]; Object.defineProperty(lim, k, { get(){ return CodisLimits.num(id, nv); } }); });
+  const VALUE_SPAN_V = ()=>lim.VALUE_SPAN, MAX_PRIZE_X_V = ()=>lim.MAX_PRIZE_X, MAX_RTP_V = ()=>lim.MAX_RTP, MAX_PWIN_V = ()=>lim.MAX_PWIN;   /* أقصى فرق بالفئة · أعلى جائزة × السعر · أعلى عائد متوقع مسموح قبل اعتبار البكج غير متاح */
 
   function ranked(){ return econCfg().rarities.slice().sort((a,b)=>(a.order - b.order)); }
   /* أوزان عشرية → أعداد صحيحة مجموعها 1000 (حدّ أدنى 1 لكل بند) */
@@ -7593,23 +7657,37 @@ const CodisBoxes = (function(){
     const items = prizePool().map(x=>({ x:x, v:valueOf(x) })).filter(o=>o.v > 0 && o.v >= (minV || 0)).sort((a,b)=>a.v - b.v || a.x.id.localeCompare(b.x.id)), out = [];
     for(let i = 0; i < items.length;){
       const start = items[i].v, g = [];
-      while(i < items.length && items[i].v - start <= VALUE_SPAN){ g.push(items[i]); i++; }
+      while(i < items.length && items[i].v - start <= VALUE_SPAN_V()){ g.push(items[i]); i++; }
       out.push({ items:g.map(o=>o.x), vals:g.map(o=>o.v), min:g[0].v, max:g[g.length - 1].v, mean:g.reduce((s,o)=>s + o.v, 0) / g.length });
     }
     const tones = econTones();
     return out.map((c,k)=>Object.assign(c, { id:'vc' + (k + 1), name:'فئة ' + (k + 1), order:k + 1, tone:tones[Math.min(tones.length - 1, Math.floor(k * tones.length / out.length))], n:c.items.length }));
   }
   /* احتمالات الفئات الفعلية للمستوى (بالألف، مجموعها 1000): فئات مؤهّلة فقط (أعلى بطاقة ≤ MAX_PRIZE_X × السعر)، والاحتمال ∝ المتوسط^(−β) مع β يحقق العائد المستهدف. فارغة = البكج غير متاح */
-  function effective(t){
-    const top = Math.max.apply(null, tiers().map(x=>x.basePrice)), cs = classes(minValue(t.id)).filter(c=>c.max <= MAX_PRIZE_X * t.basePrice || t.basePrice >= top); if(!cs.length) return [];   /* أغلى بكج يضم كل الفئات: البطاقات الغالية التي لا يقترب منها غيرها تبقى فئة مستقلة بنسبة صغيرة بدل أن تُستبعد من كل البكجات */
+  /* احتمالات يحدّدها المطوّر (بالألف، قابلة للصفر) تحل محل المحسوبة — فقط للمطوّر الموثَّق وبنفس عدد الفئات */
+  function adminPermille(ws){ const tot = ws.reduce((s,x)=>s + x, 0); if(!(tot > 0)) return null; const raw = ws.map(x=>x / tot * 1000), out = raw.map(Math.floor); let left = 1000 - out.reduce((s,x)=>s + x, 0); raw.map((x,i)=>({ f:x - Math.floor(x), i:i })).sort((a,b)=>b.f - a.f || a.i - b.i).forEach(o=>{ if(left > 0 && ws[o.i] > 0){ out[o.i]++; left--; } }); return out; }
+  function overridePm(t, rows){
+    if(!CodisLimits.on()) return rows;
+    const o = data.adminOverrides && data.adminOverrides.boxes && data.adminOverrides.boxes[t.id];
+    if(!o || !Array.isArray(o.pm) || o.pm.length !== rows.length) return rows;
+    const pm = adminPermille(o.pm); if(!pm) return rows;
+    return rows.map((r,i)=>Object.assign({}, r, { pm:pm[i] }));
+  }
+  function effective(t, raw){
+    const rows = effectiveBase(t); if(raw === true) return rows; return overridePm(t, rows);
+  }
+  function effectiveBase(t){
+    const top = Math.max.apply(null, tiers().map(x=>x.basePrice));
+    let cs = classes(minValue(t.id)).filter(c=>c.max <= MAX_PRIZE_X_V() * t.basePrice || t.basePrice >= top);
+    if(!cs.length){ if(!CodisLimits.bypass('box.empty')) return []; cs = classes(minValue(t.id)); if(!cs.length) return []; }   /* أغلى بكج يضم كل الفئات: البطاقات الغالية التي لا يقترب منها غيرها تبقى فئة مستقلة بنسبة صغيرة بدل أن تُستبعد من كل البكجات */
     const target = t.basePrice / (PRICE_FACTOR * BOX_MARKUP);
     const mk = b=>toPermille(cs.map(c=>Math.pow(c.mean, -b))), ev = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].mean, 0);
     let lo = -4, hi = 14;
     for(let k = 0; k < 60; k++){ const m = (lo + hi) / 2; if(ev(mk(m)) > target) lo = m; else hi = m; }
     const win = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].vals.filter(v=>v > t.basePrice).length / cs[i].vals.length, 0);
     let pm = mk(hi);
-    while(win(pm) > MAX_PWIN && hi < 14){ hi += 0.25; pm = mk(hi); }   /* لا يكون الربح بالسحب أرجح من الخسارة حتى لو كان العائد المتوقع دون السعر */
-    if(ev(pm) > MAX_RTP * t.basePrice || win(pm) > MAX_PWIN) return [];   /* حتى أرخص الفئات المؤهّلة تعطي ربحاً شبه مضمون بهذا السعر */
+    while(win(pm) > MAX_PWIN_V() && hi < 14){ hi += 0.25; pm = mk(hi); }   /* لا يكون الربح بالسحب أرجح من الخسارة حتى لو كان العائد المتوقع دون السعر */
+    if((ev(pm) > MAX_RTP_V() * t.basePrice || win(pm) > MAX_PWIN_V()) && !CodisLimits.bypass('box.rtpGate')) return [];   /* حتى أرخص الفئات المؤهّلة تعطي ربحاً شبه مضمون بهذا السعر */
     return cs.map((c,i)=>Object.assign({}, c, { pm:pm[i] }));
   }
   /* أثر القيم الفعلية على المستوى: العائد المتوقع بالاستبدال وبالبيع ونسبته للسعر، واحتمال أن تفوق الجائزة السعر */
@@ -7623,8 +7701,9 @@ const CodisBoxes = (function(){
   function get(uid){ return list().find(b=>b.uid === uid) || null; }
   function pruneOpened(){
     const op = list().filter(b=>b.status === 'opened').sort((a,b)=>a.openedAt < b.openedAt ? 1 : a.openedAt > b.openedAt ? -1 : 0);
-    if(op.length <= KEEP_OPENED) return;
-    const drop = {}; op.slice(KEEP_OPENED).forEach(b=>{ drop[b.uid] = true; });
+    const keepN = CodisLimits.bypass('box.prune') ? Infinity : CodisLimits.num('box.keepOpened', KEEP_OPENED_N);
+    if(op.length <= keepN) return;
+    const drop = {}; op.slice(keepN).forEach(b=>{ drop[b.uid] = true; });
     data.inventory.boxes = list().filter(b=>!drop[b.uid]);
   }
   /* «ندرة» عرض لجائزة بطاقة التجاوز: لونها من لون فئتها (للأنيميشن والكشف فقط) — لا تدخل إعدادات الندرة ولا تمسّها */
@@ -7656,7 +7735,7 @@ const CodisBoxes = (function(){
   function buy(tierId){
     const t = tier(tierId); if(!t) return { ok:false, reason:'unavailable' };
     if(!effective(t).length) return { ok:false, reason:'empty' };
-    if(CodisWallet.balance() < t.price) return { ok:false, reason:'insufficient', need:t.price - CodisWallet.balance(), price:t.price };
+    if(!CodisLimits.afford(CodisWallet.balance(), t.price)) return { ok:false, reason:'insufficient', need:t.price - CodisWallet.balance(), price:t.price };
     return CodisWallet.transact([], ()=>buyInTx(t));
   }
   /* منطق فتح صندوق واحد (منح المكافأة من نظامها الأصلي + ربطها بالصندوق + حالة opened): مصدر واحد يستعمله open وbuyOpenMany. يعمل داخل CodisWallet.transact فقط.
@@ -7702,7 +7781,7 @@ const CodisBoxes = (function(){
     const t = tier(tierId); if(!t) return { ok:false, reason:'unavailable' };
     if(!effective(t).length) return { ok:false, reason:'empty' };
     const total = t.price * BULK, bal0 = CodisWallet.balance();
-    if(bal0 < total) return { ok:false, reason:'insufficient', need:total - bal0, price:t.price, total:total };
+    if(!CodisLimits.afford(bal0, total)) return { ok:false, reason:'insufficient', need:total - bal0, price:t.price, total:total };
     const rolls = [];   /* roll لا يغيّر أي حالة: السحوبات العشر تُجرى قبل المعاملة بسحب مستقل لكل صندوق */
     const cosTaken = {};   /* المظهر دائم: لو سحب صندوقان من العشرة المظهر نفسه يُعاد سحب الثاني (حالة نادرة) بدل منحه مرتين أو إفشال العملية كلها */
     for(let i = 0; i < BULK; i++){
@@ -7728,7 +7807,7 @@ const CodisBoxes = (function(){
       return { ok:true, tier:t, n:BULK, price:t.price, total:total, items:items, balanceBefore:bal0, balanceAfter:CodisWallet.balance() };
     });
   }
-  return { tiers, tier, pool, classes, effective, stats, valueOf, minValue, owned, get, roll, buy, open, buyOpenMany, BULK };
+  return { tiers, tier, pool, classes, effective, effectiveBase, stats, valueOf, minValue, owned, get, roll, buy, open, buyOpenMany, BULK };
 })();
 
 /* نتيجة عادة (محطة/إخفاق/أسبوع/وقوع): تمر من نفس المحرك والسجل — معرّف ثابت لكل حدث فلا تتكرر */
@@ -14599,7 +14678,7 @@ document.addEventListener('keydown', e=>{
 });
 /* بلاطة المتجر: البطاقة (تنقلب لظهرها بالمعلومات) + اسم المكافأة فقط + زر شراء بالسعر. الزر خارج البطاقة فلا يتداخلان */
 function econStoreCardHtml(it, rar, bal, i){
-  const price = CodisEconomy.storePrice(it), ok = bal >= price, busy = econBusyId === it.id, id = escapeHtml(it.id), wk = econStoreWeeklyKey(it, rar), mo = econStoreMonthlyKey(it, rar);
+  const price = CodisEconomy.storePrice(it), ok = CodisLimits.afford(bal, price), busy = econBusyId === it.id, id = escapeHtml(it.id), wk = econStoreWeeklyKey(it, rar), mo = econStoreMonthlyKey(it, rar);
   const kind = wk ? 'is-wk' : mo ? 'is-mo' : (econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) ? 'is-dl' : 'is-plain';
   const buy = '<button type="button" class="btn ' + (ok ? 'btn-primary' : 'btn-secondary') + ' shop-buy' + (busy ? ' is-busy' : '') + '" ' + (ok && !busy ? '' : 'disabled aria-disabled="true"') +
     ' aria-label="' + escapeHtml('شراء ' + it.name + ' — ' + econFmt(price) + ' كوين' + (ok ? '' : ' — ينقصك ' + econFmt(price - bal))) + '" onclick="econBuy(\'' + id + '\')">' + (busy ? 'جارٍ الشراء…' : ok ? econCoin(price) : 'ينقصك ' + econFmt(price - bal)) + '</button>';
@@ -14895,7 +14974,7 @@ function econPaintDetail(){
     if(econDetailSig !== 'gone'){ econDetailSig = 'gone'; sheet.removeAttribute('data-tone'); sheet.className = 'modal store-detail'; body.innerHTML = '<h3 id="econ-detail-title">المكافأة غير متاحة</h3><div class="eco-empty">هذي المكافأة ما عادت موجودة في المتجر</div>'; }
     return;
   }
-  const price = CodisEconomy.storePrice(it), bal = data.wallet.balance, avail = !!it.enabled && price > 0, ok = avail && bal >= price, busy = econBusyId === it.id || econStoreBusy;
+  const price = CodisEconomy.storePrice(it), bal = data.wallet.balance, avail = !!it.enabled && price > 0, ok = avail && CodisLimits.afford(bal, price), busy = econBusyId === it.id || econStoreBusy;
   const sig = [it.id, it.name, it.room, rar.id, price, bal, avail, busy].join('|');
   if(sig === econDetailSig) return; econDetailSig = sig;
   sheet.className = 'modal store-detail rwc-' + rar.tone; sheet.setAttribute('data-tone', rar.tone);
@@ -15272,7 +15351,7 @@ function econCosmeticsShopHtml(){
   const C = CodisCosmetics, sv = CodisWallet.silverBalance(), busy = econStoreBusy;
   return '<section class="st-part cos-sec" id="eco-cosmetics" aria-labelledby="cos-h"><header class="st-part-head"><h4 class="hcd-title" id="cos-h">مظاهر البطاقات</h4></header><div class="hcd-grid cos-grid" role="list">' +
     C.defs().map((d, i)=>{
-      const own = C.owns(d.id), ok = own || sv >= d.silver;
+      const own = C.owns(d.id), ok = own || CodisLimits.afford(sv, d.silver);
       const btn = own ? econCosEquipBtnHtml(d)
         : '<button type="button" class="btn ' + (ok ? 'btn-primary' : 'btn-secondary') + ' hcd-buy cos-buy" ' + (ok && !busy ? '' : 'disabled aria-disabled="true"') +
           ' aria-label="' + escapeHtml('شراء ' + d.name + ' — ' + econFmt(d.silver) + ' فضة' + (ok ? '' : ' — ينقصك ' + econFmt(d.silver - sv) + ' فضة')) + '" onclick="econCosBuy(\'' + d.id + '\')">' + (ok ? econSilver(d.silver) : 'ينقصك ' + econFmt(d.silver - sv) + ' فضة') + '</button>';
@@ -15433,7 +15512,7 @@ function hcdBackHtml(d, x){
 }
 /* بلاطة بطاقة العطلة في شبكة كروت المتجر: نفس بلاطة المكافأة (بطاقة تنقلب + الاسم فقط + زر الشراء بسعرها النهائي) */
 function hcdStoreTileHtml(k, bal, i){
-  const H = CodisHolidayCards, d = H.def(k), p = H.price(k), blocked = d.weeklyBuyLimit && H.storeLocked(k), ok = !blocked && bal >= p, busy = econStoreBusy;
+  const H = CodisHolidayCards, d = H.def(k), p = H.price(k), blocked = d.weeklyBuyLimit && H.storeLocked(k), ok = !blocked && CodisLimits.afford(bal, p), busy = econStoreBusy;
   const label = blocked ? 'الأسبوع القادم' : ok ? econCoin(p) : 'ينقصك ' + econFmt(p - bal);
   return '<div class="hcd-shop st-tile' + (ok ? '' : ' is-short') + '" role="listitem" data-kind="' + k + '" style="--i:' + (i || 0) + '">' +
     codisFlipHtml('<div class="st-face">' + hcdCardHtml({ kind:k, status:'owned', expiresAt:'' }, { sub:'', bare:true }) + '</div>', hcdBackHtml(d, { price:p, blocked:blocked }), { label:d.name + ' — ' + econFmt(p) + ' كوين' }) +
@@ -15649,8 +15728,8 @@ function econBoxesHtml(){
     '</header>' +
     (nOwn ? '<div class="bx-own" role="group" aria-label="بكجاتك المغلقة">' + ownedChips + '</div>' : '') +
     '<div class="bx-grid" role="list">' + ts.map((t, i)=>{
-      const n = CodisBoxes.effective(t).length, ok = bal >= t.price && n > 0, label = !n ? 'غير متاح' : bal >= t.price ? 'شراء' : 'ينقصك ' + econFmt(t.price - bal);
-      const total = t.price * CodisBoxes.BULK, ok10 = bal >= total && n > 0, label10 = !n ? 'غير متاح' : 'ينقصك ' + econFmt(total - bal);   /* شراء ١٠: السعر = سعر الوحدة الفعلي (CodisBoxes.tier().price) × ١٠ بلا أي خصم أو تغيير تسعير */
+      const n = CodisBoxes.effective(t).length, ok = CodisLimits.afford(bal, t.price) && n > 0, label = !n ? 'غير متاح' : CodisLimits.afford(bal, t.price) ? 'شراء' : 'ينقصك ' + econFmt(t.price - bal);
+      const total = t.price * CodisBoxes.BULK, ok10 = CodisLimits.afford(bal, total) && n > 0, label10 = !n ? 'غير متاح' : 'ينقصك ' + econFmt(total - bal);   /* شراء ١٠: السعر = سعر الوحدة الفعلي (CodisBoxes.tier().price) × ١٠ بلا أي خصم أو تغيير تسعير */
       return '<div class="bx-card' + (ok ? '' : ' is-short') + '" role="listitem" data-tier="' + t.id + '" data-tone="' + t.tone + '" style="--i:' + i + '">' +
         '<button type="button" class="bx-open" aria-haspopup="dialog" aria-label="' + escapeHtml(t.name + ' — عرض الكروت المحتملة ونسب ظهورها') + '" onclick="econPackOpen(\'' + t.id + '\', this)"></button>' +
         '<div class="bx-art">' + econBoxArt(t.index) + '<span class="bx-info" aria-hidden="true">' + codisIcon('info') + '</span></div>' +
@@ -15679,7 +15758,7 @@ async function econBuyBox(tierId){
     if(!t){ codisSfx('invalid'); showToast('البكج غير متاح', 'var(--warning)'); return; }
     if(!CodisBoxes.pool().length){ codisSfx('invalid'); showToast('ماكو مكافآت بالمتجر — أضف مكافآت مفعّلة أولاً', 'var(--warning)'); return; }
     if(!CodisBoxes.effective(t).length){ codisSfx('invalid'); showToast('هذا البكج غير متاح حالياً — لا توجد كروت مناسبة لسعره', 'var(--warning)'); return; }
-    if(data.wallet.balance < t.price){ codisSfx('invalid'); showToast('الرصيد غير كافٍ — ينقصك ' + econFmt(t.price - data.wallet.balance) + ' كوين', 'var(--warning)'); return; }
+    if(!CodisLimits.afford(data.wallet.balance, t.price)){ codisSfx('invalid'); showToast('الرصيد غير كافٍ — ينقصك ' + econFmt(t.price - data.wallet.balance) + ' كوين', 'var(--warning)'); return; }
     const ok = await codisConfirm(CodisCopy.buyBox(t.name, econFmt(t.price), econFmt(data.wallet.balance - t.price), t));
     if(!ok) return;
     const r = CodisBoxes.buy(tierId);
@@ -17272,10 +17351,13 @@ function codisBackTarget(){
    يبدأ الخروج مبكراً بما يكفي كي يكتمل ظهور الواجهة الرئيسية عند 2000ms
    من لحظة فتح المستند، بينما تتهيأ الواجهة خلف شاشة الإقلاع. */
 function codisBoot(){
-  const TOTAL = 12; let done = 0, failed = 0;   /* 11 مرحلة تجهيز + انتظار الخطوط */
+  const TOTAL = 14; let done = 0, failed = 0; const reqFailed = [];   /* 13 مرحلة تجهيز + انتظار الخطوط */
+  const STAGE = { lock:'تأمين التطبيق', motion:'تجهيز الحركة', notifications:'تجهيز الإشعارات', archive:'ترتيب الأرشيف', economy:'تحميل الاقتصاد', coinchip:'تحميل الرصيد', backup:'فحص النسخ', habits:'تجهيز العادات', planning:'تجهيز غرفة التخطيط', tasks:'تجهيز غرفة العمليات', learn:'تجهيز غرفة الأستاذ', route:'اختيار الغرفة', view:'تثبيت الواجهة' };
+  const REQUIRED = { economy:'الاقتصاد', planning:'غرفة التخطيط', tasks:'غرفة العمليات', learn:'غرفة الأستاذ' };
   function step(label, fn){
+    if(window.codisBootStatus && STAGE[label]) window.codisBootStatus(STAGE[label] + '…');
     try{ fn(); }
-    catch(err){ failed++; console.error('CODIS init error ('+label+'):', err); }
+    catch(err){ failed++; if(REQUIRED[label]) reqFailed.push(REQUIRED[label]); console.error('CODIS init error ('+label+'):', err); }
     done++; if(window.codisBootProgress) window.codisBootProgress(done / TOTAL, failed > 0);
   }
   try{
@@ -17300,11 +17382,16 @@ function codisBoot(){
     const fontsReady = (document.fonts && document.fonts.ready) ? Promise.race([document.fonts.ready, new Promise(function(r){ setTimeout(r, 2500); })]) : Promise.resolve();
     fontsReady.catch(function(){}).then(function(){
     if(window.codisBootProgress) window.codisBootProgress(1, failed > 0);
+    if(window.codisBootStatus && !reqFailed.length) window.codisBootStatus('جاهز');
+    window.codisStartupTimer_ref = codisStartupTimer;
+    const go = function(){
     window.clearTimeout(codisStartupTimer);
     const revealAt = window.CODIS_BOOT_DURATION - window.getCodisExitDuration();
     const remaining = Math.max(0, revealAt - performance.now());
     codisStartupTimer = window.setTimeout(window.codisReveal, remaining);
     window.setTimeout(function(){ econUiReady = true; try{ CodisOutcomeUI.flushPending(); econRenderHome(); }catch(e){ console.error('economy flush:', e); } }, remaining + 900);
+    };
+    if(reqFailed.length && window.codisBootFail){ window.clearTimeout(codisStartupTimer); window.codisBootFail(reqFailed, go); } else go();
     });   // القرارات المعلّقة تظهر بعد انكشاف الواجهة
   }
 }
@@ -17357,6 +17444,14 @@ function codisDeliverAdminMessage(m){
   if(added) showToast('رسالة من المطوّر: ' + String(m.title || '').slice(0, 60), 'var(--aqua)', 'bell');
   return true;
 }
+/* CODIS-POWER: الثوابت القابلة للتعديل من لوحة المطوّر (القيمة العادية تُقرأ الآن) */
+(function(){
+  const R = CodisLimits.reg;
+  CodisBoxes.tiers().forEach(t=>R('box.price.' + t.id, 'سعر ' + t.name + ' (كوين)', t.price));
+  [['box.VALUE_SPAN', 'أقصى فرق قيمة داخل الفئة الواحدة', 50], ['box.MAX_PRIZE_X', 'أعلى جائزة مسموحة × سعر البكج', 12], ['box.MAX_RTP', 'أعلى عائد متوقع (نسبة من السعر)', 0.95], ['box.MAX_PWIN', 'أعلى احتمال أن تفوق الجائزة السعر', 0.6],
+   ['box.keepOpened', 'عدد البكجات المفتوحة المحفوظة بالسجل', 100], ['dismantle.rate', 'معامل تفكيك البطاقات (× قيمة البطاقة)', 1.5], ['dismantle.expiredSilver', 'فضة تفكيك البطاقة المنتهية', 25]].forEach(a=>R(a[0], a[1], a[2]));
+  [['bx2', 50], ['bx3', 90], ['bx4', 165], ['bx5', 245]].forEach(a=>{ const t = CodisBoxes.tier(a[0]); R('box.minValue.' + a[0], 'الحد الأدنى لقيمة جائزة ' + (t ? t.name : a[0]), a[1]); });
+})();
 /* ================= ACCOUNT & SYNC (CodisAccount) =================
    حسابات Google عبر Supabase (REST مباشر، بلا مكتبات) + مزامنة لقطة كاملة بنسخة (version) لمنع الضياع وتكرار المكافآت.
    الإعداد: يُقرأ بالأولوية من window.CODIS_BACKEND_OVERRIDE ثم وسمَي <meta name="codis-supabase-url|key"> في <head> ثم CODIS_BACKEND أدناه — Project URL والمفتاح العام (anon/publishable) فقط؛ لا تضع service_role أبداً (يُرفض تلقائياً).
@@ -17704,7 +17799,7 @@ const CodisAccount = (function(){
       const f = await api('/storage/v1/object/authenticated/dev-addon/dev-addon.js'); if(!f.ok) return;   // الحماية الفعلية: RLS على المخزن
       const code = await f.text(); if(!code || code.length < 100) return;
       const sc = document.createElement('script'); sc.textContent = code + '\n//# sourceURL=codis-dev-addon.js'; document.head.appendChild(sc);
-      S.admin = true; window.__codisDevLoaded = true; paint();
+      S.admin = true; adminOK = true; window.__codisDevLoaded = true; paint();
     }catch(e){ console.debug('[CODIS] dev add-on not loaded:', e && e.message); }   // بدون شبكة: لا إضافة مطوّر
   }
 
@@ -17748,7 +17843,7 @@ const CodisAccount = (function(){
   }
 
   /* ---------- CODIS-ADMIN: صندوق الوارد (هدايا/رسائل المطوّر لهذا المستخدم فقط) ---------- */
-  let inboxAt = 0, inboxBusy = false;
+  let inboxAt = 0, inboxBusy = false, adminOK = false;   /* CODIS-POWER: متغيّر خاص (ليس على S المكشوفة) */
   async function pullInbox(force){
     if(!S.user || !S.session || window.CODIS_SYNC_HOLD || inboxBusy) return;
     if(!force && Date.now() - inboxAt < 30000) return;
@@ -17797,7 +17892,7 @@ const CodisAccount = (function(){
     try{ if(typeof window.codisAfterLogin === 'function') window.codisAfterLogin(S.status); }catch(e){ console.warn('[CODIS profile]', e && e.message); }
   }
   function syncNow(){ if(!S.user || S.reconciling || window.CODIS_SYNC_HOLD) return; const m = meta(); return m.owner === S.user.id && m.dirty ? push() : reconcile(); }
-  return { init, signIn, signOut, deleteAccount, syncNow, noteChange, pullInbox, adminCall, state:S, configured, configError: CHK.ok ? null : { code:CHK.code, msg:CHK.msg }, LABELS, fmt, meta, isAdmin:() => S.admin, _test:{ hasProgress, checkBackend, authErrMsg, classify, b64u, jwt } };
+  return { init, signIn, signOut, deleteAccount, syncNow, noteChange, pullInbox, adminCall, state:S, configured, configError: CHK.ok ? null : { code:CHK.code, msg:CHK.msg }, LABELS, fmt, meta, isAdmin:() => adminOK === true, _test:{ hasProgress, checkBackend, authErrMsg, classify, b64u, jwt } };
 })();
 
 /* ---------- صفحات الإعدادات: الحساب + حذف الحساب (تُرسم طازجة عند كل فتح) ---------- */
