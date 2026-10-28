@@ -15,6 +15,7 @@ CODIS is a **single-file Arabic (RTL) HTML app** (life organizer / game). All UI
 ## Layout
 - `src/CODIS_9-7-3.html` — **latest authoritative app (user must place it here; NOT yet provided).** `src/CODIS_9-7-2.html` is the older base the auth work was built on.
 - `app/CODIS_FINAL.html` — 9-7-2 + auth/sync fixes (byte-reproducible via `tools/patch.py`).
+- `tools/patch_rules.py <in> <out>` — CODIS-RULES: توزيع بكجات موحّد (82.7%) + حماية احتمالات الندرة + منع حصاد المهام (يوم/خطة/أسبوع/شهر) + عادة أسبوعية بيوم مميّز + مكافأة قاومت/خصم وقعت + هوية الأهمية (بعد patch_power.py). اختبار: tests/economy_rules_browser.js.
 - `tools/patch_power.py <in> <out>` — CODIS-POWER: `CodisLimits` (إعفاء المطوّر من كل قيد) + تجاوز القيود الحالية + تعديل نسب البكجات/الأسعار/الثوابت للمطوّر + شاشة البداية: حالة نصية وفشل صريح (بعد patch_admin.py). اللوحة: `addons/dev/adapt_power.js`. حارس: `tests/limits_check.js`.
 - `tools/patch_admin.py <in> <out>` — CODIS-ADMIN: استلام هدايا ورسائل المطوّر (صفوف المستخدم نفسه فقط) + `CodisAccount.adminCall` للّوحة. الخادم: `sql/codis_admin.sql`؛ اللوحة: `addons/dev/adapt_admin.js` (بعد patch_mobile.py). فحوص: `tests/run_admin_sqltest.js`.
 - `tools/patch_mobile.py <in> <out>` — CODIS-MOBILE: المتجر صفحة كاملة داخل .main (إصلاح iOS) + content-visibility للأقسام البعيدة + صور blob + حركة غرفة واحدة على اللمس (بعد patch_perf.py).

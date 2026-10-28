@@ -4370,6 +4370,24 @@ html[data-view="store"] .store-btn, html[data-view="store"] .coin-chip{ opacity:
 /* أقسام المتجر خارج الشاشة لا تُحسب ولا تُرسم حتى تقترب (قياس: تخطيط المتجر 52–104ms → ~6ms). auto تحفظ الارتفاع الحقيقي بعد أول ظهور */
 #eco-store-body > #eco-cosmetics, #eco-store-body > #eco-cards{ content-visibility:auto; contain-intrinsic-size:auto 1200px; }
 
+/* CODIS-RULES · هوية الأهمية للعادات: عادية = هادئة ومستقرة · مهمة = دافئة · حرجة = تركيز وإلحاح. التمييز بالشكل (سماكة الشريط/الإطار) والأيقونة والنص قبل اللون */
+#page-habits .hb-pill .ico{ --ctx-ico-n:var(--ico-xs); margin-inline-end:4px; vertical-align:-2px; }
+#page-habits .habit-card.imp-normal::before{ width:3px; }
+#page-habits .habit-card.imp-normal .streak-ring .ring-fill{ stroke:var(--aqua); }
+#page-habits .hb-pill.is-normal{ color:var(--text-2); }
+#page-habits .habit-card.imp-important{ background:linear-gradient(135deg, rgb(var(--warning-rgb) / .07) 0%, transparent 50%), var(--disc-card); border-color:rgb(var(--warning-rgb) / .22); }
+#page-habits .habit-card.imp-important::before{ width:4px; background:var(--warning); }
+#page-habits .habit-card.imp-important .streak-ring .ring-fill{ stroke:var(--warning-ink); }
+#page-habits .habit-card.imp-critical{ background:linear-gradient(135deg, var(--danger-a12) 0%, transparent 58%), var(--disc-card); border-color:var(--danger-a40); border-width:1.5px;
+  box-shadow:inset 0 1px 0 rgb(var(--danger-rgb) / .20), 0 1px 2px rgb(var(--lo-rgb) / .28); }
+#page-habits .habit-card.imp-critical::before{ width:5px; background:var(--danger); }
+#page-habits .habit-card.imp-critical.is-restrain::before{ background:repeating-linear-gradient(180deg, var(--danger) 0 6px, transparent 6px 9px); }
+#page-habits .habit-card.imp-critical .habit-name{ font-weight:700; }
+#page-habits .habit-card.imp-critical .streak-ring .ring-fill{ stroke:var(--danger-ink); }
+#page-habits .habit-card.imp-critical:not(:has(.active)):not(.is-abstain)::before{ animation:hbCritBeat 3.6s ease-in-out infinite; }   /* انتباه خفيف فقط ما دامت لم تُنجَز اليوم */
+@keyframes hbCritBeat{ 0%, 100%{ opacity:1; } 50%{ opacity:.5; } }
+@media (prefers-reduced-motion:reduce){ #page-habits .habit-card.imp-critical:not(:has(.active))::before{ animation:none; } }
+
 /* ===================== ZOOM LOCK =====================
    No double-tap zoom and no pinch-zoom: pan-only touch-action on every element (rules that set their own touch-action
    — the planning slider's pan-y — still win by specificity). Scrolling, taps, sliders and drags are unchanged. */
@@ -5921,12 +5939,13 @@ function codisTasksNeeded(tasks, targetPct){
 function taskValue(t){ return codisTaskWeight(t) * codisTaskFraction(t); }
 /* ضبط حالة المهمة + نسبتها معاً بصورة متسقة. فتح «نصها» يبدأ من القيمة الافتراضية (50). يُرجع الحالة الجديدة */
 function codisApplyTaskStatus(t, status, opts){
-  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); return t.status; }
+  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); delete t.doneOn; return t.status; }
   const prev = t.status;
   t.status = (t.status === status) ? null : status;
-  if(t.status === 'done') t.progress = 100;
+  if(t.status === 'done'){ t.progress = 100; t.doneOn = todayKey(); }   /* CODIS-RULES: تاريخ الإنجاز لقاعدة «ليس الأسبوع كله بيوم» */
   else if(t.status === 'half') t.progress = (prev === 'half' && isFinite(Number(t.progress))) ? Math.max(0, Math.min(100, Math.round(Number(t.progress)))) : codisAchCfg().partialDefault;
   else t.progress = 0;
+  if(t.status !== 'done') delete t.doneOn;
   return t.status;
 }
 /* تجميد التقدير التلقائي داخل المهمة (عند الأرشفة): نتيجة الأرشيف لا تتغير لو تغيّرت الإعدادات لاحقاً */
@@ -6298,7 +6317,7 @@ function econNormPouches(inv, iso, now, TB){
   const keep = {}; list.filter(p=>p.status === 'used').sort((a,b)=>a.usedAt < b.usedAt ? 1 : a.usedAt > b.usedAt ? -1 : 0).slice(0, 200).forEach(p=>{ keep[p.uid] = true; });
   return list.filter(p=>p.status !== 'used' || keep[p.uid]);
 }
-function econTxTypes(){ return ['EARN_REWARD_EXCHANGE','PURCHASE_REWARD','SELL_REWARD','PENALTY_BYPASS','ADMIN_ADJUSTMENT','PURCHASE_BOX','PURCHASE_HOLIDAY_CARD']; }
+function econTxTypes(){ return ['EARN_REWARD_EXCHANGE','PURCHASE_REWARD','SELL_REWARD','PENALTY_BYPASS','ADMIN_ADJUSTMENT','PURCHASE_BOX','PURCHASE_HOLIDAY_CARD','HABIT_LAPSE']; }
 function econBoxTierIds(){ return ['bx1','bx2','bx3','bx4','bx5']; }
 /* فترات العقوبات الفعلية بالمشروع (حقل scope بسجل النتائج): يومية · أسبوعية · شهرية · عادات — وبطاقات التجاوز تُربط بها وبالشدة */
 function econPassScopes(){ return ['daily','weekly','monthly','habit']; }   /* معرّفات مستويات الصناديق (التعريف الكامل في CodisBoxes) */
@@ -6366,7 +6385,7 @@ function econDefaults(){
     contexts: {
       daily:   { mult:{}, minSeverity:'LOW' },
       weekly:  { enabled:true, successRule:'FULL_COMPLETION', minPercentage:80, manualStop:'none', room:'weekly', minSeverity:'MEDIUM', mult:{ C:1, B:1, A:1, S:1, SS:1 }, planWeight:70, habitWeight:30, habitMinPct:50 },
-      habits:  { resistReward:false, monthlyReward:true, eventPenalty:50 },
+      habits:  { resistReward:true, resistRewardV2:true, monthlyReward:true, eventPenalty:50, lapseCoins:10, resistDailyCap:3 },
       monthly: { enabled:true, excellentMin:90, successMin:75, punishEnabled:true, room:'monthly', minSeverity:'HIGH',
                  mult:{ C:1, B:1, A:1, S:1, SS:1 }, excellentMult:{ C:0, B:1, A:1, S:1, SS:1 },
                  weights:{ plans:40, weeks:25, days:25, punish:10, habits:20 }, punishPenalty:10 }
@@ -6412,7 +6431,7 @@ function econNormalizeConfig(src){
       mult:mm(null, dd.monthly.mult), excellentMult:mm(null, dd.monthly.excellentMult),
       weights:{ plans:econNum(mw.plans, 40, 0, 100), weeks:econNum(mw.weeks, 25, 0, 100), days:econNum(mw.days, 25, 0, 100), punish:econNum(mw.punish, 10, 0, 100), habits:econNum(mw.habits, 20, 0, 100) },
       punishPenalty:econNum(m0.punishPenalty, 10, 0, 100) },
-    habits: { resistReward:false,   /* غرفة التأديب لا تمنح مكافآت يومية: «قاومت» يُسجَّل بلا مكافأة (الحدثية تُكافأ شهرياً بحجم الأسبوعية فقط) */
+    habits: { resistReward:((cx.habits || {}).resistRewardV2 === true ? (cx.habits || {}).resistReward !== false : true), resistRewardV2:true, lapseCoins:econNum((cx.habits || {}).lapseCoins, 10, 0, 100, true), resistDailyCap:econNum((cx.habits || {}).resistDailyCap, 3, 1, 20, true),   /* غرفة التأديب لا تمنح مكافآت يومية: «قاومت» يُسجَّل بلا مكافأة (الحدثية تُكافأ شهرياً بحجم الأسبوعية فقط) */
        monthlyReward:(cx.habits || {}).monthlyReward !== false, eventPenalty:econNum((cx.habits || {}).eventPenalty, 50, 0, 100, true) }
   };
   if(out.contexts.weekly.planWeight + out.contexts.weekly.habitWeight <= 0) out.contexts.weekly.planWeight = 70;
@@ -6653,14 +6672,15 @@ const CodisRewardEngine = (function(){
   function adaptiveFor(ctxKey, o){ const a = o && o.adaptive; return (a && a.period === ctxKey) ? econAdaptiveOdds(a.period, a.count) : null; }
   function rarityTable(room, ctxKey, o){
     const pool = poolOf(room), cx = econCfg().contexts[ctxKey] || {}, mm = (o && o.mult) || cx.mult || {}, boost = (ctxKey === 'daily') ? pityState() : { active:false }, ad = adaptiveFor(ctxKey, o);   /* Pity لليومي فقط: لا يضخّم قيمة الأسبوعية (×7) والشهرية (×30) */
-    const rows = usableRarities().map(r=>{
-      const n = pool.filter(x=>x.rarity === r.id && wnum(x.weight) > 0).length;
+    const prot = !CodisLimits.bypass('reward.protectedOdds');   /* احتمالات الندرة تُحسب على كل الندرات دائماً (حذف/تعطيل الكروت لا يُركّز الاحتمال على العليا) */
+    const rows = (prot ? econCfg().rarities : usableRarities()).map(r=>{
+      const n = (prot && !r.enabled) ? 0 : pool.filter(x=>x.rarity === r.id && wnum(x.weight) > 0).length;   /* CODIS-RULES: ندرة معطّلة = بلا بطاقات لكن احتمالها ثابت */
       let w = wnum(ad && ad.weights[r.id] !== undefined ? ad.weights[r.id] : r.weight) * (mm[r.id] === undefined ? 1 : wnum(mm[r.id]));
       const boosted = boost.active && r.order >= boost.minOrder;
       if(boosted) w *= boost.mult;
       return { r:r, w:w, n:n, boosted:boosted };
-    }).filter(x=>x.n > 0);
-    if(!rows.length) return [];
+    }).filter(x=>prot || x.n > 0);
+    if(!rows.length || (prot && !pool.length)) return [];   /* بلا أي بطاقة بالقائمة: السلوك القديم (مكافأة عامة بأدنى ندرة) */
     let total = rows.reduce((s,x)=>s + x.w, 0);
     if(total <= 0){ rows.forEach(x=>{ x.w = 1; }); total = rows.length; }
     rows.forEach(x=>{ x.p = x.w / total; });
@@ -6686,12 +6706,13 @@ const CodisRewardEngine = (function(){
     if(!table.length) return genericReward(room);
     const tg = econRarityById(econCfg().pity.targetRarity), eligible = !!tg && table.some(x=>x.r.order >= tg.order);   // هل كانت الندرة المستهدفة ممكنة في هذه السحبة؟
     const row = weightedPick(table, x=>x.w);
-    const rows = rewardTable(room, row.r.id);
-    const pick = weightedPick(rows, x=>x.w) || rows[0];
+    const rows = row.n > 0 ? rewardTable(room, row.r.id) : [];
+    const pick = rows.length ? (weightedPick(rows, x=>x.w) || rows[0]) : null;
+    const gcoin = pick ? 0 : (room === 'learn' ? ECON_LEARN_COIN : econCoinFor(row.r.id, econScopeOfRoom(room)));   /* ندرة بلا بطاقات: مكافأة عامة بنفس قيمة ندرتها */
     const ad = adaptiveFor(ctxKey, o);
-    return { generic:false, ctxKey:ctxKey, eligible:eligible, reward:pick.item, rarity:row.r, odds:Math.round(row.p * 1000) / 10, pity:row.boosted,
+    return { generic:false, ctxKey:ctxKey, eligible:eligible, reward:pick ? pick.item : null, genericName:pick ? '' : 'مكافأة ' + row.r.name, rarity:row.r, odds:Math.round(row.p * 1000) / 10, pity:row.boosted,
       adaptive:ad ? { period:ad.period, count:ad.count, over:ad.over, dec:Math.round(ad.dec * 1e6) / 1e6, cOdds:Math.round(ad.cOdds * 1e6) / 1e6 } : null,
-      coinValue:econEffCoin(pick.item, row.r), storePrice:econEffStore(pick.item, row.r) };
+      coinValue:pick ? econEffCoin(pick.item, row.r) : gcoin, storePrice:pick ? econEffStore(pick.item, row.r) : econAutoStore(gcoin) };
   }
   /* سجل منع التكرار لكل قائمة على حدة (حتى 20 = أقصى نافذة) حتى لا تُزيح قائمةٌ نشطة تاريخَ قائمة نادرة */
   function pushRecent(st, room, id){
@@ -6755,7 +6776,10 @@ const CodisLimits = (function(){
 })();
 [['wallet.nonnegative', 'الرصيد لا ينزل تحت الصفر'], ['buy.insufficient', 'فحص كفاية الرصيد عند الشراء'], ['holiday.weekly', 'حدّ شراء بطاقات العطلة الأسبوعي'],
  ['holiday.expireduse', 'منع استخدام بطاقة عطلة منتهية'], ['sell.unsellable', 'منع بيع مكافأة بقيمة تساوي أو تفوق شراءها'], ['box.empty', 'البكج «غير متاح» عندما لا فئات مؤهلة'],
- ['box.rtpGate', 'بوابة العائد المتوقع للبكج'], ['box.prune', 'قصّ سجل البكجات المفتوحة عند 100']].forEach(a=>CodisLimits.reg(a[0], a[1]));
+ ['box.rtpGate', 'بوابة العائد المتوقع للبكج'], ['box.prune', 'قصّ سجل البكجات المفتوحة عند 100'],
+ ['reward.protectedOdds', 'حماية احتمالات الندرة (حذف/تعطيل الكروت لا يغيّر الاحتمالات)'], ['claim.crossPlan', 'منع تكرار مكافأة نفس اليوم/الأسبوع عند بدء خطة جديدة'],
+ ['task.futureDay', 'منع إنجاز مهام يوم لم يأتِ بعد'], ['habit.sameDay', 'العادة الأسبوعية تُحتسب مرة واحدة باليوم'], ['habit.resistCap', 'حدّ مكافآت «قاومت» اليومي'],
+ ['claim.lateCap', 'حدّ مكافآت أيام التعويض (يوم فائت واحد باليوم لكل غرفة)'], ['claim.burst', 'مكافأة الأسبوع تتطلب نشاطاً على أيام مختلفة']].forEach(a=>CodisLimits.reg(a[0], a[1]));
 
 const CodisWallet = (function(){
   function balance(){ return data.wallet.balance; }
@@ -7093,7 +7117,7 @@ const CodisEconomy = (function(){
     if(kind === 'reward'){
       const r = CodisRewardEngine.roll(room, ctxKey, rollOpts);
       CodisRewardEngine.commit(room, r);
-      Object.assign(e, { item:r.reward ? r.reward.name : 'مكافأة', rewardId:r.reward ? r.reward.id : null, rarity:r.rarity.id, rarityName:r.rarity.name,
+      Object.assign(e, { item:r.reward ? r.reward.name : (r.genericName || 'مكافأة'), rewardId:r.reward ? r.reward.id : null, rarity:r.rarity.id, rarityName:r.rarity.name,
         rarityTone:r.rarity.tone, rarityOrder:r.rarity.order, odds:r.odds, coinValue:r.coinValue, storePrice:r.storePrice, coinsAwarded:0 });
       if(r.pity) e.pity = true;
       if(r.adaptive) e.adaptive = r.adaptive;   // شفافية: الفترة وعدد المهام المكتملة ومقدار خفض C وقت السحب
@@ -7181,14 +7205,29 @@ const CodisEconomy = (function(){
   function voidIfPending(id){ const e = L()[id]; if(e && e.status === 'pending'){ e.status = 'void'; saveData(); return true; } return false; }
 
   /* ---- يومي: نفس المعرّف القديم تماماً (غرفة|أسبوع|خطة|يوم|نوع) فلا تتكرر نتيجة موجودة ---- */
+  /* CODIS-RULES: نتيجة واحدة لكل (غرفة + أسبوع + يوم + نوع) مهما بدأ المستخدم من خطط داخل الأسبوع — معرّف الخطة كان يخلق معرّفاً جديداً فيتكرر الدفع */
+  function claimedDay(room, weekId, dayIdx, kind){ return Object.keys(L()).map(k=>L()[k]).find(e=>e && e.scope === 'daily' && e.room === room && e.weekId === weekId && e.day === dayIdx && e.kind === kind && e.status !== 'void') || null; }
+  function weekBurst(arch){
+    if(CodisLimits.bypass('claim.burst')) return false;
+    const seen = {}; let unknown = false, taskDays = 0;
+    [arch && arch.tasksWeek, arch && arch.learnWeek].forEach(w=>{ if(!w || !w.days) return; for(let d=0; d<7; d++){ if(d === w.holidayDay || holidayExtras(w).indexOf(d) !== -1) continue; const l = w.days[d] || []; if(l.length) taskDays++; l.forEach(x=>{ if(x && x.status === 'done'){ if(x.doneOn) seen[x.doneOn] = 1; else unknown = true; } }); } });
+    if(unknown) return false;
+    return Object.keys(seen).length < Math.min(Math.max(1, Math.trunc(CodisLimits.num('task.weeklyMinDays', 3))), taskDays);
+  }
+  function weekAlreadyPaid(weekId, room, exceptId){ if(CodisLimits.bypass('claim.crossPlan')) return false; return Object.keys(L()).some(k=>{ const e = L()[k]; return k !== exceptId && e && e.scope === 'weekly' && e.weekId === weekId && e.room === room && e.kind === 'reward' && e.status !== 'void'; }); }
   function daily(room, dayIdx, kind, pct){
     const weekId = currentWeekId(), week = room === 'learn' ? learnCurrentWeek() : currentWeek(), planId = (week && week.startedAt) || '';
     const id = [room, weekId, planId, dayIdx, kind].join('|');
     if(L()[id]) return create(id, kind, 'daily', room, 'daily');
+    { const dup = claimedDay(room, weekId, dayIdx, kind); if(dup && !CodisLimits.bypass('claim.crossPlan')) return { entry:dup, isNew:false }; }
+    /* أيام التعويض: دورة الخطة تلتف داخل الأسبوع فتصير أيام قبل اليوم قابلة للإنجاز دفعة واحدة. مكافأة يوم فائت واحد فقط لكل غرفة باليوم؛ مهام يومها نفسه دائماً تُكافأ */
+    const dk = dateForWeekDay(weekId, dayIdx), tk = todayKey(), late = !!(dk && dk < tk && kind === 'reward');
+    if(late){ const used = Object.keys(L()).map(k=>L()[k]).filter(e=>e && e.scope === 'daily' && e.room === room && e.late === true && e.status !== 'void' && localDateStr(new Date(e.at)) === tk).length;
+      if(used >= 1 && !CodisLimits.bypass('claim.lateCap')) return { entry:null, isNew:false }; }
     /* عدد المهام المكتملة بالكامل (done) في هذا اليوم وهذه الغرفة: يغذّي الاحتمالات التكيفية اليومية (المخططة/الجزئية/غير المنجزة لا تُحتسب) */
     const dayTasks = (week && week.days && Array.isArray(week.days[dayIdx])) ? week.days[dayIdx] : [];
     const doneCount = dayTasks.filter(t=>t && t.status === 'done').length;
-    return create(id, kind, 'daily', room, 'daily', { weekId:weekId, planId:planId || null, planName:(week && week.planName) || '', day:dayIdx, pct:pct,
+    return create(id, kind, 'daily', room, 'daily', { late:late, weekId:weekId, planId:planId || null, planName:(week && week.planName) || '', day:dayIdx, pct:pct,
       threshold:kind === 'reward' ? data.settings.rewardThreshold : data.settings.punishThreshold },
       (kind === 'reward' && (room === 'tasks' || room === 'learn')) ? { adaptive:{ period:'daily', count:doneCount } } : null);
   }
@@ -7231,7 +7270,7 @@ const CodisEconomy = (function(){
     /* النتيجة = الخطة (غرفة التخطيط) + أداء العادات (غرفة التأديب) بأوزان قابلة للضبط. لا عادات محتسبة → الخطة وحدها */
     const hs = CodisDiscipline.weekStats(arch.weekId), pw = cx.planWeight, hw = hs.pct === null ? 0 : cx.habitWeight;
     const overall = hs.pct === null ? st.pct : Math.round((st.pct * pw + hs.pct * hw) / ((pw + hw) || 1));
-    const th = econThresholds(), cls = econClassifyPct(overall, th), success = cls === 'reward';   // النوع من النتيجة النهائية وحدّي الإنجاز الفعليين (مكافأة/محايد/عقوبة)
+    const th = econThresholds(), cls0 = econClassifyPct(overall, th), cls = (cls0 === 'reward' && (weekAlreadyPaid(arch.weekId, cx.room, id) || weekBurst(arch))) ? 'neutral' : cls0, success = cls === 'reward';   /* دُفعت مكافأة هذا الأسبوع، أو أُنجز كله بيوم واحد: لا مكافأة */   // النوع من النتيجة النهائية وحدّي الإنجاز الفعليين (مكافأة/محايد/عقوبة)
     const report = CodisDiscipline.weeklyReport(arch, st, hs, { cx:cx, overall:overall, success:success, cls:cls, th:th });
     return create(id, cls, 'weekly', cx.room, 'weekly', { weekId:arch.weekId, planId:arch.startedAt || null, planName:arch.name || '', archiveId:arch.id, pct:overall,
       stats:{ total:st.total, done:st.done, half:st.half, none:st.none, open:st.open, holidays:st.holidays, cause:cause, rule:cx.successRule, planPct:st.pct, habitPct:hs.pct }, report:report },
@@ -7286,7 +7325,8 @@ const CodisEconomy = (function(){
     /* حسم مبكر: أي شهر اكتملت فيه 4 أسابيع منتهية (بدأ بأول أسبوع فيه) يُحسم فوراً بالمكافأة أو العقوبة والتقرير، دون انتظار نهاية الشهر */
     if(cx.enabled){
       const cnt = {};
-      Object.keys(L()).forEach(k=>{ const e = L()[k]; if(e && e.scope === 'weekly' && e.status !== 'void'){ const mk = entryMonth(e); if(mk) cnt[mk] = (cnt[mk] || 0) + 1; } });
+      const seenW = {};   /* CODIS-RULES: أسابيع مختلفة فقط — عدّ الإدخالات كان يسمح بحسم الشهر بأربع خطط في يوم واحد */
+      Object.keys(L()).forEach(k=>{ const e = L()[k]; if(e && e.scope === 'weekly' && e.status !== 'void'){ const mk = entryMonth(e); if(mk && !seenW[mk + '|' + e.weekId]){ seenW[mk + '|' + e.weekId] = 1; cnt[mk] = (cnt[mk] || 0) + 1; } } });
       Object.keys(cnt).sort().forEach(mk=>{
         if(cnt[mk] >= 4 && mk <= cur && !L()['monthly|' + mk]){ const r = monthlyOutcome(mk); if(r && r.isNew){ created.push(r.entry); changed = true; } }
       });
@@ -7608,7 +7648,7 @@ const CodisBoxes = (function(){
     { id:'bx4', name:'بكج ذهبي',    tone:'s',  tilt:2.2 },
     { id:'bx5', name:'بكج خرافي',   tone:'ss', tilt:3.0 }
   ];
-  const PRICE_FACTOR = 0.85, KEEP_OPENED_N = 100;
+  const PRICE_FACTOR = 0.85, KEEP_OPENED_N = 100, REF_TOP = 827;   /* CODIS-RULES: نسبة الفئة الأدنى المرجعية = 82.7% لكل البكجات */
   /* تسعير الصناديق منتج مستقل: أساسه boxWeight (50/30/15/4/1) وهامش boxMarkup (×1.4) من النموذج الثابت، فلا يتغيّر سعر أي صندوق ولا توفّر أي مستوى عند تعديل احتمالات سحب المكافآت أو سعر شراء المكافأة الفردية */
   const BOX_MARKUP = econModel().boxMarkup;
   function boxWeight(r){ const w = Number(r.boxWeight); return w > 0 ? w : 0; }
@@ -7680,14 +7720,31 @@ const CodisBoxes = (function(){
     const top = Math.max.apply(null, tiers().map(x=>x.basePrice));
     let cs = classes(minValue(t.id)).filter(c=>c.max <= MAX_PRIZE_X_V() * t.basePrice || t.basePrice >= top);
     if(!cs.length){ if(!CodisLimits.bypass('box.empty')) return []; cs = classes(minValue(t.id)); if(!cs.length) return []; }   /* أغلى بكج يضم كل الفئات: البطاقات الغالية التي لا يقترب منها غيرها تبقى فئة مستقلة بنسبة صغيرة بدل أن تُستبعد من كل البكجات */
-    const target = t.basePrice / (PRICE_FACTOR * BOX_MARKUP);
-    const mk = b=>toPermille(cs.map(c=>Math.pow(c.mean, -b))), ev = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].mean, 0);
-    let lo = -4, hi = 14;
-    for(let k = 0; k < 60; k++){ const m = (lo + hi) / 2; if(ev(mk(m)) > target) lo = m; else hi = m; }
+    const target = t.basePrice / (PRICE_FACTOR * BOX_MARKUP), n = cs.length;
+    const ev = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].mean, 0);
     const win = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].vals.filter(v=>v > t.basePrice).length / cs[i].vals.length, 0);
-    let pm = mk(hi);
-    while(win(pm) > MAX_PWIN_V() && hi < 14){ hi += 0.25; pm = mk(hi); }   /* لا يكون الربح بالسحب أرجح من الخسارة حتى لو كان العائد المتوقع دون السعر */
-    if((ev(pm) > MAX_RTP_V() * t.basePrice || win(pm) > MAX_PWIN_V()) && !CodisLimits.bypass('box.rtpGate')) return [];   /* حتى أرخص الفئات المؤهّلة تعطي ربحاً شبه مضمون بهذا السعر */
+    /* CODIS-RULES — توزيع موحَّد لكل المستويات: الفئة الأدنى بنسبة مرجعية ثابتة (REF_TOP‰ = 82.7%)، والباقي (17.3%) على بقية الفئات بنفس عائلة التناقص الأسي
+       المستعملة أصلاً (∝ المتوسط^−β) مع β يُحَلّ ليبقى العائد المتوقع عند هدف التسعير نفسه (لا يتغيّر اقتصاد البكج). إن كانت المرجعية تجعل العائد يتجاوز سقف
+       RTP لمستوى معيّن (فئته الأدنى غالية نسبةً لسعره) تُرفع نسبتها بأقل مقدار لازم بدل جعل البكج «غير متاح». كل رقم مُصدَّر من هنا هو ما يسحب به roll() وما تعرضه الواجهة. */
+    let pm;
+    if(n === 1) pm = [1000];
+    else {
+      const k = n - 1, fMax = 1000 - k;
+      const build = (f, b)=>{
+        const raw = cs.slice(1).map(c=>Math.pow(c.mean, -b)), s = raw.reduce((x,y)=>x + y, 0) || 1, tot = 1000 - f;
+        const base = raw.map(x=>x / s * (tot - k)), out = base.map(x=>1 + Math.floor(x)); let left = tot - out.reduce((x,y)=>x + y, 0);
+        base.map((x,i)=>({ f:x - Math.floor(x), i:i })).sort((p,q)=>q.f - p.f || p.i - q.i).forEach(o=>{ if(left > 0){ out[o.i]++; left--; } });
+        return [f].concat(out);
+      };
+      const ok = p=>ev(p) <= MAX_RTP_V() * t.basePrice && win(p) <= MAX_PWIN_V();
+      let f = Math.min(Math.max(1, Math.round(CodisLimits.num('box.refTop', REF_TOP))), fMax);
+      while(f < fMax && !ok(build(f, 14))) f += 5;
+      f = Math.min(f, fMax);
+      let lo = -4, hi = 14;
+      for(let i = 0; i < 60; i++){ const m = (lo + hi) / 2; if(ev(build(f, m)) > target) lo = m; else hi = m; }
+      pm = build(f, hi);
+    }
+    if((ev(pm) > MAX_RTP_V() * t.basePrice || win(pm) > MAX_PWIN_V()) && !CodisLimits.bypass('box.rtpGate')) return [];
     return cs.map((c,i)=>Object.assign({}, c, { pm:pm[i] }));
   }
   /* أثر القيم الفعلية على المستوى: العائد المتوقع بالاستبدال وبالبيع ونسبته للسعر، واحتمال أن تفوق الجائزة السعر */
@@ -7814,7 +7871,9 @@ const CodisBoxes = (function(){
 function habitOutcome(h, suffix, kind, label, opts){
   /* opts.weekly: مكافأة بحجم الأسبوعية (إكمال شهر عادة حدثية) من قائمة/قيمة الأسبوعية؛ الافتراضي: مكافأة فورية صغيرة بحجم اليومية */
   const wk = !!(opts && opts.weekly);
-  return CodisEconomy.create(['habit', h.id, suffix, kind].join('|'), kind, 'habit', wk ? 'weekly' : 'habits', wk ? 'weekly' : 'daily', { habitId:h.id, habitText:h.text || '', label:label || '', periodic:wk ? 'monthlyEvent' : 'resist' });
+  /* CODIS-RULES: مكافأة «قاومت» صغيرة دائماً = أدنى ندرة فقط (لا تصل الندرات العليا) */
+  const small = (opts && opts.resist) ? { mult:econCfg().rarities.reduce((o, r, i)=>{ o[r.id] = i === 0 ? 1 : 0; return o; }, {}) } : null;
+  return CodisEconomy.create(['habit', h.id, suffix, kind].join('|'), kind, 'habit', wk ? 'weekly' : 'habits', wk ? 'weekly' : 'daily', { habitId:h.id, habitText:h.text || '', label:label || '', periodic:wk ? 'monthlyEvent' : 'resist' }, small);
 }
 /* الواجهة القديمة لتثبيت نتيجة اليوم — اسمها وتوقيعها كما كانا حتى لا يتغير أي مستدعٍ */
 function outcomeRecord(room, dayIdx, kind, pct){ return CodisEconomy.daily(room, dayIdx, kind, pct); }
@@ -11975,6 +12034,13 @@ function getTaskOutcomeKind(stats){
   return null;
 }
 
+/* CODIS-RULES: لا يُنجَز يوم لم يأتِ بعد (يُسمح بالمسح/التراجع). المطوّر معفى */
+function codisTaskDayLocked(weekId, dayIdx, t, status){
+  if(t && t.status === status) return false;
+  const dk = dateForWeekDay(weekId, dayIdx); if(!dk || dk <= todayKey()) return false;
+  if(CodisLimits.bypass('task.futureDay')) return false;
+  codisSfx('invalid'); showToast('هذا اليوم لم يأتِ بعد — تُنجَز مهامه في موعده', 'var(--warning)'); return true;
+}
 function setTaskStatus(id, status, opts){
   opts = opts || {};   // opts.progress: التعديل من شريط نسبة الإنجاز (يثبّت «نصها» بالنسبة المختارة بلا تبديل/إلغاء وبلا صوت نقر)
   codisJustChangedId = id; if(!opts.silent) codisHaptic(8);
@@ -11987,6 +12053,7 @@ function setTaskStatus(id, status, opts){
     if(t){
       changedDay = Number(dIdx);
       // clicking the already-selected option clears it back to unanswered, in case of a mis-click
+      if(codisTaskDayLocked(currentWeekId(), changedDay, t, status)) return;
       newStatus = codisApplyTaskStatus(t, status, opts);
       break;
     }
@@ -14598,6 +14665,9 @@ function econRenderPeriods(){
   html += '<div class="settings-card"><div class="eco-sec-title">العادات الحدثية</div><div class="eco-form">' +
     '' +
     econSwitch('contexts.habits.monthlyReward', c.contexts.habits.monthlyReward, 'مكافأة شهر كامل بلا وقوع (بحجم الأسبوعية)') +
+    econSwitch('contexts.habits.resistReward', c.contexts.habits.resistReward, 'مكافأة صغيرة عند «قاومت» (مرة باليوم لكل عادة)') +
+    econField('عقوبة الوقوع (كوينز تُخصم، لا ينزل الرصيد تحت الصفر)', econNumInput('contexts.habits.lapseCoins', c.contexts.habits.lapseCoins, { min:0, max:100, label:'عقوبة الوقوع بالكوينز' })) +
+    econField('حدّ مكافآت المقاومة اليومي (لكل العادات)', econNumInput('contexts.habits.resistDailyCap', c.contexts.habits.resistDailyCap, { min:1, max:20, label:'حدّ مكافآت المقاومة اليومي' })) +
     econField('خصم الوقوع من أداء الأسبوع (نقطة لكل وقوع)', econNumInput('contexts.habits.eventPenalty', c.contexts.habits.eventPenalty, { min:0, max:100, label:'خصم الوقوع' })) + '</div></div>';
   html += '<div class="settings-card"><div class="eco-sec-title">التقارير المحفوظة</div>' + econReportsListHtml() + '</div>';
   html += '<div class="settings-card"><div class="eco-sec-title">قيمة المكافآت (كوين)</div><p class="eco-note">ثابتة ومحسوبة تلقائياً: الأسبوعية ×' + econModel().scale.weekly + ' والشهرية ×' + econModel().scale.monthly + ' من اليومية. المتجر = الاستبدال ×' + econModel().markup + ' والبيع ' + econModel().sellPercent + '%. أسعار البكجات ثابتة: ' + CodisBoxes.tiers().map(t=>econFmt(t.price)).join(' · ') + ' كوين.</p>' +
@@ -16438,7 +16508,8 @@ function bestStreak(h){
   return best;
 }
 /* ---- W (weekly) ---- */
-function weekCount(h, wk){ return ((h.weeklyLogs||{})[wk]||[]).length; }
+/* CODIS-RULES: أيام مختلفة فقط (سجلات قديمة مكرّرة لنفس اليوم تبقى محفوظة لكن لا تُحتسب أكثر من يوم) */
+function weekCount(h, wk){ const a = ((h.weeklyLogs||{})[wk]||[]); return CodisLimits.bypass('habit.sameDay') ? a.length : new Set(a).size; }
 /* ---- H (event-based): counter runs from creation (day 1) or from the last occurrence (0 on that day); never resets on its own ---- */
 function hDays(h){ return Math.max(0, daysBetween(h.lastOccurrence || h.createdAt, todayKey()) + (h.lastOccurrence ? 0 : 1)); }
 function hRunKey(h){ return h.lastOccurrence ? 'o'+h.lastOccurrence : 'c'+h.createdAt; }
@@ -16783,21 +16854,34 @@ function logWeeklyHabit(id, delta){   // W: +1 / -1 (undo) inside the current we
   const h = data.habits.build.find(x=>x.id===id); if(!h || h.type!=='W') return;
   codisJustChangedId = id; codisHaptic(8);
   const wk = currentWeekId(), arr = h.weeklyLogs[wk] = h.weeklyLogs[wk] || [];
-  if(delta > 0) arr.push(todayKey()); else arr.pop();
+  if(delta > 0){
+    const tk = todayKey();
+    if(arr.indexOf(tk) !== -1 && !CodisLimits.bypass('habit.sameDay')){ codisSfx('invalid'); showToast('سجّلت هذي العادة اليوم — تُحتسب مرة واحدة باليوم، كمّل غداً', 'var(--warning)'); return; }
+    arr.push(tk);
+  } else arr.pop();
   saveData(); codisSfx(delta > 0 ? 'task.done' : 'task.undo'); renderHabitsPage();
 }
 async function recordEventHabit(id){   // H: «وقعت بها»
   const h = data.habits.quit.find(x=>x.id===id); if(!h) return;
   const today = todayKey();
   if(h.lastOccurrence === today){ showToast('سجّلت الوقوع اليوم أصلاً', 'var(--danger)'); return; }
-  const ok = await codisConfirm(CodisCopy.occurred());
+  const lapseCoins = Math.max(0, Math.trunc(Number(econCfg().contexts.habits.lapseCoins) || 0));
+  const ok = await codisConfirm(CodisCopy.occurred(lapseCoins));
   if(!ok) return;
   codisJustChangedId = id; codisHaptic(8);
-  const days = hDays(h), pun = '';   // لا عقوبة مستقلة: الوقوع يدخل التقييم الأسبوعي
+  /* عقوبة الوقوع: صغيرة، مرة واحدة لكل (عادة+يوم) بمعرّف مرجعي فريد، ولا تُنزل الرصيد تحت الصفر. تُنفَّذ بمعاملة ذرّية قبل تسجيل الوقوع */
+  let pen = 0;
+  if(lapseCoins > 0){
+    const lr = CodisWallet.transact([], ()=>{ const amt = Math.min(lapseCoins, Math.max(0, CodisWallet.balance())); if(amt <= 0) return { ok:true, amt:0 }; const tx = CodisWallet.apply('HABIT_LAPSE', -amt, 'وقوع بعادة «' + h.text + '»', 'habit', 'lapse|' + h.id + '|' + today, { name:h.text }); return tx ? { ok:true, amt:amt } : { ok:false, reason:'tx' }; });
+    if(!lr || !lr.ok){ codisSfx('invalid'); showToast('تعذّر تسجيل الوقوع — لم يتغيّر شي', 'var(--danger)'); return; }
+    pen = lr.amt;
+  }
+  const days = hDays(h), pun = '';   // لا عقوبة بطاقة مستقلة: الوقوع يدخل التقييم الأسبوعي + خصم الكوينز أعلاه
   if(h.resists && h.resists[today]){ CodisEconomy.voidIfPending(['habit', h.id, 'rs:' + today, 'reward'].join('|')); delete h.resists[today]; }   // وقوع اليوم يلغي مقاومته غير المستلمة
   h.bestDays = Math.max(h.bestDays||0, days);
-  h.occurrences.push({ date:today, daysBefore:days, punishment:pun }); h.lastOccurrence = today; h.log[today] = true;
+  h.occurrences.push({ date:today, daysBefore:days, punishment:pun, coins:pen }); h.lastOccurrence = today; h.log[today] = true;
   saveData(); codisSfx('discipline.penalty');
+  showToast(pen > 0 ? 'سُجّل الوقوع — خُصم ' + econFmt(pen) + ' كوين. تكمل من جديد 💪' : 'سُجّل الوقوع — تكمل من جديد', 'var(--warning)');
   CodisEvents.emit('HABIT_EVENT_OCCURRED', { id:h.id, text:h.text, importance:habitImportance(h), dateKey:today, detail:pun });
   renderHabitsPage();
 }
@@ -16808,10 +16892,17 @@ function resistEventHabit(id){   // H: «قاومت» — مكافأة فوري�
   if(h.resists[today]){ codisSfx('invalid'); showToast('سجّلت المقاومة اليوم أصلاً', 'var(--warning)'); return; }
   if(h.lastOccurrence === today){ codisSfx('invalid'); showToast('سجّلت وقوعاً اليوم — لا تُسجَّل مقاومة لنفس اليوم', 'var(--danger)'); return; }
   codisJustChangedId = id; codisHaptic(8);
-  const rr = econCfg().contexts.habits.resistReward ? habitOutcome(h, 'rs:' + today, 'reward', 'قاومت «' + h.text + '»') : null;
+  let rr = null, capped = false; const hc = econCfg().contexts.habits;
+  if(hc.resistReward){
+    /* حدّ يومي على كل العادات: لا تُحصد مكافآت بإنشاء عادات كثيرة أو حذفها وإعادتها (العدّ من سجل النتائج الذي يبقى بعد الحذف) */
+    const todayN = Object.keys(data.outcomeLedger).filter(k=>{ const e = data.outcomeLedger[k]; return e && e.periodic === 'resist' && e.status !== 'void' && localDateStr(new Date(e.at)) === today; }).length;
+    if(todayN >= hc.resistDailyCap && !CodisLimits.bypass('habit.resistCap')) capped = true;
+    else rr = habitOutcome(h, 'rs:' + today, 'reward', 'قاومت «' + h.text + '»', { resist:true });
+  }
   h.resists[today] = { outcomeId:rr ? rr.entry.id : null };
   saveData();
-  if(rr && rr.isNew) CodisOutcomeUI.enqueue(rr.entry.id, 250); else codisSfx('task.done');
+  if(rr && rr.isNew){ CodisOutcomeUI.enqueue(rr.entry.id, 250); showToast('ممتاز! مقاومة اليوم — مكافأة صغيرة بانتظارك', 'var(--success)', 'check'); }
+  else { codisSfx('task.done'); if(capped) showToast('سُجّلت المقاومة ✓ — بلغت حدّ مكافآت المقاومة اليوم (' + hc.resistDailyCap + ')', 'var(--aqua)', 'info'); }
   renderHabitsPage();
 }
 
@@ -16821,6 +16912,7 @@ function habitRingSvg(frac){ return codisRingSvg(frac); }   // ring geometry + s
 /* History: structured events — status chip · what happened · note · date. Same entries, order and limits as the
    text version it replaces; the state is carried by shape (check / close / half / gift) and colour together. */
 const HB_EV_ICON = { ok:'check', fail:'close', partial:'half', reward:'gift' };
+const HB_IMP_ICON = { normal:'calendar', important:'sparkle', critical:'warning' };   /* CODIS-RULES: الأهمية تظهر بالشكل والأيقونة والنص، لا باللون وحده */
 function habitHistoryHtml(h){
   const ev = (kind, title, date, note)=>({ kind:kind, title:title, date:date || '', note:note || '' });
   let rows = [];
@@ -16831,7 +16923,7 @@ function habitHistoryHtml(h){
     rows = h.weekHistory.slice(-6).reverse().map(e=>ev(e.ok ? 'ok' : e.partial ? 'partial' : 'fail',
       'أسبوع · ' + e.done + '/' + e.required + (e.partial && !e.ok ? ' (أسبوع جزئي)' : ''), e.weekId, e.ok ? e.reward : (e.partial ? '' : e.punishment)));
   } else {
-    rows = h.occurrences.slice(-5).reverse().map(o=>ev('fail', 'وقوع' + (o.daysBefore!=null ? ' بعد ' + o.daysBefore + ' يوم' : ''), o.date, o.punishment))
+    rows = h.occurrences.slice(-5).reverse().map(o=>ev('fail', 'وقوع' + (o.daysBefore!=null ? ' بعد ' + o.daysBefore + ' يوم' : ''), o.date, o.punishment || (o.coins ? 'خُصم ' + o.coins + ' كوين' : '')))
       .concat(Object.values(h.monthlyMilestones).sort((a,b)=>a.date<b.date?1:-1).slice(0,3).map(m=>ev('reward', 'مكافأة' + (m.days ? ' · ' + m.days + ' يوم' : ''), m.days ? '' : m.date, m.reward)));
   }
   if(!rows.length) return '';
@@ -16857,8 +16949,9 @@ function renderHabitRow(h){
   const imp = habitImportance(h), today = todayKey(), abst = isAbstainDaily(h), kind = habitKind(h);
   const row = document.createElement('div');
   const cls = (h.type==='E' ? 'is-daily' : h.type==='W' ? 'is-weekly' : 'is-event') + (kind==='quit' ? ' is-restrain' : '') + (abst ? ' is-abstain' : '');
-  row.className = 'habit-card '+cls+(h.id===codisJustChangedId ? ' just-changed' : '');
-  const pills = '<span class="pill hb-pill">'+({E:'يومية',W:'أسبوعية',H:'حدثية'})[h.type]+'</span><span class="pill hb-pill is-'+imp+'">'+habitImpLabel(imp)+'</span>';
+  row.className = 'habit-card imp-'+imp+' '+cls+(h.id===codisJustChangedId ? ' just-changed' : '');
+  row.setAttribute('data-imp', imp);
+  const pills = '<span class="pill hb-pill">'+({E:'يومية',W:'أسبوعية',H:'حدثية'})[h.type]+'</span><span class="pill hb-pill is-'+imp+'">'+(ICONS[HB_IMP_ICON[imp]] || '')+habitImpLabel(imp)+'</span>';
   let ringNum, frac, meta, extra = '', action = '', acts = '', nameDone = false;
   if(h.type==='E'){
     const done = !!h.log[today], failed = !!(h.failLog && h.failLog[today]), streak = buildStreak(h); nameDone = done;
@@ -16884,8 +16977,10 @@ function renderHabitRow(h){
     const last = lastW.map(e=>'<i class="hb-wk is-'+(e.ok?'ok':(e.partial?'partial':'fail'))+'">'+(e.ok?ICONS.check:(e.partial?ICONS.half:ICONS.close))+'</i>').join('');
     const lastLabel = lastW.map(e=>e.ok?'مكتمل':(e.partial?'جزئي':'فائت')).join('، ');
     meta = '<span>هذا الأسبوع <b>'+c+' / '+req+'</b></span><span>أسابيع مكتملة <b>'+weeksOk+'</b></span>'+(last?'<span class="hb-wks" role="img" aria-label="الأسابيع السابقة: '+lastLabel+'">السابقة '+last+'</span>':'');
-    if(c > 0) extra = '<button type="button" class="hb-link" data-undo="1">تراجع عن آخر تسجيل</button>';
-    action = '<button type="button" class="stat-btn stat-done '+(nameDone?'active':'')+'" aria-label="سجّلت إنجازاً" title="سجّلت إنجازاً"><span class="stat-ico">'+ICONS.check+'</span></button>';
+    const todayDone = ((h.weeklyLogs[wk]||[]).indexOf(today) !== -1);
+    extra = '<div class="hb-state '+(todayDone?'is-ok':'is-open')+'">'+(todayDone ? 'اليوم: سُجّل — التسجيل الجاي غداً' : (c >= req ? 'اكتمل هدف الأسبوع — تقدر تسجّل يوماً إضافياً' : 'اليوم: متاح — المتبقي '+(req-c)+' من '+req+' (يوم مختلف لكل تسجيل)'))+'</div>'
+          + (c > 0 ? '<button type="button" class="hb-link" data-undo="1">تراجع عن آخر تسجيل</button>' : '');
+    action = '<button type="button" class="stat-btn stat-done '+(todayDone?'active':'')+'" aria-pressed="'+todayDone+'"'+(todayDone?' aria-disabled="true"':'')+' aria-label="'+(todayDone?'سُجّلت اليوم':'سجّلت إنجازاً')+'" title="'+(todayDone?'سُجّلت اليوم':'سجّلت إنجازاً')+'"><span class="stat-ico">'+ICONS.check+'</span></button>';
   } else {
     const days = hDays(h), best = Math.max(h.bestDays||0, days), months = Object.keys(h.monthlyMilestones).length;
     ringNum = days; frac = (days % 30) / 30;
@@ -16953,7 +17048,7 @@ function setLearnTaskStatus(id, status, opts){
   let newStatus = null, changed = false, changedDay = null;
   for(const dIdx in week.days){
     const t = (week.days[dIdx]||[]).find(x=>x.id===id);
-    if(t){ newStatus = codisApplyTaskStatus(t, status, opts); changed = true; changedDay = Number(dIdx); break; }
+    if(t){ if(codisTaskDayLocked(currentWeekId(), Number(dIdx), t, status)) return; newStatus = codisApplyTaskStatus(t, status, opts); changed = true; changedDay = Number(dIdx); break; }
   }
   if(changed && !opts.silent) codisSfx(codisTaskSoundFor(newStatus));
   saveData();
@@ -17217,7 +17312,7 @@ const CodisCopy = {
   deletePunish:(name)=>({ title:'حذف العقوبة من القائمة؟', message:'«' + name + '» تنحذف من قائمة العقوبات.', icon:'trash', confirmText:'حذف' }),
   archiveHabit:(name)=>({ title:'نقل العادة للأرشيف؟', message:(name ? ('«' + name + '» تنتقل') : 'العادة تنتقل') + ' للأرشيف وسجلها كله يبقى محفوظ. تكدر ترجعها أو تحذفها نهائياً من الأرشيف.', icon:'archive', confirmText:'نقل للأرشيف', danger:false }),
   slip:()=>({ title:'تسجيل إخفاق اليوم؟', message:'تنقطع السلسلة ويُحتسب اليوم إخفاقاً بتقييم الأسبوع. السجل السابق يبقى محفوظ.', detail:'تكدر تتراجع عنه اليوم.', icon:'warning', confirmText:'سجّل الإخفاق' }),
-  occurred:()=>({ title:'تسجيل وقوع بالعادة؟', message:'العداد يبدأ من جديد ويدخل التقييم الأسبوعي. السجل السابق يبقى محفوظ.', icon:'warning', confirmText:'سجّل الوقوع' }),
+  occurred:(coins)=>({ title:'تسجيل وقوع بالعادة؟', message:'العداد يبدأ من جديد ويدخل التقييم الأسبوعي.' + (coins > 0 ? ' وتُخصم ' + coins + ' كوين من رصيدك (لا ينزل تحت الصفر).' : '') + ' السجل السابق يبقى محفوظ.', icon:'warning', confirmText:'سجّل الوقوع' }),
   buy:(name, price, after)=>({ title:'شراء «' + name + '»؟', message:'يتسحب ' + price + ' كوين من رصيدك ويصير رصيدك ' + after + ' كوين. تنضاف المكافأة لمخزونك.', icon:'gift', confirmText:'شراء', danger:false }),
   /* شراء البكجات: نافذة مدمجة — رسمة البكج (×العدد) والسعر الإجمالي وزر واحد. الاسم والمستوى والأرصدة والاحتمالات لا تُعرض (التحقق والخصم كما هما في CodisBoxes) */
   buyBox10:(name, kind, n, unit, total, bal, after, tier)=>({ title:'شراء ' + n + ' بكجات', message:'', hero:econBuyHeroHtml(tier, n, total), compact:true, icon:'gift', confirmText:'شراء وفتح ' + n, danger:false }),
@@ -17450,6 +17545,8 @@ function codisDeliverAdminMessage(m){
   CodisBoxes.tiers().forEach(t=>R('box.price.' + t.id, 'سعر ' + t.name + ' (كوين)', t.price));
   [['box.VALUE_SPAN', 'أقصى فرق قيمة داخل الفئة الواحدة', 50], ['box.MAX_PRIZE_X', 'أعلى جائزة مسموحة × سعر البكج', 12], ['box.MAX_RTP', 'أعلى عائد متوقع (نسبة من السعر)', 0.95], ['box.MAX_PWIN', 'أعلى احتمال أن تفوق الجائزة السعر', 0.6],
    ['box.keepOpened', 'عدد البكجات المفتوحة المحفوظة بالسجل', 100], ['dismantle.rate', 'معامل تفكيك البطاقات (× قيمة البطاقة)', 1.5], ['dismantle.expiredSilver', 'فضة تفكيك البطاقة المنتهية', 25]].forEach(a=>R(a[0], a[1], a[2]));
+  R('box.refTop', 'نسبة الفئة الأدنى بكل بكج (‰ — 827 = 82.7%)', 827);
+  R('task.weeklyMinDays', 'أقل عدد أيام مختلفة لنيل مكافأة الأسبوع', 3);
   [['bx2', 50], ['bx3', 90], ['bx4', 165], ['bx5', 245]].forEach(a=>{ const t = CodisBoxes.tier(a[0]); R('box.minValue.' + a[0], 'الحد الأدنى لقيمة جائزة ' + (t ? t.name : a[0]), a[1]); });
 })();
 /* ================= ACCOUNT & SYNC (CodisAccount) =================
