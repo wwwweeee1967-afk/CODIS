@@ -42,7 +42,16 @@ need.forEach(([re, min, name])=>{ const n = (html.match(re) || []).length; if(n 
 
 /* (3) the flag must be verified-only and not settable through exported state */
 if(!/isAdmin:\(\) => adminOK === true/.test(html.replace(/\s+/g, ' ').replace('isAdmin:() =>', 'isAdmin:() =>')) && !/isAdmin:\s*\(\)\s*=>\s*adminOK === true/.test(html)) fail('CodisAccount.isAdmin must return the private adminOK flag');
-if(/S\.admin\s*=\s*true;\s*adminOK\s*=\s*true/.test(html) === false) fail('adminOK must be set only after the add-on download succeeded (loadAdmin)');
+/* adminOK must be set (a) only inside loadAdmin, (b) after the server allowed the private download (storage fetch ok + code received), and (c) BEFORE the add-on script is injected,
+   because the add-on's own panels check CodisLimits.verified() while loading (this ordering bug once hid the control panel). */
+{ const m = html.match(/async function loadAdmin\(\)\{[\s\S]*?\n  \}\n/);
+  if(!m) fail('loadAdmin not found');
+  else {
+    const b = m[0], iFetch = b.indexOf('/storage/v1/object/authenticated/dev-addon/'), iCode = b.indexOf('const code = await f.text()'), iOK = b.search(/adminOK\s*=\s*true/), iInject = b.indexOf('appendChild(sc)');
+    if(iOK < 0) fail('adminOK is never set in loadAdmin');
+    else if(!(iFetch >= 0 && iCode > iFetch && iOK > iCode)) fail('adminOK must be set only after the private add-on download succeeded');
+    else if(!(iInject > iOK)) fail('adminOK must be set BEFORE the add-on script is injected (its panels verify on load)');
+  } }
 if((html.match(/adminOK\s*=\s*true/g) || []).length !== 1) fail('adminOK must be assigned true in exactly one place');
 
 console.log(bad ? '\nFAILED: ' + bad + ' problem(s). Route the restriction through CodisLimits (see CLAUDE.md → Admin exemption rule).' : 'OK — every user restriction is exempt for the verified developer; guard intact.');

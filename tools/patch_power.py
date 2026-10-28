@@ -66,7 +66,10 @@ r"""  { const ap = d.adminPower, ao = d.adminOverrides, okId = k=>/^[a-z0-9_.]{1
 
 # the flag cannot be flipped through the exported state object: a private closure variable, set only after the server allowed the add-on download
 rep("  let inboxAt = 0, inboxBusy = false;", "  let inboxAt = 0, inboxBusy = false, adminOK = false;   /* CODIS-POWER: متغيّر خاص (ليس على S المكشوفة) */")
-rep("      S.admin = true; window.__codisDevLoaded = true; paint();", "      S.admin = true; adminOK = true; window.__codisDevLoaded = true; paint();")
+# adminOK must be true BEFORE the add-on script runs (its panels check CodisLimits.verified() while loading). It is set only after the SERVER allowed the
+#    private download (RLS) — i.e. strictly after the admins check and the storage fetch above succeeded.
+rep("      const sc = document.createElement('script'); sc.textContent = code + '\\n//# sourceURL=codis-dev-addon.js'; document.head.appendChild(sc);\n      S.admin = true; window.__codisDevLoaded = true; paint();",
+    "      adminOK = true;   /* CODIS-POWER: الخادم سمح بالتنزيل ← موثَّق. يُضبط قبل تشغيل الإضافة لأن لوحاتها تتحقق منه أثناء تحميلها */\n      const sc = document.createElement('script'); sc.textContent = code + '\\n//# sourceURL=codis-dev-addon.js'; document.head.appendChild(sc);\n      S.admin = true; window.__codisDevLoaded = true; paint();")
 rep("isAdmin:() => S.admin,", "isAdmin:() => adminOK === true,")
 
 # ================= 3) wallet: balance guard =================

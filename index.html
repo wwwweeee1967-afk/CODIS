@@ -17895,8 +17895,9 @@ const CodisAccount = (function(){
       const rows = await r.json(); if(!Array.isArray(rows) || !rows.some(x => x && x.user_id === S.user.id)) return;   // دفاع إضافي: صفّي أنا حصراً
       const f = await api('/storage/v1/object/authenticated/dev-addon/dev-addon.js'); if(!f.ok) return;   // الحماية الفعلية: RLS على المخزن
       const code = await f.text(); if(!code || code.length < 100) return;
+      adminOK = true;   /* CODIS-POWER: الخادم سمح بالتنزيل ← موثَّق. يُضبط قبل تشغيل الإضافة لأن لوحاتها تتحقق منه أثناء تحميلها */
       const sc = document.createElement('script'); sc.textContent = code + '\n//# sourceURL=codis-dev-addon.js'; document.head.appendChild(sc);
-      S.admin = true; adminOK = true; window.__codisDevLoaded = true; paint();
+      S.admin = true; window.__codisDevLoaded = true; paint();
     }catch(e){ console.debug('[CODIS] dev add-on not loaded:', e && e.message); }   // بدون شبكة: لا إضافة مطوّر
   }
 
