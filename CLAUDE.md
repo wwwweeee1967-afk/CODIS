@@ -5,6 +5,7 @@ CODIS is a **single-file Arabic (RTL) HTML app** (life organizer / game). All UI
 ## Layout
 - `src/CODIS_9-7-3.html` — **latest authoritative app (user must place it here; NOT yet provided).** `src/CODIS_9-7-2.html` is the older base the auth work was built on.
 - `app/CODIS_FINAL.html` — 9-7-2 + auth/sync fixes (byte-reproducible via `tools/patch.py`).
+- `tools/patch_admin.py <in> <out>` — CODIS-ADMIN: استلام هدايا ورسائل المطوّر (صفوف المستخدم نفسه فقط) + `CodisAccount.adminCall` للّوحة. الخادم: `sql/codis_admin.sql`؛ اللوحة: `addons/dev/adapt_admin.js` (بعد patch_mobile.py). فحوص: `tests/run_admin_sqltest.js`.
 - `tools/patch_mobile.py <in> <out>` — CODIS-MOBILE: المتجر صفحة كاملة داخل .main (إصلاح iOS) + content-visibility للأقسام البعيدة + صور blob + حركة غرفة واحدة على اللمس (بعد patch_perf.py).
 - `tools/patch_perf.py <in> <out>` — CODIS-PERF: إغلاق طبقة المتجر عند التنقّل + data-view + شريط إقلاع حقيقي + شارات المباعة/المستخدمة + فتح أكياس بالكمية + تفكيك البطاقات المنتهية (25 فضة) (بعد patch_dev.py).
 - `tools/patch_dev.py <in> <out>` — حاجز CODIS_SYNC_HOLD لمنع مزامنة بيانات معاينة المطوّر (بعد patch_toast.py). إضافة المطوّر نفسها: `tools/build_devaddon.py` ← `addons/dev-addon.js` (ترفع يدوياً إلى bucket dev-addon، للأدمن فقط).

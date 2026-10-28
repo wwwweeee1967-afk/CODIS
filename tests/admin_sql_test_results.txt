@@ -1,0 +1,69 @@
+ A1 anon admin_list_users                            | denied: permission denied for function admin_list_users
+ A1 anon admin_grant                                 | denied: permission denied for function admin_grant
+ A1 anon admin_message                               | denied: permission denied for function admin_message
+ A1 anon select admin_grants                         | denied: permission denied for table admin_grants
+ A1 anon select admin_messages                       | denied: permission denied for table admin_messages
+ A1 anon ack_my_grants                               | denied: permission denied for function ack_my_grants
+ A2 B admin_list_users                               | denied: admin only
+ A2 B admin_get_user                                 | denied: admin only
+ A2 B admin_stats                                    | denied: admin only
+ A2 B admin_audit_log                                | denied: admin only
+ A2 B admin_grant self 1e6 coins                     | denied: admin only
+ A2 B admin_grant all                                | denied: admin only
+ A2 B admin_message all                              | denied: admin only
+ A2 B admin_set_ban C                                | denied: admin only
+ A2 B admin_cancel_grant                             | denied: admin only
+ A2 B codis_require_admin                            | denied: permission denied for function codis_require_admin
+ A2 B codis_admin_targets                            | denied: permission denied for function codis_admin_targets
+ A2 B insert admin_grants                            | denied: permission denied for table admin_grants
+ A2 B insert admin_messages                          | denied: permission denied for table admin_messages
+ A2 B update admin_grants                            | denied: permission denied for table admin_grants
+ A2 B select admin_audit                             | denied: permission denied for table admin_audit
+ A2 B insert admins (self-promote)                   | denied: permission denied for table admins
+ A2 B is_admin()                                     | false
+ A3 admin list count                                 | 3
+ A3 admin list B row (photo stripped, bad json safe) | {"name": "Bee"} coins=50 silver=7
+ A3 admin list C (non-number / huge values)          | coins=null silver=9000000000000000
+ A3 admin search "Bee"                               | 1
+ A3 admin search injection text                      | 0
+ A3 grant B +100 coins                               | 1
+ A3 grant all +5 silver                              | 3
+ A3 grant unknown id (ignored)                       | 0
+ A3 grant zero                                       | denied: nothing to grant
+ A3 grant too large                                  | denied: amount too large
+ A3 grant no recipients                              | denied: no recipients
+ A3 message all                                      | 3
+ A3 message empty title                              | denied: title must be 1-120 characters
+ A3 message 2001 chars                               | denied: message must be 1-2000 characters
+ A3 ban C                                            | true
+ A3 ban admin (self)                                 | denied: cannot ban an admin
+ A3 stats                                            | {"users": 3, "admins": 1, "banned": 1, "active_7d": 2, "active_30d": 2, "coins_total": 50, "silver_total": 9000000000000007, "with_progress": 2, "pending_grants": 4, "pending_messages": 3}
+ A3 audit rows                                       | 5
+ A3 get_user B has progress                          | 1
+ A3 C banned_until set (superuser view)              | true
+ A4 B sees own grants                                | 2
+ A4 B sees own messages                              | 1
+ A4 B read created_by column                         | denied: permission denied for table admin_grants
+ A4 B ack A's grant ids (0)                          | 0
+ A4 B ack own grants                                 | 2
+ A4 B ack again (0)                                  | 0
+ A4 B ack own messages                               | 1
+ A4 B ack A's grant by id (0)                        | 0
+ A4 A grant still pending                            | true
+ A5 secdef + search_path ack_my_grants               | secdef=true cfg=search_path=""
+ A5 secdef + search_path ack_my_messages             | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_audit_log             | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_cancel_grant          | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_get_user              | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_grant                 | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_list_users            | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_message               | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_set_ban               | secdef=true cfg=search_path=""
+ A5 secdef + search_path admin_stats                 | secdef=true cfg=search_path=""
+ A5 secdef + search_path codis_admin_targets         | secdef=true cfg=search_path=""
+ A5 secdef + search_path codis_json_int              | secdef=false cfg=search_path=""
+ A5 secdef + search_path codis_require_admin         | secdef=true cfg=search_path=""
+ A5 RLS admin_audit                                  | true
+ A5 RLS admin_grants                                 | true
+ A5 RLS admin_messages                               | true
+ A5 anon/authenticated EXECUTE on internal helpers   | none
