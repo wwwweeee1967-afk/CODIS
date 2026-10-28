@@ -5,6 +5,7 @@ CODIS is a **single-file Arabic (RTL) HTML app** (life organizer / game). All UI
 ## Layout
 - `src/CODIS_9-7-3.html` — **latest authoritative app (user must place it here; NOT yet provided).** `src/CODIS_9-7-2.html` is the older base the auth work was built on.
 - `app/CODIS_FINAL.html` — 9-7-2 + auth/sync fixes (byte-reproducible via `tools/patch.py`).
+- `tools/patch_perf.py <in> <out>` — CODIS-PERF: إغلاق طبقة المتجر عند التنقّل + data-view + شريط إقلاع حقيقي + شارات المباعة/المستخدمة + فتح أكياس بالكمية + تفكيك البطاقات المنتهية (25 فضة) (بعد patch_dev.py).
 - `tools/patch_dev.py <in> <out>` — حاجز CODIS_SYNC_HOLD لمنع مزامنة بيانات معاينة المطوّر (بعد patch_toast.py). إضافة المطوّر نفسها: `tools/build_devaddon.py` ← `addons/dev-addon.js` (ترفع يدوياً إلى bucket dev-addon، للأدمن فقط).
 - `tools/patch_toast.py <in> <out>` — يؤجّل إشعار شراء الصناديق إلى ما بعد إغلاق نافذة الفتح (يُشغَّل بعد patch_boxes.py).
 - `tools/patch_boxes.py <in> <out>` — صناديق CODIS-BOXES-V3: الرسومات الخمسة (من tools/boxes/art، والأصول في assets/box_art_original) + مجسّم/طقس فتح + كشف بمستويات + ×10 + عتبات القيمة (يُشغَّل بعد patch_avatar.py).
