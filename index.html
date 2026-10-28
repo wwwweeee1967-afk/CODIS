@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- CODIS-V2 -->
+<!-- CODIS-V3-ROOM -->
+<!-- CODIS-V4-TASKFLOW -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,6 +9,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
+<meta name="codis-version" content="3.2.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -2748,16 +2752,13 @@ html.codis-locked{ overflow:hidden; }
   background:linear-gradient(var(--aqua-a40), var(--aqua-a40)) left center / 12px 1px no-repeat;
 }
 #settings-home .page-head::before{ content:"CONTROL CENTER"; content:"CONTROL CENTER" / ""; }
-#settings-page-thresholds .settings-section-head::before{ content:"CONTROL / CALIBRATION"; content:"CONTROL / CALIBRATION" / ""; }
 #settings-page-rewards .settings-section-head::before{ content:"CONTROL / PERIOD"; content:"CONTROL / PERIOD" / ""; }   /* shared by rewards + penalties */
 #settings-page-rp .settings-section-head::before{ content:"CONTROL / OUTCOMES"; content:"CONTROL / OUTCOMES" / ""; }
 #settings-page-rp-reward .settings-section-head::before{ content:"CONTROL / REWARDS"; content:"CONTROL / REWARDS" / ""; }
 #settings-page-rp-punish .settings-section-head::before{ content:"CONTROL / PENALTIES"; content:"CONTROL / PENALTIES" / ""; }
-#settings-page-eco-periods .settings-section-head::before{ content:"CONTROL / REWARD RULES"; content:"CONTROL / REWARD RULES" / ""; }
 #settings-page-eco-store .settings-section-head::before{ content:"CODIS / STORE"; content:"CODIS / STORE" / ""; }
 #settings-page-eco-log .settings-section-head::before{ content:"CODIS / LEDGER"; content:"CODIS / LEDGER" / ""; }
 #settings-page-archive-list .settings-section-head::before{ content:"CONTROL / RECORD"; content:"CONTROL / RECORD" / ""; }
-#settings-page-data .settings-section-head::before{ content:"CONTROL / BACKUP"; content:"CONTROL / BACKUP" / ""; }
 #settings-page-sound .settings-section-head::before{ content:"CONTROL / AUDIO"; content:"CONTROL / AUDIO" / ""; }
 #settings-page-notifications .settings-section-head::before{ content:"CONTROL / SIGNALS"; content:"CONTROL / SIGNALS" / ""; }
 #settings-page-app-lock .settings-section-head::before{ content:"CONTROL / SECURITY"; content:"CONTROL / SECURITY" / ""; }
@@ -4392,6 +4393,117 @@ html[data-view="store"] .store-btn, html[data-view="store"] .coin-chip{ opacity:
    No double-tap zoom and no pinch-zoom: pan-only touch-action on every element (rules that set their own touch-action
    — the planning slider's pan-y — still win by specificity). Scrolling, taps, sliders and drags are unchanged. */
 html, body, body *{ touch-action:pan-x pan-y; }
+
+/* CODIS-V3-ROOM — غرفة التأديب: تسلسل بصري واضح، تباعد مريح، تفاصيل قابلة للطي */
+#page-habits #build-habit-list, #page-habits #quit-habit-list{ display:flex; flex-direction:column; gap:14px; }
+#page-habits .disc-toolbar{ margin:18px 0 14px; }
+#page-habits .habit-card{ grid-template-columns:auto minmax(0,1fr) auto; column-gap:14px; row-gap:12px; padding:18px 16px 12px; align-items:center; }
+#page-habits .habit-card.is-abstain{ grid-template-columns:auto minmax(0,1fr) auto; }
+#page-habits .habit-body{ display:flex; flex-direction:column; gap:6px; grid-column:2; grid-row:1; min-width:0; }
+#page-habits .habit-body{ text-align:start; align-items:flex-start; }
+#page-habits .habit-body > *{ grid-column:auto; }
+#page-habits .hb-chev svg{ width:14px; height:14px; }
+#page-habits .habit-card .habit-name{ grid-column:auto; grid-row:auto; align-self:flex-start; font-size:17px; font-weight:700; line-height:1.4; }
+#page-habits .hb-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+#page-habits .hb-tags .pill{ margin:0; padding:3px 9px; font-size:11px; }
+#page-habits .habit-body .hb-state{ margin-top:0; font-size:13px; line-height:1.55; color:var(--text-2); }
+#page-habits .hb-glance{ display:flex; flex-wrap:wrap; gap:4px 14px; font-size:12.5px; color:var(--text-3); }
+#page-habits .hb-glance b{ color:var(--text); font-weight:700; font-variant-numeric:tabular-nums; }
+#page-habits .habit-card > .stat-btn, #page-habits .habit-card > .hb-fell{ grid-column:3; grid-row:1; width:52px; height:52px; min-width:52px; border-radius:50%; }
+#page-habits .habit-card > .hb-fell{ width:auto; min-width:88px; height:44px; border-radius:var(--disc-r-field); padding:0 14px; }
+#page-habits .habit-card > .hb-acts{ grid-column:1 / -1; grid-row:2; margin:0; }
+#page-habits .hb-acts .hb-act{ flex:1; min-height:46px; }
+#page-habits .hb-more-toggle{ grid-column:1 / -1; justify-self:center; display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 14px; border:0; background:none; color:var(--text-3); font:inherit; font-size:12.5px; cursor:pointer; border-radius:var(--disc-r-ctl); }
+#page-habits .hb-more-toggle .hb-chev{ display:inline-flex; width:14px; height:14px; transform:rotate(-90deg); transition:transform .24s var(--ease); }
+#page-habits .habit-card.is-open .hb-more-toggle .hb-chev{ transform:rotate(90deg); }
+#page-habits .hb-more-toggle:focus-visible{ outline:2px solid var(--disc-accent); outline-offset:2px; }
+#page-habits .hb-more{ grid-column:1 / -1; display:grid; grid-template-rows:0fr; transition:grid-template-rows .26s var(--ease); margin-top:-12px; }
+#page-habits .habit-card.is-open .hb-more{ grid-template-rows:1fr; margin-top:0; }
+#page-habits .hb-more-clip{ overflow:hidden; min-height:0; display:flex; flex-direction:column; gap:12px; }
+#page-habits .habit-card.is-open .hb-more-clip{ padding-top:4px; }
+#page-habits .hb-more .habit-meta{ grid-column:auto; }
+#page-habits .habit-card > .task-del{ grid-column:auto; }
+#page-habits .hb-archive{ position:static; align-self:flex-start; display:inline-flex; align-items:center; gap:8px; width:auto; height:auto; min-height:40px; padding:0 12px; border-radius:var(--disc-r-ctl); font-size:12.5px; opacity:.85; }
+@media (prefers-reduced-motion:reduce){ #page-habits .hb-more, #page-habits .hb-more-toggle .hb-chev{ transition:none; } }
+@media (max-width:420px){
+  #page-habits .habit-card{ padding:16px 12px 10px; column-gap:10px; }
+  #page-habits .habit-card .habit-name{ font-size:16px; }
+  #page-habits .habit-card > .stat-btn{ width:48px; height:48px; min-width:48px; }
+}
+
+/* CODIS-V4-TASKFLOW — حركات القلم + لوحة النسبة + نافذة المنجزة */
+.task-item{ position:relative; }
+.task-item.is-answering{ pointer-events:none; }
+.pen-ov{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:4; }
+.pen-p{ fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1 1; stroke-dashoffset:1.01; animation:penDraw 600ms cubic-bezier(.45,.05,.25,1) both; will-change:stroke-dashoffset; }
+.pen-check{ stroke:var(--success); stroke-width:6; filter:none; }
+.pen-x{ stroke:var(--danger); stroke-width:6; }
+.pen-scr, .pen-hat{ stroke:var(--text-2); stroke-width:2.2; opacity:.55; }
+.pen-soft{ stroke:var(--danger-ink, var(--danger)); opacity:.4; stroke-width:2; }
+.pen-half{ stroke:var(--warning); stroke-width:4; }
+.pen-rest{ stroke:var(--warning); stroke-width:2; stroke-dasharray:.012 .02; opacity:.5; animation-name:penFade; }
+.pen-hat.pen-warm{ stroke:var(--warning-ink, var(--warning)); opacity:.5; }
+.pen-fill{ fill:var(--warning); opacity:.22; transform-box:fill-box; transform-origin:100% 50%; animation:penFill 680ms cubic-bezier(.3,.0,.2,1) both; }
+.pen-lab{ fill:var(--warning-ink, var(--warning)); font-size:15px; font-weight:700; opacity:0; animation:penFade 300ms ease-out both; }
+@keyframes penDraw{ from{ stroke-dashoffset:1.01; } to{ stroke-dashoffset:0; } }
+@keyframes penFill{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+@keyframes penFade{ from{ opacity:0; } to{ opacity:1; } }
+.task-item.pen-leaving{ animation:penLeave 420ms cubic-bezier(.4,0,.6,1) both; overflow:hidden; }
+@keyframes penLeave{
+  0%{ opacity:1; transform:none; max-height:var(--pen-h, 400px); }
+  55%{ opacity:0; transform:translateX(-14px); max-height:var(--pen-h, 400px); }
+  100%{ opacity:0; transform:translateX(-14px); max-height:0; margin-block:0; padding-block:0; border-width:0; }
+}
+@media (prefers-reduced-motion:reduce){
+  .pen-p, .pen-fill, .pen-lab{ animation-duration:1ms !important; animation-delay:0ms !important; }
+  .task-item.pen-leaving{ animation-duration:260ms; }
+  @keyframes penLeave{ 0%{ opacity:1; max-height:var(--pen-h, 400px); } 100%{ opacity:0; max-height:0; margin-block:0; padding-block:0; border-width:0; } }
+}
+/* لوحة النسبة الجزئية */
+.pp-panel{ display:flex; flex-direction:column; gap:12px; margin-top:10px; padding:14px; border-radius:14px; background:var(--warning-a12); border:1px solid rgb(var(--warning-rgb) / .28); }
+.pp-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.pp-q{ font-size:14px; font-weight:600; color:var(--text); }
+.pp-val{ font-size:22px; font-weight:800; color:var(--warning-ink, var(--warning)); font-variant-numeric:tabular-nums; }
+.pp-chips{ display:flex; gap:8px; }
+.pp-chip{ flex:1; min-height:40px; border-radius:10px; border:1px solid rgb(var(--hi-rgb) / .16); background:rgb(var(--hi-rgb) / .05); color:var(--text-2); font:inherit; font-weight:600; cursor:pointer; }
+.pp-chip.is-on{ background:var(--warning); color:#1a1405; border-color:var(--warning); }
+.pp-range.is-unset::-webkit-slider-thumb{ background:rgb(var(--hi-rgb) / .4); }
+.pp-range.is-unset::-moz-range-thumb{ background:rgb(var(--hi-rgb) / .4); }
+.pp-preview{ font-size:13px; line-height:1.7; color:var(--text-2); }
+.pp-preview b{ color:var(--text); font-size:15px; }
+.pp-actions{ display:flex; gap:8px; }
+.pp-actions .btn{ flex:1; min-height:44px; }
+.pp-actions .pp-ok:disabled{ opacity:.45; }
+/* زر المنجزة */
+.cd-trigger{ display:flex; align-items:center; gap:8px; margin:14px auto 0; min-height:40px; padding:0 14px; border-radius:999px; border:1px solid rgb(var(--hi-rgb) / .14); background:rgb(var(--hi-rgb) / .04); color:var(--text-2); font:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+.cd-trigger:focus-visible{ outline:2px solid var(--aqua); outline-offset:2px; }
+.cd-n{ min-width:22px; padding:1px 7px; border-radius:999px; background:var(--aqua-a14, rgb(var(--hi-rgb) / .1)); color:var(--text); font-size:12px; font-weight:700; text-align:center; font-variant-numeric:tabular-nums; }
+.cd-ico svg{ width:16px; height:16px; }
+/* نافذة المنجزة */
+.cd-ov{ position:fixed; inset:0; z-index:9000; display:flex; align-items:flex-end; justify-content:center; pointer-events:none; }
+.cd-back{ position:absolute; inset:0; background:rgb(var(--lo-rgb) / .55); opacity:0; transition:opacity .2s ease; pointer-events:auto; }
+.cd-sheet{ position:relative; width:min(560px, 100%); max-height:82vh; display:flex; flex-direction:column; border-radius:22px 22px 0 0; background:var(--surface, #0d1117); border:1px solid rgb(var(--hi-rgb) / .1); border-bottom:0; transform:translateY(100%); transition:transform .24s cubic-bezier(.2,.8,.2,1); pointer-events:auto; padding-bottom:env(safe-area-inset-bottom); }
+.cd-ov.is-open .cd-back{ opacity:1; } .cd-ov.is-open .cd-sheet{ transform:none; }
+.cd-grab{ width:38px; height:4px; border-radius:4px; background:rgb(var(--hi-rgb) / .18); margin:8px auto 0; }
+.cd-head{ display:flex; align-items:center; justify-content:space-between; padding:10px 16px 8px; }
+.cd-title{ margin:0; font-size:17px; font-weight:700; }
+.cd-close{ width:40px; height:40px; border-radius:50%; border:0; background:rgb(var(--hi-rgb) / .06); color:var(--text-2); cursor:pointer; }
+.cd-body{ overflow:auto; padding:4px 16px 18px; display:flex; flex-direction:column; gap:14px; overscroll-behavior:contain; }
+.cd-group{ display:flex; flex-direction:column; gap:8px; }
+.cd-gh{ display:flex; align-items:center; gap:8px; margin:0; font-size:13px; color:var(--text-3); font-weight:600; }
+.cd-gn{ font-variant-numeric:tabular-nums; }
+.cd-row{ display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:rgb(var(--hi-rgb) / .04); border:1px solid rgb(var(--hi-rgb) / .07); }
+.cd-row.is-done{ border-inline-start:3px solid var(--success); } .cd-row.is-half{ border-inline-start:3px solid var(--warning); } .cd-row.is-none{ border-inline-start:3px solid var(--danger); }
+.cd-main{ flex:1; min-width:0; } .cd-t{ font-size:15px; line-height:1.5; overflow-wrap:anywhere; }
+.cd-meta{ display:flex; flex-wrap:wrap; gap:4px 10px; margin-top:2px; font-size:12px; color:var(--text-3); }
+.cd-pct{ color:var(--warning-ink, var(--warning)); font-weight:700; }
+.cd-restore{ flex:none; min-height:40px; padding:0 14px; border-radius:10px; border:1px solid rgb(var(--hi-rgb) / .16); background:none; color:var(--text); font:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+.cd-restore:disabled{ opacity:.45; }
+.cd-outs{ display:flex; flex-direction:column; gap:6px; padding:12px; border-radius:14px; background:rgb(var(--hi-rgb) / .04); }
+.cd-day-out{ font-size:13px; line-height:1.6; } .cd-day-out.is-reward{ color:var(--gold, var(--warning-ink)); } .cd-day-out.is-punish{ color:var(--danger-ink, var(--danger)); }
+.cd-note{ font-size:12px; color:var(--text-3); }
+.cd-empty{ padding:30px 0; text-align:center; color:var(--text-3); }
+@media (prefers-reduced-motion:reduce){ .cd-sheet, .cd-back{ transition:none; } }
 </style>
 </head>
 <body>
@@ -4760,11 +4872,6 @@ html, body, body *{ touch-action:pan-x pan-y; }
         </div>
         <div role="group" aria-label="التقدّم">
           <div class="ios-list">
-            <button type="button" class="ios-row" onclick="openSettingsCategory('thresholds')">
-              <span class="ios-row-icon tone-aqua"><svg data-icon="gauge" data-size="md"></svg></span>
-              <span class="ios-row-title">حدود الإنجاز</span>
-              <span class="ios-row-trailing"><svg class="ios-chevron" data-icon="forward"></svg></span>
-            </button>
             <button type="button" class="ios-row" onclick="openSettingsCategory('rp')">
               <span class="ios-row-icon tone-gold"><svg data-icon="scale" data-size="md"></svg></span>
               <span class="ios-row-title">المكافآت والعقوبات</span>
@@ -4778,11 +4885,6 @@ html, body, body *{ touch-action:pan-x pan-y; }
             <button type="button" class="ios-row" id="home-pending-row" style="display:none;" onclick="econOpenPending()">
               <span class="ios-row-icon tone-gold"><svg data-icon="hourglass" data-size="md"></svg></span>
               <span class="ios-row-title">قرارات معلّقة</span>
-              <span class="ios-row-trailing"><svg class="ios-chevron" data-icon="forward"></svg></span>
-            </button>
-            <button type="button" class="ios-row" onclick="openSettingsCategory('eco-periods')">
-              <span class="ios-row-icon tone-gold"><svg data-icon="rules" data-size="md"></svg></span>
-              <span class="ios-row-title">قواعد المكافآت</span>
               <span class="ios-row-trailing"><svg class="ios-chevron" data-icon="forward"></svg></span>
             </button>
           </div>
@@ -4826,11 +4928,6 @@ html, body, body *{ touch-action:pan-x pan-y; }
               <span class="ios-row-title">الأرشيف</span>
               <span class="ios-row-trailing"><svg class="ios-chevron" data-icon="forward"></svg></span>
             </button>
-            <button type="button" class="ios-row" onclick="openSettingsCategory('data')">
-              <span class="ios-row-icon tone-neutral"><svg data-icon="archive" data-size="md"></svg></span>
-              <span class="ios-row-title">النسخ الاحتياطي</span>
-              <span class="ios-row-trailing"><svg class="ios-chevron" data-icon="forward"></svg></span>
-            </button>
           </div>
         </div>
 
@@ -4838,49 +4935,7 @@ html, body, body *{ touch-action:pan-x pan-y; }
 
       <div class="settings-foot">
         <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#codis-mark"/></svg>
-        <span class="eyebrow">CODIS 3.1</span>
-        <span>كل بياناتك محفوظة بجهازك بس، ما تنرسل لأي مكان.</span>
-      </div>
-    </div>
-
-    <!-- ============ قسم: حدود الإنجاز ============ -->
-    <div id="settings-page-thresholds" class="settings-page-section" style="display:none;">
-      <button type="button" class="settings-back-btn" onclick="showSettingsHome()"><svg class="ios-chevron" data-icon="back"></svg>الإعدادات</button>
-      <div class="settings-section-head">
-        <div class="settings-section-title">حدود الإنجاز</div>
-      </div>
-
-      <div class="settings-grid">
-        <div class="settings-card">
-          <div class="threshold-grid">
-            <div class="threshold-box">
-              <div class="threshold-box-label"><span class="dot dot-gold"></span> نسبة المكافأة (أعلى من)</div>
-              <div class="threshold-input-wrap">
-                <input type="number" id="set-reward-threshold" aria-label="نسبة المكافأة" value="90" min="0" max="100" oninput="updateThresholdBar()">
-                <span class="pct-sign">%</span>
-              </div>
-            </div>
-            <div class="threshold-box">
-              <div class="threshold-box-label"><span class="dot dot-danger"></span> نسبة العقوبة (أقل من)</div>
-              <div class="threshold-input-wrap">
-                <input type="number" id="set-punish-threshold" aria-label="نسبة العقوبة" value="70" min="0" max="100" oninput="updateThresholdBar()">
-                <span class="pct-sign">%</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="threshold-bar-wrap">
-            <div class="threshold-bar">
-              <div id="seg-punish"></div>
-              <div id="seg-neutral"></div>
-              <div id="seg-reward"></div>
-            </div>
-            <div class="threshold-bar-labels"><span>0%</span><span>50%</span><span>100%</span></div>
-          </div>
-
-          <button type="button" class="btn btn-primary btn-block threshold-save" onclick="saveThresholds()">حفظ الحدود</button>
-        </div>
-        <div class="settings-card" id="ach-settings-body"></div>
+        <span class="eyebrow" id="app-version-label">CODIS</span>
       </div>
     </div>
 
@@ -5044,15 +5099,7 @@ html, body, body *{ touch-action:pan-x pan-y; }
       <div class="settings-grid" id="eco-log-body"></div>
     </div>
 
-    <div id="settings-page-eco-periods" class="settings-page-section" style="display:none;">
-      <button type="button" class="settings-back-btn" onclick="showSettingsHome()"><svg class="ios-chevron" data-icon="back"></svg>الإعدادات</button>
-      <div class="settings-section-head">
-        <div class="settings-section-title">قواعد المكافآت</div>
-      </div>
-      <div class="settings-grid" id="eco-periods-body"></div>
-    </div>
-
-    <!-- ============ قسم: الصوت ============ -->    <!-- ============ قسم: الصوت ============ -->
+    <!-- ============ قسم: الصوت ============ -->
     <div id="settings-page-sound" class="settings-page-section" style="display:none;">
       <button type="button" class="settings-back-btn" onclick="showSettingsHome()"><svg class="ios-chevron" data-icon="back"></svg>الإعدادات</button>
       <div class="settings-section-head">
@@ -5310,23 +5357,6 @@ html, body, body *{ touch-action:pan-x pan-y; }
       <button type="button" class="settings-back-btn" onclick="archBack()"><svg class="ios-chevron" data-icon="back"></svg>الأرشيف</button>
       <div class="settings-section-head"><div class="settings-section-title" id="arch-leaf-title">الأرشيف</div></div>
       <div class="settings-grid"><div class="settings-card"><div id="archive-list"></div></div></div>
-    </div>
-
-    <!-- ============ قسم: النسخ الاحتياطي ============ -->
-    <div id="settings-page-data" class="settings-page-section" style="display:none;">
-      <button type="button" class="settings-back-btn" onclick="showSettingsHome()"><svg class="ios-chevron" data-icon="back"></svg>الإعدادات</button>
-      <div class="settings-section-head">
-        <div class="settings-section-title">النسخ الاحتياطي</div>
-      </div>
-      <div class="settings-grid">
-        <div class="settings-card">
-          <p style="font-size:14px; line-height:1.8; opacity:.75; margin:0 0 14px;">نسخة كاملة من خططك وعاداتك وأرشيفك وإعداداتك وسجل النتائج. لا تتضمن رمز القفل، ويبقى قفلك الحالي كما هو عند الاسترجاع. إصدار البيانات: <span id="backup-schema-version">—</span></p>
-          <button type="button" class="btn btn-primary btn-block" onclick="codisExportBackup()">تصدير نسخة كاملة</button>
-          <button type="button" class="btn btn-secondary btn-block" style="margin-top:10px;" onclick="document.getElementById('backup-file').click()">استيراد نسخة</button>
-          <input type="file" id="backup-file" accept=".json,application/json" style="display:none;" onchange="codisImportBackup(this)">
-          <p style="font-size:13px; line-height:1.8; opacity:.6; margin:14px 0 0;">قبل أي استرجاع تُحفظ نسخة تلقائية من بياناتك الحالية، ولا يُستبدل شيء إلا بعد تأكيدك.</p>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -5939,9 +5969,10 @@ function codisTasksNeeded(tasks, targetPct){
 function taskValue(t){ return codisTaskWeight(t) * codisTaskFraction(t); }
 /* ضبط حالة المهمة + نسبتها معاً بصورة متسقة. فتح «نصها» يبدأ من القيمة الافتراضية (50). يُرجع الحالة الجديدة */
 function codisApplyTaskStatus(t, status, opts){
-  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); delete t.doneOn; return t.status; }
+  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); delete t.doneOn; t.answeredAt = new Date().toISOString(); return t.status; }
   const prev = t.status;
   t.status = (t.status === status) ? null : status;
+  if(t.status) t.answeredAt = new Date().toISOString(); else delete t.answeredAt;   /* CODIS-V4: وقت الحسم يظهر في سجل «المنجزة» */
   if(t.status === 'done'){ t.progress = 100; t.doneOn = todayKey(); }   /* CODIS-RULES: تاريخ الإنجاز لقاعدة «ليس الأسبوع كله بيوم» */
   else if(t.status === 'half') t.progress = (prev === 'half' && isFinite(Number(t.progress))) ? Math.max(0, Math.min(100, Math.round(Number(t.progress)))) : codisAchCfg().partialDefault;
   else t.progress = 0;
@@ -6158,8 +6189,8 @@ function saveData(){
   if(ok){
     if(raw.length > STORAGE_WARN_CHARS && !storageNearFullNotified){
       storageNearFullNotified = true;
-      showToast('مساحة التخزين تقترب من الامتلاء — صدّر نسخة احتياطية من الإعدادات', 'var(--warning)');
-      if(typeof CodisEvents !== 'undefined') CodisEvents.emit('SYSTEM_WARNING', { title:'مساحة التخزين تقترب من الامتلاء', message:'صدّر نسخة احتياطية من الإعدادات، ثم فكّر بحذف الأرشيف القديم.' });
+      showToast('مساحة التخزين تقترب من الامتلاء — فكّر بحذف الأرشيف القديم', 'var(--warning)');
+      if(typeof CodisEvents !== 'undefined') CodisEvents.emit('SYSTEM_WARNING', { title:'مساحة التخزين تقترب من الامتلاء', message:'فكّر بحذف الأرشيف القديم.' });
     } else if(raw.length <= STORAGE_WARN_CHARS) storageNearFullNotified = false;
   }
   if(!ok && !saveErrorNotified){
@@ -6173,80 +6204,6 @@ function saveData(){
 }
 let data = loadData();
 if(window.__habitMigrated || window.__econMigrated){ try{ saveData(); }catch(e){} }   // يثبّت الترحيل مرة واحدة   // persist habit migration once
-
-/* ================= BACKUP / RESTORE (النسخ الاحتياطي) =================
-   الملف: { format, schemaVersion, exportedAt, checksum, data }. الاسترجاع بالترتيب: ملف ← إصدار ← بنية ← بيانات أساسية ← تأكيد ← حفظ ← تحقق.
-   • قبل الكتابة تُحفظ نسخة من البيانات الحالية بمفتاح مستقل؛ إن فشل الحفظ أو التحقق يُعاد الوضع السابق ولا تبقى حالة نصف مسترجعة.
-   • أسرار القفل (الرمز، الاسترداد، Face ID) لا تدخل النسخة ولا تُستبدل عند الاسترجاع. */
-const BACKUP_FORMAT = 'codis-backup';
-const PRE_RESTORE_KEY = 'life_organizer_data_v1_pre_restore';
-const BACKUP_LOCK_KEYS = ['appLock','appLockReset','appLockFace','appLockRecovery'];
-function backupChecksum(str){   // FNV-1a — كشف تلف أو تعديل الملف (ليس تشفيراً)
-  let h = 0x811c9dc5;
-  for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
-  return h.toString(16);
-}
-function codisExportBackup(){
-  try{
-    const d = JSON.parse(JSON.stringify(data));
-    BACKUP_LOCK_KEYS.forEach(k=>{ delete d.settings[k]; });
-    const payload = { format:BACKUP_FORMAT, schemaVersion:SCHEMA_VERSION, exportedAt:new Date().toISOString(), checksum:backupChecksum(JSON.stringify(d)), data:d };
-    const blob = new Blob([JSON.stringify(payload)], { type:'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'codis-backup-' + localDateStr(new Date()) + '.json';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
-    showToast('تم تصدير النسخة الكاملة', 'var(--aqua)', 'check');
-  }catch(e){ console.error('تعذّر التصدير:', e); showToast('تعذّر تصدير النسخة', 'var(--danger)'); }
-}
-function codisValidateBackup(text){
-  let p;
-  try{ p = JSON.parse(text); }catch(e){ return { error:'الملف تالف أو ليس نسخة صالحة' }; }
-  if(!p || typeof p !== 'object' || p.format !== BACKUP_FORMAT) return { error:'هذا الملف ليس نسخة احتياطية من CODIS' };
-  if(typeof p.schemaVersion !== 'number' || !isFinite(p.schemaVersion)) return { error:'إصدار البيانات غير معروف في الملف' };
-  if(p.schemaVersion > SCHEMA_VERSION) return { error:'النسخة من إصدار أحدث غير متوافق مع هذا التطبيق' };
-  const d = p.data;
-  if(!d || typeof d !== 'object' || Array.isArray(d)) return { error:'بنية النسخة غير صحيحة' };
-  if(typeof p.checksum !== 'string' || p.checksum !== backupChecksum(JSON.stringify(d))) return { error:'النسخة تالفة أو تم تعديلها' };
-  const bad = ['weeks','learnWeeks','settings','habits'].find(k=>!d[k] || typeof d[k] !== 'object' || Array.isArray(d[k]));
-  if(bad) return { error:'بيانات أساسية ناقصة في النسخة' };
-  const clean = JSON.parse(JSON.stringify(d));
-  normalizeData(clean, false);
-  return { payload:p, data:clean, summary:{
-    plans: Object.keys(clean.weeks).length + Object.keys(clean.learnWeeks).length,
-    archive: clean.archive.length,
-    habits: clean.habits.build.length + clean.habits.quit.length,
-    when: p.exportedAt ? formatArDate(p.exportedAt) : '—'
-  } };
-}
-async function codisImportBackup(input){
-  const file = input && input.files && input.files[0];
-  if(input) input.value = '';
-  if(!file) return;
-  let text;
-  try{ text = await file.text(); }catch(e){ showToast('تعذّرت قراءة الملف', 'var(--danger)'); return; }
-  const v = codisValidateBackup(text);
-  if(v.error){ showToast(v.error, 'var(--danger)'); return; }
-  const ok = await codisConfirm({ title:'استرجاع نسخة احتياطية', icon:'archive', danger:true, confirmText:'استرجاع',
-    message:'نسخة بتاريخ ' + v.summary.when + ' — ' + v.summary.plans + ' خطة، ' + v.summary.archive + ' بالأرشيف، ' + v.summary.habits + ' عادة. سيتم استبدال بياناتك الحالية، وتُحفظ نسخة تلقائية منها قبل ذلك.' });
-  if(!ok) return;
-  const previousRaw = CodisStorage.read(STORE_KEY);
-  if(previousRaw && !CodisStorage.write(PRE_RESTORE_KEY, previousRaw)){ showToast('تعذّر تأمين بياناتك الحالية — لم يتم الاسترجاع', 'var(--danger)'); return; }
-  BACKUP_LOCK_KEYS.forEach(k=>{ v.data.settings[k] = data.settings[k]; });
-  const nextRaw = JSON.stringify(v.data);
-  let saved = CodisStorage.write(STORE_KEY, nextRaw);
-  if(saved){ const back = CodisStorage.read(STORE_KEY); saved = (back === nextRaw); }
-  if(!saved){
-    if(previousRaw) CodisStorage.write(STORE_KEY, previousRaw);   // تراجع: الحالة السابقة كما كانت
-    showToast('فشل الحفظ — بقيت بياناتك كما هي', 'var(--danger)');
-    return;
-  }
-  if(typeof CodisAccount !== 'undefined'){ try{ CodisAccount.noteChange(); }catch(e){} }   // الاسترجاع من ملف يُزامَن كتغيير عادي
-  data = v.data;   // أي حفظ لاحق يكتب البيانات المسترجعة لا القديمة
-  showToast('تم الاسترجاع — جارٍ إعادة التحميل', 'var(--aqua)', 'check');
-  setTimeout(()=>location.reload(), 700);
-}
 
 /* ================= OUTCOME LEDGER (سجل النتائج) =================
    مصدر الحقيقة الوحيد لكل نتيجة (يومي · أسبوعي · شهري · عادة؛ مكافأة/عقوبة). outcomeRecord تبقى بوابة نتيجة اليوم وتمرّ الآن من CodisEconomy.
@@ -6557,6 +6514,12 @@ function econNormalizeAll(d){
   const s = d.settings;
   econRemapCustomRarities(s);
   s.economy = econNormalizeConfig(s.economy);
+  if(!s.rulesLockedV2){   /* CODIS-V2: قواعد المكافآت داخلية ثابتة — يُعاد ضبط ما كان قابلاً للتعديل مرة وحدة */
+    const keepCosts = s.economy.penaltyCosts, def = econDefaults();
+    s.economy = econNormalizeConfig(Object.assign(def, keepCosts ? { penaltyCosts:keepCosts } : {}));
+    s.rewardThreshold = 90; s.punishThreshold = 70; s.achievement = codisNormalizeAchievement(null); s.rulesLockedV2 = 1;
+    window.__econMigrated = true;
+  }
   const legacy = !Array.isArray(s.rewardItems) || !Array.isArray(s.punishItems);
   if(legacy){
     /* بنية قديمة: نص لكل مكافأة/عقوبة. كل غرفة تبدأ بنسخة من العمليات إن لم تكن لها قائمة (سلوك النسخ القديم نفسه) */
@@ -11861,6 +11824,236 @@ function codisEditTaskWeight(item, task, kind){
   meta.querySelector('.tw-cancel').addEventListener('click', ()=>redraw());
   try{ inp.focus(); inp.select(); }catch(e){}
 }
+/* ================= CODIS-V4-TASKFLOW — مسار حسم المهام =================
+   • answer(): الحالة تُطبَّق وتُحفظ فوراً عبر setTaskStatus/setLearnTaskStatus (نفس المنطق والمعاملات)، ثم تُعرَض الحركة. الحركة لا تستدعي أي معاملة.
+   • busy: يمنع النقر المتكرر على نفس المهمة؛ anim: مهام تحت الحركة تبقى ظاهرة حتى تنتهي ثم تخرج من القائمة النشطة.
+   • restore(): يعيد المهمة غير محسومة. نتيجة اليوم المعلّقة (لم تُحسم) تُلغى بآلية void الموجودة؛ المحسومة تبقى كما سُجّلت (لا انعكاس مالي ولا تكرار). */
+const CodisPen = (function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduced = ()=>{ try{ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } };
+  const TOTAL = { done:1700, none:1600, half:1700 };
+  function rng(seed){ let x = 2166136261; String(seed).split('').forEach(c=>{ x ^= c.charCodeAt(0); x = Math.imul(x, 16777619) >>> 0; }); return ()=>{ x = (Math.imul(x, 1664525) + 1013904223) >>> 0; return x / 4294967296; }; }
+  function el(name, attrs){ const n = document.createElementNS(NS, name); Object.keys(attrs || {}).forEach(k=>n.setAttribute(k, attrs[k])); return n; }
+  /* مسار كتابة: pathLength=1 + stroke-dashoffset (يتحكّم به CSS؛ التأخير السالب يستأنف الحركة لو أُعيد بناء العنصر) */
+  function stroke(svg, d, cls, delay, dur, elapsed){
+    const p = el('path', { d:d, class:'pen-p ' + cls, pathLength:'1' });
+    p.style.animationDuration = dur + 'ms'; p.style.animationDelay = (delay - elapsed) + 'ms'; svg.appendChild(p); return p;
+  }
+  function scribble(w, h, x0, x1, y0, y1, passes, r){
+    let d = 'M' + x0 + ',' + y0, dir = 1;
+    for(let i=0;i<passes;i++){ const y = y0 + (y1 - y0) * (i / Math.max(1, passes - 1)), xa = dir > 0 ? x1 : x0, jy = (r() - .5) * 5; d += ' L' + (xa + (r() - .5) * 8).toFixed(1) + ',' + (y + jy).toFixed(1) + ' L' + (dir > 0 ? x1 : x0) + ',' + (y + 7 + jy).toFixed(1); dir = -dir; }
+    return d;
+  }
+  function hatch(x0, x1, y0, y1, n, r){
+    let d = ''; const step = (x1 - x0) / n;
+    for(let i=0;i<n;i++){ const x = x0 + i * step + (r() - .5) * 4; d += ' M' + x.toFixed(1) + ',' + y1.toFixed(1) + ' L' + (x + (y1 - y0) * .55).toFixed(1) + ',' + y0.toFixed(1); }
+    return d.trim();
+  }
+  function build(item, spec, elapsed){
+    const w = Math.max(160, item.clientWidth || 320), h = Math.max(70, item.clientHeight || 120), r = rng(spec.id + spec.status), red = reduced();
+    const svg = el('svg', { class:'pen-ov pen-' + spec.status, viewBox:'0 0 ' + w + ' ' + h, 'aria-hidden':'true', focusable:'false' });
+    const k = red ? .35 : 1, cx = w / 2, cy = h * .46, sz = Math.min(h * .62, 86, w * .3);
+    const tx0 = w * .07, tx1 = w * .93, ty0 = h * .16, ty1 = h * .42;
+    if(spec.status === 'done'){
+      stroke(svg, 'M' + (cx - .50 * sz) + ',' + (cy + .02 * sz) + ' C' + (cx - .38 * sz) + ',' + (cy + .14 * sz) + ' ' + (cx - .26 * sz) + ',' + (cy + .30 * sz) + ' ' + (cx - .16 * sz) + ',' + (cy + .42 * sz) + ' C' + (cx + .06 * sz) + ',' + (cy + .05 * sz) + ' ' + (cx + .30 * sz) + ',' + (cy - .26 * sz) + ' ' + (cx + .56 * sz) + ',' + (cy - .50 * sz), 'pen-check', 80 * k, 540 * k, elapsed);
+      stroke(svg, scribble(w, h, tx0, tx1, ty0, ty1, 8, r), 'pen-scr', 560 * k, 640 * k, elapsed);
+      stroke(svg, hatch(tx0, tx1, ty0, ty1 + 10, 14, r), 'pen-hat', 760 * k, 460 * k, elapsed);
+    } else if(spec.status === 'none'){
+      stroke(svg, 'M' + (cx - .48 * sz) + ',' + (cy - .46 * sz) + ' C' + (cx - .2 * sz) + ',' + (cy - .16 * sz) + ' ' + (cx + .2 * sz) + ',' + (cy + .18 * sz) + ' ' + (cx + .50 * sz) + ',' + (cy + .50 * sz), 'pen-x', 80 * k, 320 * k, elapsed);
+      stroke(svg, 'M' + (cx + .50 * sz) + ',' + (cy - .48 * sz) + ' C' + (cx + .2 * sz) + ',' + (cy - .18 * sz) + ' ' + (cx - .2 * sz) + ',' + (cy + .16 * sz) + ' ' + (cx - .48 * sz) + ',' + (cy + .48 * sz), 'pen-x', 360 * k, 300 * k, elapsed);
+      stroke(svg, scribble(w, h, tx0, tx1, ty0, ty1, 5, r), 'pen-scr pen-soft', 700 * k, 520 * k, elapsed);
+    } else {
+      const pct = Math.max(1, Math.min(99, spec.pct || 50)), bx1 = w - 14, bw = (w - 28) * pct / 100, bx0 = bx1 - bw, by0 = h * .14, by1 = h * .46;
+      const rc = el('rect', { x:bx0, y:by0, width:bw, height:by1 - by0, rx:6, class:'pen-fill' }); rc.style.animationDelay = (80 * k - elapsed) + 'ms'; rc.style.animationDuration = 680 * k + 'ms'; svg.appendChild(rc);
+      stroke(svg, 'M' + bx1 + ',' + (by1 + 9) + ' C' + (bx1 - bw * .3) + ',' + (by1 + 4) + ' ' + (bx1 - bw * .6) + ',' + (by1 + 14) + ' ' + bx0 + ',' + (by1 + 9), 'pen-half', 140 * k, 620 * k, elapsed);
+      if(pct < 99) stroke(svg, 'M' + bx0 + ',' + (by1 + 9) + ' L' + (14) + ',' + (by1 + 9), 'pen-rest', 700 * k, 360 * k, elapsed);
+      stroke(svg, hatch(bx0 + 4, bx1 - 4, by0 + 3, by1 - 3, Math.max(3, Math.round(bw / 16)), r), 'pen-hat pen-warm', 700 * k, 460 * k, elapsed);
+      const tx = el('text', { x:bx0 + bw / 2, y:(by0 + by1) / 2 + 5, class:'pen-lab', 'text-anchor':'middle' }); tx.textContent = pct + '%'; tx.style.animationDelay = (520 * k - elapsed) + 'ms'; svg.appendChild(tx);
+    }
+    item.appendChild(svg);
+    return svg;
+  }
+  /* خروج المهمة: يبدأ بعد انتهاء الخطوط (تلاشٍ + انزلاق + طيّ الارتفاع) */
+  function leave(item, status, elapsed){
+    const at = (reduced() ? 600 : (status === 'none' ? 1200 : 1250)) - elapsed;
+    item.style.setProperty('--pen-h', item.offsetHeight + 'px');
+    item.classList.add('pen-leaving'); item.style.animationDelay = at + 'ms';
+  }
+  function mount(item, spec, elapsed){ item.classList.add('is-answering'); build(item, spec, elapsed || 0); leave(item, spec.status, elapsed || 0); }
+  function total(status){ return reduced() ? 1000 : TOTAL[status] || 1600; }
+  return { mount, total };
+})();
+
+const CodisTaskFlow = (function(){
+  const busy = new Set(), anim = new Map();
+  const key = (k, id)=>k + ':' + id;
+  const roomOf = k=>k === 'learn' ? 'learn' : 'tasks';
+  const weekOf = k=>k === 'learn' ? learnCurrentWeek() : currentWeek();
+  const dayIdx = k=>k === 'learn' ? activeLearnDayIdx : activeDayIdx;
+  const render = k=>{ if(k === 'learn') renderLearnPage(); else renderTasksPage(); };
+  function find(k, id){
+    const w = weekOf(k); if(!w || !w.days) return null;
+    for(const d in w.days){ const t = (w.days[d] || []).find(x=>x.id === id); if(t) return { t:t, day:Number(d), week:w }; }
+    return null;
+  }
+  const listEl = k=>document.getElementById(k === 'learn' ? 'learn-day-task-list' : 'day-task-list');
+  const itemEl = (k, id)=>{ const l = listEl(k); return l ? l.querySelector('.task-item[data-tid="' + String(id).replace(/"/g, '') + '"]') : null; };
+  /* هل تظهر المهمة بالقائمة النشطة؟ غير المحسومة، أو التي تجري حركتها الآن */
+  function visible(k, t){ return !t.status || anim.has(key(k, t.id)); }
+  function finalize(kk){
+    const a = anim.get(kk); if(!a || a.done) return;
+    a.done = true; clearTimeout(a.timer); anim.delete(kk); busy.delete(kk);
+    try{ render(a.kind); }catch(e){ console.error('task flow render failed:', e); }
+  }
+  function play(k, id, status, pct){
+    const kk = key(k, id), a = anim.get(kk); if(!a) return;
+    const item = itemEl(k, id);
+    a.timer = setTimeout(()=>finalize(kk), CodisPen.total(status) + 700);   /* مهلة أمان: لو فشل رسم الحركة تُحسم القائمة على أي حال */
+    if(!item){ finalize(kk); return; }
+    try{ if(!item.querySelector('.pen-ov')) CodisPen.mount(item, { id:id, status:status, pct:pct }, performance.now() - a.t0); item.addEventListener('animationend', function onEnd(ev){ if(ev.target === item && ev.animationName === 'penLeave'){ item.removeEventListener('animationend', onEnd); finalize(kk); } }); }
+    catch(e){ console.error('pen animation failed:', e); finalize(kk); }
+  }
+  /* إعادة بناء القائمة أثناء الحركة (مثلاً تحديث شريط الإنجاز): نستأنف الحركة من الزمن المنقضي بدل أن تُقطع */
+  function reattach(k, t, item){
+    const a = anim.get(key(k, t.id)); if(!a || a.done) return;
+    item.dataset.tid = t.id;
+    try{ CodisPen.mount(item, { id:t.id, status:a.status, pct:a.pct }, performance.now() - a.t0); }catch(e){}
+  }
+  function apply(k, id, status, pct){
+    const kk = key(k, id); if(busy.has(kk)) return;
+    const f = find(k, id); if(!f || f.t.status) return;
+    busy.add(kk); anim.set(kk, { kind:k, status:status, pct:pct, t0:performance.now(), done:false, timer:0 });
+    const want = status;
+    try{ (k === 'learn' ? setLearnTaskStatus : setTaskStatus)(id, status, pct === null ? undefined : { progress:pct }); }
+    catch(e){ console.error('task status failed:', e); }
+    const f2 = find(k, id);
+    if(!f2 || f2.t.status !== want){ anim.delete(kk); busy.delete(kk); return; }   /* رُفض الحسم (مثل يوم لم يأتِ بعد): لا حركة ولا أثر */
+    play(k, id, status, pct);
+  }
+  function previewPct(f, p){
+    const list = (f.week.days[f.day] || []).map(x=>x === f.t ? Object.assign({}, x, { status:'half', progress:p }) : x);
+    return codisWeightedProgress(list);
+  }
+  function previewText(f, p){
+    const st = previewPct(f, p), pct = st.pct === null ? 0 : st.pct, th = { r:data.settings.rewardThreshold, p:data.settings.punishThreshold };
+    let line = (st.unanswered > 0 ? 'إنجاز يومك حتى الآن سيصير <b>' : 'إنجاز يومك سيصير <b>') + pct + '%</b>.';
+    if(st.unanswered > 0) line += ' باقي ' + st.unanswered + ' مهام تنحسم قبل ما تتحدد نتيجة اليوم.';
+    else if(pct >= th.r) line += ' يتجاوز حدّ المكافأة (' + th.r + '%) ← تُسجَّل مكافأة اليوم.';
+    else if(pct < th.p) line += ' تحت حدّ العقوبة (' + th.p + '%) ← تُسجَّل عقوبة اليوم.';
+    else line += ' بين الحدّين: لا مكافأة ولا عقوبة.';
+    return line;
+  }
+  function openPartial(k, id, item){
+    const f = find(k, id); if(!f || f.t.status || !item) return;
+    const l = listEl(k); if(l) l.querySelectorAll('.pp-panel').forEach(p=>p.remove());
+    const panel = document.createElement('div'); panel.className = 'pp-panel'; panel.setAttribute('role', 'group'); panel.setAttribute('aria-label', 'نسبة الإنجاز');
+    panel.innerHTML = '<div class="pp-head"><span class="pp-q">كم أنجزت منها؟</span><output class="pp-val" aria-live="polite">اختر النسبة</output></div>' +
+      '<div class="pp-chips">' + [25, 50, 75].map(v=>'<button type="button" class="pp-chip" data-v="' + v + '">' + v + '%</button>').join('') + '</div>' +
+      '<input type="range" class="tp-range pp-range is-unset" min="1" max="99" step="1" value="50" aria-label="نسبة الإنجاز" aria-valuetext="لم تُختر بعد">' +
+      '<div class="pp-preview" aria-live="polite" hidden></div>' +
+      '<div class="pp-actions"><button type="button" class="btn btn-primary pp-ok" disabled>تأكيد</button><button type="button" class="btn btn-quiet pp-cancel">إلغاء</button></div>';
+    item.appendChild(panel);
+    const range = panel.querySelector('.pp-range'), val = panel.querySelector('.pp-val'), pv = panel.querySelector('.pp-preview'), ok = panel.querySelector('.pp-ok');
+    let chosen = null;
+    const set = v=>{
+      v = Math.round(Number(v)); if(!(v >= 1 && v <= 99)) return;
+      chosen = v; range.value = v; range.classList.remove('is-unset'); range.style.setProperty('--tp', v + '%'); range.setAttribute('aria-valuetext', v + '%');
+      val.textContent = v + '%'; pv.hidden = false; pv.innerHTML = previewText(f, v); ok.disabled = false;
+      panel.querySelectorAll('.pp-chip').forEach(c=>c.classList.toggle('is-on', Number(c.dataset.v) === v));
+    };
+    range.addEventListener('input', ()=>set(range.value));
+    range.addEventListener('change', ()=>set(range.value));
+    panel.querySelectorAll('.pp-chip').forEach(c=>{ c.onclick = ()=>set(c.dataset.v); });
+    panel.querySelector('.pp-cancel').onclick = ()=>{ panel.remove(); };
+    ok.onclick = ()=>{ if(chosen === null || ok.disabled) return; ok.disabled = true; panel.querySelectorAll('button,input').forEach(x=>{ x.disabled = true; }); apply(k, id, 'half', chosen); };
+    try{ panel.scrollIntoView({ block:'nearest', behavior:'smooth' }); }catch(e){}
+  }
+  function answer(k, id, status, item){
+    if(busy.has(key(k, id))) return;
+    if(status === 'half'){
+      const f = find(k, id); if(!f || f.t.status) return;
+      if(codisTaskDayLocked(currentWeekId(), f.day, f.t, 'half')) return;   /* يوم لم يأتِ: نفس القاعدة القديمة (المطوّر معفى) */
+      openPartial(k, id, item); return;
+    }
+    apply(k, id, status, null);
+  }
+
+  /* ---- نافذة المنجزة + الاسترجاع ---- */
+  const OUT = { done:'خلصتها', half:'نصها', none:'ما سويتها' };
+  const answered = (k, day)=>{ const w = weekOf(k); return ((w && w.days && w.days[day]) || []).filter(t=>t.status && !anim.has(key(k, t.id))); };
+  function dayEntries(k, weekId, day){
+    const L = data.outcomeLedger || {};
+    return Object.keys(L).map(x=>L[x]).filter(e=>e && e.scope === 'daily' && e.room === roomOf(k) && e.weekId === weekId && e.day === day && e.status !== 'void');
+  }
+  function outcomeLine(e){
+    const st = e.status === 'pending' ? ' — بانتظار قرارك' : '', coins = Number(e.coinsAwarded) > 0 ? ' · +' + econFmt(e.coinsAwarded) + ' كوين' : (Number(e.coinsSpent) > 0 ? ' · −' + econFmt(e.coinsSpent) + ' كوين' : '');
+    return (e.kind === 'reward' ? 'مكافأة اليوم: ' : 'عقوبة اليوم: ') + (e.item || '—') + coins + st;
+  }
+  function doneBar(k, day){
+    const n = answered(k, day).length; if(!n) return null;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cd-trigger'; b.setAttribute('aria-haspopup', 'dialog');
+    b.innerHTML = '<span class="cd-ico" aria-hidden="true">' + codisIcon('archive', { size:'sm' }) + '</span><span class="cd-lab">المنجزة</span><span class="cd-n">' + n + '</span>';
+    b.setAttribute('aria-label', 'المهام المحسومة: ' + n);
+    b.onclick = ()=>openDone(k, day, b);
+    return b;
+  }
+  let sheet = null;
+  function closeDone(){ if(!sheet) return; const s0 = sheet; sheet = null; document.removeEventListener('keydown', s0.onKey, true); s0.root.classList.remove('is-open'); setTimeout(()=>s0.root.remove(), 220); try{ s0.opener && s0.opener.isConnected && s0.opener.focus({ preventScroll:true }); }catch(e){} }
+  function sheetBody(k, day){
+    const w = weekOf(k), weekId = currentWeekId(), list = answered(k, day);
+    if(!list.length) return '<div class="cd-empty">ماكو مهام محسومة هنا</div>';
+    const ents = dayEntries(k, weekId, day), out = ents.map(e=>'<div class="cd-day-out ' + (e.kind === 'reward' ? 'is-reward' : 'is-punish') + '">' + escapeHtml(outcomeLine(e)) + '</div>').join('');
+    const groups = ['done', 'half', 'none'].map(st=>{
+      const g = list.filter(t=>t.status === st); if(!g.length) return '';
+      return '<section class="cd-group"><h3 class="cd-gh"><span>' + OUT[st] + '</span><span class="cd-gn">' + g.length + '</span></h3>' + g.map(t=>{
+        const when = t.answeredAt ? (formatArDate(t.answeredAt) + ' · ' + new Date(t.answeredAt).toLocaleTimeString('ar', { hour:'2-digit', minute:'2-digit' })) : 'وقت الحسم غير مسجّل';
+        const pct = st === 'half' ? '<span class="cd-pct">' + Math.round(Number(t.progress) || 0) + '%</span>' : '';
+        return '<div class="cd-row is-' + st + '"><div class="cd-main"><div class="cd-t">' + escapeHtml(t.text) + '</div><div class="cd-meta">' + pct + '<span>' + escapeHtml(when) + '</span></div></div>' +
+          '<button type="button" class="cd-restore" data-id="' + escapeHtml(String(t.id)) + '">استرجاع</button></div>';
+      }).join('') + '</section>';
+    }).join('');
+    return (out ? '<div class="cd-outs">' + out + '<div class="cd-note">النتيجة المسجّلة لا تتغيّر باسترجاع مهمة.</div></div>' : '') + groups;
+  }
+  function openDone(k, day, opener){
+    closeDone();
+    const root = document.createElement('div'); root.className = 'cd-ov';
+    root.innerHTML = '<div class="cd-back"></div><div class="cd-sheet" role="dialog" aria-modal="true" aria-label="المهام المحسومة"><div class="cd-grab" aria-hidden="true"></div><div class="cd-head"><h2 class="cd-title">المنجزة · ' + DAYS_AR[day] + '</h2><button type="button" class="cd-close" aria-label="إغلاق">' + ICONS.close + '</button></div><div class="cd-body"></div></div>';
+    document.body.appendChild(root);
+    const body = root.querySelector('.cd-body'), s0 = { root:root, opener:opener, onKey:ev=>{ if(ev.key === 'Escape'){ ev.stopPropagation(); closeDone(); } } };
+    sheet = s0; document.addEventListener('keydown', s0.onKey, true);
+    const paint = ()=>{
+      body.innerHTML = sheetBody(k, day);
+      body.querySelectorAll('.cd-restore').forEach(b=>{ b.onclick = async ()=>{ b.disabled = true; await restore(k, b.dataset.id); if(sheet === s0) paint(); }; });
+    };
+    paint();
+    root.querySelector('.cd-back').onclick = closeDone; root.querySelector('.cd-close').onclick = closeDone;
+    requestAnimationFrame(()=>{ root.classList.add('is-open'); try{ root.querySelector('.cd-close').focus({ preventScroll:true }); }catch(e){} });
+  }
+  async function restore(k, id){
+    const kk = key(k, id); if(busy.has(kk)) return false;
+    const f = find(k, id); if(!f || !f.t.status) return false;   /* غير محسومة أصلاً ← لا شيء (يمنع تكرار الاسترجاع) */
+    busy.add(kk);
+    try{
+      const weekId = currentWeekId(), ents = dayEntries(k, weekId, f.day), pend = ents.filter(e=>e.status === 'pending'), done = ents.filter(e=>e.status !== 'pending');
+      let msg = 'ترجع المهمة للقائمة بدون حسم، وتقدر تحسمها من جديد.';
+      if(pend.length) msg += ' نتيجة اليوم اللي كانت بانتظار قرارك تُلغى لأن اليوم صار غير مكتمل، وتُسجَّل من جديد إذا حسمت كل المهام.';
+      if(done.length) msg += ' نتيجة اليوم اللي انحسمت سابقاً تبقى كما سُجّلت (ما تنسحب ولا تنكرر).';
+      const ok = await codisConfirm({ title:'استرجاع مهمة', icon:'archive', message:msg, confirmText:'استرجاع' });
+      if(!ok) return false;
+      const f2 = find(k, id); if(!f2 || !f2.t.status) return false;   /* تغيّرت الحالة أثناء نافذة التأكيد */
+      const t = f2.t, from = t.status;
+      t.status = null; t.progress = 0; delete t.doneOn; delete t.answeredAt;
+      t.restoredAt = new Date().toISOString(); t.restores = (Number(t.restores) || 0) + 1; t.restoredFrom = from;
+      pend.forEach(e=>{ try{ CodisEconomy.voidIfPending(e.id); }catch(x){ console.error(x); } });
+      saveData();
+      try{ render(k); }catch(e){ console.error(e); }
+      codisSfx('confirm'); showToast('رجعت المهمة للقائمة', 'var(--success)', 'check');
+      return true;
+    }finally{ busy.delete(kk); }
+  }
+  return { visible, answer, reattach, doneBar, restore, openDone, closeDone, _anim:anim, _busy:busy };
+})();
+
 function codisTaskItemHtml(task, withHint){
   const st = task.status;
   const hint = withHint ? ' (اضغط مرة ثانية للإلغاء)' : '';
@@ -11872,7 +12065,7 @@ function codisTaskItemHtml(task, withHint){
   const wi = codisTaskWeightInfo(task), wTxt = String(Math.round(wi.weight * 100) / 100), safeId = escapeHtml(String(task.id));
   const meta = `<div class="task-meta"><button type="button" class="task-wt${wi.source === 'manual' ? ' is-manual' : ''}" data-id="${safeId}" title="${escapeHtml(wi.why)}" aria-label="وزن المهمة ${wTxt} (${wi.source === 'manual' ? 'يدوي' : 'تلقائي'}) — اضغط للتعديل"><span class="tw-k">الوزن</span><b class="tw-v">${wTxt}</b><span class="tw-s">${wi.source === 'manual' ? 'يدوي' : 'تلقائي'}</span></button></div>`;
   const pv = Math.round(codisTaskFraction(task) * 100);
-  const partial = st==='half' ? `<div class="task-partial" data-id="${safeId}"><label class="tp-lab" for="tp-${safeId}">نسبة الإنجاز</label><input type="range" class="tp-range" id="tp-${safeId}" min="0" max="100" step="1" value="${pv}" style="--tp:${pv}%" aria-valuetext="${pv}%"><output class="tp-val" for="tp-${safeId}">${pv}%</output></div>` : '';
+  const partial = (false && st==='half') ? `<div class="task-partial" data-id="${safeId}"><label class="tp-lab" for="tp-${safeId}">نسبة الإنجاز</label><input type="range" class="tp-range" id="tp-${safeId}" min="0" max="100" step="1" value="${pv}" style="--tp:${pv}%" aria-valuetext="${pv}%"><output class="tp-val" for="tp-${safeId}">${pv}%</output></div>` : '';
   return `
     <div class="task-main">
       <div class="task-text ${textClass}">${prio}${escapeHtml(task.text)}</div>
@@ -11961,18 +12154,25 @@ function renderTasksPage(selectDay){
   } else if(dayTasks.length===0){
     listWrap.innerHTML = `<div class="empty-state is-clear"><div class="es-mark">${ICONS.celebrate}</div><div class="es-copy">أضف مهمة للبدء</div></div>`;
   } else {
+    let shown = 0;
     dayTasks.forEach(task=>{
+      if(!CodisTaskFlow.visible('tasks', task)) return;   /* المحسومة تنتقل إلى «المنجزة» */
+      shown++;
       const item = document.createElement('div');
       item.className = 'task-item' + (task.status ? ' is-' + task.status : '') + (task.id === codisJustChangedId ? ' just-changed' : '');
+      item.dataset.tid = task.id;
       item.innerHTML = codisTaskItemHtml(task, true);
       item.querySelectorAll('.stat-btn').forEach(b=>{
-        b.onclick = ()=>setTaskStatus(task.id, b.dataset.status);
+        b.onclick = ()=>CodisTaskFlow.answer('tasks', task.id, b.dataset.status, item);
       });
       codisBindTaskExtras(item, task, 'tasks');
       item.querySelector('.task-del').onclick = ()=>deleteTask(task.id);
       listWrap.appendChild(item);
       CodisMotion.taskSettle(item, task);
+      CodisTaskFlow.reattach('tasks', task, item);
     });
+    if(!shown) listWrap.insertAdjacentHTML('beforeend', `<div class="empty-state is-clear"><div class="es-mark">${ICONS.celebrate}</div><div class="es-copy">كل مهام اليوم محسومة</div></div>`);
+    { const bar = CodisTaskFlow.doneBar('tasks', activeDayIdx); if(bar) listWrap.appendChild(bar); }
   }
   const _userAction = codisJustChangedId !== null;
   if(codisJustChangedId === null) CodisMotion.enterList(listWrap); else codisJustChangedId = null;
@@ -12383,46 +12583,11 @@ function closeArchiveDetail(){
   archiveDetailId = null;
 }
 
-/* ---- إعدادات وزن المهام والإنجاز الجزئي (data.settings.achievement) ---- */
-function achNumInput(path, val, o){ o = o || {}; return '<input type="number" class="eco-num" inputmode="decimal" value="' + val + '" min="' + o.min + '" max="' + o.max + '" step="' + (o.step || 1) + '" aria-label="' + escapeHtml(o.label || path) + '" onchange="achSetPath(\'' + path + '\', this)">'; }
-function achSetPath(path, el){
-  const keys = path.split('.'); let o = data.settings.achievement;
-  for(let i=0;i<keys.length-1;i++){ o = o[keys[i]]; if(!o) return; }
-  o[keys[keys.length - 1]] = el.type === 'checkbox' ? el.checked : Number(el.value);
-  data.settings.achievement = codisNormalizeAchievement(data.settings.achievement);   // القيم غير الصالحة تُصحَّح تلقائياً
-  saveData(); codisSfx('confirm'); renderAchievementSettings(); renderTasksPage(); renderLearnPage();
-}
-async function achReset(){
-  const ok = await codisConfirm({ title:'استعادة الافتراضي', icon:'sliders', message:'ترجع إعدادات الوزن والنسبة الجزئية للقيم الافتراضية. الأوزان اليدوية على المهام ونتائجك السابقة ما تتأثر.', confirmText:'استعادة', danger:false });
-  if(!ok) return;
-  data.settings.achievement = codisNormalizeAchievement(null); saveData(); codisSfx('success'); showToast('رجعت القيم الافتراضية', 'var(--success)', 'check');
-  renderAchievementSettings(); renderTasksPage(); renderLearnPage();
-}
-function renderAchievementSettings(){
-  const box = document.getElementById('ach-settings-body'); if(!box) return;
-  const a = codisAchCfg(), w = a.weighting, f = x=>String(Math.round(x * 100) / 100);
-  const ex = [['مهمة بسيطة بلا تفاصيل', { qty:1, unit:'مهمة' }], ['18 وحدة (نص عادي)', { qty:18, unit:'عنصر' }], ['30 دقيقة', { qty:1, unit:'مراجعة 30 دقيقة' }], ['برمجة مشروع', { qty:1, unit:'برمجة مشروع' }], ['اتصال سريع', { qty:1, unit:'اتصل بفلان' }]];
-  box.innerHTML = '<div class="eco-sec-title">وزن المهام والإنجاز الجزئي</div>' +
-    '<p class="eco-note">نسبة الإنجاز = مجموع (وزن المهمة × نسبة إنجازها) ÷ مجموع الأوزان. الأسبوعي والشهري يستعملان نفس حدّي المكافأة والعقوبة أعلاه. الوزن اليدوي على بطاقة المهمة له الأولوية دائماً، والكمية وحدها لا تكبّر الوزن بلا سقف.</p>' +
-    '<div class="eco-form">' +
-    '<span class="eco-switch-row"><input type="checkbox" class="ios-switch" ' + (w.auto ? 'checked' : '') + ' aria-label="تقدير الجهد تلقائياً" onchange="achSetPath(\'weighting.auto\', this)"><span>تقدير الجهد تلقائياً</span></span>' +
-    econField('الوقت المرجعي لمهمة وزنها 1 (دقيقة)', achNumInput('weighting.baseMinutes', w.baseMinutes, { min:1, max:600, label:'الوقت المرجعي' })) +
-    econField('أثر الكمية (أس بين 0 و1، و0.5 = الجذر)', achNumInput('weighting.qtyExponent', w.qtyExponent, { min:0, max:1, step:0.05, label:'أثر الكمية' })) +
-    econField('سقف أثر الكمية (×)', achNumInput('weighting.maxQtyFactor', w.maxQtyFactor, { min:1, max:20, step:0.5, label:'سقف أثر الكمية' })) +
-    econField('أصغر وزن مسموح', achNumInput('weighting.minWeight', w.minWeight, { min:0.05, max:1, step:0.05, label:'أصغر وزن' })) +
-    econField('أكبر وزن مسموح', achNumInput('weighting.maxWeight', w.maxWeight, { min:1, max:100, step:0.5, label:'أكبر وزن' })) +
-    econField('نسبة «نصها» الابتدائية (%)', achNumInput('partialDefault', a.partialDefault, { min:0, max:100, label:'نسبة نصها الابتدائية' }), 'تبدأ منها عند اختيار «نصها»، وتعدّلها بالشريط على بطاقة المهمة.') +
-    '</div><div class="eco-sec-title">أمثلة على الأوزان الحالية</div><div class="eco-ptable" style="grid-template-columns:1fr auto;"><span class="ph">المهمة</span><span class="ph pn">الوزن</span>' +
-    ex.map(e=>'<span>' + escapeHtml(e[0]) + '</span><span class="pn">' + f(codisEstimateTaskWeight(e[1]).weight) + '</span>').join('') + '</div>' +
-    '<button type="button" class="btn btn-secondary eco-full" onclick="achReset()">استعادة القيم الافتراضية</button>';
-}
+/* CODIS-V2: الإصدار يأتي من <meta name="codis-version"> فقط (يكتبه tools/set_version.py من ملف VERSION) */
+const CODIS_VERSION = (function(){ const m = document.querySelector('meta[name="codis-version"]'); return (m && m.content) || ''; })();
 function renderSettings(){
-  renderAchievementSettings();
-  const rEl = document.getElementById('set-reward-threshold');
-  const pEl = document.getElementById('set-punish-threshold');
-  if(rEl) rEl.value = data.settings.rewardThreshold;
-  if(pEl) pEl.value = data.settings.punishThreshold;
-  updateThresholdBar();
+  { const el = document.getElementById('app-version-label'); if(el) el.textContent = CODIS_VERSION ? 'CODIS ' + CODIS_VERSION : 'CODIS'; }
+
   renderArchiveList();
 
   econRenderAll();   // المكافآت والعقوبات واقتصاد الكوينز (قوائم الغرف · الندرة · المتجر · السجل)
@@ -12449,17 +12614,6 @@ function openSettingsCategory(cat){
   if(cat === 'dev' && typeof CodisDev !== 'undefined' && CodisDev) CodisDev.open();
   if(ECON_PAGES[cat]) window[ECON_PAGES[cat]]();   // صفحات الاقتصاد تُرسم طازجة عند كل فتح
   CodisMotion.settingsGo(sec, 1);                   // push: category enters from the leading side
-}
-function updateThresholdBar(){
-  const rEl = document.getElementById('set-reward-threshold');
-  const pEl = document.getElementById('set-punish-threshold');
-  if(!rEl || !pEl) return;
-  let r = Number(rEl.value); if(isNaN(r)) r=90; r = Math.max(0, Math.min(100, r));
-  let p = Number(pEl.value); if(isNaN(p)) p=70; p = Math.max(0, Math.min(100, p));
-  if(p > r) p = r;
-  document.getElementById('seg-punish').style.width = p + '%';
-  document.getElementById('seg-neutral').style.width = (r - p) + '%';
-  document.getElementById('seg-reward').style.width = (100 - r) + '%';
 }
 /* Toast: رسالة قصيرة + أيقونة حالة. النوع يُشتق من اللون الممرَّر (توافق كامل مع كل الاستدعاءات الحالية):
    success → ✓ · warning → ⚠ · danger → ✕ (خطأ) · aqua → ⓘ (معلومة) · gold → احتفال. الأيقونة الممرَّرة صراحةً تتقدّم على الافتراضية. */
@@ -12494,28 +12648,6 @@ function showToast(msg, color, icon){
   if(!reduced){ if(wasShowing) t.classList.add('is-swap'); t.classList.add('is-run'); }
   t.classList.add('show');
   t._timer = setTimeout(()=>{ t.classList.remove('show', 'is-run', 'is-swap'); }, dur);
-}
-function saveThresholds(){
-  const rInput = document.getElementById('set-reward-threshold');
-  const pInput = document.getElementById('set-punish-threshold');
-  if(!rInput || !pInput) return;
-  let r = Number(rInput.value);
-  let p = Number(pInput.value);
-  if(isNaN(r)) r = 90;
-  if(isNaN(p)) p = 70;
-  r = Math.max(0, Math.min(100, r));
-  p = Math.max(0, Math.min(100, p));
-  if(p > r) p = r; // نفس منطق شريط العرض — يمنع حفظ حد عقوبة أعلى من حد المكافأة
-  data.settings.rewardThreshold = r;
-  data.settings.punishThreshold = p;
-  rInput.value = r;
-  pInput.value = p;
-  saveData();
-  renderTasksPage();
-  renderLearnPage();
-  updateThresholdBar();
-  codisSfx('success');
-  showToast('انحفظت الحدود', 'var(--success)', 'check');
 }
 /* ================= REWARD ECONOMY — UI =================
    طبقة عرض فقط: كل قرار/منطق يمر من CodisEconomy / CodisWallet. تستخدم طبقة النتيجة الموجودة (#outcome-overlay) و CodisMotion و codisSfx. */
@@ -14331,7 +14463,7 @@ function closeOutcomeOverlay(){ CodisOutcomeUI.close(); }
 let settingsDailyRoom = 'tasks';
 let settingsRoom = 'tasks';   // غرفة قوائم المكافآت/العقوبات المعروضة بالإعدادات
 let econLogLimit = 40, econEditing = null, econStoreBusy = false;
-const ECON_PAGES = { 'eco-store':'econRenderStore', 'eco-log':'econRenderLog', 'eco-periods':'econRenderPeriods', 'account':'codisRenderAccountPage', 'acct-delete':'codisRenderAcctDeletePage' };
+const ECON_PAGES = { 'eco-store':'econRenderStore', 'eco-log':'econRenderLog', 'account':'codisRenderAccountPage', 'acct-delete':'codisRenderAcctDeletePage' };
 function econSave(msg){ saveData(); if(msg){ codisSfx('success'); showToast(msg, 'var(--success)', 'check'); } }
 /* جدول أسعار للقراءة فقط: صفوف (معرّف، اسم) × أعمدة الفترات الثلاث */
 function econPriceTable(rows, fn){
@@ -14339,22 +14471,9 @@ function econPriceTable(rows, fn){
     rows.map(r=>'<span>' + escapeHtml(r[1]) + '</span>' + ['daily','weekly','monthly'].map(k=>'<span class="pn">' + econFmt(fn(r[0], k)) + '</span>').join('')).join('') + '</div>';
 }
 function econField(label, control, hint){ return '<label class="eco-field"><span class="eco-lab">' + label + '</span>' + control + (hint ? '<span class="eco-hint">' + hint + '</span>' : '') + '</label>'; }
-function econNumInput(path, val, o){ o = o || {}; return '<input type="number" class="eco-num" inputmode="decimal" value="' + val + '" min="' + (o.min === undefined ? 0 : o.min) + '" max="' + (o.max === undefined ? 1000000 : o.max) + '" step="' + (o.step || 1) + '" aria-label="' + escapeHtml(o.label || path) + '" onchange="econSetPath(\'' + path + '\', this)">'; }
-function econSwitch(path, on, label){ return '<span class="eco-switch-row"><input type="checkbox" class="ios-switch" ' + (on ? 'checked' : '') + ' aria-label="' + escapeHtml(label) + '" onchange="econSetPath(\'' + path + '\', this)"><span>' + escapeHtml(label) + '</span></span>'; }
 function econRarityOptions(){ return econCfg().rarities.map(r=>[r.id, r.id + ' — ' + r.name]); }
 function econRoomOptions(){ return econListIds().map(r=>[r, r === 'weekly' || r === 'monthly' ? econRoomLabel(r) : 'يومية · ' + econRoomLabel(r)]); }
 function econSevOptions(){ return econSeverities().map(s=>[s, econSevLabel(s)]); }
-/* يكتب قيمة إعداد بمسارها داخل data.settings.economy ثم يعيد التطبيع (القيم غير الصالحة تُصحَّح تلقائياً) */
-function econSetPath(path, el){
-  const keys = path.split('.'); let o = data.settings.economy;
-  for(let i=0;i<keys.length-1;i++){ o = o[keys[i]]; if(!o) return; }
-  const k = keys[keys.length - 1];
-  o[k] = el.type === 'checkbox' ? el.checked : (el.type === 'number' ? Number(el.value) : el.value);
-  data.settings.economy = econNormalizeConfig(data.settings.economy);
-  econNormalizeItems(data.settings);
-  econSave(); codisSfx('confirm');
-  econRenderAll();
-}
 function econRenderAll(){
   Object.keys(ECON_PAGES).forEach(k=>{ const p = document.getElementById('settings-page-' + k); if(p && p.style.display !== 'none') window[ECON_PAGES[k]](); });
   econRenderRewards(); econRenderPunish(); econRenderHome();
@@ -14632,49 +14751,6 @@ function econSyncPeriodUI(){
   const cur = daily ? 'daily' : settingsRoom;
   document.querySelectorAll('.period-sel .arch-filter-btn').forEach(b=>{ const on = b.dataset.period === cur; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
   document.querySelectorAll('.room-sel').forEach(e=>{ e.style.display = daily ? '' : 'none'; });
-}
-
-/* ---- قواعد المكافآت: صفحة واحدة بسيطة. الأوزان والمضاعفات والاحتمالات وحماية الحظ ومنع التكرار والشدة والغرفة تبقى داخلية (قيمها المخزّنة محفوظة وتعمل كما هي) ---- */
-async function econResetRules(){
-  const ok = await codisConfirm({ title:'استعادة الافتراضي', icon:'sliders', message:'ترجع قيم الندرة وقواعد المكافآت الدورية للافتراضي. مكافآتك وعقوباتك ونتائجك وما بحوزتك ما تتأثر.', confirmText:'استعادة', danger:false });
-  if(!ok) return;
-  const d = econDefaults(), keep = data.settings.economy.penaltyCosts;
-  data.settings.economy = econNormalizeConfig(Object.assign(d, { penaltyCosts:keep })); econNormalizeItems(data.settings);
-  econSave('رجعت القيم الافتراضية'); econRenderAll();
-}
-function econRenderPeriods(){
-  const box = document.getElementById('eco-periods-body'); if(!box) return;
-  const c = econCfg(), w = c.contexts.weekly, m = c.contexts.monthly;
-  const th = econThresholds(), wRule = 'مكافأة من ' + econFmt(th.reward) + '% وعقوبة تحت ' + econFmt(th.punish) + '% من نتيجة الأسبوع (وبينهما لا مكافأة ولا عقوبة)';
-  let html = '<div class="settings-card"><div class="eco-sec-title">المكافآت الدورية</div>' +
-    '<p class="eco-note">اليومية تلقائية عند تجاوز حدّ المكافأة في «حدود الإنجاز» (غرفتا العمليات والأستاذ فقط). العادات لا تصرف مكافأة يومية؛ تدخل في تقييم الأسبوع.</p><div class="eco-form">' +
-    econSwitch('contexts.weekly.enabled', w.enabled, 'مكافأة أسبوعية') + '<p class="eco-note">تُحسم عند انتهاء الخطة، ' + wRule + '.</p>' +
-    econSwitch('contexts.monthly.enabled', m.enabled, 'مكافأة شهرية') + '<p class="eco-note">تُحسم مرة وحدة بعد انتهاء الشهر من أدائك فيه: مكافأة من ' + econFmt(th.reward) + '% وعقوبة تحت ' + econFmt(th.punish) + '% (وبينهما لا مكافأة ولا عقوبة).</p>' +
-    econSwitch('contexts.monthly.punishEnabled', m.punishEnabled, 'عقوبة للشهر غير الناجح') + '</div></div>';
-  html += '<div class="settings-card"><div class="eco-sec-title">نتيجة الأسبوع: التخطيط والتأديب</div><p class="eco-note">النتيجة = نسبة الخطة × وزنها + أداء العادات × وزنه. إن لم توجد عادات محتسبة تُحسب الخطة وحدها.</p><div class="eco-form">' +
-    econField('وزن غرفة التخطيط', econNumInput('contexts.weekly.planWeight', w.planWeight, { min:0, max:100, label:'وزن التخطيط' })) +
-    econField('وزن غرفة التأديب', econNumInput('contexts.weekly.habitWeight', w.habitWeight, { min:0, max:100, label:'وزن التأديب' })) +
-    econField('وزن العادات في الشهر', econNumInput('contexts.monthly.weights.habits', m.weights.habits, { min:0, max:100, label:'وزن العادات الشهري' }), 'يُحسب من نتائج الأسابيع المكتملة.') + '</div></div>';
-  const ad = c.adaptive, adp = (k, lab, unit)=>econField(lab + ' — الحد الأساسي (' + unit + ')', econNumInput('adaptive.' + k + '.base', ad[k].base, { min:0, max:100000, label:'الحد الأساسي ' + lab })) + econField(lab + ' — خفض الشائعة لكل مهمة إضافية (نقطة مئوية)', econNumInput('adaptive.' + k + '.step', ad[k].step, { min:0, max:100, step:0.025, label:'مقدار الخفض ' + lab }));
-  const cAt = (k, n)=>{ const o = econAdaptiveOdds(k, n); return Math.round((o ? o.cOdds : c.rarities[0].weight) * 1000) / 1000; };
-  html += '<div class="settings-card"><div class="eco-sec-title">الاحتمالات التكيفية</div><p class="eco-note">ضمن الحد الأساسي تبقى الاحتمالات كما هي (شائعة ' + econFmt(c.rarities[0].weight) + '%). كل مهمة <b>مكتملة بالكامل</b> فوق الحد تُنقص احتمال الشائعة بالمقدار المحدد، ويُوزَّع المنقوص على بقية الندرات بنسبة احتمالاتها الأساسية. تُطبَّق فقط عند استحقاق المكافأة، ويبقى نظام حماية الحظ يعمل فوقها.</p><div class="eco-form">' +
-    econSwitch('adaptive.enabled', ad.enabled, 'تفعيل الاحتمالات التكيفية') + adp('daily', 'اليومي', 'مهام اليوم') + adp('weekly', 'الأسبوعي', 'مهام الأسبوع') + adp('monthly', 'الشهري', 'مهام الشهر') + '</div>' +
-    '<p class="eco-note">أمثلة (احتمال الشائعة): يوم 5 مهام = ' + cAt('daily', 5) + '% · أسبوع 25 = ' + cAt('weekly', 25) + '% · شهر 120 = ' + cAt('monthly', 120) + '%.</p></div>';
-  { const W = m.weights, sum = (W.plans + W.weeks + W.days + W.punish + W.habits) || 1, pc = x=>Math.round(x / sum * 1000) / 10;
-    html += '<div class="settings-card"><div class="eco-sec-title">أوزان الشهر (نسبية)</div><p class="eco-note">خطط ' + W.plans + ' · أسابيع ' + W.weeks + ' · أيام ' + W.days + ' · عقوبات ' + W.punish + ' · عادات ' + W.habits + ' (المجموع ' + sum + '). هذه أوزان نسبية تُطبَّع تلقائياً على مجموع المكوّنات الموجودة فعلاً في الشهر، فمجموعها لا يلزم أن يكون 100: الحصص الفعلية عند اكتمال كل المكوّنات ' + pc(W.plans) + '% · ' + pc(W.weeks) + '% · ' + pc(W.days) + '% · ' + pc(W.punish) + '% · ' + pc(W.habits) + '%.</p></div>'; }
-  html += '<div class="settings-card"><div class="eco-sec-title">العادات الحدثية</div><div class="eco-form">' +
-    '' +
-    econSwitch('contexts.habits.monthlyReward', c.contexts.habits.monthlyReward, 'مكافأة شهر كامل بلا وقوع (بحجم الأسبوعية)') +
-    econSwitch('contexts.habits.resistReward', c.contexts.habits.resistReward, 'مكافأة صغيرة عند «قاومت» (مرة باليوم لكل عادة)') +
-    econField('عقوبة الوقوع (كوينز تُخصم، لا ينزل الرصيد تحت الصفر)', econNumInput('contexts.habits.lapseCoins', c.contexts.habits.lapseCoins, { min:0, max:100, label:'عقوبة الوقوع بالكوينز' })) +
-    econField('حدّ مكافآت المقاومة اليومي (لكل العادات)', econNumInput('contexts.habits.resistDailyCap', c.contexts.habits.resistDailyCap, { min:1, max:20, label:'حدّ مكافآت المقاومة اليومي' })) +
-    econField('خصم الوقوع من أداء الأسبوع (نقطة لكل وقوع)', econNumInput('contexts.habits.eventPenalty', c.contexts.habits.eventPenalty, { min:0, max:100, label:'خصم الوقوع' })) + '</div></div>';
-  html += '<div class="settings-card"><div class="eco-sec-title">التقارير المحفوظة</div>' + econReportsListHtml() + '</div>';
-  html += '<div class="settings-card"><div class="eco-sec-title">قيمة المكافآت (كوين)</div><p class="eco-note">ثابتة ومحسوبة تلقائياً: الأسبوعية ×' + econModel().scale.weekly + ' والشهرية ×' + econModel().scale.monthly + ' من اليومية. المتجر = الاستبدال ×' + econModel().markup + ' والبيع ' + econModel().sellPercent + '%. أسعار البكجات ثابتة: ' + CodisBoxes.tiers().map(t=>econFmt(t.price)).join(' · ') + ' كوين.</p>' +
-    econPriceTable(c.rarities.map(r=>[r.id, r.name]), (id, k)=>econCoinFor(id, k)) +
-    c.rarities.map((r, i)=>r.enabled ? '' : econSwitch('rarities.' + i + '.enabled', false, 'تفعيل ' + r.name)).join('') + '</div>';
-  html += '<div class="settings-card"><button type="button" class="btn btn-secondary eco-full" onclick="econResetRules()">استعادة القيم الافتراضية</button></div>';
-  box.innerHTML = html;
 }
 
 /* ---- المتجر: كل المكافآت من كل الغرف + اللي بحوزتك بصفحة وحدة ---- */
@@ -16440,6 +16516,7 @@ function econRenderLog(){
     }).join('') + '</div>';
     if(txs.length > econLogLimit) html += '<button type="button" class="btn btn-secondary eco-full" onclick="econShowMoreLog()">عرض المزيد</button>';
   }
+  html += '<div class="eco-sec-title">التقارير المحفوظة</div><div class="settings-card">' + econReportsListHtml() + '</div>';
   const up = CodisPasses.used().sort((a,b)=>a.usedAt < b.usedAt ? 1 : a.usedAt > b.usedAt ? -1 : 0).slice(0, 20);
   if(up.length) html += '<div class="eco-sec-title">بطاقات التجاوز المستخدمة</div><div class="ios-list eco-log">' + up.map(p=>'<div class="eco-log-row"><b class="eco-log-ico">' + ICONS.check + '</b><div class="eco-log-main"><span class="eco-log-reason">' + escapeHtml(CodisPasses.label(p)) + '</span>' +
     '<span class="eco-log-sub">' + (p.usedForName ? escapeHtml(p.usedForName) + ' · ' : '') + 'بدون كوينز · ' + escapeHtml(formatArDate(p.usedAt)) + '</span></div></div>').join('') + '</div>';
@@ -16945,6 +17022,7 @@ function habitDaysStrip(h){   // last 7 days of a daily-restraint habit: ✓ cle
   }
   return '<div class="hb-days" role="img" aria-label="آخر 7 أيام: '+ok+' ناجحة، '+bad+' إخفاق">'+cells.join('')+'</div>';
 }
+const hbOpenSet = new Set();   /* بطاقات «التفاصيل» المفتوحة (حالة واجهة فقط، لا تُحفظ) */
 function renderHabitRow(h){
   const imp = habitImportance(h), today = todayKey(), abst = isAbstainDaily(h), kind = habitKind(h);
   const row = document.createElement('div');
@@ -16990,17 +17068,31 @@ function renderHabitRow(h){
     const rsd = !!(h.resists && h.resists[today]);
     acts = '<div class="hb-acts"><button type="button" class="hb-act hb-act-clean'+(rsd?' active':'')+'" data-act="resist" aria-pressed="'+rsd+'"><span class="hb-act-ico">'+ICONS.check+'</span>'+(rsd ? 'قاومت اليوم' : 'قاومت')+'</button></div>';
   }
+  /* CODIS-V3-ROOM: 3 أرقام أساسية ظاهرة؛ الباقي داخل «التفاصيل» (إفصاح تدريجي) */
+  let glance = '';
+  if(h.type==='E'){ const sk = buildStreak(h); glance = '<span>سلسلة <b>'+sk+'</b></span><span>الأفضل <b>'+Math.max(bestStreak(h),sk)+'</b></span><span>أيام <b>'+habitDoneDays(h).length+'</b></span>'; }
+  else if(h.type==='W'){ glance = '<span>هذا الأسبوع <b>'+weekCount(h,currentWeekId())+' / '+h.requiredPerWeek+'</b></span>'; }
+  else { glance = '<span>أفضل <b>'+Math.max(h.bestDays||0, hDays(h))+'</b> يوم</span><span>وقوع <b>'+h.occurrences.length+'</b></span>'; }
+  const openNow = hbOpenSet.has(h.id);
+  if(openNow) row.classList.add('is-open');
   row.innerHTML = `
     <div class="streak-ring">${habitRingSvg(frac)}<span class="streak-num">${ringNum}</span></div>
     <div class="habit-body">
-      <div class="habit-name ${nameDone?'done':''}">${escapeHtml(h.text)} ${pills}</div>
+      <div class="habit-name ${nameDone?'done':''}">${escapeHtml(h.text)}</div>
+      <div class="hb-tags">${pills}</div>
       ${extra}
-      <div class="habit-meta is-ar">${meta}</div>
-      ${habitHistoryHtml(h)}
+      <div class="hb-glance">${glance}</div>
     </div>
     ${action}
-    <button type="button" class="task-del" aria-label="نقل العادة للأرشيف" title="نقل العادة للأرشيف">${ICONS.trash}</button>
-    ${acts}`;
+    ${acts}
+    <button type="button" class="hb-more-toggle" aria-expanded="${openNow}"><span>التفاصيل</span><span class="hb-chev" aria-hidden="true">${ICONS.forward}</span></button>
+    <div class="hb-more" aria-hidden="${!openNow}"${openNow ? '' : ' inert'}><div class="hb-more-clip">
+      <div class="habit-meta is-ar">${meta}</div>
+      ${habitHistoryHtml(h)}
+      <button type="button" class="task-del hb-archive" aria-label="نقل العادة للأرشيف" title="نقل العادة للأرشيف">${ICONS.trash}<span>نقل للأرشيف</span></button>
+    </div></div>`;
+  { const tg = row.querySelector('.hb-more-toggle'), mo = row.querySelector('.hb-more');
+    tg.onclick = ()=>{ const on = !row.classList.contains('is-open'); row.classList.toggle('is-open', on); tg.setAttribute('aria-expanded', on); mo.setAttribute('aria-hidden', !on); if(on){ mo.removeAttribute('inert'); hbOpenSet.add(h.id); } else { mo.setAttribute('inert', ''); hbOpenSet.delete(h.id); } }; }
   if(abst){
     row.querySelector('[data-act="clean"]').onclick = ()=>toggleDailyHabit(h.id);
     row.querySelector('[data-act="slip"]').onclick = ()=>slipDailyHabit(h.id);
@@ -17196,16 +17288,23 @@ function renderLearnPage(selectDay){
   } else if(dayTasks.length===0){
     listWrap.innerHTML = `<div class="empty-state is-clear"><div class="es-mark">${ICONS.celebrate}</div><div class="es-copy">أضف عنصراً للبدء</div></div>`;
   } else {
+    let shown = 0;
     dayTasks.forEach(task=>{
+      if(!CodisTaskFlow.visible('learn', task)) return;
+      shown++;
       const item = document.createElement('div');
       item.className = 'task-item' + (task.status ? ' is-' + task.status : '') + (task.id === codisJustChangedId ? ' just-changed' : '');
+      item.dataset.tid = task.id;
       item.innerHTML = codisTaskItemHtml(task, false);
-      item.querySelectorAll('.stat-btn').forEach(b=>{ b.onclick = ()=>setLearnTaskStatus(task.id, b.dataset.status); });
+      item.querySelectorAll('.stat-btn').forEach(b=>{ b.onclick = ()=>CodisTaskFlow.answer('learn', task.id, b.dataset.status, item); });
       codisBindTaskExtras(item, task, 'learn');
       item.querySelector('.task-del').onclick = ()=>deleteLearnTask(task.id);
       listWrap.appendChild(item);
       CodisMotion.taskSettle(item, task);
+      CodisTaskFlow.reattach('learn', task, item);
     });
+    if(!shown) listWrap.insertAdjacentHTML('beforeend', `<div class="empty-state is-clear"><div class="es-mark">${ICONS.celebrate}</div><div class="es-copy">كل عناصر اليوم محسومة</div></div>`);
+    { const bar = CodisTaskFlow.doneBar('learn', activeLearnDayIdx); if(bar) listWrap.appendChild(bar); }
   }
   const _userAction = codisJustChangedId !== null;
   if(codisJustChangedId === null) CodisMotion.enterList(listWrap); else codisJustChangedId = null;
@@ -17465,7 +17564,6 @@ function codisBoot(){
     });
     step('economy', econTick);
     step('coinchip', econRenderChip);   // أشهر انتهت منذ آخر استخدام تُحسم هنا (بعد أرشفة الأسابيع القديمة)
-    step('backup', function(){ const el = document.getElementById('backup-schema-version'); if(el) el.textContent = SCHEMA_VERSION; });
     step('habits', initHabitChecks);
     step('planning', renderPlanningPage);
     step('tasks', renderTasksPage);
