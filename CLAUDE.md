@@ -15,6 +15,7 @@ CODIS is a **single-file Arabic (RTL) HTML app** (life organizer / game). All UI
 ## Layout
 - `src/CODIS_9-7-3.html` — **latest authoritative app (user must place it here; NOT yet provided).** `src/CODIS_9-7-2.html` is the older base the auth work was built on.
 - `app/CODIS_FINAL.html` — 9-7-2 + auth/sync fixes (byte-reproducible via `tools/patch.py`).
+- `tools/patch_v10.py` — CODIS-BULK-V3: فتح ×10 سينمائي على مسرح واحد (`CodisBulkCinema`): صندوق بعد صندوق تصاعدياً بالقيمة، الإيقاع والشدّة من مجموعة القيمة (1..5) عبر `econBulkSchedule`، الكرت يطير لخانته بالشريط، نقر المسرح يسرّع الصندوق الحالي، التخطّي للنتائج؛ عرض فقط (بعد patch_v9). اختبار: tests/bulk_browser.js (يستعمل `CodisBulkCinema._seek`).
 - `tools/patch_v9.py` — CODIS-BULK-V2: فتح ×10: جدول زمني حسب مستوى القيمة (`econBulkSchedule`)، شدّة حركة/تسليط/نغمة/اهتزاز بالمستوى، بطاقة مكبّرة قابلة للقلب عند النقر بعد الانتهاء، كل المؤقّتات بـtoken (بعد patch_v8). اختبار: tests/bulk_browser.js.
 - `tools/patch_v8.py` — CODIS-PACKUI: معاينة البكج: ترويسة + شريط توزيع + مفتاح نقر + أقسام فئات قابلة للطي بصفوف أفقية (الأرقام من `CodisBoxes.effective`) (بعد patch_v7).
 - `tools/patch_v7.py` — CODIS-CARDS-V2: إزالة حشوة الإطار 4:5 مركزياً (`--card-pad:0`, `.rwc{padding:0}`) + ظهر بطاقة مولَّد SVG لكل ندرة×نوع (`codisBackOrnament`) (بعد patch_v6). اختبار: tests/cards_browser.js.
