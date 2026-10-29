@@ -10,19 +10,17 @@
   const today = todayKey(), wk = currentWeekId(), todayIdx = new Date().getDay();
   const ledger = f=>Object.keys(data.outcomeLedger).map(k=>data.outcomeLedger[k]).filter(f);
 
-  /* ---- PHASE 2: boxes ---- */
-  const REF = 827; let capped = [];
+  /* ---- PHASE 2: boxes (CODIS-BOXES-V4 model: sell-back ratio rho < 1 per tier, dud cap, floors; see tests/boxes_model_browser.js for the full statistical suite) ---- */
+  const sellK = econCfg().sellPercent / 100;
   CodisBoxes.tiers().forEach(t=>{
     const rows = CodisBoxes.effective(t), pm = rows.map(r=>r.pm);
     T('box ' + t.id + ' available', rows.length > 0);
     T('box ' + t.id + ' sums to 1000‰', pm.reduce((a,b)=>a + b, 0) === 1000, pm.join(','));
     T('box ' + t.id + ' no invalid probability', pm.every(x=>Number.isInteger(x) && x >= 1));
-    if(pm[0] === REF) T('box ' + t.id + ' lowest class = 82.7%', true); else { capped.push(t.id + ':' + pm[0]); T('box ' + t.id + ' lowest class >= 82.7% (economy cap)', pm[0] > REF, pm[0]); }
-    const st = CodisBoxes.stats(t); T('box ' + t.id + ' RTP within cap (<=0.95)', st.rtp <= 0.95 + 1e-9, st.rtp.toFixed(3));
+    const st = CodisBoxes.stats(t); T('box ' + t.id + ' sell-back EV below price (no guaranteed profit)', st.ev * sellK < t.price, (st.ev * sellK / t.price).toFixed(3));
     const n = 12000, cnt = rows.map(()=>0); for(let i = 0; i < n; i++) cnt[rows.indexOf(CodisRewardEngine.pick(rows, x=>x.pm))]++;
     T('box ' + t.id + ' sampled top-class frequency matches displayed', Math.abs(cnt[0] / n * 1000 - pm[0]) < 25, (cnt[0] / n * 1000).toFixed(0) + ' vs ' + pm[0]);
   });
-  T('box 1 is the reference (exactly 82.7%)', CodisBoxes.effective(CodisBoxes.tier('bx1'))[0].pm === REF);
   T('opening a box still works', !!CodisBoxes.roll(CodisBoxes.tier('bx3')));
 
   /* ---- PHASE 3: reward-card manipulation ---- */
@@ -91,5 +89,5 @@
   /* ---- exemption guard ---- */
   T('a normal user has no developer powers', CodisLimits.on() === false && CodisAccount.isAdmin() === false);
   const passed = out.filter(x=>x.ok).length;
-  return { passed, failed:out.length - passed, boxCappedTiers:capped, results:out };
+  return { passed, failed:out.length - passed, results:out };
 })();

@@ -2,6 +2,11 @@
 <!-- CODIS-V2 -->
 <!-- CODIS-V3-ROOM -->
 <!-- CODIS-V4-TASKFLOW -->
+<!-- CODIS-V5-NAV -->
+<!-- CODIS-BOXES-V4 -->
+<!-- CODIS-PACKUI -->
+<!-- CODIS-BULK-V2 -->
+<!-- CODIS-CARDS-V2 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -9,7 +14,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.2.0">
+<meta name="codis-version" content="3.3.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4504,6 +4509,88 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .cd-note{ font-size:12px; color:var(--text-3); }
 .cd-empty{ padding:30px 0; text-align:center; color:var(--text-3); }
 @media (prefers-reduced-motion:reduce){ .cd-sheet, .cd-back{ transition:none; } }
+
+/* CODIS-CARDS-V2 (A) — لا حشوة حول العمل الفني: الإطار 4:5 يملؤه الرسم (الحدّ 1px هو الإطار الفعلي) */
+:root{ --card-pad:0%; }
+.rwc{ padding:0; }
+.scx-hc-in{ overflow:hidden; border-radius:inherit; }
+.scx-hc-in .scx-art, .scx-hc-in img{ transform:scale(1.03); transform-origin:50% 50%; }
+/* CODIS-CARDS-V2 (B) — ظهر البطاقة */
+.cbk{ padding:0; justify-content:flex-end; gap:0; }
+.cbk::after{ display:none; }
+.cbk-orn{ position:absolute; inset:0; width:100%; height:100%; color:rgb(var(--k)); pointer-events:none; }
+.cbk-orn .o-pat{ fill:none; stroke:currentColor; stroke-width:.28; opacity:.12; }
+.cbk-orn .o-ring{ opacity:.2; stroke-width:.4; }
+.cbk-orn .o-fr{ fill:none; stroke:currentColor; stroke-width:.6; opacity:.8; }
+.cbk-orn .o-fr2{ fill:none; stroke:currentColor; stroke-width:.35; opacity:.4; }
+.cbk-orn .o-dia{ fill:currentColor; opacity:.85; }
+.cbk-orn .o-em{ fill:none; stroke:currentColor; stroke-width:.9; stroke-linecap:round; stroke-linejoin:round; }
+.cbk-orn .o-thin{ stroke-width:.45; opacity:.7; }
+.cbk-orn .o-emf{ fill:currentColor; opacity:.22; }
+.cbk-orn text{ fill:currentColor; font:900 10px "Avenir Next", "Segoe UI", Arial, system-ui, sans-serif; letter-spacing:.02em; }
+.cbk[data-tone="ss"] .o-fr{ stroke-width:.95; opacity:1; } .cbk[data-tone="s"] .o-fr{ stroke-width:.8; }
+.cbk[data-tone="ss"], .cbk[data-tone="s"]{ box-shadow:inset 0 0 0 1px rgba(var(--k),.6), inset 0 0 22px rgba(var(--k),.16); }
+.cbk-in{ position:relative; z-index:1; margin:0 7% 8%; padding:3.4cqw 4.4cqw 3.6cqw; display:flex; flex-direction:column; gap:1.4cqw; border-radius:3.2cqw; background:rgba(7,9,14,.78); border:1px solid rgba(var(--k),.32); max-height:60%; overflow:hidden; }
+.cbk-in .cbk-t{ font-size:clamp(9px, 9.2cqw, 15px); -webkit-line-clamp:2; }
+.cbk-in .cbk-rows dt{ font-size:clamp(7.5px, 6.6cqw, 11px); } .cbk-in .cbk-rows dd{ font-size:clamp(8px, 7.2cqw, 12px); }
+.cbk-in .cbk-note{ font-size:clamp(7px, 6cqw, 10.5px); -webkit-line-clamp:2; margin:0; }
+.cbk-in .cbk-t{ text-align:center; }
+.cbk-in .cbk-rows{ margin:0; padding:2.6cqw 0 0; gap:2.2cqw; }
+@media (prefers-reduced-motion:no-preference){ .cbk[data-tone="ss"]::before{ content:''; position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(115deg, transparent 38%, rgba(255,236,170,.16) 50%, transparent 62%); transform:translateX(-120%); animation:cbkSheen 6s ease-in-out infinite; } }
+@keyframes cbkSheen{ 0%,55%{ transform:translateX(-120%); } 85%,100%{ transform:translateX(120%); } }
+
+/* CODIS-PACKUI — معاينة البكج: ترويسة · شريط توزيع · أقسام قابلة للطي بصفوف أفقية */
+.pk-hero2{ display:flex; align-items:center; gap:14px; padding:6px 4px 2px; }
+.pk-hero2-art{ flex:none; width:92px; } .pk-hero2-art img, .pk-hero2-art svg{ display:block; width:100%; height:auto; }
+.pk-hero2-txt{ min-width:0; display:grid; gap:6px; } .pk-hero2-txt h3{ margin:0; font-size:21px; line-height:1.25; }
+.pk-gems{ display:flex; gap:4px; } .pk-gems i{ width:8px; height:8px; border-radius:2px; transform:rotate(45deg); background:rgb(var(--hi-rgb) / .16); } .pk-gems i.on{ background:var(--gold, #e8bd5a); }
+.pk-hero2-price{ font-size:16px; font-weight:800; }
+.pk-facts{ display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; list-style:none; margin:14px 0 0; padding:0; }
+.pk-facts li{ display:grid; justify-items:center; gap:2px; padding:10px 6px; border-radius:14px; background:rgb(var(--hi-rgb) / .05); border:1px solid rgb(var(--hi-rgb) / .08); }
+.pk-facts b{ font-size:18px; font-variant-numeric:tabular-nums; } .pk-facts span{ font-size:11.5px; color:var(--text-3, var(--text-2)); }
+.pk-ov{ margin-top:18px; }
+.pk-h{ margin:0 0 10px; font-size:13px; font-weight:700; color:var(--text-2); letter-spacing:0; }
+.pk-seg{ display:flex; height:12px; border-radius:999px; overflow:hidden; gap:2px; background:rgb(var(--hi-rgb) / .06); direction:ltr; }
+.pk-seg i{ min-width:3px; background:rgb(var(--k)); opacity:.92; }
+.pk-leg{ list-style:none; margin:10px 0 0; padding:0; display:grid; gap:2px; }
+.pk-leg-b{ display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:10px; width:100%; min-height:44px; padding:0 8px; border:0; border-radius:10px; background:none; color:inherit; font:inherit; text-align:start; cursor:pointer; }
+.pk-leg-b:focus-visible{ outline:2px solid rgb(var(--k)); outline-offset:1px; } @media (hover:hover){ .pk-leg-b:hover{ background:rgb(var(--k) / .08); } }
+.pk-lg-dot{ width:10px; height:10px; border-radius:50%; background:rgb(var(--k)); }
+.pk-ln{ font-weight:700; font-size:14px; } .pk-lr{ font-size:12px; color:var(--text-3, var(--text-2)); font-variant-numeric:tabular-nums; direction:ltr; }
+.pk-lp{ min-width:54px; text-align:end; font-size:15px; font-variant-numeric:tabular-nums; color:color-mix(in srgb, rgb(var(--k)) 55%, #fff); }
+.pk-groups2{ display:grid; gap:10px; margin-top:18px; }
+.pk-grp{ border-radius:16px; border:1px solid rgb(var(--k) / .28); background:linear-gradient(180deg, rgb(var(--k) / .07), transparent 70%); }
+.pk-gs{ display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:10px; min-height:56px; padding:8px 12px; cursor:pointer; list-style:none; }
+.pk-gs::-webkit-details-marker{ display:none; } .pk-gs:focus-visible{ outline:2px solid rgb(var(--k)); outline-offset:-2px; border-radius:16px; }
+.pk-gs-dot{ width:10px; height:10px; border-radius:50%; background:rgb(var(--k)); }
+.pk-gs-t{ display:grid; gap:1px; min-width:0; } .pk-gs-t b{ font-size:15px; } .pk-gs-t small{ font-size:11.5px; color:var(--text-3, var(--text-2)); }
+.pk-gs-p{ font-size:18px; font-variant-numeric:tabular-nums; color:color-mix(in srgb, rgb(var(--k)) 55%, #fff); }
+.pk-gs-c{ width:9px; height:9px; border-inline-end:2px solid var(--text-3, #8a93a0); border-bottom:2px solid var(--text-3, #8a93a0); transform:rotate(45deg); transition:transform .2s ease; margin-inline:4px; }
+.pk-grp[open] .pk-gs-c{ transform:rotate(-135deg); }
+.pk-row{ display:flex; gap:10px; overflow-x:auto; padding:2px 12px 14px; scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; scrollbar-width:none; }
+.pk-row::-webkit-scrollbar{ display:none; }
+.pk-cell{ flex:none; width:96px; display:grid; gap:6px; justify-items:center; scroll-snap-align:start; }
+.pk-cell .pk-tile{ width:100%; }
+.pk-cap{ font-size:11.5px; font-weight:700; color:var(--text-2); font-variant-numeric:tabular-nums; }
+@media (prefers-reduced-motion:reduce){ .pk-gs-c{ transition:none; } }
+
+/* CODIS-BULK-V2 — شدّة الحركة حسب مستوى القيمة + تسليط + بطاقة مكبّرة */
+.bk-modal.is-run .bk-chest .cb-rig{ animation:bkShake var(--sh, .3s) linear; animation-delay:calc(var(--d) - var(--sh, .3s)); }
+.bk-cell[data-lv="1"], .bk-cell[data-lv="2"]{ --sh:.22s; } .bk-cell[data-lv="3"], .bk-cell[data-lv="4"]{ --sh:.34s; } .bk-cell[data-lv="5"]{ --sh:.5s; }
+.bk-cell[data-lv="6"], .bk-cell[data-lv="7"]{ --sh:.72s; } .bk-cell[data-lv="8"], .bk-cell[data-lv="9"]{ --sh:1s; }
+.bk-modal.is-run .bk-cell[data-lv="8"] .cb-rig, .bk-modal.is-run .bk-cell[data-lv="9"] .cb-rig{ animation-iteration-count:2; }
+.bk-modal.is-run .bk-cell:is([data-lv="5"], [data-lv="6"], [data-lv="7"], [data-lv="8"], [data-lv="9"]){ z-index:4; animation:bkSpot var(--hold, 540ms) ease-in-out calc(var(--d) - 220ms) both; }
+.bk-modal.is-run .bk-cell[data-hot]:is([data-lv="6"], [data-lv="7"], [data-lv="8"], [data-lv="9"]){ animation:bkSpot var(--hold, 860ms) ease-in-out calc(var(--d) - 220ms) both, bkHot 1.1s ease-out calc(var(--d) + 240ms) both; }
+@keyframes bkSpot{ 0%{ transform:none; } 38%{ transform:scale(1.09); } 100%{ transform:none; } }
+.bk-modal.is-done .bk-cell{ cursor:pointer; }
+.bk-zoom{ position:fixed; inset:0; z-index:12; display:grid; place-items:center; opacity:0; transition:opacity .18s ease; }
+.bk-zoom.is-open{ opacity:1; }
+.bk-zoom-back{ position:absolute; inset:0; background:rgb(var(--lo-rgb) / .84); }
+.bk-zoom-card{ position:relative; width:min(78vw, 300px); display:grid; gap:12px; justify-items:center; }
+.bk-zoom-card .cflip{ width:100%; --card-r:16px; } .bk-zoom-card .cflip .pk-tile{ width:100%; }
+.bk-zoom-name{ margin:0; text-align:center; font-size:16px; font-weight:800; overflow-wrap:anywhere; } .bk-zoom-hint{ margin:-6px 0 0; font-size:12px; color:var(--text-3, var(--text-2)); }
+.bk-zoom-x{ min-height:44px; min-width:140px; }
+@media (prefers-reduced-motion:reduce){ .bk-zoom{ transition:none; } .bk-modal.is-run .bk-cell{ animation:none !important; } }
 </style>
 </head>
 <body>
@@ -7617,7 +7704,7 @@ const CodisBoxes = (function(){
   function boxWeight(r){ const w = Number(r.boxWeight); return w > 0 ? w : 0; }
   /* CODIS-BOXES-V3 — الحد الأدنى لقيمة الجائزة لكل مستوى (شامل: القيمة >= الحد). القيمة = valueOf(x): نفس الحقل الذي يصنّف به المحرك الجوائز أصلاً (قيمة الاستبدال بالكوين للمكافأة، وسعر بطاقة التجاوز/العطلة/الكيس/المظهر).
      البرونزي بلا حد (سلوكه كما كان تماماً). يُطبَّق قبل تجميع الفئات داخل classes() فتتبعه كل النتائج تلقائياً: effective() ← الاحتمالات المعروضة والمسحوبة (roll) ← التوفّر (فارغ = غير متاح بسلوكه المعتاد) ← الإحصاءات. لا يغيّر أسعار الصناديق. */
-  const MIN_VALUE = Object.freeze({ bx1:0, bx2:50, bx3:90, bx4:165, bx5:245 });
+  const MIN_VALUE = Object.freeze({ bx1:0, bx2:0, bx3:0, bx4:0, bx5:0 });   /* CODIS-BOXES-V4: لا استبعاد بالقيمة الدنيا؛ النموذج الاحتمالي يخفّض الرخيص تدريجياً (المطوّر قادر على فرض حدّ) */
   function minValue(id){ const v = Number(CodisLimits.num('box.minValue.' + id, MIN_VALUE[id])); return v > 0 ? v : 0; }
   const VALUE_SPAN_N = 50, MAX_PRIZE_X_N = 12, MAX_RTP_N = 0.95, MAX_PWIN_N = 0.6;   /* القيم العادية؛ المطوّر يعدّلها من اللوحة (CODIS-POWER) */
   const lim = {}; ['VALUE_SPAN', 'MAX_PRIZE_X', 'MAX_RTP', 'MAX_PWIN'].forEach(k=>{ const id = 'box.' + k, nv = { VALUE_SPAN:VALUE_SPAN_N, MAX_PRIZE_X:MAX_PRIZE_X_N, MAX_RTP:MAX_RTP_N, MAX_PWIN:MAX_PWIN_N }[k]; Object.defineProperty(lim, k, { get(){ return CodisLimits.num(id, nv); } }); });
@@ -7655,16 +7742,17 @@ const CodisBoxes = (function(){
   function valueOf(x){ return x.kind === 'cosmetic' ? CodisCosmetics.value(x.cosmeticId) : x.kind === 'pouch' ? CodisPouches.value(x.pouchType) : x.kind === 'pass' ? CodisPasses.price(x) : x.kind === 'holiday' ? CodisHolidayCards.price(x.cardKind) : econEffCoin(x, econRarityById(x.rarity)); }
   /* جوائز البكج = المكافآت المؤهّلة + بطاقات التجاوز الـ12 (تُصنَّف بقيمتها بنفس آلية الفئات). بلا مكافآت مؤهّلة يبقى البكج غير متاح كما كان — البطاقات وحدها لا تفتحه */
   function prizePool(){ const p = pool(); return p.length ? p.concat(CodisPasses.prizes(), CodisHolidayCards.prizes(), CodisPouches.prizes(), CodisCosmetics.prizes()) : []; }   /* مظاهر البطاقات: غير المملوكة فقط */
-  /* فئات القيمة من المكافآت المؤهّلة الآن: تجميع بالطمع من الأدنى بفرق ≤ VALUE_SPAN. مستقلة عن الندرة الأصلية ولا تغيّرها */
-  function classes(minV){
-    const items = prizePool().map(x=>({ x:x, v:valueOf(x) })).filter(o=>o.v > 0 && o.v >= (minV || 0)).sort((a,b)=>a.v - b.v || a.x.id.localeCompare(b.x.id)), out = [];
-    for(let i = 0; i < items.length;){
-      const start = items[i].v, g = [];
-      while(i < items.length && items[i].v - start <= VALUE_SPAN_V()){ g.push(items[i]); i++; }
-      out.push({ items:g.map(o=>o.x), vals:g.map(o=>o.v), min:g[0].v, max:g[g.length - 1].v, mean:g.reduce((s,o)=>s + o.v, 0) / g.length });
-    }
+  /* CODIS-BOXES-V4 — نطاقات قيمة ثابتة (كوين). الفئة = نطاق فيه جوائز مؤهّلة؛ المتوسط للحساب والاحتمال لكل نطاق */
+  const BAND_EDGES = [30, 120, 300, 700, 1500, 3500], BAND_NAMES = ['أساسية', 'متوسطة', 'جيدة', 'قيّمة', 'نادرة', 'أسطورية', 'خرافية'];
+  const RHO = { bx1:.78, bx2:.82, bx3:.86, bx4:.90, bx5:.93 }, DUD_CAP = { bx1:1, bx2:.55, bx3:.45, bx4:.35, bx5:.25 }, DUD_RATIO = .4, FLOOR_PM = 4, REF_CAP = 900;
+  function bandOf(v){ let k = 0; while(k < BAND_EDGES.length && v > BAND_EDGES[k]) k++; return k; }
+  function classes(minV, capV){
+    const lim = capV === undefined || capV === null ? Infinity : capV;
+    const items = prizePool().map(x=>({ x:x, v:valueOf(x) })).filter(o=>o.v > 0 && o.v >= (minV || 0) && o.v <= lim).sort((a,b)=>a.v - b.v || a.x.id.localeCompare(b.x.id)), by = [];
+    items.forEach(o=>{ const b = bandOf(o.v); (by[b] = by[b] || []).push(o); });
+    const out = []; by.forEach((g, b)=>{ if(!g || !g.length) return; out.push({ items:g.map(o=>o.x), vals:g.map(o=>o.v), min:g[0].v, max:g[g.length - 1].v, mean:g.reduce((s,o)=>s + o.v, 0) / g.length, band:b }); });
     const tones = econTones();
-    return out.map((c,k)=>Object.assign(c, { id:'vc' + (k + 1), name:'فئة ' + (k + 1), order:k + 1, tone:tones[Math.min(tones.length - 1, Math.floor(k * tones.length / out.length))], n:c.items.length }));
+    return out.map((c,k)=>Object.assign(c, { id:'vc' + (k + 1), name:BAND_NAMES[c.band] || ('فئة ' + (k + 1)), order:k + 1, tone:tones[Math.min(tones.length - 1, Math.floor(k * tones.length / out.length))], n:c.items.length }));
   }
   /* احتمالات الفئات الفعلية للمستوى (بالألف، مجموعها 1000): فئات مؤهّلة فقط (أعلى بطاقة ≤ MAX_PRIZE_X × السعر)، والاحتمال ∝ المتوسط^(−β) مع β يحقق العائد المستهدف. فارغة = البكج غير متاح */
   /* احتمالات يحدّدها المطوّر (بالألف، قابلة للصفر) تحل محل المحسوبة — فقط للمطوّر الموثَّق وبنفس عدد الفئات */
@@ -7679,35 +7767,44 @@ const CodisBoxes = (function(){
   function effective(t, raw){
     const rows = effectiveBase(t); if(raw === true) return rows; return overridePm(t, rows);
   }
-  function effectiveBase(t){
-    const top = Math.max.apply(null, tiers().map(x=>x.basePrice));
-    let cs = classes(minValue(t.id)).filter(c=>c.max <= MAX_PRIZE_X_V() * t.basePrice || t.basePrice >= top);
-    if(!cs.length){ if(!CodisLimits.bypass('box.empty')) return []; cs = classes(minValue(t.id)); if(!cs.length) return []; }   /* أغلى بكج يضم كل الفئات: البطاقات الغالية التي لا يقترب منها غيرها تبقى فئة مستقلة بنسبة صغيرة بدل أن تُستبعد من كل البكجات */
-    const target = t.basePrice / (PRICE_FACTOR * BOX_MARKUP), n = cs.length;
-    const ev = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].mean, 0);
-    const win = p=>p.reduce((s,x,i)=>s + x / 1000 * cs[i].vals.filter(v=>v > t.basePrice).length / cs[i].vals.length, 0);
-    /* CODIS-RULES — توزيع موحَّد لكل المستويات: الفئة الأدنى بنسبة مرجعية ثابتة (REF_TOP‰ = 82.7%)، والباقي (17.3%) على بقية الفئات بنفس عائلة التناقص الأسي
-       المستعملة أصلاً (∝ المتوسط^−β) مع β يُحَلّ ليبقى العائد المتوقع عند هدف التسعير نفسه (لا يتغيّر اقتصاد البكج). إن كانت المرجعية تجعل العائد يتجاوز سقف
-       RTP لمستوى معيّن (فئته الأدنى غالية نسبةً لسعره) تُرفع نسبتها بأقل مقدار لازم بدل جعل البكج «غير متاح». كل رقم مُصدَّر من هنا هو ما يسحب به roll() وما تعرضه الواجهة. */
-    let pm;
-    if(n === 1) pm = [1000];
-    else {
-      const k = n - 1, fMax = 1000 - k;
-      const build = (f, b)=>{
-        const raw = cs.slice(1).map(c=>Math.pow(c.mean, -b)), s = raw.reduce((x,y)=>x + y, 0) || 1, tot = 1000 - f;
-        const base = raw.map(x=>x / s * (tot - k)), out = base.map(x=>1 + Math.floor(x)); let left = tot - out.reduce((x,y)=>x + y, 0);
-        base.map((x,i)=>({ f:x - Math.floor(x), i:i })).sort((p,q)=>q.f - p.f || p.i - q.i).forEach(o=>{ if(left > 0){ out[o.i]++; left--; } });
-        return [f].concat(out);
-      };
-      const ok = p=>ev(p) <= MAX_RTP_V() * t.basePrice && win(p) <= MAX_PWIN_V();
-      let f = Math.min(Math.max(1, Math.round(CodisLimits.num('box.refTop', REF_TOP))), fMax);
-      while(f < fMax && !ok(build(f, 14))) f += 5;
-      f = Math.min(f, fMax);
-      let lo = -4, hi = 14;
-      for(let i = 0; i < 60; i++){ const m = (lo + hi) / 2; if(ev(build(f, m)) > target) lo = m; else hi = m; }
-      pm = build(f, hi);
+  /* أعداد حقيقية (مجموعها 1000) ← أعداد صحيحة مجموعها 1000 بأكبر باقٍ، بحدّ أدنى FLOOR_PM لكل فئة، بلا سالب */
+  function toPm(raw, total){
+    total = total || 1000;
+    const n = raw.length, floor = Math.min(FLOOR_PM, Math.floor(total / n)), out = raw.map(x=>Math.max(floor, Math.floor(x)));
+    let left = total - out.reduce((a,b)=>a + b, 0);
+    const ord = raw.map((x,i)=>({ f:x - Math.floor(x), i:i })).sort((a,b)=>b.f - a.f || a.i - b.i);
+    for(let j = 0; left > 0; j = (j + 1) % n){ out[ord[j].i]++; left--; }
+    while(left < 0){ let k = 0; for(let i = 1; i < n; i++) if(out[i] > out[k]) k = i; if(out[k] <= floor) break; out[k]--; left++; }
+    return out;
+  }
+  /* توزيع النموذج لمستوى: cs = فئات مؤهّلة بترتيب القيمة، price = السعر المدفوع، target = العائد المتوقع بالكوين. يُعيد pm (بالألف) */
+  function solve(cs, price, target, dudCap){
+    const n = cs.length; if(n === 1) return [1000];
+    const mean = cs.map(c=>c.mean), dud = cs.map(c=>c.mean < DUD_RATIO * price), nd = dud.filter(x=>!x).length;
+    const groupPm = (beta, idx, mass)=>{ const w = idx.map(i=>Math.pow(mean[i], -beta)), s = w.reduce((a,b)=>a + b, 0) || 1; return w.map(x=>x / s * mass); };
+    const ev = p=>p.reduce((s,x,i)=>s + x / 1000 * mean[i], 0);
+    const solveBeta = f=>{ let lo = -4, hi = 14; for(let i = 0; i < 70; i++){ const m = (lo + hi) / 2; if(ev(f(m)) > target) lo = m; else hi = m; } return f(hi); };
+    const all = idx=>cs.map((_, i)=>i);
+    let p = solveBeta(b=>groupPm(b, all(), 1000));
+    const dudMass = p.reduce((s,x,i)=>s + (dud[i] ? x : 0), 0);
+    if(nd > 0 && nd < n && dudMass > dudCap * 1000){
+      const D = dudCap * 1000, di = [], ni = []; cs.forEach((_, i)=>(dud[i] ? di : ni).push(i));
+      p = solveBeta(b=>{ const out = new Array(n); groupPm(b, ni, 1000 - D).forEach((x, k)=>{ out[ni[k]] = x; }); groupPm(b, di, D).forEach((x, k)=>{ out[di[k]] = x; }); return out; });
     }
-    if((ev(pm) > MAX_RTP_V() * t.basePrice || win(pm) > MAX_PWIN_V()) && !CodisLimits.bypass('box.rtpGate')) return [];
+    let pm = toPm(p);
+    const cap = Math.max(1, Math.round(CodisLimits.num('box.refTop', REF_CAP)));   /* حدّ أعلى لنسبة الفئة الأدنى (المطوّر يعدّله) */
+    if(n > 1 && pm[0] > cap){ const ex = pm[0] - cap; pm[0] = cap; const rest = pm.slice(1), tot = rest.reduce((a,b)=>a + b, 0) || 1; pm = [pm[0]].concat(toPm(rest.map(x=>x / tot * (1000 - cap)), 1000 - cap)); }
+    return pm;
+  }
+  function effectiveBase(t){
+    const top = Math.max.apply(null, tiers().map(x=>x.basePrice)), cap = t.basePrice >= top ? Infinity : MAX_PRIZE_X_V() * t.basePrice;
+    let cs = classes(minValue(t.id), cap);
+    if(!cs.length){ if(!CodisLimits.bypass('box.empty')) return []; cs = classes(minValue(t.id)); if(!cs.length) return []; }   /* أغلى بكج يضم كل الجوائز؛ إن لم توجد جوائز مؤهّلة: غير متاح (المطوّر معفى) */
+    const price = t.price > 0 ? t.price : t.basePrice * 0.7, sellK = Math.max(0.01, (Number(econCfg().sellPercent) || 80) / 100);
+    const rho = Number(CodisLimits.num('box.rho.' + t.id, RHO[t.id] || .85)), target = Math.max(0, rho) * price / sellK;   /* عائد الاستبدال المطلوب ⇒ عائد البيع = ρ × السعر (< السعر دائماً) */
+    const pm = solve(cs, price, target, Number(DUD_CAP[t.id]) || 1);
+    const ev = pm.reduce((s,x,i)=>s + x / 1000 * cs[i].mean, 0), win = pm.reduce((s,x,i)=>s + x / 1000 * cs[i].vals.filter(v=>v > t.basePrice).length / cs[i].vals.length, 0);
+    if((ev > MAX_RTP_V() * t.basePrice || win > MAX_PWIN_V()) && !CodisLimits.bypass('box.rtpGate')) return [];
     return cs.map((c,i)=>Object.assign({}, c, { pm:pm[i] }));
   }
   /* أثر القيم الفعلية على المستوى: العائد المتوقع بالاستبدال وبالبيع ونسبته للسعر، واحتمال أن تفوق الجائزة السعر */
@@ -7827,7 +7924,8 @@ const CodisBoxes = (function(){
       return { ok:true, tier:t, n:BULK, price:t.price, total:total, items:items, balanceBefore:bal0, balanceAfter:CodisWallet.balance() };
     });
   }
-  return { tiers, tier, pool, classes, effective, effectiveBase, stats, valueOf, minValue, owned, get, roll, buy, open, buyOpenMany, BULK };
+  try{ Object.keys(RHO).forEach(k=>CodisLimits.reg('box.rho.' + k, 'عائد البيع المتوقع ÷ السعر — ' + k, RHO[k])); }catch(e){}
+  return { tiers, tier, pool, classes, effective, effectiveBase, stats, valueOf, minValue, owned, get, roll, buy, open, buyOpenMany, BULK, model:{ BAND_EDGES, RHO, DUD_CAP, DUD_RATIO, FLOOR_PM, solve, toPm } };
 })();
 
 /* نتيجة عادة (محطة/إخفاق/أسبوع/وقوع): تمر من نفس المحرك والسجل — معرّف ثابت لكل حدث فلا تتكرر */
@@ -14797,12 +14895,54 @@ function codisFlipHtml(front, back, o){
     '<div class="cflip-in"><div class="cflip-f">' + front + '</div><div class="cflip-b" aria-hidden="true">' + back + '</div></div></div>';
 }
 /* ظهر البطاقة: عنوان + صفوف [عنوان، قيمة، سمات dd، القيمة HTML جاهز؟] + ملاحظة اختيارية. الصفوف الفارغة تُتجاهل */
+/* CODIS-CARDS-V2 — ظهر البطاقة: تركيبة مولّدة من هوية البطاقة (ندرتها + نوعها). kind: reward|weekly|monthly|pass|holiday|pouch|cosmetic|box */
+const CBK_CODE = { c:'C', b:'B', a:'A', s:'S', ss:'SS' };
+function codisBackOrnament(tone, kind, seed){
+  const f = n=>Math.round(n * 10) / 10, P = [];
+  let x0 = 2166136261; String(seed || '').split('').forEach(ch=>{ x0 ^= ch.charCodeAt(0); x0 = Math.imul(x0, 16777619) >>> 0; });
+  const rnd = ()=>{ x0 = (Math.imul(x0, 1664525) + 1013904223) >>> 0; return x0 / 4294967296; };
+  /* 1) نقش الخلفية حسب الندرة: C شرائط مائلة · B موجات · A معيّن · S أشعة · SS أشعة مضاعفة + حلقات */
+  const L = [];
+  if(tone === 'c'){ for(let x = -125; x <= 100; x += 7) L.push('M' + x + ' 0L' + (x + 125) + ' 125'); }
+  else if(tone === 'b'){ for(let y = 10; y < 125; y += 8){ let d = 'M0 ' + y; for(let x = 0; x < 100; x += 10) d += 'q5 -6 10 0'; L.push(d); } }
+  else if(tone === 'a'){ for(let k = -125; k <= 225; k += 12){ L.push('M' + k + ' 0L' + (k + 125) + ' 125'); L.push('M' + k + ' 125L' + (k + 125) + ' 0'); } }
+  else { const n = tone === 'ss' ? 40 : 24; for(let i = 0; i < n; i++){ const a = i / n * Math.PI * 2; L.push('M50 32L' + f(50 + Math.cos(a) * 150) + ' ' + f(32 + Math.sin(a) * 150)); } }
+  P.push('<path class="o-pat" d="' + L.join('') + '"/>');
+  if(tone === 'ss'){ [26, 34, 42].forEach(r=>P.push('<circle class="o-pat o-ring" cx="50" cy="32" r="' + r + '"/>')); }
+  /* 2) إطار: واحد للعادية، مزدوج من A فما فوق، وزخارف زوايا تتزايد */
+  P.push('<rect class="o-fr" x="4" y="4" width="92" height="117" rx="7"/>');
+  if(tone === 'a' || tone === 's' || tone === 'ss') P.push('<rect class="o-fr2" x="7.5" y="7.5" width="85" height="110" rx="4.5"/>');
+  [[4, 4, 1, 1], [96, 4, -1, 1], [4, 121, 1, -1], [96, 121, -1, -1]].forEach(c=>{
+    const x = c[0], y = c[1], sx = c[2], sy = c[3];
+    P.push('<path class="o-dia" d="M' + x + ' ' + f(y + sy * 5) + 'L' + f(x + sx * 5) + ' ' + y + 'L' + f(x + sx * 10) + ' ' + f(y + sy * 5) + 'L' + f(x + sx * 5) + ' ' + f(y + sy * 10) + 'Z"/>');
+    if(tone === 's' || tone === 'ss') P.push('<path class="o-fr2" d="M' + f(x + sx * 12) + ' ' + y + 'Q' + f(x + sx * 12) + ' ' + f(y + sy * 12) + ' ' + x + ' ' + f(y + sy * 12) + '"/>');
+    if(tone === 'ss') P.push('<circle class="o-dia" cx="' + f(x + sx * 15) + '" cy="' + f(y + sy * 15) + '" r="1"/>');
+  });
+  /* 3) الميدالية المركزية + رمز النوع */
+  const cx = 50, cy = 32;
+  P.push('<g transform="translate(50 24) scale(.82) translate(-50 -32)"><circle class="o-em" cx="' + cx + '" cy="' + cy + '" r="17"/><circle class="o-em o-thin" cx="' + cx + '" cy="' + cy + '" r="13.5"/>');
+  const G = {
+    reward:()=>'<path class="o-emf" d="M50 21L61 32 50 43 39 32Z"/><path class="o-em" d="M50 21L61 32 50 43 39 32Z"/><text x="50" y="36.2" text-anchor="middle">' + (CBK_CODE[tone] || 'C') + '</text>',
+    weekly:()=>{ let d = ''; for(let i = 0; i < 7; i++){ const a = i / 7 * Math.PI * 2 - Math.PI / 2; d += '<circle class="o-emf" cx="' + f(cx + Math.cos(a) * 9.5) + '" cy="' + f(cy + Math.sin(a) * 9.5) + '" r="1.9"/>'; } return d + '<text x="50" y="36.2" text-anchor="middle">7</text>'; },
+    monthly:()=>{ let d = ''; for(let i = 0; i < 30; i++){ const a = i / 30 * Math.PI * 2; d += 'M' + f(cx + Math.cos(a) * 9) + ' ' + f(cy + Math.sin(a) * 9) + 'L' + f(cx + Math.cos(a) * 11.6) + ' ' + f(cy + Math.sin(a) * 11.6); } return '<path class="o-em o-thin" d="' + d + '"/><text x="50" y="36.2" text-anchor="middle">30</text>'; },
+    pass:()=>'<path class="o-em" d="M40 25H60a2 2 0 0 1 2 2V29a3 3 0 0 0 0 6V37a2 2 0 0 1-2 2H40a2 2 0 0 1-2-2V35a3 3 0 0 0 0-6V27a2 2 0 0 1 2-2Z"/><path class="o-em o-thin" d="M50 26V38" stroke-dasharray="1.6 1.6"/>',
+    holiday:()=>'<path class="o-emf" d="M55 22.5A10.5 10.5 0 1 0 55 41.5 8.4 8.4 0 0 1 55 22.5Z"/><path class="o-em" d="M55 22.5A10.5 10.5 0 1 0 55 41.5 8.4 8.4 0 0 1 55 22.5Z"/><circle class="o-dia" cx="57.5" cy="28" r="1.3"/>',
+    pouch:()=>'<circle class="o-emf" cx="50" cy="32" r="9"/><circle class="o-em" cx="50" cy="32" r="9"/><circle class="o-em o-thin" cx="50" cy="32" r="5.6"/><path class="o-em o-thin" d="M50 28V36"/>',
+    cosmetic:()=>'<path class="o-emf" d="M50 20Q51.6 30.4 62 32 51.6 33.6 50 44 48.4 33.6 38 32 48.4 30.4 50 20Z"/><path class="o-em" d="M50 20Q51.6 30.4 62 32 51.6 33.6 50 44 48.4 33.6 38 32 48.4 30.4 50 20Z"/>',
+    box:()=>'<path class="o-em" d="M50 22L60.5 27.5V38.5L50 44 39.5 38.5V27.5Z"/><path class="o-em o-thin" d="M39.5 27.5L50 33 60.5 27.5M50 33V44"/>'
+  };
+  P.push('<g class="o-glyph">' + (G[kind] || G.reward)() + '</g></g>');
+  /* 4) تفرّد خفيف لكل بطاقة: نقاط نجمية بمواضع ثابتة من اسمها (seed) */
+  for(let i = 0; i < (tone === 'ss' ? 7 : tone === 's' ? 5 : 3); i++) P.push('<circle class="o-dia" cx="' + f(14 + rnd() * 72) + '" cy="' + f(50 + rnd() * 6) + '" r="' + f(0.5 + rnd() * 0.7) + '"/>');
+  return '<svg class="cbk-orn" viewBox="0 0 100 125" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + P.join('') + '</svg>';
+}
 function codisCardBackHtml(title, rows, o){
   o = o || {};
-  const tone = econTones().indexOf(o.tone) !== -1 ? o.tone : 'c';
-  return '<div class="cbk rwc-' + tone + '" data-tone="' + tone + '"><span class="cbk-brand" aria-hidden="true">CODIS</span><b class="cbk-t" dir="auto">' + escapeHtml(title) + '</b>' +
+  const tone = econTones().indexOf(o.tone) !== -1 ? o.tone : 'c', kind = o.kind || 'reward';
+  return '<div class="cbk rwc-' + tone + '" data-tone="' + tone + '" data-kind="' + escapeHtml(kind) + '">' + codisBackOrnament(tone, kind, title) +
+    '<div class="cbk-in"><b class="cbk-t" dir="auto">' + escapeHtml(title) + '</b>' +
     '<dl class="cbk-rows">' + rows.filter(r=>r && r[1] !== '' && r[1] !== null && r[1] !== undefined).map(r=>'<div><dt>' + escapeHtml(r[0]) + '</dt><dd' + (r[2] ? ' ' + r[2] : '') + '>' + (r[3] ? r[1] : escapeHtml(String(r[1]))) + '</dd></div>').join('') + '</dl>' +
-    (o.note ? '<p class="cbk-note" dir="auto">' + escapeHtml(o.note) + '</p>' : '') + '</div>';
+    (o.note ? '<p class="cbk-note" dir="auto">' + escapeHtml(o.note) + '</p>' : '') + '</div></div>';
 }
 function codisFlipToggle(el){
   const on = !el.classList.contains('is-flipped');
@@ -14828,7 +14968,7 @@ function econStoreCardHtml(it, rar, bal, i){
   const kind = wk ? 'is-wk' : mo ? 'is-mo' : (econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) ? 'is-dl' : 'is-plain';
   const buy = '<button type="button" class="btn ' + (ok ? 'btn-primary' : 'btn-secondary') + ' shop-buy' + (busy ? ' is-busy' : '') + '" ' + (ok && !busy ? '' : 'disabled aria-disabled="true"') +
     ' aria-label="' + escapeHtml('شراء ' + it.name + ' — ' + econFmt(price) + ' كوين' + (ok ? '' : ' — ينقصك ' + econFmt(price - bal))) + '" onclick="econBuy(\'' + id + '\')">' + (busy ? 'جارٍ الشراء…' : ok ? econCoin(price) : 'ينقصك ' + econFmt(price - bal)) + '</button>';
-  const back = codisCardBackHtml(it.name, [['الفئة', econCardName(it, rar)], ['القسم', econRoomLabel(it.room)], ['السعر', econCoin(price), '', true]], { tone:rar.tone });
+  const back = codisCardBackHtml(it.name, [['الفئة', econCardName(it, rar)], ['القسم', econRoomLabel(it.room)], ['السعر', econCoin(price), '', true]], { tone:rar.tone, kind:wk ? 'weekly' : mo ? 'monthly' : 'reward' });
   return '<div class="shop-card store-card st-tile rar-' + escapeHtml(rar.tone) + (ok ? '' : ' is-short') + '" style="--i:' + (i || 0) + '" role="listitem" data-id="' + id + '">' +
     codisFlipHtml('<span class="store-art is-card ' + kind + '">' + econStoreFaceHtml(it, rar, { price:price }) + '</span>', back, { cls:'store-open', label:it.name + ' — ' + econCardName(it, rar) + ' — ' + econFmt(price) + ' كوين' }) +
     '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span></div>' +
@@ -14911,7 +15051,7 @@ function econInventoryHtml(){
           (can ? 'role="button" tabindex="0" aria-pressed="' + (on ? 'true' : 'false') + '" aria-label="' + escapeHtml(it.name + ' — ' + econFmt(sv) + ' كوين') + '" onclick="econSelToggle(\'' + uid + '\')" onkeydown="econSelKey(event, \'' + uid + '\')"' : 'role="listitem" aria-disabled="true"') + '>' + inner +
           (can ? '<div class="own-pick"><span class="own-pick-t">' + (on ? 'محدّدة' : 'تحديد') + '</span><span class="own-pick-v">' + econCoin(sv) + '</span></div>' : '<div class="own-pick is-off">لا تُباع</div>') + '</div>';
       } else {
-        const back = codisCardBackHtml(it.name, [['الفئة', it.rarityName], ['المصدر', econSourceLabel(it)], ['التاريخ', formatArDate(it.acquiredAt)], ['البيع', can ? econCoin(sv) : 'لا تُباع', '', can]], { tone:it.rarityTone });
+        const back = codisCardBackHtml(it.name, [['الفئة', it.rarityName], ['المصدر', econSourceLabel(it)], ['التاريخ', formatArDate(it.acquiredAt)], ['البيع', can ? econCoin(sv) : 'لا تُباع', '', can]], { tone:it.rarityTone, kind:(it.scope === 'weekly' ? 'weekly' : it.scope === 'monthly' ? 'monthly' : 'reward') });
         html += '<div class="shop-card st-tile rar-' + escapeHtml(it.rarityTone) + '" role="listitem" data-uid="' + uid + '" style="--i:' + i + '">' + codisFlipHtml('<div class="own-art">' + art + '</div>', back, { label:it.name + ' — ' + it.rarityName }) + cap +
           '<div class="shop-acts"><button type="button" class="btn btn-secondary" ' + (can && !busy ? '' : 'disabled aria-disabled="true"') + ' aria-label="' + escapeHtml((can ? 'بيع ' + it.name + ' — ' + econFmt(sv) + ' كوين' : it.name + ' — غير قابلة للبيع')) + '" onclick="econSell(\'' + uid + '\')">' + (can ? codisIcon('coin') + '<span>بيع · ' + econFmt(sv) + '</span>' : '<span>لا تُباع</span>') + '</button>' +
           '<button type="button" class="chip-act" ' + (busy ? 'disabled' : '') + ' onclick="econUse(\'' + uid + '\')">استخدمتها</button></div></div>';
@@ -14960,7 +15100,7 @@ function econPassTilesHtml(i0){
   let i = i0 || 0;
   return { n:owned.length, html:rows.map(g=>{ const p = g[0], sev = econNormSeverity(p.severity, 'MEDIUM');
     const back = codisCardBackHtml(CodisPasses.title(p), [['الفترة', CodisPasses.scopeName(p.scope)], ['الشدة', econSevLabel(sev)], ['القيمة', econCoin(CodisPasses.price(p)), '', true], g.length > 1 ? ['العدد', '×' + econFmt(g.length)] : null],
-      { tone:sev === 'HIGH' ? 's' : sev === 'LOW' ? 'b' : 'a', note:'بطاقة حصرية · استعمال واحد' });
+      { tone:sev === 'HIGH' ? 's' : sev === 'LOW' ? 'b' : 'a', kind:'pass', note:'بطاقة حصرية · استعمال واحد' });
     return '<div class="st-tile" role="listitem" style="--i:' + (i++) + '">' + codisFlipHtml('<div class="st-face">' + codisPassCardHtml(p, { count:g.length, plain:true }) + (g.length > 1 ? '<span class="st-n" dir="ltr">×' + econFmt(g.length) + '</span>' : '') + '</div>', back, { label:CodisPasses.label(p) }) +
       '<div class="st-cap"><span class="shop-name">' + escapeHtml(CodisPasses.title(p)) + '</span></div>' + econDismBtn('pass', p.uid, CodisPasses.price(p)) + '</div>';
   }).join('') };
@@ -15654,7 +15794,7 @@ function hcdBackHtml(d, x){
   else rows.push(['الصلاحية', life]);
   if(d.weeklyBuyLimit && !x.state) rows.push(['الشراء', x.blocked ? 'اشتريتها هذا الأسبوع' : 'مرة بالأسبوع']);
   if(x.count > 1) rows.push(['العدد', '×' + econFmt(x.count)]);
-  return codisCardBackHtml(d.name, rows, { tone:d.kind === 'extra' ? 's' : 'b', note:d.desc });
+  return codisCardBackHtml(d.name, rows, { tone:d.kind === 'extra' ? 's' : 'b', kind:'holiday', note:d.desc });
 }
 /* بلاطة بطاقة العطلة في شبكة كروت المتجر: نفس بلاطة المكافأة (بطاقة تنقلب + الاسم فقط + زر الشراء بسعرها النهائي) */
 function hcdStoreTileHtml(k, bal, i){
@@ -15944,7 +16084,17 @@ async function econBuyBox10(tierId){
 const ECON_BULK_STEP = 150, ECON_BULK_LEAD = 780, ECON_BULK_TAIL = 820;
 function econBulkModal(){ return document.getElementById('econ-bulk-modal'); }
 function econBulkOrder(res){ return res.items.map((r, i)=>({ i:i, lv:CodisRevealLevels.levelOfResult(r) })).sort((a, b)=>a.lv - b.lv || a.i - b.i); }
-function econBulkTotalMs(res){ return ECON_BULK_LEAD + res.items.length * ECON_BULK_STEP + ECON_BULK_TAIL; }
+/* CODIS-BULK-V2 — الجدول الزمني: at[i] = لحظة فتح الصندوق i (ms)، dur[i] = مدة بقائه قبل التالي. المستويات العالية تتوقف قبل الكشف (ترقّب) وتأخذ وقتاً أطول */
+let econBulkSch = null;
+function econBulkSchedule(res){
+  const ord = econBulkOrder(res), at = {}, dur = {}; let t = ECON_BULK_LEAD;
+  ord.forEach(o=>{
+    const lv = o.lv, hold = lv <= 2 ? 280 : lv <= 4 ? 400 : lv <= 5 ? 540 : lv <= 7 ? 860 : 1250, pre = lv >= 8 ? 420 : lv >= 6 ? 240 : 0;
+    t += pre; at[o.i] = t; dur[o.i] = hold; t += hold;
+  });
+  return { at:at, dur:dur, total:t + ECON_BULK_TAIL };
+}
+function econBulkTotalMs(res){ return econBulkSchedule(res).total; }
 function econBulkCounts(res){
   const c = { reward:0, pass:0, holiday:0, pouch:0, cosmetic:0 };
   res.items.forEach(r=>{ if(r.cosmetic) c.cosmetic++; else if(r.pouch) c.pouch++; else if(r.pass) c.pass++; else if(r.holiday) c.holiday++; else c.reward++; });
@@ -15967,12 +16117,12 @@ function econBulkBest(res){
 }
 /* خلية واحدة. run=true: صندوق مصغّر فوق البطاقة يُفتح في موعد --d ثم تظهر البطاقة تحته. data-box = معرّف الصندوق الذي خرجت منه */
 function econBulkCellHtml(r, i, run, ord, best){
-  const it = r.item, rar = r.rarity, inf = econBulkInfo(r), lv = CodisRevealLevels.levelOfResult(r), RL = CodisRevealLevels.info(lv), d = ECON_BULK_LEAD + ord * ECON_BULK_STEP;
+  const it = r.item, rar = r.rarity, inf = econBulkInfo(r), lv = CodisRevealLevels.levelOfResult(r), RL = CodisRevealLevels.info(lv), d = econBulkSch ? econBulkSch.at[i] : ECON_BULK_LEAD + ord * ECON_BULK_STEP, hold = econBulkSch ? econBulkSch.dur[i] : 300;
   const art = r.pouch ? '<div class="pk-tile is-pouch"><div class="pch-art">' + econPouchSvg(r.pouch.type) + '</div></div>' : econPackTileHtml(it, rar).replace(' role="listitem"', '');
-  return '<div class="bk-cell' + (inf.special ? ' is-special' : '') + (best ? ' is-best' : '') + '" role="listitem" data-tone="' + escapeHtml(rar.tone) + '" data-kind="' + inf.kind + '" data-lv="' + lv + '"' + (lv >= 6 ? ' data-hot="1"' : '') + ' data-box="' + escapeHtml(r.box.uid) + '" style="--i:' + i + ';--d:' + d + 'ms;--lrgb:' + RL.rgb + ';--lrgb2:' + RL.rgb2 + '">' +
+  return '<div class="bk-cell' + (inf.special ? ' is-special' : '') + (best ? ' is-best' : '') + '" role="listitem" data-tone="' + escapeHtml(rar.tone) + '" data-kind="' + inf.kind + '" data-lv="' + lv + '"' + (lv >= 6 ? ' data-hot="1"' : '') + ' data-box="' + escapeHtml(r.box.uid) + '" style="--i:' + i + ';--d:' + d + 'ms;--hold:' + hold + 'ms;--lrgb:' + RL.rgb + ';--lrgb2:' + RL.rgb2 + '">' +
     '<span class="bk-no" dir="ltr" aria-label="البكج رقم ' + (i + 1) + '">' + (i + 1) + '</span>' + (best ? '<span class="bk-best">الأفضل</span>' : '') +
     (run ? '<div class="bk-chest" aria-hidden="true">' + CodisBoxCinema.rigHtml(r.tier.index, true) + '</div><span class="bk-burst" aria-hidden="true"></span>' : '') +
-    '<div class="bk-card">' + codisFlipHtml(art, codisCardBackHtml(inf.name, [['الفئة', rar.name], ['من', r.tier.name]], { tone:rar.tone }), { label:inf.name }) + '</div><p class="bk-name" dir="auto">' + escapeHtml(inf.name) + '</p><div class="bk-meta">' + inf.chip + '</div></div>';
+    '<div class="bk-card">' + codisFlipHtml(art, codisCardBackHtml(inf.name, [['الفئة', rar.name], ['من', r.tier.name]], { tone:rar.tone, kind:inf.kind === 'reward' ? 'reward' : inf.kind }), { label:inf.name }) + '</div><p class="bk-name" dir="auto">' + escapeHtml(inf.name) + '</p><div class="bk-meta">' + inf.chip + '</div></div>';
 }
 function econBulkHeadHtml(s){
   const r = s.res, t = r.tier;
@@ -15990,10 +16140,42 @@ function econBulkActionsHtml(s){
 }
 function econBulkPaint(){
   const m = econBulkModal(), body = document.getElementById('econ-bulk-body'), s = econBulkState; if(!m || !body || !s) return;
+  econBulkSch = econBulkSchedule(s.res);
   const sheet = m.querySelector('.bk-modal'), run = s.phase !== 'done', ord = {}; econBulkOrder(s.res).forEach((o, k)=>{ ord[o.i] = k; });
   sheet.className = 'modal store-detail bk-modal' + (econCalm() ? ' is-calm' : '') + (run ? ' is-run' : ' is-done'); sheet.setAttribute('data-tone', s.res.tier.tone);
   CodisArt.set(body, ()=>'<div class="bk-head">' + econBulkHeadHtml(s) + '</div><div class="bk-grid" role="list" aria-label="المكافآت المستلمة">' + s.res.items.map((r, i)=>econBulkCellHtml(r, i, run, ord[i], !run && i === s.best && s.res.items.length > 1)).join('') + '</div><div class="bk-actions">' + econBulkActionsHtml(s) + '</div>');
   codisFitRewardCard(body); codisWatchRewardCards(body);
+  /* النقر على خلية: لا قلب مجهري داخلها — أثناء الفتح لا يحدث شيء، وبعد الانتهاء تُفتح بطاقة مكبّرة */
+  const grid = body.querySelector('.bk-grid');
+  if(grid) grid.addEventListener('click', e=>{
+    const c = e.target.closest ? e.target.closest('.bk-cell') : null; if(!c) return;
+    e.stopPropagation(); e.preventDefault();
+    if(econBulkState && econBulkState.phase === 'done') econBulkZoom(Array.prototype.indexOf.call(grid.children, c), c);
+  }, true);
+}
+var econBulkZoomEl = null;
+function econBulkZoomClose(){
+  const z = econBulkZoomEl; if(!z) return; econBulkZoomEl = null;
+  document.removeEventListener('keydown', z._key, true); z.classList.remove('is-open');
+  window.setTimeout(()=>{ z.remove(); }, 200);
+  try{ if(z._opener && z._opener.isConnected) z._opener.focus({ preventScroll:true }); }catch(e){}
+}
+function econBulkZoom(i, opener){
+  const s = econBulkState, m = econBulkModal(); if(!s || !m || s.phase !== 'done') return; econBulkZoomClose();
+  const r = s.res.items[i]; if(!r) return;
+  const inf = econBulkInfo(r), it = r.item, rar = r.rarity;
+  const art = r.pouch ? '<div class="pk-tile is-pouch"><div class="pch-art">' + econPouchSvg(r.pouch.type) + '</div></div>' : econPackTileHtml(it, rar).replace(' role="listitem"', '');
+  const back = codisCardBackHtml(inf.name, [['الفئة', rar.name], ['من', r.tier.name], ['البكج رقم', econFmt(i + 1)]], { tone:rar.tone, kind:inf.kind });
+  const z = document.createElement('div'); z.className = 'bk-zoom'; z.setAttribute('data-tone', rar.tone);
+  z.innerHTML = '<div class="bk-zoom-back"></div><div class="bk-zoom-card" role="dialog" aria-modal="true" aria-label="' + escapeHtml(inf.name) + '">' + codisFlipHtml(art, back, { label:inf.name }) +
+    '<p class="bk-zoom-name" dir="auto">' + escapeHtml(inf.name) + '</p><p class="bk-zoom-hint">اضغط البطاقة لقلبها</p><button type="button" class="btn btn-secondary bk-zoom-x">إغلاق</button></div>';
+  m.appendChild(z); z._opener = opener || null; econBulkZoomEl = z;
+  z._key = ev=>{ if(ev.key === 'Escape'){ ev.stopPropagation(); ev.preventDefault(); econBulkZoomClose(); } };
+  document.addEventListener('keydown', z._key, true);
+  z.querySelector('.bk-zoom-back').onclick = econBulkZoomClose; z.querySelector('.bk-zoom-x').onclick = econBulkZoomClose;
+  try{ codisFitRewardCard(z); codisWatchRewardCards(z); }catch(e){}
+  requestAnimationFrame(()=>{ z.classList.add('is-open'); try{ z.querySelector('.bk-zoom-x').focus({ preventScroll:true }); }catch(e){} });
+  window.setTimeout(()=>{ z.classList.add('is-open'); }, 60);
 }
 function econBulkWorld(m, tier){
   const sheet = m.querySelector('.bk-modal'), old = sheet.querySelector('.bk-world'); if(old) old.remove();
@@ -16004,8 +16186,8 @@ function econBulkWorld(m, tier){
 function econBulkShow(res){
   const m = econBulkModal(); if(!m || !res || !res.ok || !res.items || !res.items.length) return false;
   if(econBulkState) econBulkClose(true);
-  const calm = econCalm(), token = ++econBulkToken;
-  const s = econBulkState = { res:res, phase:calm ? 'done' : 'opening', token:token, timer:0, cues:[], at:Date.now(), best:econBulkBest(res) };   /* تقليل الحركة: النتائج فوراً بلا حركة ولا زر تخطّي */
+  const calm = econCalm(), token = ++econBulkToken; econBulkZoomClose();
+  const s = econBulkState = { res:res, phase:calm ? 'done' : 'opening', token:token, timer:0, cues:[], at:Date.now(), best:econBulkBest(res) }; econBulkSch = econBulkSchedule(res);   /* تقليل الحركة: النتائج فوراً بلا حركة ولا زر تخطّي */
   if(!calm) econBulkWorld(m, res.tier);
   econBulkPaint(); codisSfx('open');
   m.setAttribute('aria-hidden', 'false'); CodisMotion.modalIn(m);
@@ -16015,9 +16197,11 @@ function econBulkShow(res){
     codisSfx('press'); s.timer = window.setTimeout(()=>econBulkFinish(token), econBulkTotalMs(res));
     /* نغمات الجوائز العالية بمواعيدها (3 كحد أقصى) — كلها تُمسح عند الإغلاق/التخطّي */
     const ord = {}; econBulkOrder(res).forEach((o, k)=>{ ord[o.i] = k; });
-    res.items.map((r, i)=>({ i:i, lv:CodisRevealLevels.levelOfResult(r) })).filter(o=>o.lv >= 6).sort((a, b)=>b.lv - a.lv).slice(0, 3).forEach(o=>{
-      s.cues.push(window.setTimeout(()=>{ if(econBulkState && econBulkState.token === token && econBulkState.phase === 'opening') codisSfx(o.lv >= 8 ? 'reward.achievement' : 'reward.unlock'); }, ECON_BULK_LEAD + ord[o.i] * ECON_BULK_STEP + 240));
+    res.items.map((r, i)=>({ i:i, lv:CodisRevealLevels.levelOfResult(r) })).filter(o=>o.lv >= 5).sort((a, b)=>b.lv - a.lv).slice(0, 5).forEach(o=>{
+      s.cues.push(window.setTimeout(()=>{ if(econBulkState && econBulkState.token === token && econBulkState.phase === 'opening'){ codisSfx(o.lv >= 8 ? 'reward.achievement' : 'reward.unlock'); try{ codisHaptic(o.lv >= 8 ? [14, 50, 30] : o.lv >= 6 ? [12, 40] : [8]); }catch(x){} } }, econBulkSch.at[o.i] + 240));
     });
+    /* الصندوق الجاري فتحه يبقى ظاهراً (التمرير فقط إن خرج من الشاشة) */
+    res.items.forEach((r, i)=>{ s.cues.push(window.setTimeout(()=>{ if(!(econBulkState && econBulkState.token === token && econBulkState.phase === 'opening')) return; const c = m.querySelectorAll('.bk-cell')[i]; if(c){ try{ c.scrollIntoView({ block:'nearest', behavior:'smooth' }); }catch(x){} } }, Math.max(0, econBulkSch.at[i] - 380))); });
   }
   return true;
 }
@@ -16040,7 +16224,7 @@ function econBulkDismiss(){ if(econBulkState && Date.now() - econBulkState.at < 
 function econBulkSkip(){ const s = econBulkState; if(!s || s.phase !== 'opening') return; econBulkFinish(s.token); }
 /* الإغلاق (زر/Esc/خلفية/سحب للخلف): لا يمسّ أي بيانات — المنح والحفظ تمّا قبل ظهور النافذة */
 function econBulkClose(silent){
-  const m = econBulkModal(); if(!m) return;
+  const m = econBulkModal(); if(!m) return; econBulkZoomClose();
   const s = econBulkState; econBulkToken++; econBulkClearTimers(s);
   if(silent !== true && CodisMotion.isOpen(m)) codisSfx('close');
   CodisMotion.modalOut(m); m.setAttribute('aria-hidden', 'true'); econBulkState = null;
@@ -16469,16 +16653,27 @@ function econPackPaint(){
   const ord = it=>(it.kind === 'pass' || it.kind === 'holiday' || it.kind === 'pouch' || it.kind === 'cosmetic') ? pool.length + CodisBoxes.valueOf(it) : pool.indexOf(it);   /* المكافآت بترتيب المتجر ثم البطاقات (تجاوز/عطلة) بسعرها */
   const groups = CodisBoxes.effective(t).map(o=>({ o:o, items:o.items.slice().sort((a,b)=>ord(a) - ord(b)) })).filter(g=>g.items.length);
   const total = groups.reduce((q, g)=>q + g.items.length, 0);
-  const hero = '<div class="pk-hero"><div class="pk-hero-art">' + econBoxArt(t.index) + '</div><div class="pk-hero-txt"><h3 id="econ-pack-title">' + escapeHtml(t.name) + '</h3>' +
-    '<p class="pk-sub">' + (total ? '<span>' + econFmt(total) + ' كرت ممكن</span><span class="pk-dot" aria-hidden="true"></span>' : '') + econCoin(t.price) + (CodisBoxes.minValue(t.id) ? '<span class="pk-dot" aria-hidden="true"></span><span>قيمة كل كرت ' + econFmt(CodisBoxes.minValue(t.id)) + ' كوين فأكثر</span>' : '') + '</p></div></div>';
-  const list = groups.length ? '<div class="pk-groups">' + groups.map(g=>{
-    const pct = econPm(g.o.pm);
-    return '<section class="pk-group" data-tone="' + escapeHtml(g.o.tone) + '" aria-label="احتمال ' + pct + '"><header class="pk-gh"><b class="pk-pct" dir="ltr">' + pct + '</b><span class="pk-bar" aria-hidden="true"><i style="width:' + (g.o.pm / 10).toFixed(1) + '%"></i></span></header>' +
-      '<div class="pk-cards" role="list">' + g.items.map(it=>econPackTileHtml(it, econRarityById(it.rarity))).join('') + '</div></section>';
+  /* CODIS-PACKUI — الأرقام من CodisBoxes.effective(t) نفسها التي يسحب بها roll() */
+  const TONE_RGB = { c:'154,160,170', b:'74,158,184', a:'62,118,228', s:'208,142,52', ss:'255,208,110' }, rgb = tn=>TONE_RGB[tn] || TONE_RGB.c;
+  const pctTxt = x=>(x >= 10 ? x.toFixed(1) : x >= 1 ? x.toFixed(1) : x.toFixed(2)) + '%';   /* x بالنسبة المئوية */
+  const rev = groups.slice().reverse(), topPrize = groups.length ? Math.max.apply(null, groups.map(g=>g.o.max)) : 0;
+  const gem = '<span class="pk-gems" aria-hidden="true">' + [1,2,3,4,5].map(i=>'<i class="' + (i <= t.index ? 'on' : '') + '"></i>').join('') + '</span>';
+  const hero = '<div class="pk-hero2"><div class="pk-hero2-art">' + econBoxArt(t.index) + '</div><div class="pk-hero2-txt"><h3 id="econ-pack-title">' + escapeHtml(t.name) + '</h3>' + gem +
+    '<div class="pk-hero2-price">' + econCoin(t.price) + '</div></div></div>' +
+    (total ? '<ul class="pk-facts"><li><b>' + econFmt(total) + '</b><span>كرت ممكن</span></li><li><b>' + econFmt(groups.length) + '</b><span>فئات</span></li><li><b>' + econFmt(topPrize) + '</b><span>أعلى قيمة</span></li></ul>' : '');
+  const overview = groups.length ? '<section class="pk-ov" aria-label="احتمالات الفئات"><h4 class="pk-h">احتمال كل فئة</h4>' +
+    '<div class="pk-seg" role="img" aria-label="' + escapeHtml(groups.map(g=>g.o.name + ' ' + econPm(g.o.pm)).join('، ')) + '">' + groups.map(g=>'<i style="flex:' + g.o.pm + ';--k:' + rgb(g.o.tone) + '"></i>').join('') + '</div>' +
+    '<ul class="pk-leg">' + rev.map(g=>'<li><button type="button" class="pk-leg-b" style="--k:' + rgb(g.o.tone) + '" onclick="econPackJump(\'' + escapeHtml(g.o.id) + '\')"><i class="pk-lg-dot" aria-hidden="true"></i><span class="pk-ln">' + escapeHtml(g.o.name) + '</span>' +
+      '<span class="pk-lr">' + econFmt(g.o.min) + (g.o.max !== g.o.min ? '–' + econFmt(g.o.max) : '') + '</span><b class="pk-lp" dir="ltr">' + econPm(g.o.pm) + '</b></button></li>').join('') + '</ul></section>' : '';
+  const list = groups.length ? '<div class="pk-groups2">' + rev.map((g, gi)=>{
+    const each = g.o.pm / 10 / g.items.length;
+    return '<details class="pk-grp" id="pk-g-' + escapeHtml(g.o.id) + '" style="--k:' + rgb(g.o.tone) + '"' + (gi < 2 ? ' open' : '') + '><summary class="pk-gs"><span class="pk-gs-dot" aria-hidden="true"></span><span class="pk-gs-t"><b>' + escapeHtml(g.o.name) + '</b><small>' + econFmt(g.items.length) + ' كرت · لكل كرت ' + pctTxt(each) + '</small></span><b class="pk-gs-p" dir="ltr">' + econPm(g.o.pm) + '</b><span class="pk-gs-c" aria-hidden="true"></span></summary>' +
+      '<div class="pk-row" role="list">' + g.items.map(it=>'<div class="pk-cell">' + econPackTileHtml(it, econRarityById(it.rarity)) + '<span class="pk-cap" dir="ltr">' + pctTxt(each) + '</span></div>').join('') + '</div></details>';
   }).join('') + '</div>' : '<div class="eco-empty pk-empty">ماكو كروت مؤهّلة حالياً — أضف مكافآت مفعّلة من الإعدادات ← المكافآت</div>';
-  body.innerHTML = hero + list + close;
+  body.innerHTML = hero + overview + list + close;
   codisFitRewardCard(body); codisWatchRewardCards(body);
 }
+function econPackJump(id){ const d = document.getElementById('pk-g-' + id); if(!d) return; d.open = true; try{ d.scrollIntoView({ block:'start', behavior:(matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth') }); }catch(e){} }
 function econPackOpen(tierId, opener){
   const m = econPackModal();
   if(!m || !CodisBoxes.tier(tierId)){ codisSfx('invalid'); showToast('البكج غير متاح', 'var(--warning)'); return; }
@@ -17453,52 +17648,111 @@ Object.keys(MODAL_CLOSERS).forEach(id=>{
   if(el) el.addEventListener('click', (e)=>{ if(e.target === el) MODAL_CLOSERS[id](); });
 });
 
-/* ================= SWIPE BACK (مثل iPhone) =================
-   اسحب من حافة الشاشة (يمين أو يسار) نحو الداخل: يغلق أعلى طبقة مفتوحة، وإلا يرجع خطوة داخل الإعدادات؛ في الغرف الرئيسية لا يفعل شيئاً.
-   يستدعي نفس دوال الإغلاق/الرجوع التي تستعملها الأزرار، فلا منطق جديد. */
-function codisBackTarget(){
+/* ================= CODIS-V5-NAV — الرجوع والسحب (مالك واحد) =================
+   • codisBackLayer(): أعلى طبقة مفتوحة {act, el} بترتيب ثابت (تأكيد ← نوافذ ← المتجر ← صفحة فرعية بالإعدادات)؛ الغرف الرئيسية ← null (لا رجوع ولا خروج).
+   • CodisNav.back(): التنفيذ الوحيد للرجوع (قفل 380ms) — يستعمله السحب وpopstate وزر الرجوع؛ لا يلمس الجلسة ولا البيانات.
+   • حارس History: مدخلان {codis:'base'} ثم {codis:'top'}. أي popstate يعني أن المستخدم ضغط رجوع (سحب Safari/زر Android) فننفّذ رجوعاً داخلياً واحداً ثم نعيد حارس top.
+     لا مدخلات تُضاف عند التنقل بين الغرف أو فتح النوافذ ⇒ لا مدخلات وهمية.
+   • السحب التفاعلي يعمل فقط حيث لا يوجد سحب أصلي (تطبيق مثبَّت/غير iOS Safari)؛ في Safari المتصفح يتولى النظام السحب ويصلنا popstate. */
+function codisBackLayer(){
   const open = id=>{ const el = document.getElementById(id); return !!el && el.style.display !== 'none' && el.style.display !== ''; };
-  if(open('codis-confirm-modal')) return ()=>resolveCodisConfirm(false);
-  if(open('dq-modal')) return ()=>dqEsc();
-  const rep = document.getElementById('report-overlay'); if(rep && rep.classList.contains('is-open')) return codisCloseReport;
-  const oc = document.getElementById('outcome-overlay'); if(oc && oc.classList.contains('is-visible')) return closeOutcomeOverlay;
-  if(open('econ-pack-modal')) return econPackClose;
-  if(open('econ-box-modal')) return econBoxClose;
-  if(open('econ-bulk-modal')) return econBulkClose;
-  if(open('econ-detail-modal')) return econCloseDetail;
-  if(open('archive-detail-modal')) return closeArchiveDetail;
-  if(open('notif-center-modal')) return closeNotifCenter;
-  const ha = document.getElementById('habit-add'); if(ha && ha.getAttribute('aria-hidden') === 'false') return closeAddHabit;
-  if(econStoreIsOpen()) return econCloseStore;
+  const L = (id, act)=>({ act:act, el:document.getElementById(id) });
+  if(econBulkZoomEl) return { act:econBulkZoomClose, el:econBulkZoomEl };
+  if(open('codis-confirm-modal')) return L('codis-confirm-modal', ()=>resolveCodisConfirm(false));
+  if(open('dq-modal')) return L('dq-modal', ()=>dqEsc());
+  const rep = document.getElementById('report-overlay'); if(rep && rep.classList.contains('is-open')) return { act:codisCloseReport, el:rep };
+  const oc = document.getElementById('outcome-overlay'); if(oc && oc.classList.contains('is-visible')) return { act:closeOutcomeOverlay, el:oc };
+  if(open('holiday-pick-modal')) return L('holiday-pick-modal', hcdPickClose);
+  if(open('econ-pack-modal')) return L('econ-pack-modal', econPackClose);
+  if(open('econ-box-modal')) return L('econ-box-modal', econBoxClose);
+  if(open('econ-bulk-modal')) return L('econ-bulk-modal', econBulkClose);
+  if(open('econ-detail-modal')) return L('econ-detail-modal', econCloseDetail);
+  if(open('archive-detail-modal')) return L('archive-detail-modal', closeArchiveDetail);
+  if(open('notif-center-modal')) return L('notif-center-modal', closeNotifCenter);
+  const ha = document.getElementById('habit-add'); if(ha && ha.getAttribute('aria-hidden') === 'false') return { act:closeAddHabit, el:null };
   const pg = document.getElementById('page-settings');
   if(pg && getComputedStyle(pg).display !== 'none'){
     const sec = Array.prototype.find.call(pg.children, c=>c.classList.contains('settings-page-section') && getComputedStyle(c).display !== 'none');
-    const btn = sec && sec.querySelector('.settings-back-btn'); if(btn) return ()=>btn.click();
-  }
+    if(econStoreIsOpen()) return { act:econCloseStore, el:sec || null };
+    const btn = sec && sec.querySelector('.settings-back-btn'); if(btn) return { act:()=>btn.click(), el:sec };
+  } else if(econStoreIsOpen()) return { act:econCloseStore, el:null };
   return null;
 }
-(function(){
-  const EDGE = 30, MIN = 70;           /* بدء السحب خلال 30px من الحافة، وإنهاؤه بعد 70px للداخل على الأقل */
+function codisBackTarget(){ const l = codisBackLayer(); return l ? l.act : null; }
+const CodisNav = (function(){
+  const standalone = ()=>{ try{ return window.navigator.standalone === true || matchMedia('(display-mode: standalone)').matches; }catch(e){ return false; } };
+  const reduced = ()=>{ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } };
+  const nativeSwipe = /iP(hone|ad|od)/.test(navigator.userAgent) && !standalone();   /* Safari المتصفح: السحب الأصلي موجود ويصلنا كـpopstate */
+  let lastBack = 0, busyDrag = false;
+  function back(){
+    const now = Date.now(); if(now - lastBack < 380) return false;
+    const l = codisBackLayer(); if(!l) return false;
+    lastBack = now;
+    try{ codisHaptic([8]); }catch(e){}
+    try{ l.act(); }catch(e){ console.error('back failed:', e); }
+    return true;
+  }
+  /* ---- حارس History ---- */
+  function guard(){
+    try{
+      const st = history.state;
+      if(st && st.codis === 'top') return;                    /* إعادة تحميل: الحارس موجود أصلاً */
+      history.replaceState({ codis:'base' }, '', location.href);
+      history.pushState({ codis:'top' }, '', location.href);
+    }catch(e){}
+  }
+  window.addEventListener('popstate', e=>{
+    const st = e.state || {};
+    if(st.codis === 'top') return;                            /* وصلنا لمدخلنا نفسه (أمام): لا شيء */
+    back();                                                   /* رجوع داخلي واحد (أو لا شيء في الغرف الرئيسية) */
+    try{ history.pushState({ codis:'top' }, '', location.href); }catch(x){}   /* لا نغادر التطبيق ولا نكشف بوابة الدخول */
+  });
+  /* ---- السحب التفاعلي ---- */
+  const EDGE = 28, MIN = 72;
   let g = null;
-  const reset = ()=>{ g = null; };
-  document.addEventListener('touchstart', e=>{
-    if(e.touches.length !== 1){ reset(); return; }
-    const t = e.touches[0], b = document.body.getBoundingClientRect(), side = t.clientX <= b.left + EDGE ? 'l' : (t.clientX >= b.right - EDGE ? 'r' : '');   /* edges of the phone frame */
-    if(!side || !codisBackTarget()){ reset(); return; }
-    g = { side:side, x:t.clientX, y:t.clientY, dx:0, dy:0 };
-  }, { passive:true });
-  document.addEventListener('touchmove', e=>{
-    if(!g || e.touches.length !== 1) return;
-    const t = e.touches[0]; g.dx = g.side === 'l' ? t.clientX - g.x : g.x - t.clientX; g.dy = Math.abs(t.clientY - g.y);
-    if(g.dx < -20 || (g.dy > 24 && g.dy > g.dx * 0.8)) reset();     /* عمودي أو للخارج: ليس رجوعاً */
-  }, { passive:true });
-  document.addEventListener('touchend', ()=>{
-    const s = g; reset(); if(!s || s.dx < MIN || s.dy > s.dx * 0.6) return;
-    const act = codisBackTarget(); if(!act) return;
-    try{ codisHaptic([8]); }catch(x){}
-    act();
-  }, { passive:true });
-  document.addEventListener('touchcancel', reset, { passive:true });
+  const clear = el=>{ if(!el) return; el.style.transition = ''; el.style.transform = ''; el.style.willChange = ''; };
+  function settle(done){
+    const s0 = g; g = null; if(!s0) return;
+    const el = s0.el; busyDrag = false;
+    if(!s0.active || !el){ return; }
+    const w = el.getBoundingClientRect().width || window.innerWidth, sign = s0.side === 'l' ? 1 : -1;
+    const go = done && s0.dx >= Math.max(MIN, w * .3);
+    if(reduced()){ clear(el); if(go) back(); return; }
+    el.style.transition = 'transform 200ms cubic-bezier(.2,.8,.2,1)';
+    el.style.transform = go ? 'translate3d(' + sign * w + 'px,0,0)' : 'translate3d(0,0,0)';
+    let fin = false;
+    const end = ()=>{ if(fin) return; fin = true; el.removeEventListener('transitionend', end); if(go) back(); setTimeout(()=>clear(el), 0); };
+    el.addEventListener('transitionend', end); setTimeout(end, 260);
+  }
+  if(!nativeSwipe){
+    document.addEventListener('touchstart', e=>{
+      if(g){ settle(false); return; }
+      if(e.touches.length !== 1) return;
+      const t = e.touches[0], b = document.body.getBoundingClientRect(), side = t.clientX <= b.left + EDGE ? 'l' : (t.clientX >= b.right - EDGE ? 'r' : '');
+      if(!side) return;
+      const l = codisBackLayer(); if(!l) return;
+      g = { side:side, x:t.clientX, y:t.clientY, dx:0, dy:0, active:false, el:l.el };
+    }, { passive:true });
+    document.addEventListener('touchmove', e=>{
+      if(!g) return;
+      if(e.touches.length !== 1){ settle(false); return; }
+      const t = e.touches[0]; g.dx = g.side === 'l' ? t.clientX - g.x : g.x - t.clientX; g.dy = Math.abs(t.clientY - g.y);
+      if(!g.active){
+        if(g.dx < -14 || (g.dy > 12 && g.dy > g.dx)){ g = null; return; }      /* عمودي أو للخارج: ليس رجوعاً */
+        if(g.dx > 12 && g.dx > g.dy * 1.2){ g.active = true; busyDrag = true; if(g.el){ g.el.style.transition = 'none'; g.el.style.willChange = 'transform'; } }
+      }
+      if(g.active){
+        if(e.cancelable) e.preventDefault();
+        if(g.el && !reduced()){ const sign = g.side === 'l' ? 1 : -1; g.el.style.transform = 'translate3d(' + sign * Math.max(0, g.dx) + 'px,0,0)'; }
+      }
+    }, { passive:false });
+    document.addEventListener('touchend', ()=>{ if(!g) return; if(!g.active){ g = null; return; } const done = true; if(!g.el){ const ok = g.dx >= MIN; g = null; busyDrag = false; if(ok) back(); return; } settle(done); }, { passive:true });
+    document.addEventListener('touchcancel', ()=>settle(false), { passive:true });
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden && g) settle(false); });
+    window.addEventListener('blur', ()=>{ if(g) settle(false); });
+  }
+  guard();
+  return { back, guard, nativeSwipe, _lock:()=>lastBack };
 })();
 
 /* ================= iPhone keyboard-safe input scroll =================
@@ -17940,7 +18194,7 @@ const CodisAccount = (function(){
       const back = location.origin + location.pathname;
       const g = document.getElementById('codis-gate');
       if(g && g.classList.contains('is-open')) gateBusy(true); else showToast('جارٍ التحويل إلى Google…', 'var(--success)');
-      location.href = cfg.url + '/auth/v1/authorize?provider=google&flow_type=pkce&code_challenge=' + ch + '&code_challenge_method=s256&redirect_to=' + encodeURIComponent(back);
+      location.replace(cfg.url + '/auth/v1/authorize?provider=google&flow_type=pkce&code_challenge=' + ch + '&code_challenge_method=s256&redirect_to=' + encodeURIComponent(back));
     }catch(e){ console.warn('[CODIS auth] signIn failed:', e && e.message); showToast('تعذّر بدء تسجيل الدخول', 'var(--danger)'); signingIn = false; }
   }
   async function handleReturn(){
@@ -18071,7 +18325,9 @@ const CodisAccount = (function(){
   async function init(){
     paint();
     if(!configured) return;
-    window.addEventListener('pageshow', ev => { if(ev.persisted){ signingIn = false; const g = document.getElementById('codis-gate'); if(g && g.classList.contains('is-busy')) gateBusy(false); } });
+    window.addEventListener('pageshow', ev => { if(ev.persisted){ signingIn = false; const g = document.getElementById('codis-gate'); if(g && g.classList.contains('is-busy')) gateBusy(false);
+        /* CODIS-V5: صفحة مستعادة من الكاش قد تحمل بوابة قديمة — الحقيقة هي الجلسة المخزَّنة لا لقطة الصفحة */
+        try{ loadSession(); if(S.session || rd(K_GUEST) === '1'){ hideGate(); paint(); } }catch(e){} } });
     window.addEventListener('online', () => { if(S.user){ if(meta().owner === S.user.id && meta().dirty) schedule(300); else if(!S.reconciling) reconcile(); } });
     document.addEventListener('visibilitychange', () => { if(!document.hidden && S.user && !S.reconciling && !pushing){ const m = meta(); if(m.owner === S.user.id && m.dirty) schedule(300); } });
     const returned = await handleReturn();
