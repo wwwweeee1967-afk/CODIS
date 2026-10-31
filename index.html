@@ -11,6 +11,8 @@
 <!-- CODIS-AUDIT-1 -->
 <!-- CODIS-PLAN-EXTEND -->
 <!-- CODIS-PLANCARD -->
+<!-- CODIS-GRACE -->
+<!-- CODIS-CYCLE -->
 <!-- CODIS-CARDS-V2 -->
 <html lang="ar" dir="rtl">
 <head>
@@ -19,7 +21,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.6.1">
+<meta name="codis-version" content="3.8.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4651,6 +4653,21 @@ html, body, body *{ touch-action:pan-x pan-y; }
 #planning-active .pm-btn:focus-visible{ outline:2px solid var(--aqua); outline-offset:-2px; }
 #planning-active .pm-btn.is-danger{ color:rgba(255,138,130,.92); }
 @media (hover:hover){ #planning-active .pm-btn:hover{ background:rgb(var(--hi-rgb) / .06); } #planning-active .pm-btn.is-danger:hover{ background:var(--danger-a12); } }
+
+/* CODIS-GRACE */
+.grace-banner{ display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; margin:0 0 var(--sp-md, 12px); padding:12px 14px; border-radius:14px; text-align:start; font:inherit; cursor:pointer; color:var(--text); background:rgb(var(--warning-rgb) / .10); border:1px solid rgb(var(--warning-rgb) / .38); }
+.grace-banner:focus-visible{ outline:2px solid var(--warning); outline-offset:2px; }
+.gb-t{ display:grid; gap:2px; min-width:0; } .gb-t b{ font-size:14px; } .gb-t span{ font-size:12px; line-height:1.55; color:var(--text-2); }
+.gb-go{ flex:none; padding:7px 12px; border-radius:999px; font-size:12.5px; font-weight:800; color:#1a1405; background:var(--warning); }
+.gs-note{ margin:0; font-size:12.5px; line-height:1.7; color:var(--text-2); }
+.gs-day{ margin:8px 2px 2px; font-size:12px; font-weight:700; color:var(--text-3, var(--text-2)); }
+.gs-row{ display:grid; gap:8px; padding:12px; border-radius:14px; background:rgb(var(--hi-rgb) / .04); border:1px solid rgb(var(--hi-rgb) / .07); }
+.gs-t{ font-size:14.5px; line-height:1.5; overflow-wrap:anywhere; }
+.gs-btns{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:6px; }
+.gs-btns button{ min-height:42px; border-radius:10px; border:1px solid rgb(var(--hi-rgb) / .14); background:none; color:var(--text); font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.gs-btns button.is-done{ border-color:rgb(var(--success-rgb, 80 200 140) / .5); color:var(--success); } .gs-btns button.is-none{ color:var(--danger-ink, var(--danger)); }
+.gs-half{ grid-template-columns:auto repeat(4, minmax(0, 1fr)); align-items:center; } .gs-half span{ font-size:12.5px; color:var(--text-2); }
+.gs-foot{ display:grid; gap:8px; margin-top:6px; } .gs-foot .btn{ min-height:46px; }
 </style>
 </head>
 <body>
@@ -5519,6 +5536,7 @@ html, body, body *{ touch-action:pan-x pan-y; }
     <div id="archive-detail-body"></div>
     <div class="modal-actions">
       <button type="button" class="btn btn-primary" id="archive-detail-restore" style="display:none;" onclick="restoreArchiveDetailHabit()">استرجاع العادة</button>
+      <button type="button" class="btn btn-primary" id="archive-detail-reopen" style="display:none;" onclick="reopenArchiveDetailPlan()">أعد فتح الخطة للتسجيل</button>
       <button type="button" class="btn btn-destructive" id="archive-detail-delete" onclick="deleteArchiveDetailPlan()">حذف الخطة</button>
       <button type="button" class="btn btn-secondary" onclick="closeArchiveDetail()">إغلاق</button>
     </div>
@@ -7331,7 +7349,7 @@ const CodisEconomy = (function(){
   }
   function weekAlreadyPaid(weekId, room, exceptId){ if(CodisLimits.bypass('claim.crossPlan')) return false; return Object.keys(L()).some(k=>{ const e = L()[k]; return k !== exceptId && e && e.scope === 'weekly' && e.weekId === weekId && e.room === room && e.kind === 'reward' && e.status !== 'void'; }); }
   function daily(room, dayIdx, kind, pct){
-    const weekId = currentWeekId(), week = room === 'learn' ? learnCurrentWeek() : currentWeek(), planId = (week && week.startedAt) || '';
+    const weekId = currentPlanKey(), week = room === 'learn' ? learnCurrentWeek() : currentWeek(), planId = (week && week.startedAt) || '';
     const id = [room, weekId, planId, dayIdx, kind].join('|');
     if(L()[id]) return create(id, kind, 'daily', room, 'daily');
     { const dup = claimedDay(room, weekId, dayIdx, kind); if(dup && !CodisLimits.bypass('claim.crossPlan')) return { entry:dup, isNew:false }; }
@@ -7342,7 +7360,7 @@ const CodisEconomy = (function(){
     /* عدد المهام المكتملة بالكامل (done) في هذا اليوم وهذه الغرفة: يغذّي الاحتمالات التكيفية اليومية (المخططة/الجزئية/غير المنجزة لا تُحتسب) */
     const dayTasks = (week && week.days && Array.isArray(week.days[dayIdx])) ? week.days[dayIdx] : [];
     const doneCount = dayTasks.filter(t=>t && t.status === 'done').length;
-    return create(id, kind, 'daily', room, 'daily', { late:late, weekId:weekId, planId:planId || null, planName:(week && week.planName) || '', day:dayIdx, pct:pct,
+    return create(id, kind, 'daily', room, 'daily', { late:late, weekId:weekId, planEnd:planEndKey(weekId, week), planId:planId || null, planName:(week && week.planName) || '', day:dayIdx, pct:pct,
       threshold:kind === 'reward' ? data.settings.rewardThreshold : data.settings.punishThreshold },
       (kind === 'reward' && (room === 'tasks' || room === 'learn')) ? { adaptive:{ period:'daily', count:doneCount } } : null);
   }
@@ -7387,14 +7405,15 @@ const CodisEconomy = (function(){
     const overall = hs.pct === null ? st.pct : Math.round((st.pct * pw + hs.pct * hw) / ((pw + hw) || 1));
     const th = econThresholds(), cls0 = econClassifyPct(overall, th), cls = (cls0 === 'reward' && (weekAlreadyPaid(arch.weekId, cx.room, id) || weekBurst(arch))) ? 'neutral' : cls0, success = cls === 'reward';   /* دُفعت مكافأة هذا الأسبوع، أو أُنجز كله بيوم واحد: لا مكافأة */   // النوع من النتيجة النهائية وحدّي الإنجاز الفعليين (مكافأة/محايد/عقوبة)
     const report = CodisDiscipline.weeklyReport(arch, st, hs, { cx:cx, overall:overall, success:success, cls:cls, th:th });
-    return create(id, cls, 'weekly', cx.room, 'weekly', { weekId:arch.weekId, planId:arch.startedAt || null, planName:arch.name || '', archiveId:arch.id, pct:overall,
+    return create(id, cls, 'weekly', cx.room, 'weekly', { weekId:arch.weekId, planEnd:planEndKey(arch.weekId, arch.tasksWeek || arch.learnWeek), planId:arch.startedAt || null, planName:arch.name || '', archiveId:arch.id, pct:overall,
       stats:{ total:st.total, done:st.done, half:st.half, none:st.none, open:st.open, holidays:st.holidays, cause:cause, rule:cx.successRule, planPct:st.pct, habitPct:hs.pct }, report:report },
       cls === 'reward' ? { adaptive:{ period:'weekly', count:doneTasks(arch) } } : null);   // احتمالات الأسبوع التكيفية: المهام المكتملة بالكامل في الأسبوع الناجح فقط
   }
 
   /* ---- شهري: يُقفل حتى ينتهي الشهر. nextMonth أول شهر لم يُحسم؛ كل شهر منتهٍ يُعالَج مرة واحدة (حتى لو مرّت شهور بلا فتح) ---- */
   function entryMonth(e){
-    try{ if(e.scope === 'daily' && e.weekId && Number.isInteger(e.day)){ const ds = dateForWeekDay(e.weekId, e.day); if(ds) return ds.slice(0,7); }
+    try{ const pm = codisEntryPlanMonth(e); if(pm) return pm;
+      if(e.scope === 'daily' && e.weekId && Number.isInteger(e.day)){ const ds = dateForWeekDay(e.weekId, e.day); if(ds) return ds.slice(0,7); }
       if(e.scope === 'weekly' && typeof e.weekId === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.weekId)) return e.weekId.slice(0,7);   /* الأسبوع يتبع شهر بدايته (كالخطط) لا وقت حسمه */
       return localDateStr(new Date(e.at)).slice(0,7); }
     catch(x){ return ''; }
@@ -7402,7 +7421,7 @@ const CodisEconomy = (function(){
   function monthStats(m){
     const cx = econCfg().contexts.monthly, W = cx.weights;
     const ents = Object.keys(L()).map(k=>L()[k]).filter(e=>e.scope !== 'monthly' && e.status !== 'void' && entryMonth(e) === m);
-    const plans = (data.archive || []).filter(a=>a && typeof a.weekId === 'string' && a.weekId.slice(0,7) === m && a.cause !== 'manual' && typeof a.pct === 'number').filter((a,i,arr)=>{ if(!a.startedAt) return true; return arr.findIndex(b=>b.weekId === a.weekId && b.startedAt === a.startedAt) === i; });   // نفس الخطة لا تُحتسب مرتين
+    const plans = (data.archive || []).filter(a=>a && typeof a.weekId === 'string' && codisPlanMonth(a) === m && a.cause !== 'manual' && typeof a.pct === 'number').filter((a,i,arr)=>{ if(!a.startedAt) return true; return arr.findIndex(b=>b.weekId === a.weekId && b.startedAt === a.startedAt) === i; });   // نفس الخطة لا تُحتسب مرتين
     const wk = ents.filter(e=>e.scope === 'weekly'), dy = ents.filter(e=>e.scope === 'daily'), pun = ents.filter(e=>e.kind === 'punish');
     const wkOk = wk.filter(e=>e.kind === 'reward').length, dyOk = dy.filter(e=>e.kind === 'reward').length;
     if(!plans.length && !wk.length && !dy.length) return null;       // شهر بلا نشاط: لا نتيجة
@@ -7432,8 +7451,10 @@ const CodisEconomy = (function(){
   function processMonths(){
     const st = data.economyState, cur = econThisMonthKey(), cx = econCfg().contexts.monthly, created = [];
     let guard = 0, changed = false;
+    const holdMonths = (typeof codisGraceMonthKeys === 'function') ? codisGraceMonthKeys() : new Set();   /* CODIS-GRACE: شهر فيه أسبوع بانتظار التسوية لا يُحسم بعد */
     while(st.nextMonth < cur && guard++ < 36){
       const m = st.nextMonth;
+      if(holdMonths.has(m)) break;
       if(cx.enabled){ const r = monthlyOutcome(m); if(r && r.isNew) created.push(r.entry); }
       st.nextMonth = econNextMonthKey(m); changed = true;
     }
@@ -7443,7 +7464,7 @@ const CodisEconomy = (function(){
       const seenW = {};   /* CODIS-RULES: أسابيع مختلفة فقط — عدّ الإدخالات كان يسمح بحسم الشهر بأربع خطط في يوم واحد */
       Object.keys(L()).forEach(k=>{ const e = L()[k]; if(e && e.scope === 'weekly' && e.status !== 'void'){ const mk = entryMonth(e); if(mk && !seenW[mk + '|' + e.weekId]){ seenW[mk + '|' + e.weekId] = 1; cnt[mk] = (cnt[mk] || 0) + 1; } } });
       Object.keys(cnt).sort().forEach(mk=>{
-        if(cnt[mk] >= 4 && mk <= cur && !L()['monthly|' + mk]){ const r = monthlyOutcome(mk); if(r && r.isNew){ created.push(r.entry); changed = true; } }
+        if(cnt[mk] >= 4 && mk <= cur && !holdMonths.has(mk) && !L()['monthly|' + mk]){ const r = monthlyOutcome(mk); if(r && r.isNew){ created.push(r.entry); changed = true; } }
       });
     }
     if(changed) saveData();
@@ -7613,7 +7634,7 @@ const CodisHolidayCards = (function(){
   /* ---- سياق الخطة الحالية: أسبوع المهام وأسبوع الأستاذ معاً (يشتركان بالعطلة) ---- */
   function planContext(){
     if(!currentPlanActive()) return null;
-    const wk = currentWeekId(), weeks = [];
+    const wk = currentPlanKey(), weeks = [];
     if(data.weeks[wk] && typeof data.weeks[wk] === 'object') weeks.push({ key:'tasks', w:data.weeks[wk] });
     if(data.learnWeeks[wk] && typeof data.learnWeeks[wk] === 'object') weeks.push({ key:'learn', w:data.learnWeeks[wk] });
     if(!weeks.length) return null;
@@ -7630,7 +7651,7 @@ const CodisHolidayCards = (function(){
   function syncHabitDays(ctx){
     ctx.weeks.forEach(e=>{
       const w = e.w, hp = w.habitPlan; if(!hp || !Array.isArray(hp.days)) return;
-      const days = []; for(let i = getPlanStartDay(w); i < 7; i++){ if(isHolidayIdx(w, i)) continue; const k = dateForWeekDay(ctx.wk, i); if(k) days.push(k); }
+      const days = [], ph = { cyc:2, planStartDay:getPlanStartDay(w) }; for(let n = 0; n < 7; n++){ const i = (ph.planStartDay + n) % 7; if(isHolidayIdx(w, i)) continue; const k = dateForWeekDay(ctx.wk, i, ph); if(k) days.push(k); }
       hp.days = days;
     });
   }
@@ -8012,17 +8033,19 @@ const CodisDiscipline = (function(){
   const DAYN = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   const hcfg = ()=>econCfg().contexts.habits;
   function entryMonth(e){
-    try{ if(e.scope === 'daily' && e.weekId && Number.isInteger(e.day)){ const ds = dateForWeekDay(e.weekId, e.day); if(ds) return ds.slice(0,7); }
+    try{ const pm = codisEntryPlanMonth(e); if(pm) return pm;
+      if(e.scope === 'daily' && e.weekId && Number.isInteger(e.day)){ const ds = dateForWeekDay(e.weekId, e.day); if(ds) return ds.slice(0,7); }
       if(e.scope === 'weekly' && typeof e.weekId === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.weekId)) return e.weekId.slice(0,7);   /* الأسبوع يتبع شهر بدايته (كالخطط) لا وقت حسمه */
       return localDateStr(new Date(e.at)).slice(0,7); }
     catch(x){ return ''; }
   }
   const all = ()=>((data.habits && data.habits.build) || []).concat((data.habits && data.habits.quit) || []);
-  const wEnd = wk=>addDaysKey(wk, 6);
+  const wFrom = wk=>planStartKey(wk);   /* CODIS-CYCLE: بداية نافذة الخطة */
+  const wEnd = wk=>addDaysKey(wFrom(wk), 6);
   const over = wk=>wEnd(wk) < todayKey();
   function days(h, wk){        /* أيام الأسبوع المحتسبة: من إنشاء العادة وحتى اليوم، واليوم المفتوح غير المسجّل لا يُحتسب بعد */
     const t = todayKey(), out = [];
-    for(let i=0;i<7;i++){ const k = addDaysKey(wk, i); if(k < h.createdAt || k > t) continue; if(k === t && !over(wk) && !h.log[k] && !(h.failLog && h.failLog[k])) continue; out.push(k); }
+    for(let i=0;i<7;i++){ const k = addDaysKey(wFrom(wk), i); if(k < h.createdAt || k > t) continue; if(k === t && !over(wk) && !h.log[k] && !(h.failLog && h.failLog[k])) continue; out.push(k); }
     return out;
   }
   function one(h, wk){
@@ -8039,15 +8062,15 @@ const CodisDiscipline = (function(){
       if(over(wk) || c >= req) o.score = Math.round(Math.min(c, req) / req * 100); else o.why = 'الأسبوع لم ينتهِ بعد';
     } else {
       const ds = days(h, wk); if(!ds.length){ o.why = 'لم تبدأ أيامها بعد'; return o; }
-      const occ = (h.occurrences || []).filter(x=>x.date >= wk && x.date <= wEnd(wk)).length;
-      const res = Object.keys(h.resists || {}).filter(k=>k >= wk && k <= wEnd(wk)).length;
+      const occ = (h.occurrences || []).filter(x=>x.date >= wFrom(wk) && x.date <= wEnd(wk)).length;
+      const res = Object.keys(h.resists || {}).filter(k=>k >= wFrom(wk) && k <= wEnd(wk)).length;
       o.occurrences = occ; o.resisted = res; o.required = ds.length; o.score = occ ? Math.max(0, 100 - occ * hcfg().eventPenalty) : 100;
     }
     return o;
   }
   function weekStats(wk){
     const items = all().map(h=>one(h, wk)), cn = items.filter(x=>x.score !== null), ws = cn.reduce((a,x)=>a + x.w, 0);
-    return { weekId:wk, from:wk, to:wEnd(wk), items:items, counted:cn.length, total:items.length, partial:!over(wk), pct:cn.length ? Math.round(cn.reduce((a,x)=>a + x.w * x.score, 0) / ws) : null };
+    return { weekId:wk, from:wFrom(wk), to:wEnd(wk), items:items, counted:cn.length, total:items.length, partial:!over(wk), pct:cn.length ? Math.round(cn.reduce((a,x)=>a + x.w * x.score, 0) / ws) : null };
   }
   function planDays(arch){        /* نسبة كل يوم بالخطة (بدون يوم العطلة) */
     const out = [];
@@ -8125,7 +8148,7 @@ const CodisDiscipline = (function(){
     ents.filter(e=>e.kind === 'punish').forEach(e=>r.punishments.push({ item:e.item, scope:e.scope, label:e.label || e.planName || e.habitText || '' }));
     /* مهام تكرر عدم إنجازها خلال الشهر */
     const cnt = {};
-    (data.archive || []).filter(a=>a && typeof a.weekId === 'string' && a.weekId.slice(0,7) === m && a.cause !== 'manual').forEach(a=>{ const seen = {}; unfinished(a).forEach(t=>{ if(!seen[t]){ seen[t] = 1; cnt[t] = (cnt[t] || 0) + 1; } }); });
+    (data.archive || []).filter(a=>a && typeof a.weekId === 'string' && codisPlanMonth(a) === m && a.cause !== 'manual').forEach(a=>{ const seen = {}; unfinished(a).forEach(t=>{ if(!seen[t]){ seen[t] = 1; cnt[t] = (cnt[t] || 0) + 1; } }); });
     r.recurring = Object.keys(cnt).filter(t=>cnt[t] >= 2).map(t=>({ text:t, times:cnt[t] })).sort((a,b)=>b.times - a.times).slice(0, 5);
     /* الاتجاه: نصف الشهر الأول مقابل الثاني (نتائج الأسابيع المكتملة فقط) */
     const pcts = wk.filter(e=>typeof e.pct === 'number');
@@ -10052,7 +10075,51 @@ function getWeekId(d){
   return localDateStr(sunday);
 }
 function currentWeekId(){ return getWeekId(new Date()); }
-function currentWeek(){ return data.weeks[currentWeekId()]; }
+/* ===== CODIS-CYCLE =====
+   مفتاح الخطة = الأحد التقويمي ليوم توزيعها (للتوافق). دورتها = 7 أيام تبدأ من يوم التوزيع (مفتاح + planStartDay) وتنتهي بعد 6 أيام.
+   الخطط الموسومة cyc:2 تستعمل هذا النموذج؛ أرشيف قديم بلا العلامة يبقى بتواريخه القديمة (أسبوع تقويمي). */
+function planHostFor(id){
+  const h = (data.weeks && data.weeks[id]) || (data.learnWeeks && data.learnWeeks[id]); if(h) return h;
+  const a = (data.archive || []).find(x=>x && x.weekId === id && x.kind !== 'habit' && (x.tasksWeek || x.learnWeek));
+  return a ? (a.tasksWeek || a.learnWeek) : null;
+}
+function planStartIdx(host){
+  if(!host) return 0;
+  if(Number.isInteger(host.planStartDay) && host.planStartDay >= 0 && host.planStartDay <= 6) return host.planStartDay;
+  return inferPlanStartDay(host);
+}
+function planStartKey(id, host){ host = host || planHostFor(id); return addDaysKey(id, host && host.cyc === 2 ? planStartIdx(host) : 0); }
+function planEndKey(id, host){ return addDaysKey(planStartKey(id, host), 6); }
+function codisPlanMonth(a){ return planEndKey(a.weekId, a.tasksWeek || a.learnWeek).slice(0, 7); }
+/* مفتاح الخطة الجارية: الخطة التي تقع دورتها على اليوم (الأحدث أولاً)، وإلا أسبوع اليوم التقويمي (للتوزيع الجديد) */
+/* شهر إدخال سجل اليومي/الأسبوعي = شهر نهاية دورة خطته (المحفوظ planEnd، أو من الخطة الجارية/المؤرشفة الموسومة) */
+function codisEntryPlanMonth(e){
+  if(!e) return '';
+  if(typeof e.planEnd === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.planEnd)) return e.planEnd.slice(0, 7);
+  if((e.scope === 'daily' || e.scope === 'weekly') && typeof e.weekId === 'string'){ const h = planHostFor(e.weekId); if(h && h.cyc === 2) return planEndKey(e.weekId, h).slice(0, 7); }
+  return '';
+}
+function currentPlanKey(){
+  const t = todayKey(); let best = null;
+  new Set([].concat(Object.keys(data.weeks || {}), Object.keys(data.learnWeeks || {}))).forEach(id=>{
+    const h = (data.weeks && data.weeks[id]) || (data.learnWeeks && data.learnWeeks[id]); if(!h) return;
+    if(planStartKey(id, h) <= t && t <= planEndKey(id, h) && (best === null || id > best)) best = id;
+  });
+  return best === null ? currentWeekId() : best;
+}
+function currentWeek(){ return data.weeks[currentPlanKey()]; }
+/* ترحيل الخطط الجارية القديمة إلى نموذج الدورة (مرة واحدة لكل خطة) وإعادة حساب تواريخ عاداتها */
+function codisMigrateCycle(){
+  [data.weeks, data.learnWeeks].forEach(st=>Object.keys(st || {}).forEach(id=>{
+    const w = st[id]; if(!w || typeof w !== 'object' || w.cyc === 2) return;
+    if(!Number.isInteger(w.planStartDay) || w.planStartDay < 0 || w.planStartDay > 6) w.planStartDay = inferPlanStartDay(w);
+    w.cyc = 2;
+    if(w.habitPlan && Array.isArray(w.habitPlan.days)){
+      const days = []; for(let n = 0; n < 7; n++){ const i = (w.planStartDay + n) % 7; if(isHolidayIdx(w, i)) continue; const k = dateForWeekDay(id, i, w); if(k) days.push(k); }
+      w.habitPlan.days = days;
+    }
+  }));
+}
 
 /* ================= ANIMATION HELPER ================= */
 /* ================= CODIS MOTION — one unified motion runtime =================
@@ -10657,7 +10724,7 @@ function codisRoomCompletePayload(room, dayIdx){
   const wk = room === 'learn' ? learnCurrentWeek() : currentWeek();
   const list = (wk && wk.days && wk.days[dayIdx]) || [];
   if(!list.length || list.some(t=>t.status !== 'done')) return null;
-  return { room:room, dayIdx:dayIdx, weekId:currentWeekId(), total:list.length, isToday:dayIdx === new Date().getDay(), remaining:codisRemainingToday() };
+  return { room:room, dayIdx:dayIdx, weekId:currentPlanKey(), total:list.length, isToday:dayIdx === new Date().getDay(), remaining:codisRemainingToday() };
 }
 
 const CodisNotifications = (function(){
@@ -11131,6 +11198,7 @@ function navigateToPage(page){
     codisSyncView();
     CodisMotion.navEnd(mo);                                 // دخول الغرفة الجديدة (تسلسل خفيف) + خروج القديمة
   }
+  try{ codisGraceBanner(); }catch(e){}
   if(pageChanged) codisSfx('nav', { ctx:page }); // بعد الرسم: أي صوت أهم صدر أثناءه (تأديب/مكافأة) يسبق ويتنازل له هذا الصوت الخفيف
 }
 document.querySelectorAll('.navbtn').forEach(btn=>{
@@ -11152,14 +11220,14 @@ function weekHasContent(w){
   return false;
 }
 function currentPlanActive(){
-  const wk = currentWeekId();
+  const wk = currentPlanKey();
   // stoppedPlans: علم قديم ما عاد يُكتب — يبقى مقروءاً للتوافق مع بيانات محفوظة سابقاً
   if(data.stoppedPlans && data.stoppedPlans[wk] === true) return false;
   return weekHasContent(data.weeks[wk]) || weekHasContent(data.learnWeeks[wk]);
 }
 /* اسم الخطة يترحّل مع بيانات الأسبوع نفسه — يبقى صحيح حتى لو تغيّرت/انحذفت الخطة المحفوظة */
 function currentPlanName(){
-  const wk = currentWeekId();
+  const wk = currentPlanKey();
   const tw = data.weeks[wk], lw = data.learnWeeks[wk];
   const stored = (tw && tw.planName) || (lw && lw.planName);
   if(stored) return stored;
@@ -11185,7 +11253,7 @@ function planHabitUnits(wk){
 function buildHabitPlanSnapshot(wk, startIdx, holidayDay){
   const hb = ((data.habits && data.habits.build) || []).filter(h=>h.type === 'E'), hq = ((data.habits && data.habits.quit) || []).filter(h=>isAbstainDaily(h));
   if(!hb.length && !hq.length) return null;
-  const days = []; for(let i=startIdx; i<7; i++){ if(i === holidayDay) continue; const k = dateForWeekDay(wk, i); if(k) days.push(k); }
+  const days = [], ph = { cyc:2, planStartDay:startIdx }; for(let n=0; n<7; n++){ const i = (startIdx + n) % 7; if(i === holidayDay) continue; const k = dateForWeekDay(wk, i, ph); if(k) days.push(k); }
   if(!days.length) return null;
   return { v:1, days:days, build:hb.map(h=>({ id:h.id, text:h.text })), quit:hq.map(h=>({ id:h.id, text:h.text })) };
 }
@@ -11207,7 +11275,7 @@ function computePlanProgressForWeek(wk){
     habitBuild:hu.build, habitQuit:hu.quit, habitDays:hu.days, habitDone:hu.done, habitTotal:hu.total };
 }
 /* نسبة إنجاز الخطة الحالية (مهام + تعلّم معاً) */
-function computePlanProgress(){ return computePlanProgressForWeek(currentWeekId()); }
+function computePlanProgress(){ return computePlanProgressForWeek(currentPlanKey()); }
 
 async function stopCurrentPlan(){
   const ok = await codisConfirm({
@@ -11216,7 +11284,7 @@ async function stopCurrentPlan(){
     confirmText: 'إيقاف الخطة'
   });
   if(!ok) return;
-  const _name = currentPlanName(), _wk = currentWeekId();
+  const _name = currentPlanName(), _wk = currentPlanKey();
   if(!archiveCurrentPlan('stopped')) return;   // فشل الحفظ: الخطة باقية كما هي ولا حدث إيقاف
   CodisEvents.emit('PLAN_STOPPED', { name:_name, weekId:_wk });
   planningMode = 'idle';
@@ -11227,7 +11295,7 @@ async function stopCurrentPlan(){
 
 /* ---- هل كل مهام الخطة الحالية (مهام + تعلّم) متعلّمة/منجزة بالكامل؟ ---- */
 function isPlanFullyComplete(){
-  const wk = currentWeekId();
+  const wk = currentPlanKey();
   const tw = data.weeks[wk], lw = data.learnWeeks[wk];
   let total = 0, answered = 0;
   [tw, lw].forEach(w=>{
@@ -11293,7 +11361,7 @@ function archivePlanForWeek(wk, reason, cause){ // reason: 'completed' | 'stoppe
   delete data.weeks[wk];
   delete data.learnWeeks[wk];
   delete data.stoppedPlans[wk];
-  if(wk === currentWeekId()) data.loadedPlanId = null;
+  if(wk === currentPlanKey()) data.loadedPlanId = null;
   if(!saveData()){
     // Rollback: لا يخسر المستخدم خطته ولا يُكرَّر الأرشيف
     const i = data.archive.indexOf(entry); if(i >= 0) data.archive.splice(i, 1);
@@ -11312,29 +11380,166 @@ function archivePlanForWeek(wk, reason, cause){ // reason: 'completed' | 'stoppe
   }catch(err){ console.error('تعذّر حسم نتيجة الأسبوع:', err); }
   return true;
 }
-function archiveCurrentPlan(reason){ return archivePlanForWeek(currentWeekId(), reason); }
+function archiveCurrentPlan(reason){ return archivePlanForWeek(currentPlanKey(), reason); }
 
 /* ---- يفحص عند كل فتح للتطبيق إذا فيه خطط من أسابيع سابقة نسيها المستخدم (ما وقفها ولا خلّصها قبل ما يتغيّر الأسبوع) ----
    بدون هذا الفحص، أي خطة تتخطى نهاية أسبوعها بدون إيقاف أو إكمال كامل تصير غير مرئية للأبد
    (زر "إيقاف الخطة" أصلاً ما يظهر إلا للأسبوع الحالي) وتضل عالقة بالبيانات لأبد الآبدين.
    هذا يحفظها بالأرشيف تلقائياً (حالة "متوقفة") بدل ما تضيع أو تختفي. ---- */
+/* ===== CODIS-GRACE ===== */
+const GRACE_DAYS = 3;   /* أيام التسجيل بعد نهاية الأسبوع: ينقضي الأربعاء 00:00 */
+function graceOpenTasks(w){
+  const out = []; if(!w || !w.days) return out;
+  for(let d = 0; d < 7; d++){
+    if(d === w.holidayDay || holidayExtras(w).indexOf(d) !== -1) continue;
+    (w.days[d] || []).forEach(t=>{ if(t && !t.status) out.push({ t:t, d:d }); });
+  }
+  return out;
+}
+function graceEndKey(id, tw, lw){
+  const base = addDaysKey(planEndKey(id, tw || lw), 1 + GRACE_DAYS), ex = [tw && tw.graceUntil, lw && lw.graceUntil].filter(Boolean).sort().pop();
+  return ex && ex > base ? ex : base;
+}
+function graceWeeks(){
+  const cur = todayKey(), ids = new Set([].concat(Object.keys(data.weeks || {}), Object.keys(data.learnWeeks || {}))), out = [];
+  ids.forEach(id=>{
+    const tw = data.weeks[id], lw = data.learnWeeks[id];
+    if(!(planEndKey(id, tw || lw) < cur)) return;   /* ما زالت دورتها جارية: ليست بانتظار التسوية */
+    const open = graceOpenTasks(tw).length + graceOpenTasks(lw).length, until = graceEndKey(id, tw, lw);
+    if(open > 0 && todayKey() < until) out.push({ id:id, tw:tw, lw:lw, open:open, until:until });
+  });
+  return out.sort((a, b)=>a.id < b.id ? -1 : 1);
+}
+function codisGraceMonthKeys(){   /* شهر نهاية أي خطة شغّالة أو بانتظار التسوية لا يُحسم */
+  const set = new Set(graceWeeks().map(g=>codisPlanMonth({ weekId:g.id, tasksWeek:g.tw, learnWeek:g.lw })));
+  [data.weeks, data.learnWeeks].forEach(st=>Object.keys(st || {}).forEach(id=>{ if(st[id]) set.add(planEndKey(id, st[id]).slice(0, 7)); }));
+  return set;
+}
 function archiveStaleWeeksIfAny(){
-  const wk = currentWeekId();
+  codisMigrateCycle();
   const staleIds = new Set([
     ...Object.keys(data.weeks||{}),
     ...Object.keys(data.learnWeeks||{})
-  ].filter(id=>id!==wk));
+  ].filter(id=>planEndKey(id, data.weeks[id] || data.learnWeeks[id]) < todayKey()));   /* بعد نهاية دورتها فقط */
   if(staleIds.size===0) return 0;
+  const grace = new Set(graceWeeks().map(g=>g.id));   /* بانتظار التسجيل: لا أرشفة ولا عقوبة */
   let count=0;
-  staleIds.forEach(id=>{ if(archivePlanForWeek(id,'stopped','stale')) count++; });
+  staleIds.forEach(id=>{ if(grace.has(id)) return; if(archivePlanForWeek(id,'stopped','stale')) count++; });
+  try{ codisGraceBanner(); }catch(e){}
   return count;
 }
+function codisGraceBanner(){
+  const gw = graceWeeks();
+  ['page-planning', 'page-tasks', 'page-learn'].forEach(pid=>{
+    const pg = document.getElementById(pid); if(!pg) return;
+    let b = pg.querySelector('.grace-banner');
+    if(!gw.length){ if(b) b.remove(); return; }
+    const g = gw[0], last = DAYS_AR[parseKey(addDaysKey(g.until, -1)).getDay()];
+    if(!b){
+      b = document.createElement('button'); b.type = 'button'; b.className = 'grace-banner'; b.onclick = ()=>openGraceSheet();
+      const head = pg.querySelector('.page-head'); if(head) head.insertAdjacentElement('afterend', b); else pg.insertBefore(b, pg.firstChild);
+    }
+    b.innerHTML = '<span class="gb-t"><b>أسبوعك الماضي ينتظر التسجيل</b><span>' + g.open + ' مهمة بدون جواب — سجّلها قبل نهاية يوم ' + last + ' وإلا تنحسم تلقائياً</span></span><span class="gb-go">سجّل الآن</span>';
+  });
+}
+var graceSheet = null;
+function closeGraceSheet(){
+  const g = graceSheet; if(!g) return; graceSheet = null;
+  document.removeEventListener('keydown', g.onKey, true); g.root.classList.remove('is-open'); codisSfx('close', { ctx:'sheet' });
+  setTimeout(()=>g.root.remove(), 220); try{ g.opener && g.opener.isConnected && g.opener.focus({ preventScroll:true }); }catch(e){}
+}
+function openGraceSheet(){
+  if(graceSheet) return; if(!graceWeeks().length) return;
+  const root = document.createElement('div'); root.className = 'cd-ov gs-ov';
+  root.innerHTML = '<div class="cd-back"></div><div class="cd-sheet" role="dialog" aria-modal="true" aria-label="تسوية الأسبوع الماضي"><div class="cd-grab" aria-hidden="true"></div>' +
+    '<div class="cd-head"><h2 class="cd-title">تسوية الأسبوع الماضي</h2><button type="button" class="cd-close" aria-label="إغلاق">' + ICONS.close + '</button></div><div class="cd-body gs-body"></div></div>';
+  document.body.appendChild(root);
+  const s0 = { root:root, opener:document.activeElement, onKey:ev=>{ if(ev.key === 'Escape'){ ev.stopPropagation(); closeGraceSheet(); } } };
+  graceSheet = s0; document.addEventListener('keydown', s0.onKey, true); codisSfx('open', { ctx:'sheet' });
+  const body = root.querySelector('.gs-body'); let pendingHalf = null;
+  const find = (g, room, id)=>{ const w = room === 'learn' ? g.lw : g.tw; if(!w) return null; for(let d = 0; d < 7; d++){ const t = (w.days[d] || []).find(x=>x && x.id === id); if(t) return t; } return null; };
+  const finish = (g, reason)=>{
+    const ok = archivePlanForWeek(g.id, reason === 'completed' ? 'completed' : 'stopped', reason === 'completed' ? 'completed' : 'stale');
+    try{ renderTasksPage(); renderLearnPage(); renderPlanningPage(); }catch(e){}
+    codisGraceBanner();
+    if(ok) showToast(reason === 'completed' ? 'اكتمل تسجيل الأسبوع وانحسمت نتيجته' : 'انحسم الأسبوع الماضي', 'var(--success)', 'check');
+    return ok;
+  };
+  const paint = ()=>{
+    const gw = graceWeeks(), g = gw[0];
+    if(!g){ closeGraceSheet(); return; }
+    const last = DAYS_AR[parseKey(addDaysKey(g.until, -1)).getDay()];
+    let html = '<p class="gs-note">أسبوع ' + escapeHtml(formatArDate(g.id)) + ' — سجّل اللي سويته فعلاً. ينحسم تلقائياً بنهاية يوم ' + last + '، أو أنهِه الآن.</p>';
+    [['tasks', 'غرفة العمليات', g.tw], ['learn', 'غرفة الأستاذ', g.lw]].forEach(r=>{
+      const items = graceOpenTasks(r[2]); if(!items.length) return;
+      html += '<section class="cd-group"><h3 class="cd-gh"><span>' + r[1] + '</span><span class="cd-gn">' + items.length + '</span></h3>';
+      let curD = -1;
+      items.forEach(o=>{
+        if(o.d !== curD){ curD = o.d; html += '<div class="gs-day">' + DAYS_AR[o.d] + '</div>'; }
+        const half = pendingHalf && pendingHalf.id === o.t.id;
+        html += '<div class="gs-row" data-room="' + r[0] + '" data-id="' + escapeHtml(String(o.t.id)) + '"><div class="gs-t">' + escapeHtml(o.t.text) + '</div>' +
+          (half ? '<div class="gs-btns gs-half"><span>كم أنجزت؟</span>' + [25, 50, 75].map(v=>'<button type="button" data-s="half" data-p="' + v + '">' + v + '%</button>').join('') + '<button type="button" data-s="cancel">إلغاء</button></div>'
+                : '<div class="gs-btns"><button type="button" data-s="done" class="is-done">خلصتها</button><button type="button" data-s="half">نصها</button><button type="button" data-s="none" class="is-none">ما سويتها</button></div>') + '</div>';
+      });
+      html += '</section>';
+    });
+    html += '<div class="gs-foot"><button type="button" class="btn btn-secondary" id="gs-end">أنهِ الأسبوع الآن</button><button type="button" class="btn btn-quiet" id="gs-later">لاحقاً</button></div>';
+    body.innerHTML = html;
+    body.querySelectorAll('.gs-btns button').forEach(b=>{ b.onclick = ()=>{
+      const row = b.closest('.gs-row'), room = row.dataset.room, id = row.dataset.id, st = b.dataset.s;
+      if(st === 'cancel'){ pendingHalf = null; paint(); return; }
+      if(st === 'half' && !b.dataset.p){ pendingHalf = { id:id }; paint(); return; }
+      const t = find(g, room, id); if(!t || t.status) { paint(); return; }
+      codisApplyTaskStatus(t, st, st === 'half' ? { progress:Number(b.dataset.p) } : undefined); t.lateRecorded = true; pendingHalf = null; saveData();
+      try{ codisSfx(codisTaskSoundFor(st)); }catch(e){}
+      if(!graceWeeks().length || !graceWeeks().some(x=>x.id === g.id)){ closeGraceSheet(); finish(g, 'completed'); return; }
+      codisGraceBanner(); paint();
+    }; });
+    body.querySelector('#gs-end').onclick = async()=>{
+      const ok = await codisConfirm({ title:'إنهاء الأسبوع الماضي', icon:'archive', message:'ينحسم الأسبوع الآن بما سجّلته؛ المهام بدون جواب تُحسب غير منجزة، وتظهر نتيجة الأسبوع (والشهر إن انتهى). تكمل؟', confirmText:'أنهِ الأسبوع' });
+      if(!ok) return; closeGraceSheet(); finish(g, 'stale');
+    };
+    body.querySelector('#gs-later').onclick = closeGraceSheet;
+  };
+  paint();
+  root.querySelector('.cd-back').onclick = closeGraceSheet; root.querySelector('.cd-close').onclick = closeGraceSheet;
+  requestAnimationFrame(()=>{ root.classList.add('is-open'); });
+  setTimeout(()=>root.classList.add('is-open'), 60);
+}
+/* إعادة فتح خطة أُرشفت تلقائياً (stale) قبل أن تُحسم نتيجتها: تُلغى النتائج المعلّقة (تُحفظ كأثر) وتعود الخطة بمهلة 3 أيام */
+function reopenArchiveReason(p){
+  if(!p || isArchivedHabit(p) || p.cause !== 'stale' || !p.weekId) return 'ليست خطة أُرشفت تلقائياً';
+  if(data.weeks[p.weekId] || data.learnWeeks[p.weekId]) return 'يوجد أسبوع مفتوح بنفس التاريخ';
+  const L = data.outcomeLedger || {}, wid = ['weekly', p.weekId, p.startedAt || ''].join('|'), mid = 'monthly|' + p.weekId.slice(0, 7), mid2 = 'monthly|' + codisPlanMonth(p);
+  if(L[wid] && L[wid].status === 'resolved') return 'نتيجة الأسبوع انحسمت بقرارك';
+  if((L[mid] && L[mid].status === 'resolved') || (L[mid2] && L[mid2].status === 'resolved')) return 'نتيجة الشهر انحسمت بقرارك';
+  return '';
+}
+function reopenArchivedPlan(id){
+  const p = (data.archive || []).find(x=>x.id === id); const why = reopenArchiveReason(p);
+  if(why){ codisSfx('invalid', { ctx:'unavailable' }); showToast('ما ينفع إعادة الفتح: ' + why, 'var(--warning)'); return false; }
+  const L = data.outcomeLedger, wid = ['weekly', p.weekId, p.startedAt || ''].join('|'), mid = 'monthly|' + p.weekId.slice(0, 7), mid2 = 'monthly|' + codisPlanMonth(p), stamp = Date.now();
+  [wid, mid, mid2].filter((k, i, a)=>a.indexOf(k) === i).forEach(k=>{ const e = L[k]; if(e){ L[k + '|reopened|' + stamp] = Object.assign({}, e, { status:'void', voidedBy:'reopen', voidedAt:new Date().toISOString() }); delete L[k]; } });
+  const until = addDaysKey(todayKey(), GRACE_DAYS);
+  if(p.tasksWeek){ data.weeks[p.weekId] = JSON.parse(JSON.stringify(p.tasksWeek)); data.weeks[p.weekId].graceUntil = until; }
+  if(p.learnWeek){ data.learnWeeks[p.weekId] = JSON.parse(JSON.stringify(p.learnWeek)); data.learnWeeks[p.weekId].graceUntil = until; }
+  data.archive = data.archive.filter(x=>x.id !== id);
+  codisMigrateCycle();   /* تعود بنموذج الدورة: أيام الالتفاف قادمة لا ماضية */
+  /* الشهر الذي ينتظر هذا الأسبوع يرجع للمعالجة من جديد (لا نتيجة قديمة تبقى) */
+  try{ const m = [p.weekId.slice(0, 7), codisPlanMonth(p)].sort()[0]; if(data.economyState && data.economyState.nextMonth > m) data.economyState.nextMonth = m; }catch(e){}
+  if(!saveData()){ showToast('تعذّر الحفظ — بقيت الخطة بالأرشيف', 'var(--danger)'); return false; }
+  closeArchiveDetail(); try{ renderArchiveList(); }catch(e){}
+  codisSfx('confirm', { ctx:'restore' }); showToast('رجعت الخطة مفتوحة للتسجيل', 'var(--success)', 'check');
+  codisGraceBanner(); setTimeout(openGraceSheet, 350);
+  return true;
+}
+function reopenArchiveDetailPlan(){ if(archiveDetailId) reopenArchivedPlan(archiveDetailId); }
 
 /* ---- تتفحص بعد كل تغيير حالة مهمة إذا الخطة خلصت بالكامل، وإذا نعم تؤرشفها تلقائياً ---- */
 function checkAndAutoArchiveIfComplete(){
   if(!currentPlanActive()) return false;
   if(!isPlanFullyComplete()) return false;
-  const _name = currentPlanName(), _wk = currentWeekId();
+  const _name = currentPlanName(), _wk = currentPlanKey();
   if(!archiveCurrentPlan('completed')) return false;   // فشل الحفظ: لا إعلان نجاح كاذب
   showToast('خلصت الخطة — انحفظت بالأرشيف', 'var(--success)', 'celebrate');
   codisSfx('reward.achievement', { delay:0.32 }); // يُسمع بعد أن يتفتح صوت النتيجة، لا فوقه
@@ -11783,7 +11988,7 @@ function planLinesFromWeek(w){
 }
 /* أيام الخطة المتبقية بترتيب دورتها: اليوم يدخل فقط إن ما انحسمت نتيجته لتلك الغرفة */
 function planRemainingDays(host, room){
-  const start = getPlanStartDay(host), hol = host.holidayDay === undefined ? -1 : host.holidayDay, today = new Date().getDay(), wk = currentWeekId();
+  const start = getPlanStartDay(host), hol = host.holidayDay === undefined ? -1 : host.holidayDay, today = new Date().getDay(), wk = currentPlanKey();
   const cyc = []; for(let i = 0; i < 7; i++) cyc.push((start + i) % 7);
   const pos = cyc.indexOf(today), L = data.outcomeLedger || {};
   const decided = Object.keys(L).some(k=>{ const e = L[k]; return e && e.scope === 'daily' && e.room === room && e.weekId === wk && e.day === today && e.status !== 'void'; });
@@ -11823,12 +12028,12 @@ function extendActivePlan(){
   saveDraftFromInputs();
   const draft = data.planningDraft, taskItems = parsePlanLines(draft.tasksRaw), learnItems = parsePlanLines(draft.learnRaw);
   if(!taskItems.length && !learnItems.length){ codisSfx('invalid', { ctx:'input' }); showToast('اكتب عنصر وحد على الأقل', 'var(--warning)'); return; }
-  const wk = currentWeekId(), host = data.weeks[wk] || data.learnWeeks[wk];
+  const wk = currentPlanKey(), host = data.weeks[wk] || data.learnWeeks[wk];
   if(!host){ endExtendPlan(); renderPlanningPage(); return; }
   const add = (store, items, raw, room)=>{
     if(!items.length) return 0;
     let w = store[wk];
-    if(!w){ const full = {}; for(let i = 0; i < 7; i++) full[i] = []; w = store[wk] = { days:full, startedAt:host.startedAt, items:{}, holidayDay:host.holidayDay, planStartDay:getPlanStartDay(host), planName:host.planName || currentPlanName() }; if(Array.isArray(host.extraHolidays)) w.extraHolidays = host.extraHolidays.slice(); }
+    if(!w){ const full = {}; for(let i = 0; i < 7; i++) full[i] = []; w = store[wk] = { days:full, startedAt:host.startedAt, items:{}, holidayDay:host.holidayDay, planStartDay:getPlanStartDay(host), cyc:2, planName:host.planName || currentPlanName() }; if(Array.isArray(host.extraHolidays)) w.extraHolidays = host.extraHolidays.slice(); }
     const days = planRemainingDays(w, room); if(!days.length) return -1;
     const r = distributeItemsToDays(items, days);
     Object.keys(r.days).forEach(d=>{ w.days[d] = (w.days[d] || []).concat(r.days[d]); });
@@ -11857,7 +12062,7 @@ function cancelSaveActivePlan(){ const row = document.getElementById('plan-save-
 function confirmSaveActivePlan(){
   const inp = document.getElementById('plan-save-active-name'), name = inp ? inp.value.trim() : '';
   if(!name){ codisSfx('invalid', { ctx:'input' }); showToast('اكتب اسم الخطة', 'var(--warning)'); return; }
-  const wk = currentWeekId(), tw = data.weeks[wk], lw = data.learnWeeks[wk];
+  const wk = currentPlanKey(), tw = data.weeks[wk], lw = data.learnWeeks[wk];
   const tasksRaw = planLinesFromWeek(tw), learnRaw = planLinesFromWeek(lw);
   if(!tasksRaw.trim() && !learnRaw.trim()){ codisSfx('invalid', { ctx:'unavailable' }); showToast('ماكو عناصر بالخطة تنحفظ', 'var(--warning)'); return; }
   if(!data.plans) data.plans = {};
@@ -11908,14 +12113,14 @@ function distributePlan(){
   if(taskItems.length){
     const { days, items_meta } = distributeItemsToDays(taskItems, available);
     const full = {}; for(let i=0;i<7;i++) full[i] = days[i] || [];
-    data.weeks[wk] = { days: full, startedAt, items: items_meta, holidayDay, planStartDay: todayIdx, planName: planNameAtDistribution, sourceRaw: draft.tasksRaw || '' };
+    data.weeks[wk] = { days: full, startedAt, items: items_meta, holidayDay, planStartDay: todayIdx, cyc: 2, planName: planNameAtDistribution, sourceRaw: draft.tasksRaw || '' };
   } else {
     delete data.weeks[wk]; // ما نخلي خطة مهام قديمة معلّقة تحت اسم/عطلة خطة جديدة
   }
   if(learnItems.length){
     const { days, items_meta } = distributeItemsToDays(learnItems, available);
     const full = {}; for(let i=0;i<7;i++) full[i] = days[i] || [];
-    data.learnWeeks[wk] = { days: full, startedAt, items: items_meta, holidayDay, planStartDay: todayIdx, planName: planNameAtDistribution, sourceRaw: draft.learnRaw || '' };
+    data.learnWeeks[wk] = { days: full, startedAt, items: items_meta, holidayDay, planStartDay: todayIdx, cyc: 2, planName: planNameAtDistribution, sourceRaw: draft.learnRaw || '' };
   } else {
     delete data.learnWeeks[wk];
   }
@@ -12486,7 +12691,7 @@ const CodisTaskFlow = (function(){
     if(busy.has(key(k, id))) return;
     if(status === 'half'){
       const f = find(k, id); if(!f || f.t.status) return;
-      if(codisTaskDayLocked(currentWeekId(), f.day, f.t, 'half')) return;   /* يوم لم يأتِ: نفس القاعدة القديمة (المطوّر معفى) */
+      if(codisTaskDayLocked(currentPlanKey(), f.day, f.t, 'half')) return;   /* يوم لم يأتِ: نفس القاعدة القديمة (المطوّر معفى) */
       openPartial(k, id, item); return;
     }
     apply(k, id, status, null);
@@ -12514,7 +12719,7 @@ const CodisTaskFlow = (function(){
   let sheet = null;
   function closeDone(){ if(!sheet) return; codisSfx('close', { ctx:'sheet' }); const s0 = sheet; sheet = null; document.removeEventListener('keydown', s0.onKey, true); s0.root.classList.remove('is-open'); setTimeout(()=>s0.root.remove(), 220); try{ s0.opener && s0.opener.isConnected && s0.opener.focus({ preventScroll:true }); }catch(e){} }
   function sheetBody(k, day){
-    const w = weekOf(k), weekId = currentWeekId(), list = answered(k, day);
+    const w = weekOf(k), weekId = currentPlanKey(), list = answered(k, day);
     if(!list.length) return '<div class="cd-empty">ماكو مهام محسومة هنا</div>';
     const ents = dayEntries(k, weekId, day), out = ents.map(e=>'<div class="cd-day-out ' + (e.kind === 'reward' ? 'is-reward' : 'is-punish') + '">' + escapeHtml(outcomeLine(e)) + '</div>').join('');
     const groups = ['done', 'half', 'none'].map(st=>{
@@ -12548,7 +12753,7 @@ const CodisTaskFlow = (function(){
     const f = find(k, id); if(!f || !f.t.status) return false;   /* غير محسومة أصلاً ← لا شيء (يمنع تكرار الاسترجاع) */
     busy.add(kk);
     try{
-      const weekId = currentWeekId(), ents = dayEntries(k, weekId, f.day), pend = ents.filter(e=>e.status === 'pending'), done = ents.filter(e=>e.status !== 'pending');
+      const weekId = currentPlanKey(), ents = dayEntries(k, weekId, f.day), pend = ents.filter(e=>e.status === 'pending'), done = ents.filter(e=>e.status !== 'pending');
       let msg = 'ترجع المهمة للقائمة بدون حسم، وتقدر تحسمها من جديد.';
       if(pend.length) msg += ' نتيجة اليوم اللي كانت بانتظار قرارك تُلغى لأن اليوم صار غير مكتمل، وتُسجَّل من جديد إذا حسمت كل المهام.';
       if(done.length) msg += ' نتيجة اليوم اللي انحسمت سابقاً تبقى كما سُجّلت (ما تنسحب ولا تنكرر).';
@@ -12767,7 +12972,7 @@ function setTaskStatus(id, status, opts){
     if(t){
       changedDay = Number(dIdx);
       // clicking the already-selected option clears it back to unanswered, in case of a mis-click
-      if(codisTaskDayLocked(currentWeekId(), changedDay, t, status)) return;
+      if(codisTaskDayLocked(currentPlanKey(), changedDay, t, status)) return;
       newStatus = codisApplyTaskStatus(t, status, opts);
       break;
     }
@@ -12923,11 +13128,13 @@ function planDurationDays(startIso, endIso){
   const diff = Math.round((e - s) / 86400000);
   return Math.max(1, diff + 1);
 }
-function dateForWeekDay(weekId, dayIdx){
+function dateForWeekDay(weekId, dayIdx, host){
   if(!weekId) return null;
   const parts = weekId.split('-').map(Number);
   if(parts.length!==3 || parts.some(isNaN)) return null;
-  const d = new Date(parts[0], parts[1]-1, parts[2] + dayIdx);
+  let off = dayIdx;
+  if(Number.isInteger(dayIdx) && dayIdx >= 0 && dayIdx < 7){ const h = host || planHostFor(weekId); if(h && h.cyc === 2 && dayIdx < planStartIdx(h)) off = dayIdx + 7; }
+  const d = new Date(parts[0], parts[1]-1, parts[2] + off);
   return localDateStr(d);
 }
 /* أقسام الأرشيف: أي قسم جديد يُضاف هنا سطر واحد فقط (id + label + empty + match) ويظهر زره تلقائياً. القسم fallback يستقبل كل ما لا يطابقه قسم آخر. */
@@ -13037,7 +13244,7 @@ function archiveDayBlockHtml(label, week, weekId){
   for(let i=0;i<7;i++){
     const tasks = (week.days && week.days[i]) || [];
     if(!tasks.length) continue;
-    const dayDate = dateForWeekDay(weekId, i);
+    const dayDate = dateForWeekDay(weekId, i, week);
     html += `<div class="arch-day">
       <div class="arch-day-title">${DAYS_AR[i]} — ${formatArDate(dayDate)}</div>
       ${tasks.map(t=>{
@@ -13059,6 +13266,7 @@ function openArchiveDetail(id){
   archiveDetailId = id;
   const _restoreBtn = document.getElementById('archive-detail-restore'), _delBtn = document.getElementById('archive-detail-delete');
   if(_restoreBtn) _restoreBtn.style.display = isArchivedHabit(p) ? '' : 'none';
+  { const rb = document.getElementById('archive-detail-reopen'); if(rb){ const why = reopenArchiveReason(p); rb.style.display = (!isArchivedHabit(p) && p.cause === 'stale') ? '' : 'none'; rb.disabled = !!why; rb.title = why; rb.textContent = why ? 'إعادة الفتح غير متاحة — ' + why : 'أعد فتح الخطة للتسجيل'; } }
   if(_delBtn) _delBtn.textContent = isArchivedHabit(p) ? 'حذف العادة' : 'حذف الخطة';
   if(isArchivedHabit(p)){
     titleEl.textContent = p.name;
@@ -17950,7 +18158,7 @@ function renderHabitsPage(){
 
 /* ================= LEARN (mirrors Tasks: weekly plan → daily items, day-locking, 3-state, XP) ================= */
 let activeLearnDayIdx = new Date().getDay();
-function learnCurrentWeek(){ return data.learnWeeks[currentWeekId()]; }
+function learnCurrentWeek(){ return data.learnWeeks[currentPlanKey()]; }
 function learnDayStats(dayIdx){
   const week = learnCurrentWeek();
   const tasks = (week && week.days[dayIdx]) || [];
@@ -17967,7 +18175,7 @@ function setLearnTaskStatus(id, status, opts){
   let newStatus = null, changed = false, changedDay = null;
   for(const dIdx in week.days){
     const t = (week.days[dIdx]||[]).find(x=>x.id===id);
-    if(t){ if(codisTaskDayLocked(currentWeekId(), Number(dIdx), t, status)) return; newStatus = codisApplyTaskStatus(t, status, opts); changed = true; changedDay = Number(dIdx); break; }
+    if(t){ if(codisTaskDayLocked(currentPlanKey(), Number(dIdx), t, status)) return; newStatus = codisApplyTaskStatus(t, status, opts); changed = true; changedDay = Number(dIdx); break; }
   }
   if(changed && !opts.silent) codisSfx(codisTaskSoundFor(newStatus));
   saveData();
@@ -18290,6 +18498,7 @@ function codisBackLayer(){
   const open = id=>{ const el = document.getElementById(id); return !!el && el.style.display !== 'none' && el.style.display !== ''; };
   const L = (id, act)=>({ act:act, el:document.getElementById(id) });
   if(econBulkZoomEl) return { act:econBulkZoomClose, el:econBulkZoomEl };
+  if(graceSheet) return { act:closeGraceSheet, el:graceSheet.root };
   if(open('codis-confirm-modal')) return L('codis-confirm-modal', ()=>resolveCodisConfirm(false));
   if(open('dq-modal')) return L('dq-modal', ()=>dqEsc());
   const rep = document.getElementById('report-overlay'); if(rep && rep.classList.contains('is-open')) return { act:codisCloseReport, el:rep };
