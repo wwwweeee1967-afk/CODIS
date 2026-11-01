@@ -140,6 +140,33 @@
     CodisCardPeek.close(); await sleep(500);
     T('peek: card back in its slot, overlay removed', !CodisCardPeek.isOpen() && !document.querySelector('.peek') && !grid.querySelector('.peek-ph') && grid.children[idx] === card && !card.style.transform);
   } else T('store has a card to peek', false);
+  /* CODIS-PEEK-ALL: كل أنواع عناصر المتجر + عنصر «مستقبلي» يُضاف لقائمة + النقرة القصيرة على البكج باقية */
+  { const body = document.getElementById('eco-store-body'), kinds = {};
+    Array.prototype.forEach.call(body.querySelectorAll('[role="list"] > *'), it=>{ const k = String(it.className).split(' ').filter(c=>/^(bx-card|cos-tile|hcd-shop|shop-card)$/.test(c)).pop() || String(it.className).split(' ')[0]; if(!kinds[k] && it.getBoundingClientRect().height > 40) kinds[k] = it; });
+    for(const k of Object.keys(kinds)){
+      const it = kinds[k], grid = it.parentNode, idx = Array.prototype.indexOf.call(grid.children, it);
+      CodisCardPeek._open(it); await sleep(600);
+      const okOpen = CodisCardPeek.isOpen() && Array.prototype.every.call(it.querySelectorAll('.btn, .chip-act'), b=>getComputedStyle(b).visibility === 'hidden');
+      CodisCardPeek.close(); await sleep(520);
+      T('peek works for store item kind: ' + k, okOpen && grid.children[idx] === it && !document.querySelector('.peek, .peek-ph'));
+    }
+    const list = body.querySelector('[role="list"]'), fut = document.createElement('div');
+    fut.setAttribute('role', 'listitem'); fut.className = 'future-tile'; fut.innerHTML = '<div style="height:90px;background:#334">جديد</div><button type="button" class="btn">شراء</button>';
+    list.appendChild(fut); fut.scrollIntoView({ block:'center' }); await sleep(250);
+    const fr = fut.firstChild.getBoundingClientRect(), o = { bubbles:true, cancelable:true, pointerId:31, pointerType:'touch', clientX:fr.left + fr.width / 2, clientY:fr.top + 30, isPrimary:true };
+    fut.firstChild.dispatchEvent(new PointerEvent('pointerdown', o)); await sleep(520); fut.firstChild.dispatchEvent(new PointerEvent('pointerup', o)); await sleep(600);
+    T('a future item added to any store list gets the preview automatically', CodisCardPeek.isOpen() && getComputedStyle(fut.querySelector('.btn')).visibility === 'hidden');
+    CodisCardPeek.close(); await sleep(520); fut.remove();
+    const btnFut = document.createElement('div'); btnFut.setAttribute('role', 'listitem'); btnFut.innerHTML = '<div style="height:90px"></div><button type="button" class="btn">x</button>'; list.appendChild(btnFut);
+    const br = btnFut.querySelector('.btn').getBoundingClientRect(), ob = { bubbles:true, cancelable:true, pointerId:32, pointerType:'touch', clientX:br.left + 5, clientY:br.top + 5, isPrimary:true };
+    btnFut.querySelector('.btn').dispatchEvent(new PointerEvent('pointerdown', ob)); await sleep(520); btnFut.querySelector('.btn').dispatchEvent(new PointerEvent('pointerup', ob));
+    T('long press on a buy/action button never opens the preview', !CodisCardPeek.isOpen()); btnFut.remove();
+    const bx = body.querySelector('.bx-card .bx-open');
+    if(bx){ bx.scrollIntoView({ block:'center' }); await sleep(250); const rr = bx.getBoundingClientRect(), oo = { bubbles:true, cancelable:true, pointerId:33, pointerType:'touch', clientX:rr.left + rr.width / 2, clientY:rr.top + rr.height / 2, isPrimary:true };
+      bx.dispatchEvent(new PointerEvent('pointerdown', oo)); await sleep(90); bx.dispatchEvent(new PointerEvent('pointerup', oo)); bx.click(); await sleep(700);
+      const m = document.getElementById('econ-pack-modal'), opened = !!m && CodisMotion.isOpen(m);   /* النقر على البكج يفتح معاينة البكج (econPackOpen) */
+      T('a short tap on a pack still opens its preview (long press did not steal taps)', opened && !CodisCardPeek.isOpen());
+      if(opened){ try{ econPackClose(); }catch(e){} await sleep(500); } } }
 
   const failed = out.filter(x=>!x.ok);
   return { passed:out.length - failed.length, failed:failed.length, failures:failed, results:out };

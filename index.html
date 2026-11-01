@@ -15,6 +15,7 @@
 <!-- CODIS-CYCLE -->
 <!-- CODIS-STICKERS -->
 <!-- CODIS-TIMERS -->
+<!-- CODIS-PEEK-ALL -->
 <!-- CODIS-CARDS-V2 -->
 <html lang="ar" dir="rtl">
 <head>
@@ -23,7 +24,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.11.0">
+<meta name="codis-version" content="3.11.1">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4764,9 +4765,10 @@ html, body, body *{ touch-action:pan-x pan-y; }
   opacity:0; transition:opacity 260ms linear; }
 .peek.is-in .peek-scrim{ opacity:1; }
 .peek.is-out .peek-scrim{ opacity:0; transition-duration:220ms; }
-.peek-host{ position:static; }
-.peek .shop-card.is-peek{ transform-origin:50% 50%; will-change:transform; filter:drop-shadow(0 26px 40px rgba(0,0,0,.55)); }
-.peek .shop-card.is-peek .store-meta, .peek .shop-card.is-peek .shop-acts, .peek .shop-card.is-peek .st-cap{ visibility:hidden; }
+.peek-host{ display:contents; }
+.peek .is-peek{ transform-origin:50% 50%; will-change:transform; filter:drop-shadow(0 26px 40px rgba(0,0,0,.55)); }
+/* CODIS-PEEK-ALL: المعاينة للعرض — أزرار الشراء/البيع/الاستخدام تُخفى (المسافة تبقى فلا يتغيّر الشكل) */
+.peek .is-peek :is(.btn, .chip-act, .own-pick){ visibility:hidden; }
 .peek-x{ position:absolute; top:calc(var(--safe-t, 0px) + 14px); inset-inline-end:14px; width:44px; height:44px; border-radius:50%; border:0; display:grid; place-items:center; cursor:pointer;
   background:rgb(255 255 255 / .12); color:#fff; opacity:0; transition:opacity 220ms linear 120ms; }
 .peek-x svg{ width:18px; height:18px; }
@@ -15996,8 +15998,10 @@ const CodisCardPeek = (function(){
   const tok = n=>{ try{ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }catch(e){ return ''; } };
   document.addEventListener('pointerdown', e=>{
     if(s || (e.pointerType === 'mouse' && e.button !== 0)) return;
-    const card = e.target.closest && e.target.closest('#eco-store-body .shop-card'); if(!card || !card.querySelector('.cflip') || card.classList.contains('is-selectable')) return;
-    if(e.target.closest('button, a, input, select, textarea')) return;
+    /* CODIS-PEEK-ALL: أي عنصر بالمتجر = ابن مباشر لقائمة داخل المتجر (الحالي والمستقبلي)؛ أزرار الإجراء وحدها لا تبدأ المعاينة */
+    const card = e.target.closest && e.target.closest('#eco-store-body [role="list"] > *');
+    if(!card || card.classList.contains('is-selectable') || card.classList.contains('peek-ph') || card.getBoundingClientRect().height < 40) return;
+    if(e.target.closest('.btn, .chip-act, input, select, textarea, a[href]')) return;
     clearP(); p = { id:e.pointerId, x:e.clientX, y:e.clientY, card:card, t:setTimeout(()=>{ const c = p && p.card; p = null; if(c) open(c); }, HOLD) };
   });
   document.addEventListener('pointermove', e=>{ if(p && e.pointerId === p.id && Math.hypot(e.clientX - p.x, e.clientY - p.y) > SLOP) clearP(); });
@@ -16012,10 +16016,15 @@ const CodisCardPeek = (function(){
     try{ navigator.vibrate && navigator.vibrate(8); }catch(e){}
     const ph = document.createElement('div'); ph.className = 'peek-ph'; ph.style.width = r.width + 'px'; ph.style.height = r.height + 'px';
     const ov = document.createElement('div'); ov.className = 'peek'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'معاينة البطاقة');
-    ov.innerHTML = '<div class="peek-scrim"></div><div class="peek-host store-sec"></div><button type="button" class="peek-x" aria-label="إغلاق المعاينة">' + ICONS.close + '</button><p class="peek-hint">اضغط البطاقة لتنقلب · اضغط خارجها للرجوع</p>';
+    ov.innerHTML = '<div class="peek-scrim"></div><div class="peek-host store-sec"></div><button type="button" class="peek-x" aria-label="إغلاق المعاينة">' + ICONS.close + '</button><p class="peek-hint">' + (card.querySelector('.cflip') ? 'اضغط البطاقة لتنقلب · ' : '') + 'اضغط خارجها للرجوع</p>';
     document.body.appendChild(ov);
     card.parentNode.insertBefore(ph, card);
-    ov.querySelector('.peek-host').appendChild(card);
+    /* سلسلة الآباء الحقيقية حتى المتجر كأغلفة بلا صندوق: الأنماط المعتمدة على الآباء (.bx-grid .bx-card …) تبقى كما هي */
+    let host = ov.querySelector('.peek-host'); const chain = [];
+    for(let n = ph.parentElement; n && n.id !== 'eco-store-body' && n !== document.body; n = n.parentElement) chain.unshift(n);
+    chain.forEach(a=>{ const w = document.createElement('div'); w.className = a.className; w.style.display = 'contents';
+      Array.prototype.forEach.call(a.attributes, at=>{ if(/^(data-|role$)/.test(at.name)) w.setAttribute(at.name, at.value); }); host.appendChild(w); host = w; });
+    host.appendChild(card);
     card.classList.add('is-peek');
     /* body مُحوَّل (إطار التطبيق) فهو حاوية fixed: كل الإحداثيات نسبةً لصندوق الطبقة نفسها لا للنافذة */
     const o = ov.getBoundingClientRect();
