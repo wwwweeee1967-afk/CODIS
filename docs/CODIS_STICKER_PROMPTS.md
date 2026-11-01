@@ -67,6 +67,24 @@ Subject: a steaming bowl of spicy noodles with chopsticks lifting a twirl, a sof
 Subject: three golden triangular fried pastries with a lemon wedge and a dipping sauce cup. Palette: fried gold, lemon yellow, mint green.
 ```
 
+### `hot_dog` — هوت دوك (موجود)
+
+```
+Subject: a grilled hot dog in a soft bun with a wavy mustard line. Palette: bun gold, sausage red, mustard yellow.
+```
+
+### `taco` — تاكو (موجود)
+
+```
+Subject: a crunchy taco shell packed with seasoned meat, lettuce, tomato and cheese. Palette: shell yellow, lettuce green, tomato red.
+```
+
+### `sandwich` — سندويچ توست (موجود)
+
+```
+Subject: a triangle toast club sandwich stacked with ham, cheese, lettuce and tomato. Palette: toast brown, lettuce green, tomato red.
+```
+
 ## أكلات عراقية
 
 ### `dolma` — دولمة (موجود)
@@ -167,6 +185,36 @@ Subject: a dark chocolate layer cake slice with glossy ganache, a cherry on top 
 Subject: a small glass cup of milky pudding with cinnamon dust, rose petals and crushed nuts, with a tiny spoon. Palette: milk white, cinnamon tan, rose pink.
 ```
 
+### `cupcake` — كب كيك (موجود)
+
+```
+Subject: a chocolate cupcake topped with a pink cream swirl and a cherry. Palette: cream pink, chocolate brown, cherry red.
+```
+
+### `cake_slice` — كيك فراولة (موجود)
+
+```
+Subject: a layered sponge cake slice with strawberry cream and a fresh strawberry on top. Palette: sponge cream, strawberry red.
+```
+
+### `cookie` — كوكيز (موجود)
+
+```
+Subject: a big golden cookie studded with chocolate chips. Palette: golden brown, chocolate.
+```
+
+### `macaron` — ماكرون (موجود)
+
+```
+Subject: a plump pink macaron with a cream filling. Palette: raspberry pink, cream.
+```
+
+### `chocolate_bar` — لوح شوكولاتة (موجود)
+
+```
+Subject: a dark chocolate bar half unwrapped from crinkled gold foil. Palette: chocolate brown, foil gold.
+```
+
 ## مشروبات باردة
 
 ### `iced_coffee` — آيس كوفي (موجود)
@@ -209,6 +257,12 @@ Subject: a blended smoothie jar with layered mango and berry, fruit chunks float
 
 ```
 Subject: a whole green coconut with a hole and straw, a small umbrella and a hibiscus flower. Palette: coconut green, hibiscus red, sand beige.
+```
+
+### `soda` — مشروب غازي (موجود)
+
+```
+Subject: a red paper soda cup with a lid and a striped straw. Palette: soda red, white swirl.
 ```
 
 ## چاي وقهوة
@@ -255,6 +309,12 @@ Subject: a tiny round cafe table with two cups, a croissant plate and a small va
 Subject: a small jar of green cardamom pods, saffron threads in a dish and a cinnamon stick laid around a tea glass. Palette: saffron orange, cardamom green, cinnamon brown.
 ```
 
+### `coffee_togo` — قهوة تيك أوي (موجود)
+
+```
+Subject: a takeaway coffee cup with a brown lid and a coffee-bean sleeve. Palette: kraft brown, cream.
+```
+
 ## طلعات
 
 ### `cinema` — سينما (موجود)
@@ -291,6 +351,12 @@ Subject: a chunky retro arcade cabinet with a joystick and glowing pixel-like sc
 
 ```
 Subject: two paper shopping bags with ribbon handles tipping over, tissue paper sprouting out. Palette: bag pink, bag teal, tissue yellow.
+```
+
+### `theater` — مسرح (موجود)
+
+```
+Subject: golden comedy and silver tragedy masks side by side. Palette: mask gold, silver grey.
 ```
 
 ## راحة
@@ -361,6 +427,30 @@ Subject: a half-finished jigsaw puzzle with one piece floating in, mismatched pa
 
 ```
 Subject: big over-ear gaming headphones with a curved mic and glowing ear cups. Palette: headset black, accent orange, glow cyan.
+```
+
+### `football` — كرة قدم (موجود)
+
+```
+Subject: a classic black and white leather football. Palette: leather white, black.
+```
+
+### `basketball` — كرة سلة (موجود)
+
+```
+Subject: an orange basketball with deep black seams. Palette: basketball orange, black.
+```
+
+### `billiards` — بليارد (موجود)
+
+```
+Subject: a glossy black eight ball. Palette: gloss black, white.
+```
+
+### `darts` — سهام دارت (موجود)
+
+```
+Subject: a dartboard with two darts in the bullseye area. Palette: board black, cream, red and green.
 ```
 
 ## أفلام ومحتوى
@@ -441,6 +531,18 @@ Subject: a classic wristwatch with a leather strap partly unrolled, gears peekin
 Subject: a rugged backpack with buckles and pockets, a laptop corner sticking out of the top flap. Palette: bag forest green, buckle brass, laptop silver.
 ```
 
+### `sports_car` — سيارة (موجود)
+
+```
+Subject: a red sports car with white racing stripes. Palette: racing red, white stripes.
+```
+
+### `diamond` — ألماسة (موجود)
+
+```
+Subject: a brilliant cut blue diamond sparkling. Palette: ice blue, white sparkle.
+```
+
 ## عناية
 
 ### `perfume` — عطر (موجود)
@@ -481,6 +583,12 @@ Subject: a retro telephone with a long curly cord forming a heart shape and a fe
 Subject: a big round table spread with shared dishes and a pot in the center, many hands reaching in (no faces). Palette: tablecloth red-white, dishes varied, wood brown.
 ```
 
+### `rose` — وردة (موجود)
+
+```
+Subject: a single deep red rose with a green leaf. Palette: rose red, leaf green.
+```
+
 ## تعلّم
 
 ### `new_book` — كتاب جديد (موجود)
@@ -519,6 +627,12 @@ Subject: a small tent glowing from inside, a campfire with sparks and a few pine
 
 ```
 Subject: a stylized domed building with arches and a minaret-like tower, a tiny bridge and a map pin shape. Palette: sandstone, dome turquoise, sky pale blue.
+```
+
+### `compass` — بوصلة (موجود)
+
+```
+Subject: an antique brass pocket compass with a red and gold needle. Palette: brass gold, parchment.
 ```
 
 ## رقمي
@@ -573,4 +687,16 @@ Subject: a night sky bursting with a cluster of colorful fireworks over a tiny s
 
 ```
 Subject: a small layered celebration cake with lit candles, a party hat and a bunch of balloons tied to it. Palette: cake pink-white, balloons bright mix, candle flame.
+```
+
+### `medal` — ميدالية (موجود)
+
+```
+Subject: a gold star medal hanging from a red and white ribbon. Palette: medal gold, ribbon red.
+```
+
+### `crown` — تاج (موجود)
+
+```
+Subject: a royal red velvet crown with gold arches and jewels. Palette: velvet red, gold, jewels.
 ```

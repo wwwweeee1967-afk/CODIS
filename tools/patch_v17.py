@@ -45,7 +45,7 @@ JS = r"""/* ===== CODIS-STICKERS: مكتبة الستيكرات =====
    البيانات (المعرّف · التصنيف · الاسم · الكلمات المفتاحية · الملف) تُبنى بـ tools/build_stickers.py من tools/stickers_meta.py وملفات assets/stickers/.
    ملف الصورة غير موجود ⇒ الستيكر لا يظهر بالمنتقي ولا على البطاقة. المعرّف وحده يُخزَّن بالبيانات (لا صور ولا Base64) */
 /* CODIS-STICKERS-DATA */const CODIS_STICKER_CATS=[];const CODIS_STICKER_ITEMS=[];/* /CODIS-STICKERS-DATA */
-const CODIS_STK_BASE = 'assets/stickers/';
+const CODIS_STK_BASE = /\/app\/[^\/]*$/.test(location.pathname) ? '../assets/stickers/' : 'assets/stickers/';   // الصفحة داخل app/ والصور بـ assets/ بجذر المشروع
 const CodisStickers = (function(){
   let idx = null;
   /* توحيد الكتابة العراقية/العربية: تشكيل وتطويل · أ إ آ ← ا · ى ← ي · ة ← ه · چ ← ج · گ ← ك · پ ← ب · ڤ ← ف */
