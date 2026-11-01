@@ -1,0 +1,576 @@
+# مطالبات توليد ستيكرات CODIS
+
+كل ستيكر يُولَّد **بصورة مستقلة** (PNG أو WebP شفاف، مربع 1024×1024) ويُحفظ باسم **المعرّف** داخل `assets/stickers/` مثل `shawarma.webp`.
+بعد وضع الصور شغّل: `py -3 tools/build_stickers.py` (يحدّث المكتبة ويظهر المتاح فقط بالمنتقي). يمكن لاحقاً تبديل أي صورة بنفس الاسم.
+
+## الأسلوب العام (يُلصق قبل وصف كل ستيكر)
+
+```
+Modern vintage paper cartoon sticker, premium collectible sticker style, antique illustration feel: hand-drawn cartoon linework with slightly uneven ink outlines, aged paper grain and subtle halftone/letterpress print texture, rich saturated colors, a thick die-cut white border around the subject with a soft paper drop shadow, slightly tilted composition, centered single subject, fully transparent background, square 1024x1024, high detail that still reads clearly at 96 px.
+```
+
+## الممنوعات (تُلصق بعد وصف كل ستيكر)
+
+```
+NO text of any kind: no letters, no numbers, no Arabic or English words, no logos, no watermarks, no labels, no captions, no signatures. Not a photo, not realistic, not a flat app icon, not an emoji. One subject only, no contact sheet, no grid, no background scene rectangle.
+```
+
+> ملاحظة جودة: وزّع التنوّع فعلاً — كل ستيكر بتكوين وزاوية ولوحة ألوان وملمس مختلف، ضمن نفس العائلة الفنية. لا تستعمل قالباً واحداً.
+
+## أكل سريع
+
+### `shawarma` — لفة شاورمة (موجود)
+
+```
+Subject: a hand-drawn shawarma wrap half-unwrapped from crinkled paper, charred pita, pickles, lettuce and garlic sauce spilling out. Palette: warm toasted orange, cream, olive green.
+```
+
+### `burger` — بركر (موجود)
+
+```
+Subject: a tall double cheeseburger with sesame bun, melting cheese, tomato slices, lettuce, with a toothpick flag. Palette: mustard yellow, tomato red, bun brown.
+```
+
+### `pizza` — بيتزا (موجود)
+
+```
+Subject: one pizza slice with stretching mozzarella strand, pepperoni discs and basil leaves on a checkered paper tray. Palette: tomato red, cheese gold, basil green.
+```
+
+### `fries` — بطاطا مقلية (موجود)
+
+```
+Subject: a red paper cone overflowing with golden fries, a puddle of cheese sauce, salt sparkles. Palette: golden yellow, red stripes.
+```
+
+### `falafel` — صمون فلافل (موجود)
+
+```
+Subject: a loaf of samoon bread stuffed with falafel balls, tahini drizzle, pickled turnip and tomato. Palette: bread tan, herb green, tahini cream.
+```
+
+### `fried_chicken` — دجاج كرسبي (موجود)
+
+```
+Subject: a stack of crispy fried chicken drumsticks in a striped bucket with a hot pepper. Palette: crunchy amber, red and white stripes.
+```
+
+### `noodles` — نودلز (موجود)
+
+```
+Subject: a steaming bowl of spicy noodles with chopsticks lifting a twirl, a soft egg and chili flakes. Palette: chili red, broth brown, bowl indigo.
+```
+
+### `sambusa` — سمبوسة (موجود)
+
+```
+Subject: three golden triangular fried pastries with a lemon wedge and a dipping sauce cup. Palette: fried gold, lemon yellow, mint green.
+```
+
+## أكلات عراقية
+
+### `dolma` — دولمة (موجود)
+
+```
+Subject: a round copper tray of rolled vine-leaf dolma arranged in a spiral with onions and a lemon. Palette: copper, vine green, lemon.
+```
+
+### `kebab` — كباب وتكة (موجود)
+
+```
+Subject: two long skewers of grilled kebab and tikka over glowing charcoal with grilled tomato and onion rings. Palette: charcoal black, ember orange, meat brown.
+```
+
+### `masgouf` — مسگوف (موجود)
+
+```
+Subject: a butterflied carp fish standing by an open fire on wooden stakes, with tomatoes, onions and flatbread. Palette: fire orange, river blue, fish silver.
+```
+
+### `biryani` — برياني ورز (موجود)
+
+```
+Subject: a steaming platter of saffron rice heaped with roasted chicken, almonds and raisins, a ladle of broth beside it. Palette: saffron yellow, roast brown, white platter.
+```
+
+### `tashreeb` — تشريب (موجود)
+
+```
+Subject: a deep clay bowl of tashreeb stew with torn bread soaking in rich red broth, chickpeas and herbs. Palette: terracotta, stew red, bread beige.
+```
+
+### `kubba` — كبة (موجود)
+
+```
+Subject: a tray of oval kubba croquettes, one cut open to show spiced meat filling, beside a small bowl of pickles. Palette: golden brown, spice red, cream.
+```
+
+### `mandi_pot` — قدر بيتي (موجود)
+
+```
+Subject: a big dented cooking pot with lid ajar releasing steam, a wooden spoon, okra and tomatoes around it. Palette: pot silver-blue, okra green, tomato red.
+```
+
+## حلويات
+
+### `kunafa` — كنافة (موجود)
+
+```
+Subject: a round tray of kunafa with golden shredded-pastry top, a slice lifted showing stretchy cheese, pistachio crumbs and syrup. Palette: deep gold, orange blossom syrup, pistachio green.
+```
+
+### `baklava` — بقلاوة (موجود)
+
+```
+Subject: a stack of diamond-shaped baklava with flaky layers, honey drizzle and chopped pistachios. Palette: honey amber, pistachio green, pastry cream.
+```
+
+### `cheesecake` — تشيز كيك (موجود)
+
+```
+Subject: a creamy cheesecake slice with a strawberry sauce top, a fork and a mint leaf on a small plate. Palette: cream white, strawberry red, plate blue.
+```
+
+### `donut` — دونات (موجود)
+
+```
+Subject: two glazed donuts, one pink frosted with colorful sprinkles and one chocolate, one with a bite taken. Palette: bubblegum pink, chocolate brown, confetti colors.
+```
+
+### `ice_cream` — آيس كريم (موجود)
+
+```
+Subject: a waffle cone with three melting scoops in mismatched flavors, drips running down, a wafer stick. Palette: vanilla cream, strawberry pink, pistachio mint.
+```
+
+### `waffle` — وافل وبان كيك (موجود)
+
+```
+Subject: a tall stack of fluffy pancakes with a butter pat, maple syrup flowing down, and berries on top. Palette: pancake tan, maple amber, berry blue.
+```
+
+### `croissant` — كرواسون (موجود)
+
+```
+Subject: a flaky golden croissant on a bakery paper bag with a few crumbs and a wheat sprig. Palette: butter gold, paper bag brown, wheat yellow.
+```
+
+### `choco_cake` — كيك شوكولاتة (موجود)
+
+```
+Subject: a dark chocolate layer cake slice with glossy ganache, a cherry on top and a dusting of cocoa. Palette: cocoa brown, cherry red, cream filling.
+```
+
+### `rice_pudding` — مهلبية ورز بحليب (موجود)
+
+```
+Subject: a small glass cup of milky pudding with cinnamon dust, rose petals and crushed nuts, with a tiny spoon. Palette: milk white, cinnamon tan, rose pink.
+```
+
+## مشروبات باردة
+
+### `iced_coffee` — آيس كوفي (موجود)
+
+```
+Subject: a tall clear glass of iced coffee with visible milk layers swirling, ice cubes and a bent paper straw. Palette: coffee brown, milk cream, icy blue.
+```
+
+### `pomegranate` — عصير رمان (موجود)
+
+```
+Subject: a glass of ruby pomegranate juice beside a split pomegranate spilling jewel-like seeds. Palette: ruby red, deep magenta, leaf green.
+```
+
+### `orange_juice` — عصير برتقال (موجود)
+
+```
+Subject: a juice glass of fresh orange juice with an orange slice on the rim and a halved orange with leaves. Palette: sunny orange, leaf green, white pulp.
+```
+
+### `mojito` — موهيتو وليمون (موجود)
+
+```
+Subject: a highball glass of mojito packed with lime wheels, muddled mint leaves, crushed ice and a striped straw. Palette: lime green, mint teal, ice white.
+```
+
+### `milkshake` — ميلك شيك (موجود)
+
+```
+Subject: a tall diner-style milkshake with whipped cream swirl, a cherry, a long spoon and a straw. Palette: strawberry pink, whipped cream white, cherry red.
+```
+
+### `smoothie` — سموذي فواكه (موجود)
+
+```
+Subject: a blended smoothie jar with layered mango and berry, fruit chunks floating beside it. Palette: mango yellow, berry purple, fresh green.
+```
+
+### `coconut` — جوز هند (موجود)
+
+```
+Subject: a whole green coconut with a hole and straw, a small umbrella and a hibiscus flower. Palette: coconut green, hibiscus red, sand beige.
+```
+
+## چاي وقهوة
+
+### `tea_glass` — استكان جاي (موجود)
+
+```
+Subject: a curvy waisted glass istikan of amber tea on a small gilded saucer with a sugar cube, thin steam curls and cardamom pods. Palette: amber, gold rim, soft glass blue.
+```
+
+### `teapot` — قوري وسماور (موجود)
+
+```
+Subject: an ornate dark teapot with a curved spout on a charcoal brazier-style stand, steam, and two small glasses. Palette: brass gold, dark teal, ember glow.
+```
+
+### `arabic_coffee` — قهوة عربية (موجود)
+
+```
+Subject: a tall brass dallah coffee pot pouring into a tiny handleless finjan cup, dates and cardamom beside. Palette: brass, coffee brown, date maroon.
+```
+
+### `espresso` — إسبريسو وكابتشينو (موجود)
+
+```
+Subject: a cappuccino cup seen from a slight angle with leaf latte art, a spoon and coffee beans scattered. Palette: espresso brown, foam cream, cup terracotta.
+```
+
+### `hot_choc` — هوت چوكليت (موجود)
+
+```
+Subject: a chunky mug of hot chocolate topped with marshmallows and a cinnamon stick, wisps of steam. Palette: cocoa brown, marshmallow white, mug red.
+```
+
+### `cafe_table` — قعدة كافيه (موجود)
+
+```
+Subject: a tiny round cafe table with two cups, a croissant plate and a small vase with a flower, a chair back peeking in. Palette: cafe green, wood brown, cream.
+```
+
+### `tea_cardamom` — چاي بالهيل (موجود)
+
+```
+Subject: a small jar of green cardamom pods, saffron threads in a dish and a cinnamon stick laid around a tea glass. Palette: saffron orange, cardamom green, cinnamon brown.
+```
+
+## طلعات
+
+### `cinema` — سينما (موجود)
+
+```
+Subject: a striped popcorn box overflowing, two torn cinema tickets and a tiny film clapperboard without any writing. Palette: cinema red, popcorn butter, midnight blue.
+```
+
+### `bowling` — بولينگ (موجود)
+
+```
+Subject: a bowling ball mid-roll toward ten scattering pins with motion swooshes. Palette: lane wood, ball indigo, pin white-red.
+```
+
+### `park_picnic` — حديقة ونزهة (موجود)
+
+```
+Subject: a checkered picnic blanket with a basket, a thermos and a tree casting soft shade, butterflies around. Palette: meadow green, gingham red, sky blue.
+```
+
+### `dinner_out` — غدا وعشا بمطعم (موجود)
+
+```
+Subject: a restaurant table with a candle, a covered silver cloche being lifted, wine-less glasses and folded napkin. Palette: candle gold, tablecloth navy, silver.
+```
+
+### `arcade` — ألعاب أركيد (موجود)
+
+```
+Subject: a chunky retro arcade cabinet with a joystick and glowing pixel-like screen and a stack of tokens. Palette: neon violet, screen cyan, token gold.
+```
+
+### `mall_bag` — مول وتسوق (موجود)
+
+```
+Subject: two paper shopping bags with ribbon handles tipping over, tissue paper sprouting out. Palette: bag pink, bag teal, tissue yellow.
+```
+
+## راحة
+
+### `armchair` — ساعة راحة (موجود)
+
+```
+Subject: a cozy armchair with a plump cushion, a knitted blanket draped over and a small side table with a plant. Palette: calm sage green, wool cream, wood brown.
+```
+
+### `nap` — غفوة ونوم (موجود)
+
+```
+Subject: a fluffy pillow with a sleeping crescent moon resting on it, tiny stars and floating zzz-shaped clouds without letters. Palette: night blue, moon yellow, pillow white.
+```
+
+### `bath` — حمام دافي (موجود)
+
+```
+Subject: a clawfoot bathtub brimming with bubbles, a rubber duck, rolled towel and a candle on the edge. Palette: bubble white, brass faucet, soft aqua.
+```
+
+### `no_phone` — بدون موبايل (موجود)
+
+```
+Subject: a smartphone resting face-down inside a small glass dome like a museum piece, a book and tea nearby. Palette: glass teal, dusk purple, paper cream.
+```
+
+### `sleep_in` — صباح بدون منبه (موجود)
+
+```
+Subject: a retro twin-bell alarm clock wearing a tiny sleep mask on its face, with a sunbeam and a quilt corner. Palette: sunrise peach, clock mint, quilt coral.
+```
+
+### `candle_spa` — عناية بالبشرة (موجود)
+
+```
+Subject: a lit scented candle in a glass, a clay face mask bowl with a brush and cucumber slices. Palette: clay beige, candle amber, cucumber green.
+```
+
+## ألعاب
+
+### `gamepad` — يد تحكم (موجود)
+
+```
+Subject: a chunky game controller with colorful round buttons and a tiny sparkle trail, one thumbstick tilted. Palette: controller charcoal, button primary colors.
+```
+
+### `board_game` — لعبة لوحية (موجود)
+
+```
+Subject: a board with chess pieces and a pair of dice, a fan of playing cards behind, a domino tile. Palette: wood brown, felt green, ivory.
+```
+
+### `handheld` — لعبة موبايل (موجود)
+
+```
+Subject: a handheld console with a glowing screen and a small pixel heart, a charging cable curled around it. Palette: console teal, screen lime, cable white.
+```
+
+### `puzzle` — ألغاز (موجود)
+
+```
+Subject: a half-finished jigsaw puzzle with one piece floating in, mismatched pastel colored pieces. Palette: pastel mix, board brown.
+```
+
+### `headset` — سماعة ألعاب (موجود)
+
+```
+Subject: big over-ear gaming headphones with a curved mic and glowing ear cups. Palette: headset black, accent orange, glow cyan.
+```
+
+## أفلام ومحتوى
+
+### `tv_show` — مسلسل وحلقة (موجود)
+
+```
+Subject: a retro television set with rabbit-ear antennas, a blanket-covered couch edge and a bowl of snacks in front. Palette: tv wood, screen blue glow, blanket red.
+```
+
+### `movie_night` — ليلة أفلام (موجود)
+
+```
+Subject: a small film projector casting a beam on a screen with silhouettes of two snack bowls and a blanket. Palette: beam amber, dark room blue, popcorn gold.
+```
+
+### `podcast` — بودكاست وموسيقى (موجود)
+
+```
+Subject: a vintage microphone beside a vinyl record and floating music-note shapes, headphones hanging on it. Palette: mic chrome, vinyl black, note mint.
+```
+
+### `anime` — أنمي وكرتون (موجود)
+
+```
+Subject: a bubbly cartoon-style character-less scene: a bowl of ramen with a speech-cloud-shaped steam and sparkle stars, manga-screentone dots. Palette: sakura pink, ramen orange, ink black.
+```
+
+## هوايات
+
+### `paint` — جلسة رسم (موجود)
+
+```
+Subject: a wooden painter palette with dollops of color, two brushes crossed and a small canvas on an easel corner. Palette: palette wood, vivid pigments.
+```
+
+### `camera` — تصوير (موجود)
+
+```
+Subject: a vintage film camera with a leather strap, a few instant photos fanning out, one with a tiny paper clip. Palette: camera black-silver, photo white, strap tan.
+```
+
+### `oud` — عود وموسيقى (موجود)
+
+```
+Subject: a beautiful pear-shaped oud with a decorative rosette and bent neck, a few music-note swirls. Palette: oud wood amber, rosette cream, strings gold.
+```
+
+### `pottery` — فخار وحرف (موجود)
+
+```
+Subject: a clay pot on a spinning wheel with wet hands shaping it, a ball of yarn and crochet hook beside. Palette: clay terracotta, yarn teal, wood brown.
+```
+
+## مشتريات
+
+### `gift_bag` — هدية صغيرة (موجود)
+
+```
+Subject: a small kraft gift bag with tissue sprouting, a keychain charm and a tiny wrapped trinket beside. Palette: kraft brown, tissue pink, charm gold.
+```
+
+### `shoes` — حذاء وملابس (موجود)
+
+```
+Subject: a pair of stylish sneakers with mismatched laces and a folded shirt with a hanger hook above. Palette: sneaker white-red, shirt denim blue.
+```
+
+### `wristwatch` — ساعة يد (موجود)
+
+```
+Subject: a classic wristwatch with a leather strap partly unrolled, gears peeking from the back and a small wallet. Palette: steel silver, strap brown, wallet navy.
+```
+
+### `backpack` — شنطة (موجود)
+
+```
+Subject: a rugged backpack with buckles and pockets, a laptop corner sticking out of the top flap. Palette: bag forest green, buckle brass, laptop silver.
+```
+
+## عناية
+
+### `perfume` — عطر (موجود)
+
+```
+Subject: an elegant faceted perfume bottle with a bulb sprayer and a spray mist cloud with floating petals. Palette: bottle amber, mist lilac, petal rose.
+```
+
+### `hair_care` — شعر وحلاقة (موجود)
+
+```
+Subject: a barber scene: scissors, a comb and a striped barber pole, a hand mirror reflecting a sparkle. Palette: barber red-blue stripe, steel, mirror silver.
+```
+
+### `skincare` — كريم ولوشن (موجود)
+
+```
+Subject: a round jar of cream with a lid leaning beside it, a lotion tube and a soft towel roll, a daisy. Palette: cream pastel, towel mint, daisy yellow.
+```
+
+## أصدقاء وعائلة
+
+### `friends_cups` — قعدة أصدقاء (موجود)
+
+```
+Subject: three mismatched mugs clinking together over a low table with a plate of snacks and a speech-bubble shape (blank). Palette: warm mix, table wood, bubble white.
+```
+
+### `phone_call` — مكالمة (موجود)
+
+```
+Subject: a retro telephone with a long curly cord forming a heart shape and a few small hearts drifting upward. Palette: phone teal, cord cream, heart pink.
+```
+
+### `family_table` — غدا عائلي (موجود)
+
+```
+Subject: a big round table spread with shared dishes and a pot in the center, many hands reaching in (no faces). Palette: tablecloth red-white, dishes varied, wood brown.
+```
+
+## تعلّم
+
+### `new_book` — كتاب جديد (موجود)
+
+```
+Subject: an open book with aged pages, a ribbon bookmark, pressed leaf and ink-pen curls, a stack of two books beneath. Palette: paper sepia, ink blue, leaf green.
+```
+
+### `notebook` — دفتر وقلم (موجود)
+
+```
+Subject: a leather-bound notebook with an elastic strap, a fountain pen and a few washi tapes and stickers. Palette: leather brown, ink navy, washi coral.
+```
+
+### `graduation` — دورة وتعلم (موجود)
+
+```
+Subject: a graduation cap resting on a stack of books with a small lightbulb and a rolled certificate (blank). Palette: cap black, tassel gold, books maroon.
+```
+
+## سفر
+
+### `suitcase` — حقيبة سفر (موجود)
+
+```
+Subject: a vintage hard-shell suitcase covered with blank travel-label shapes, a passport shape and a sun hat on top. Palette: case teal, strap tan, hat straw.
+```
+
+### `camping` — تخييم ونزهة (موجود)
+
+```
+Subject: a small tent glowing from inside, a campfire with sparks and a few pine trees under a star sky. Palette: tent orange, night navy, fire gold.
+```
+
+### `landmark` — مكان سياحي (موجود)
+
+```
+Subject: a stylized domed building with arches and a minaret-like tower, a tiny bridge and a map pin shape. Palette: sandstone, dome turquoise, sky pale blue.
+```
+
+## رقمي
+
+### `subscription` — اشتراك رقمي (موجود)
+
+```
+Subject: a floating glowing app-card with a play triangle and a cloud, small key and calendar page shapes orbiting. Palette: screen glow violet, cloud white, key gold.
+```
+
+### `ebook` — كتاب إلكتروني (موجود)
+
+```
+Subject: a tablet showing blank text lines resting against a stack of paper books with a cozy mug. Palette: tablet slate, paper cream, mug orange.
+```
+
+## مفاجآت
+
+### `mystery_box` — بوكس مفاجأة (موجود)
+
+```
+Subject: a mysterious box with a big question-mark-shaped keyhole glow (no letters), ribbons springing out and confetti. Palette: box violet, glow gold, ribbon pink.
+```
+
+### `wrapped_gift` — هدية ملفوفة (موجود)
+
+```
+Subject: a wrapped present with a big ribbon bow, curly ribbon tails and a handful of falling confetti. Palette: wrap red, ribbon gold, confetti mix.
+```
+
+### `treasure` — صندوق كنز (موجود)
+
+```
+Subject: an old wooden treasure chest overflowing with coins and gems with a skeleton-key lying in front. Palette: chest wood, gold, gem green-blue.
+```
+
+## احتفال
+
+### `trophy` — كأس إنجاز (موجود)
+
+```
+Subject: a gleaming golden trophy cup with laurel wreath and a star on a small pedestal, light rays behind. Palette: trophy gold, laurel green, ray yellow.
+```
+
+### `fireworks` — ألعاب نارية (موجود)
+
+```
+Subject: a night sky bursting with a cluster of colorful fireworks over a tiny skyline silhouette. Palette: night navy, firework mix.
+```
+
+### `party_cake` — كيكة احتفال (موجود)
+
+```
+Subject: a small layered celebration cake with lit candles, a party hat and a bunch of balloons tied to it. Palette: cake pink-white, balloons bright mix, candle flame.
+```

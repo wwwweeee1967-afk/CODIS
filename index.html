@@ -13,6 +13,7 @@
 <!-- CODIS-PLANCARD -->
 <!-- CODIS-GRACE -->
 <!-- CODIS-CYCLE -->
+<!-- CODIS-STICKERS -->
 <!-- CODIS-CARDS-V2 -->
 <html lang="ar" dir="rtl">
 <head>
@@ -21,7 +22,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.8.0">
+<meta name="codis-version" content="3.9.1">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4668,6 +4669,51 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .gs-btns button.is-done{ border-color:rgb(var(--success-rgb, 80 200 140) / .5); color:var(--success); } .gs-btns button.is-none{ color:var(--danger-ink, var(--danger)); }
 .gs-half{ grid-template-columns:auto repeat(4, minmax(0, 1fr)); align-items:center; } .gs-half span{ font-size:12.5px; color:var(--text-2); }
 .gs-foot{ display:grid; gap:8px; margin-top:6px; } .gs-foot .btn{ min-height:46px; }
+
+/* CODIS-STICKERS */
+.stk-row{ display:flex; align-items:center; gap:8px; margin:2px 0 10px; }
+.stk-pick{ flex:1; min-width:0; display:flex; align-items:center; gap:12px; min-height:56px; padding:8px 12px; border-radius:14px; border:1px dashed rgb(var(--hi-rgb) / .24); background:rgb(var(--hi-rgb) / .04); color:var(--text); font:inherit; text-align:start; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.stk-pick:active{ background:rgb(var(--hi-rgb) / .09); }
+.stk-pick:focus-visible, .stk-x:focus-visible, .stk-tile:focus-visible, .stk-chip:focus-visible, .stk-q:focus-visible{ outline:2px solid var(--aqua); outline-offset:2px; }
+.stk-th{ flex:none; width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:rgb(var(--hi-rgb) / .07); color:var(--text-3); overflow:hidden; }
+.stk-th svg{ width:22px; height:22px; }
+.stk-th.has{ background:none; overflow:visible; }
+.stk-th img{ width:100%; height:100%; object-fit:contain; transform:rotate(-6deg); filter:drop-shadow(0 2px 3px rgba(0,0,0,.4)); }
+.stk-tx{ display:flex; flex-direction:column; min-width:0; }
+.stk-tx b{ font-size:14.5px; font-weight:700; }
+.stk-tx i{ font-style:normal; font-size:12px; color:var(--text-3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.stk-x{ flex:none; width:44px; height:44px; border-radius:50%; border:0; background:rgb(var(--hi-rgb) / .06); color:var(--text-2); cursor:pointer; display:grid; place-items:center; }
+.stk-x svg{ width:18px; height:18px; }
+.stk-mini{ width:28px; height:28px; object-fit:contain; flex:none; transform:rotate(-6deg); filter:drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
+.stk-sheet{ max-height:88vh; }
+.stk-bar{ padding:0 16px 8px; display:flex; flex-direction:column; gap:8px; }
+.stk-q{ width:100%; min-height:46px; padding:0 14px; border-radius:12px; border:1px solid rgb(var(--hi-rgb) / .14); background:rgb(var(--hi-rgb) / .05); color:var(--text); font:inherit; font-size:16px; }
+.stk-cats{ display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; }
+.stk-cats::-webkit-scrollbar{ display:none; }
+.stk-chip{ flex:none; min-height:40px; padding:0 14px; border-radius:20px; border:1px solid rgb(var(--hi-rgb) / .14); background:none; color:var(--text-2); font:inherit; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.stk-chip.is-on{ background:var(--aqua); color:#04121a; border-color:transparent; }
+.stk-body{ min-height:170px; padding-top:4px; }
+.stk-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(88px, 1fr)); gap:8px; }
+.stk-tile{ position:relative; display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px 6px; border-radius:14px; border:1.5px solid transparent; background:rgb(var(--hi-rgb) / .04); color:var(--text-2); font:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.stk-tile img{ width:100%; aspect-ratio:1; object-fit:contain; display:block; }
+.stk-tile span{ font-size:11.5px; line-height:1.3; text-align:center; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.stk-tile[aria-selected="true"]{ border-color:var(--aqua); background:rgb(var(--hi-rgb) / .09); color:var(--text); }
+.stk-tile.is-cur::after{ content:''; position:absolute; top:6px; inset-inline-end:6px; width:8px; height:8px; border-radius:50%; background:var(--success); }
+.stk-empty{ grid-column:1 / -1; padding:34px 8px; text-align:center; color:var(--text-3); font-size:14px; line-height:1.7; }
+.stk-foot{ flex:none; display:flex; align-items:center; gap:14px; padding:10px 16px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid rgb(var(--hi-rgb) / .08); min-height:84px; }
+.stk-pv{ flex:none; width:74px; position:relative; aspect-ratio:4 / 5; }
+.stk-pv .rwc-wrap, .stk-pv .cfp{ position:absolute; inset:0; }
+.stk-fx{ flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; }
+.stk-name{ font-weight:700; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.stk-hint{ font-size:13px; color:var(--text-3); }
+.stk-act{ display:flex; gap:8px; flex-wrap:wrap; }
+.stk-act .btn{ min-height:44px; padding:0 14px; font-size:14px; }
+/* طبقة الستيكر على البطاقة: ملصق مائل عند الزاوية العليا فوق إطار الرسم، بعيداً عن الاسم والقيمة والندرة */
+.rwc-stk{ position:absolute; z-index:3; aspect-ratio:1; object-fit:contain; pointer-events:none; -webkit-user-drag:none; transform:rotate(-9deg); transform-origin:50% 50%; filter:drop-shadow(0 1px 0 rgba(255,255,255,.22)) drop-shadow(0 3px 5px rgba(0,0,0,.5)); }
+.rwc-stk-d, .rwc-stk-w, .rwc-stk-s{ left:-2.5%; top:-2%; width:33%; }
+.rwc-stk-m{ left:-4%; top:-1.5%; width:44%; }
+.rwc-stk-p{ left:3%; top:2%; width:36%; }
+.cfp{ position:relative; }
 </style>
 </head>
 <body>
@@ -6568,6 +6614,8 @@ function econNormalizeConfig(src){
 }
 
 /* المكافآت والعقوبات ككائنات: أي حقل ناقص يُملأ، والمعرّفات الثابتة لا تُعاد توليدها أبداً */
+/* CODIS-STICKERS: معرّف ستيكر صالح أو null — دالة تصريحية لأنها تُستعمل أثناء loadData قبل تعريف المكتبة */
+function codisStickerIdOk(v){ return (typeof v === 'string' && /^[a-z0-9_]{2,32}$/.test(v)) ? v : null; }
 function econNormalizeItems(settings){
   const rids = settings.economy.rarities.map(r=>r.id), fallbackRarity = rids[0];
   const takenR = {}, takenP = {}, now = econNowIso();
@@ -6577,7 +6625,7 @@ function econNormalizeItems(settings){
     takenR[id] = true;
     const rarity = (room !== 'learn' && rids.indexOf(x.rarity) !== -1) ? x.rarity : fallbackRarity;
     /* الأسعار من النموذج الثابت فقط: أي استثناء يدوي قديم (قيمة/سعر) يُصفَّر ولا يُحتسب */
-    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null,
+    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null, stickerId:codisStickerIdOk(x.stickerId),
       enabled:x.enabled !== false, room:room, createdAt:typeof x.createdAt === 'string' ? x.createdAt : now, updatedAt:typeof x.updatedAt === 'string' ? x.updatedAt : now };
   });
   settings.punishItems = settings.punishItems.filter(x=>x && typeof x === 'object' && typeof x.name === 'string' && x.name.trim()).map(x=>{
@@ -6619,7 +6667,7 @@ function econNormalizeInventory(d){
   const seen = {}, now = econNowIso(), iso = v=>(typeof v === 'string' && !isNaN(new Date(v).getTime())) ? v : null;
   let items = (Array.isArray(inv.items) ? inv.items : []).filter(x=>x && typeof x === 'object' && typeof x.uid === 'string' && x.uid && typeof x.name === 'string' && x.name.trim()).filter(x=>{ if(seen[x.uid]) return false; seen[x.uid] = true; return true; }).map(x=>{
     const status = ['owned','sold','used'].indexOf(x.status) !== -1 ? x.status : 'owned';
-    const it = { uid:x.uid, rewardId:(typeof x.rewardId === 'string' && x.rewardId) ? x.rewardId : null, name:x.name.trim().slice(0,120),
+    const it = { uid:x.uid, rewardId:(typeof x.rewardId === 'string' && x.rewardId) ? x.rewardId : null, stickerId:codisStickerIdOk(x.stickerId), name:x.name.trim().slice(0,120),
       rarity:String(x.rarity || '').slice(0,8), rarityName:String(x.rarityName || x.rarity || '').slice(0,24), rarityTone:econTones().indexOf(x.rarityTone) !== -1 ? x.rarityTone : 'c',
       rarityOrder:econNum(x.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(x.room) !== -1 ? x.room : 'tasks', source:(x.source === 'store' || x.source === 'box') ? x.source : 'outcome',
       sourceRef:String(x.sourceRef || ''), scope:String(x.scope || ''), acquiredAt:iso(x.acquiredAt) || now, status:status, statusAt:iso(x.statusAt) || iso(x.acquiredAt) || now,
@@ -6727,6 +6775,7 @@ function econNormalizeAll(d){
   Object.keys(d.outcomeLedger).forEach(k=>{
     const e = d.outcomeLedger[k];
     if(!e.scope) e.scope = 'daily';
+    if(e.stickerId !== undefined) e.stickerId = codisStickerIdOk(e.stickerId);
     if(!e.type) e.type = e.scope + '_' + (e.kind === 'reward' ? 'reward' : 'punishment');
     if(e.status !== 'pending' && e.status !== 'void'){ e.status = 'resolved'; if(!e.decision) e.decision = 'legacy'; }
     if(typeof e.coinValue !== 'number' || !isFinite(e.coinValue)) delete e.coinValue;
@@ -6995,7 +7044,7 @@ const CodisInventory = (function(){
   function grant(o){
     if(!o || !o.uid || get(o.uid)) return null;
     const now = econNowIso();
-    const it = { uid:o.uid, rewardId:o.rewardId || null, name:String(o.name || 'مكافأة').slice(0,120), rarity:String(o.rarity || ''), rarityName:String(o.rarityName || o.rarity || ''),
+    const it = { uid:o.uid, rewardId:o.rewardId || null, stickerId:codisStickerIdOk(o.stickerId), name:String(o.name || 'مكافأة').slice(0,120), rarity:String(o.rarity || ''), rarityName:String(o.rarityName || o.rarity || ''),
       rarityTone:econTones().indexOf(o.rarityTone) !== -1 ? o.rarityTone : 'c', rarityOrder:econNum(o.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(o.room) !== -1 ? o.room : 'tasks',
       source:(o.source === 'store' || o.source === 'box') ? o.source : 'outcome', sourceRef:String(o.sourceRef || ''), scope:String(o.scope || ''), acquiredAt:now, status:'owned', statusAt:now,
       coinValue:econNum(o.coinValue, 0, 0, 1000000, true), paid:(o.paid === null || o.paid === undefined) ? null : econNum(o.paid, 0, 0, 1000000, true) };
@@ -7250,7 +7299,7 @@ const CodisEconomy = (function(){
     if(kind === 'reward'){
       const r = CodisRewardEngine.roll(room, ctxKey, rollOpts);
       CodisRewardEngine.commit(room, r);
-      Object.assign(e, { item:r.reward ? r.reward.name : (r.genericName || 'مكافأة'), rewardId:r.reward ? r.reward.id : null, rarity:r.rarity.id, rarityName:r.rarity.name,
+      Object.assign(e, { item:r.reward ? r.reward.name : (r.genericName || 'مكافأة'), rewardId:r.reward ? r.reward.id : null, stickerId:r.reward ? codisStickerIdOk(r.reward.stickerId) : null, rarity:r.rarity.id, rarityName:r.rarity.name,
         rarityTone:r.rarity.tone, rarityOrder:r.rarity.order, odds:r.odds, coinValue:r.coinValue, storePrice:r.storePrice, coinsAwarded:0 });
       if(r.pity) e.pity = true;
       if(r.adaptive) e.adaptive = r.adaptive;   // شفافية: الفترة وعدد المهام المكتملة ومقدار خفض C وقت السحب
@@ -7283,7 +7332,7 @@ const CodisEconomy = (function(){
         e.coinsAwarded = amount;
       } else {
         /* أخذ المكافأة: نسخة واحدة تُسجَّل بممتلكاته (لقطة وقت الحصول) ولا كوينز. المعرّف من النتيجة نفسها فلا تتكرر */
-        owned = CodisInventory.grant({ uid:'own|' + e.id, rewardId:e.rewardId, name:e.item, rarity:e.rarity, rarityName:e.rarityName, rarityTone:e.rarityTone, rarityOrder:e.rarityOrder,
+        owned = CodisInventory.grant({ uid:'own|' + e.id, rewardId:e.rewardId, stickerId:e.stickerId, name:e.item, rarity:e.rarity, rarityName:e.rarityName, rarityTone:e.rarityTone, rarityOrder:e.rarityOrder,
           room:e.room, source:'outcome', sourceRef:e.id, scope:e.scope, coinValue:e.coinValue });
         if(!owned) return { ok:false, reason:'inventory' };
       }
@@ -7483,7 +7532,7 @@ const CodisEconomy = (function(){
       const tx = CodisWallet.apply('PURCHASE_REWARD', -price, 'شراء مكافأة ' + item.rarity, 'store', 'purchase|' + item.id + '|' + econUid('p'), { rewardId:item.id, name:item.name, rarity:item.rarity });
       if(!tx) return { ok:false, reason:'tx' };
       /* الخصم والملكية معاً: لقطة الاسم/الندرة/قيمة الاستبدال وقت الشراء */
-      const owned = CodisInventory.grant({ uid:'own|store|' + tx.id, rewardId:item.id, name:item.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
+      const owned = CodisInventory.grant({ uid:'own|store|' + tx.id, rewardId:item.id, stickerId:item.stickerId, name:item.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
         room:item.room, source:'store', sourceRef:tx.id, coinValue:econEffCoin(item, rar), paid:price });
       return owned ? { ok:true, tx:tx, price:price, item:item, owned:owned } : { ok:false, reason:'inventory' };
     });
@@ -7957,7 +8006,7 @@ const CodisBoxes = (function(){
     } else if(r.holidayKind){   /* الجائزة بطاقة عطلة: تُمنح للمخزون الخاص بها (لا data.inventory.items)، معرّفها من البكج فلا تُمنح مرتين، ومنه يبدأ عدّ صلاحيتها إن كانت ذات صلاحية */
       holiday = CodisHolidayCards.grant({ uid:'hc|box|' + uid, kind:r.holidayKind, source:'box', sourceRef:uid, tier:t.id }); if(!holiday) return { ok:false, reason:'inventory' };
     } else {
-      o = CodisInventory.grant({ uid:'own|box|' + uid, rewardId:it.id, name:it.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
+      o = CodisInventory.grant({ uid:'own|box|' + uid, rewardId:it.id, stickerId:it.stickerId, name:it.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
         room:it.room, source:'box', sourceRef:uid, coinValue:econEffCoin(it, rar), paid:null });
       if(!o) return { ok:false, reason:'inventory' };
     }
@@ -13581,7 +13630,7 @@ function codisSpecialCardHtml(k, o){
   const S = CODIS_SPECIAL_CARD_SLOTS[k], coin = Math.max(0, Math.trunc(Number(o.coin) || 0)), name = String(o.name || '');
   return (o.plain ? '<div class="rwc-wrap is-on">' : '<div class="rv rwc-wrap" data-s="1">') + '<div class="rwc scx scx-' + k + ' rwc-c" role="img" aria-label="' + escapeHtml(o.label || (name + (coin > 0 ? ' — ' + econFmt(coin) : ''))) + '">' +
     '<div class="rwc-stage" style="--ar:' + S.ar + ';--ar-css:' + S.w + ' / ' + S.h + '">' +
-    '<img class="rwc-art scx-art" src="' + CodisArt.src(CODIS_SPECIAL_CARD_ART[k]) + '" alt="" draggable="false">' +
+    '<img class="rwc-art scx-art" src="' + CodisArt.src(CODIS_SPECIAL_CARD_ART[k]) + '" alt="" draggable="false">' + codisStickerLayerHtml(o, 's') +
     '<div class="rwc-slot scx-plate" style="' + codisSpecialPlateStyle(k) + '"><span class="scx-row"><span class="scx-name" dir="auto">' + escapeHtml(name) + '</span>' +
     (coin > 0 ? '<span class="scx-coin">' + codisIcon('coin') + '<b>' + econFmt(coin) + '</b></span>' : '') + '</span></div>' +
     '</div></div></div>';
@@ -13678,7 +13727,7 @@ function codisWeeklyCardHtml(e, o){
   /* .rwc-d.wkc = بطاقة أسبوعية بالتصميم الجديد: الصورة هي البطاقة (4:5 بلا إطار/حشوة/خلفية خارجية). رمز الطبقة (C/B/A/S/SS) مرسوم في الصورة؛ اسم الطبقة يبقى في الوسم/التلميح */
   return (o.plain ? '<div class="rwc-wrap is-on">' : '<div class="rv rwc-wrap" data-s="1">') + '<div class="rwc rwc-d wkc rwc-' + tone + '" role="img" aria-label="' + escapeHtml(o.label || (M.en + ' — ' + M.ar + ' — ' + e.item + (coin > 0 ? ' — ' + econFmt(coin) : ''))) + '" title="' + escapeHtml(M.tip) + '">' +
     '<div class="rwc-stage" style="--ar:' + S.ar + ';--ar-css:' + S.w + ' / ' + S.h + '">' +
-    '<img class="rwc-art" src="' + CodisArt.src(CODIS_WEEKLY_ART[k]) + '" alt="" draggable="false">' +
+    '<img class="rwc-art" src="' + CodisArt.src(CODIS_WEEKLY_ART[k]) + '" alt="" draggable="false">' + codisStickerLayerHtml(e, 'w') +
     '<div class="rwc-slot rwc-name" style="' + pos(coin > 0 ? S.name : S.solo) + '"><span dir="auto">' + escapeHtml(e.item) + '</span></div>' +
     (coin > 0 ? '<div class="rwc-slot rwc-price" style="' + pos(S.price) + '"><span>' + codisIcon('coin') + '<b>' + econFmt(coin) + '</b></span></div>' : '') +
     '</div></div></div>';
@@ -13705,7 +13754,7 @@ function codisMonthlyCardHtml(e, o){
   const pos = n=>'left:' + S[n][0] + '%;top:' + S[n][1] + '%;width:' + S[n][2] + '%;height:' + S[n][3] + '%;';
   return (o.plain ? '<div class="rwc-wrap is-on">' : '<div class="rv rwc-wrap" data-s="1">') + '<div class="rwc mtc rwc-' + tone + '" role="img" aria-label="' + escapeHtml(o.label || (k + (rn ? ' — ' + rn : '') + ' — ' + e.item + (coin > 0 ? ' — ' + econFmt(coin) : ''))) + '">' +
     '<div class="rwc-stage" style="--ar:' + S.ar + ';--ar-css:' + S.w + ' / ' + S.h + '">' +
-    '<img class="rwc-art" src="' + CodisArt.src(CODIS_MONTHLY_ART[k]) + '" alt="" draggable="false">' +
+    '<img class="rwc-art" src="' + CodisArt.src(CODIS_MONTHLY_ART[k]) + '" alt="" draggable="false">' + codisStickerLayerHtml(e, 'm') +
     '<div class="rwc-slot wkc-name" style="' + pos('name') + '"><span dir="auto">' + escapeHtml(e.item) + '</span></div>' +
     '<div class="rwc-slot wkc-info" style="' + pos('info') + '"><span class="wkc-row"><span class="wkc-tier"><b dir="ltr">' + k + '</b>' + (rn ? '<i dir="rtl">' + escapeHtml(rn) + '</i>' : '') + '</span>' +
     (coin > 0 ? '<span class="wkc-coin">' + codisIcon('coin') + '<b>' + econFmt(coin) + '</b></span>' : '') + '</span></div>' +
@@ -13733,14 +13782,14 @@ function codisUseRewardCard(e){ return !!e && e.kind === 'reward' && e.scope !==
    بدون o يبقى الناتج مطابقاً تماماً لما يُعرض بعد إكمال المهام */
 function codisRewardCardHtml(e, o){
   o = o || {};
-  if(codisIsTeacherReward(e)) return codisSpecialCardHtml('teacher', { name:e.item, coin:(o.price !== undefined ? o.price : e.coinValue), plain:o.plain, label:o.label });   /* غرفة الأستاذ: بطاقتها المستقلة */
+  if(codisIsTeacherReward(e)) return codisSpecialCardHtml('teacher', { name:e.item, coin:(o.price !== undefined ? o.price : e.coinValue), plain:o.plain, label:o.label, stickerId:e.stickerId });   /* غرفة الأستاذ: بطاقتها المستقلة */
   const k = codisCardKey(e), S = CODIS_CARD_SLOTS[k], tone = k.toLowerCase();
   const coin = Math.max(0, Math.trunc(Number(o.price !== undefined ? o.price : e.coinValue) || 0));
   const pos = a=>'left:' + a[0] + '%;top:' + a[1] + '%;width:' + a[2] + '%;height:' + a[3] + '%;';
   /* .rwc-d = البطاقة اليومية الجديدة: الصورة هي البطاقة (4:5 بلا إطار/حشوة/خلفية). رمز الندرة مرسوم في الصورة، فيُعلن للقارئ الصوتي عبر الوسم */
   return (o.plain ? '<div class="rwc-wrap is-on">' : '<div class="rv rwc-wrap" data-s="1">') + '<div class="rwc rwc-d rwc-' + tone + '" role="' + (o.label ? 'img' : 'group') + '" aria-label="' + escapeHtml(o.label || CODIS_CARD_RARITY_AR[k]) + '">' +
     '<div class="rwc-stage" style="--ar:' + S.ar + ';--ar-css:' + S.w + ' / ' + S.h + '">' +
-    '<img class="rwc-art" src="' + CodisArt.src(codisCardArtSrc(k, o.cosmetic)) + '" alt="" draggable="false">' + codisCosmeticLayerHtml(k, o.cosmetic) +
+    '<img class="rwc-art" src="' + CodisArt.src(codisCardArtSrc(k, o.cosmetic)) + '" alt="" draggable="false">' + codisCosmeticLayerHtml(k, o.cosmetic) + codisStickerLayerHtml(e, 'd') +
     '<div class="rwc-slot rwc-name" style="' + pos(coin > 0 ? S.name : S.solo) + '"><span dir="auto">' + escapeHtml(e.item) + '</span></div>' +
     (coin > 0 ? '<div class="rwc-slot rwc-price" style="' + pos(S.price) + '"><span>' + codisIcon('coin') + '<b>' + econFmt(coin) + '</b></span></div>' : '') +
     '</div></div></div>';
@@ -13812,7 +13861,7 @@ function codisPunishCardHtml(e, o){
 /* بطاقة بلا صورة (مكافآت بلا تصميم فني، مثل «الحدثية»): وجه CODIS بإطار 4:5 ولون الندرة. عرض فقط */
 function codisPlainCardHtml(name, rar, o){
   o = o || {}; const tone = econTones().indexOf(rar && rar.tone) !== -1 ? rar.tone : 'c', id = String((rar && rar.id) || '');
-  return '<div class="cfp rwc-' + tone + '" role="img" aria-label="' + escapeHtml(o.label || name) + '"><span class="cfp-in"><span class="cfp-brand" aria-hidden="true">CODIS</span>' +
+  return '<div class="cfp rwc-' + tone + '" role="img" aria-label="' + escapeHtml(o.label || name) + '">' + codisStickerLayerHtml(o, 'p') + '<span class="cfp-in"><span class="cfp-brand" aria-hidden="true">CODIS</span>' +
     '<span class="cfp-gem" aria-hidden="true"><b>' + escapeHtml(id) + '</b></span><span class="cfp-name" dir="auto">' + escapeHtml(name) + '</span></span></div>';
 }
 /* ===== CodisCardAmb — خلفية الإطار الموحّد 4:5: لون محيطي مشتق من صورة البطاقة نفسها (تصغير شديد ثم تكبير ناعم = ضبابية بلا filter:blur).
@@ -15281,11 +15330,123 @@ document.addEventListener('keydown', ev=>{ if(ev.key === 'Escape' && econStoreSa
 function econOpenPending(){ const p = CodisEconomy.pending()[0]; if(p){ codisSfx('open', { ctx:'outcome' }); CodisOutcomeUI.show(p.id); } }
 
 /* ---- المكافآت ---- */
+/* ===== CODIS-STICKERS: مكتبة الستيكرات =====
+   البيانات (المعرّف · التصنيف · الاسم · الكلمات المفتاحية · الملف) تُبنى بـ tools/build_stickers.py من tools/stickers_meta.py وملفات assets/stickers/.
+   ملف الصورة غير موجود ⇒ الستيكر لا يظهر بالمنتقي ولا على البطاقة. المعرّف وحده يُخزَّن بالبيانات (لا صور ولا Base64) */
+/* CODIS-STICKERS-DATA */const CODIS_STICKER_CATS=[["food","أكل سريع","اكل وجبة طلب مطعم سريع"],["iraqi","أكلات عراقية","اكل عراقي اكلة وجبة بيتي تراثي"],["sweets","حلويات","حلويات حلو حلا سكر معجنات"],["cold","مشروبات باردة","كلاص كوب كاس مشروب مشروبات عصير بارد ثلج"],["tea","چاي وقهوة","كوب مشروب ساخن حار فنجان استكان كاس قعده"],["out","طلعات","طلعة طلعات خروج برا تجربة"],["rest","راحة","راحة استراحة دلال هدوء وقت"],["games","ألعاب","لعبة العاب لعب ترفيه"],["watch","أفلام ومحتوى","فلم فيلم مشاهدة مسلسل ترفيه محتوى"],["create","هوايات","هواية هوايات ابداع فن"],["shop","مشتريات","شراء مشتريات غرض تسوق"],["care","عناية","عناية دلال اهتمام بالنفس"],["social","أصدقاء وعائلة","اصدقاء عائلة اهل قعدة لمة"],["learn","تعلّم","تعلم تطوير دراسة قراءة"],["travel","سفر","سفر رحلة سياحة تغيير جو"],["digital","رقمي","رقمي اشتراك تطبيق انترنت"],["surprise","مفاجآت","مفاجأة هدية صندوق بوكس"],["celebrate","احتفال","احتفال انجاز فرحة مناسبة"]];const CODIS_STICKER_ITEMS=[["shawarma","food","لفة شاورمة","شاورمة شاورما لفة صاج رول دجاج لحم سندويچ ساندويش samoon shawarma wrap roll","shawarma.svg?v=08bbc7"],["burger","food","بركر","بركر برگر همبرغر دبل جيز تشيز burger cheeseburger","burger.svg?v=b93b92"],["pizza","food","بيتزا","بيتزا بيتزه جبن بيبروني خضرة شريحة pizza slice pepperoni","pizza.svg?v=a0587f"],["fries","food","بطاطا مقلية","بطاطا بطاطس فرايز ودجز جبن chips fries potato wedges","fries.svg?v=da1ad4"],["falafel","food","صمون فلافل","فلافل صمون عمبة طعمية falafel sandwich","falafel.svg?v=e301f8"],["fried_chicken","food","دجاج كرسبي","كريسبي زنجر مسحب دجاج مقلي بروستد fried chicken crispy zinger","fried_chicken.svg?v=39fc23"],["noodles","food","نودلز","نودلز نودلس اندومي معكرونة نودل حارة noodles ramen","noodles.svg?v=a906c4"],["sambusa","food","سمبوسة","سمبوسة سمبوسك كبة مقلية مقرمشات فطائر samosa pastry","sambusa.svg?v=215ddc"],["dolma","iraqi","دولمة","دولمة دولمه ورق عنب محشي صينية dolma stuffed grape leaves","dolma.svg?v=387c37"],["kebab","iraqi","كباب وتكة","كباب تكة شيش مشاوي لحم فحم مشويات kebab tikka grill skewer","kebab.svg?v=13a945"],["masgouf","iraqi","مسگوف","مسكوف مسگوف سمك سمچ شواء نهر دجلة masgouf fish carp","masgouf.svg?v=1285de"],["biryani","iraqi","برياني ورز","برياني ريزو رز تمن تمّن مندي مقلوبة صينية دجاج rice biryani mandi","biryani.svg?v=6a4ec7"],["tashreeb","iraqi","تشريب","تشريب تشريب باقلاء باجة قيمة مرگة مرقة شوربة stew soup tashreeb","tashreeb.svg?v=364fae"],["kubba","iraqi","كبة","كبة كبه حامض كبة موصلية كبة رز kubba kibbeh","kubba.svg?v=a9e9d7"],["mandi_pot","iraqi","قدر بيتي","اكل بيتي مرگة بامية فاصوليا طبخة قدر ست البيت قوزي home cooking stew pot","mandi_pot.svg?v=9ac541"],["kunafa","sweets","كنافة","كنافة كنافه قشطة بالقشطة جبن فستق knafeh kunafa","kunafa.svg?v=210937"],["baklava","sweets","بقلاوة","بقلاوة بقلاوه زلابية قطايف لقيمات حلو شرقي baklava","baklava.svg?v=7a8b29"],["cheesecake","sweets","تشيز كيك","تشيز كيك تشيزكيك كيك جبن فراولة cheesecake","cheesecake.svg?v=212041"],["donut","sweets","دونات","دونات دوناتس دونت كرزة رشات donut doughnut sprinkles","donut.svg?v=9bcf6a"],["ice_cream","sweets","آيس كريم","ايس كريم آيس كريم بوظة بوزة جيلاتو كون icecream gelato cone","ice_cream.svg?v=bf40c8"],["waffle","sweets","وافل وبان كيك","وافل بان كيك كريب نوتيلا عسل pancake waffle crepe nutella","waffle.svg?v=6013a7"],["croissant","sweets","كرواسون","كرواسون كرواسان معجنات سينابون مخبز فطور croissant pastry bakery","croissant.svg?v=de8b64"],["choco_cake","sweets","كيك شوكولاتة","كيك شوكلاته شوكولاتة براوني موس تيراميسو كوكيز chocolate cake brownie","choco_cake.svg?v=c17925"],["rice_pudding","sweets","مهلبية ورز بحليب","مهلبية رز بحليب حلا بالحليب بودينغ مهلبيه pudding milk dessert","rice_pudding.svg?v=4a6669"],["iced_coffee","cold","آيس كوفي","ايس كوفي آيس كوفي قهوة باردة لاتيه ايس لاتيه فرابيه iced coffee latte frappe","iced_coffee.svg?v=b629f5"],["pomegranate","cold","عصير رمان","رمان عصير رمان عصير فريش juice pomegranate","pomegranate.svg?v=a1a5dd"],["orange_juice","cold","عصير برتقال","برتقال عصير برتقال فريش ليمون عصير حمضيات orange juice citrus","orange_juice.svg?v=fe69f9"],["mojito","cold","موهيتو وليمون","موهيتو ليمون نعناع ليمون نعناع سلاش آيس تي mojito lemonade mint","mojito.svg?v=07410e"],["milkshake","cold","ميلك شيك","ميلك شيك ميلكشيك شيك شوكولاتة فراولة milkshake shake","milkshake.svg?v=9a9c8c"],["smoothie","cold","سموذي فواكه","سموذي سموثي فواكه كوكتيل عصير مانگو فراولة smoothie fruit mango","smoothie.svg?v=b12c96"],["coconut","cold","جوز هند","جوز هند ماء جوز الهند ماء جوزه قصب مشروب استوائي coconut water tropical","coconut.svg?v=db815d"],["tea_glass","tea","استكان جاي","جاي چاي شاي استكان ستكان استكان جاي مهيل دارسين هيل عالفحم tea glass istikan","tea_glass.svg?v=892f64"],["teapot","tea","قوري وسماور","قوري ابريق سماور جاي شاي قوري تقديم ابريق teapot kettle samovar","teapot.svg?v=52d5a6"],["arabic_coffee","tea","قهوة عربية","قهوة عربية قهوة تركية دلة فنجان هيل قهوة مرة arabic coffee dallah turkish coffee","arabic_coffee.svg?v=5d415c"],["espresso","tea","إسبريسو وكابتشينو","اسبريسو كابتشينو لاتيه سبانش لاتيه قهوة بندق نسكافيه espresso cappuccino latte","espresso.svg?v=708c1d"],["hot_choc","tea","هوت چوكليت","هوت شوكليت شوكولاتة ساخنة چوكليت كاكاو مارشميلو hot chocolate cocoa marshmallow","hot_choc.svg?v=aa0ad7"],["cafe_table","tea","قعدة كافيه","كافيه قعدة كافيه مقهى قعدة هادئة فطور بكافيه cafe coffee shop sit","cafe_table.svg?v=ab8110"],["tea_cardamom","tea","چاي بالهيل","هيل زعفران چاي بالهيل زعفران دارسين نكهة cardamom saffron tea spice","tea_cardamom.svg?v=f6c520"],["cinema","out","سينما","سينما فلم فيلم تذكرة فشار طلعة سينما cinema movie ticket popcorn","cinema.svg?v=d9b0e0"],["bowling","out","بولينگ","بولينج بولينگ بولنك بليارد بلياردو كرات bowling billiards pins","bowling.svg?v=6f6c52"],["park_picnic","out","حديقة ونزهة","حديقة نزهة بيكنك طلعة نهر تمشية غروب منتزه park picnic walk river","park_picnic.svg?v=d9cbdb"],["dinner_out","out","غدا وعشا بمطعم","مطعم غدا عشا فطور برا مطعم جديد وجبة فاخرة restaurant dinner dine out","dinner_out.svg?v=633c5f"],["arcade","out","ألعاب أركيد","اركيد صالة ألعاب ملاهي مدينة ألعاب arcade amusement","arcade.svg?v=5e3886"],["mall_bag","out","مول وتسوق","مول تسوق زيارة مول جولة اسواق shopping mall bags","mall_bag.svg?v=5cd321"],["armchair","rest","ساعة راحة","راحة استراحة ساعة راحة كرسي مريح ارجوحة هدوء جلسة استرخاء relax armchair rest","armchair.svg?v=4658d4"],["nap","rest","غفوة ونوم","غفوة نوم نومة قيلولة مخدة وسادة نوم مبچر نوم زيادة sleep nap pillow","nap.svg?v=f6d87d"],["bath","rest","حمام دافي","حمام دافئ استحمام سبا مياه فقاعات bath spa bubbles tub","bath.svg?v=045fd7"],["no_phone","rest","بدون موبايل","بدون موبايل ساعة بدون موبايل هدوء وحدك فصل ديجيتال offline unplug phone","no_phone.svg?v=80fc2e"],["sleep_in","rest","صباح بدون منبه","منبه صباح بدون منبه نومة زيادة الصبح تأخير يوم خفيف alarm clock sleep in","sleep_in.svg?v=db3710"],["candle_spa","rest","عناية بالبشرة","ماسك وجه سبا شمعة معطرة عناية بالبشرة ماسك face mask spa candle","candle_spa.svg?v=a01925"],["gamepad","games","يد تحكم","لعبة يد تحكم بلايستيشن ايدي جهاز العاب كونسول gamepad console controller ps","gamepad.svg?v=f55fc5"],["board_game","games","لعبة لوحية","العاب لوحية شطرنج طاولة دومينو ورق شدة لودو ليلة العاب board game chess dominoes cards","board_game.svg?v=e03d22"],["handheld","games","لعبة موبايل","لعبة موبايل جهاز محمول لعبة جديدة شراء لعبة تحميل لعبة mobile game handheld","handheld.svg?v=03ccd5"],["puzzle","games","ألغاز","لغز بازل ألغاز جلسة الغاز تركيب puzzle jigsaw","puzzle.svg?v=3d027c"],["headset","games","سماعة ألعاب","سماعة رأس سماعة العاب هيدفون هيدست جهاز اضافي headset gaming headphones","headset.svg?v=881e6e"],["tv_show","watch","مسلسل وحلقة","مسلسل حلقة تلفزيون شاشة ماراثون مسلسل نتفلكس فلم تلفزيون tv series show","tv_show.svg?v=d8a856"],["movie_night","watch","ليلة أفلام","ليلة أفلام فلم سناك بروجكتر ليلة افلام movie night projector","movie_night.svg?v=c449b8"],["podcast","watch","بودكاست وموسيقى","بودكاست موسيقى اغاني سماع سماعات راديو podcast music radio","podcast.svg?v=aab7ad"],["anime","watch","أنمي وكرتون","انمي كرتون رسوم متحركة ماراثون انمي anime cartoon","anime.svg?v=941db6"],["paint","create","جلسة رسم","رسم فرشاة الوان لوحة تلوين دفتر رسم paint palette brush draw","paint.svg?v=66313a"],["camera","create","تصوير","تصوير كاميرا صور طلعة تصوير ألبوم صور camera photo","camera.svg?v=4bd251"],["oud","create","عود وموسيقى","عود جيتار عزف موسيقى اغنية آلة oud guitar music instrument","oud.svg?v=92a7c6"],["pottery","create","فخار وحرف","فخار يدوي كروشيه حرفة صناعة يدوية خط عربي pottery craft handmade crochet","pottery.svg?v=79b88a"],["gift_bag","shop","هدية صغيرة","هدية قطعة صغيرة اكسسوار مشتريات صغيرة ميدالية gift small treat accessory","gift_bag.svg?v=5d34e7"],["shoes","shop","حذاء وملابس","حذاء جزمة ملابس قميص بدلة ملابس جديدة shoes sneakers clothes","shoes.svg?v=c36ea1"],["wristwatch","shop","ساعة يد","ساعة يد ساعة اكسسوار محفظة شنطة حقيبة watch accessory","wristwatch.svg?v=79afc8"],["backpack","shop","شنطة","شنطة حقيبة ظهر شنطة يومية حامل لابتوب backpack bag laptop","backpack.svg?v=44727b"],["perfume","care","عطر","عطر برفان بخور عود عطور لوشن perfume fragrance cologne","perfume.svg?v=5110d8"],["hair_care","care","شعر وحلاقة","حلاقة قص شعر تسريحة مشط حلاق ترتيب شعر زيت haircut barber comb","hair_care.svg?v=4a40fc"],["skincare","care","كريم ولوشن","كريم لوشن مرطب عناية منتج عناية جلسة قدمين skincare cream lotion","skincare.svg?v=2b48ef"],["friends_cups","social","قعدة أصدقاء","اصدقاء قعدة سوالف ليلة سوالف شاي مع الاصدقاء جلسة friends hangout","friends_cups.svg?v=0d185d"],["phone_call","social","مكالمة","مكالمة اتصال تلفون شخص عزيز دردشة رسالة call phone chat","phone_call.svg?v=dfd93c"],["family_table","social","غدا عائلي","عائلة اهل غدا عائلي سفرة مائدة لمة family lunch table","family_table.svg?v=ca86af"],["new_book","learn","كتاب جديد","كتاب جديد رواية قراءة مكتبة قراءة تخصصية مجلة book novel reading","new_book.svg?v=c8f012"],["notebook","learn","دفتر وقلم","دفتر قلم قرطاسية دفتر تخطيط دفتر انيق stationery notebook pen planner","notebook.svg?v=866480"],["graduation","learn","دورة وتعلم","دورة تعلم لغة ورشة شهادة جامعة تطوير مهارة course learning graduation","graduation.svg?v=f402fc"],["suitcase","travel","حقيبة سفر","سفر رحلة حقيبة سفرة ويكند سفرة يوم suitcase trip travel luggage","suitcase.svg?v=a9a91a"],["camping","travel","تخييم ونزهة","تخييم خيمة طلعة برية كشتة مخيم نار camping tent bonfire","camping.svg?v=de20e9"],["landmark","travel","مكان سياحي","سياحة مكان سياحي متحف معرض زيارة مدينة فندق landmark museum hotel","landmark.svg?v=a8e58e"],["subscription","digital","اشتراك رقمي","اشتراك شهر اشتراك منصة تطبيق برنامج اداة رقمية subscription app streaming","subscription.svg?v=3a312d"],["ebook","digital","كتاب إلكتروني","كتاب الكتروني تابلت قراءة رقمية اشتراك قراءة ebook tablet reader","ebook.svg?v=9bc838"],["mystery_box","surprise","بوكس مفاجأة","مفاجأة بوكس صندوق هدية مفاجأة عشوائي صندوق سناكات mystery box surprise","mystery_box.svg?v=677c89"],["wrapped_gift","surprise","هدية ملفوفة","هدية لنفسك هدية تغليف شريط علبة هدية gift wrapped present ribbon","wrapped_gift.svg?v=2ff516"],["treasure","surprise","صندوق كنز","كنز صندوق كنز ذهب جواهر عملات كنز treasure chest gold coins gems","treasure.svg?v=561f74"],["trophy","celebrate","كأس إنجاز","كأس انجاز جائزة بطولة نجاح فوز ميدالية trophy award winner medal","trophy.svg?v=2319bb"],["fireworks","celebrate","ألعاب نارية","احتفال العاب نارية فرحة طلعة احتفالية مناسبة fireworks celebration party","fireworks.svg?v=7f07f4"],["party_cake","celebrate","كيكة احتفال","كيكة حفلة عيد ميلاد شمعة بالونات حفلة مناسبة birthday party cake balloons","party_cake.svg?v=602527"]];/* /CODIS-STICKERS-DATA */
+const CODIS_STK_BASE = 'assets/stickers/';
+const CodisStickers = (function(){
+  let idx = null;
+  /* توحيد الكتابة العراقية/العربية: تشكيل وتطويل · أ إ آ ← ا · ى ← ي · ة ← ه · چ ← ج · گ ← ك · پ ← ب · ڤ ← ف */
+  function norm(s){ return String(s == null ? '' : s).toLowerCase().replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').replace(/چ/g, 'ج').replace(/گ/g, 'ك').replace(/پ/g, 'ب').replace(/ڤ/g, 'ف').replace(/[^a-z0-9ء-ي\s]/g, ' ').replace(/\s+/g, ' ').trim(); }
+  const strip = t=>(t.length > 3 && t.indexOf('ال') === 0) ? t.slice(2) : t;
+  function build(){
+    if(idx) return idx;
+    const cn = {}, ck = {}; CODIS_STICKER_CATS.forEach(c=>{ cn[c[0]] = c[1]; ck[c[0]] = c[2] || ''; });
+    idx = { cats:CODIS_STICKER_CATS.map(c=>({ id:c[0], name:c[1] })), byId:{}, list:[] };
+    CODIS_STICKER_ITEMS.forEach(r=>{
+      const o = { id:r[0], cat:r[1], name:r[2], file:r[4] || null, nameN:norm(r[2]), hay:norm(r[2] + ' ' + r[3] + ' ' + (cn[r[1]] || '') + ' ' + (ck[r[1]] || '') + ' ' + r[0].replace(/_/g, ' ')) };
+      idx.byId[o.id] = o; if(o.file) idx.list.push(o);
+    });
+    return idx;
+  }
+  const url = id=>{ const o = id ? build().byId[id] : null; return o && o.file ? CODIS_STK_BASE + o.file : ''; };
+  function search(q, cat){
+    const I = build(), toks = norm(q).split(' ').filter(Boolean).map(strip);
+    const out = I.list.filter(o=>(!cat || o.cat === cat) && toks.every(t=>o.hay.indexOf(t) !== -1));
+    if(toks.length) out.sort((a, b)=>(b.nameN.indexOf(toks[0]) !== -1 ? 1 : 0) - (a.nameN.indexOf(toks[0]) !== -1 ? 1 : 0));
+    return out;
+  }
+  function cats(){ const I = build(), n = {}; I.list.forEach(o=>{ n[o.cat] = (n[o.cat] || 0) + 1; }); return I.cats.filter(c=>n[c.id]).map(c=>({ id:c.id, name:c.name, n:n[c.id] })); }
+  return { norm:norm, url:url, has:id=>!!url(id), get:id=>build().byId[id] || null, search:search, cats:cats, count:()=>build().list.length, total:()=>CODIS_STICKER_ITEMS.length };
+})();
+/* طبقة الستيكر على البطاقة — مصدر واحد لكل أنواع البطاقات. fam: d يومي · w أسبوعي · m شهري · s الأستاذ · p بلا صورة. بلا ستيكر/بلا صورة ⇒ نص فارغ فيبقى ناتج البطاقة كما كان */
+function codisStickerLayerHtml(e, fam){
+  const id = codisStickerIdOk(e && e.stickerId), u = id ? CodisStickers.url(id) : '';
+  return u ? '<img class="rwc-stk rwc-stk-' + fam + '" src="' + escapeHtml(u) + '" alt="" draggable="false" decoding="async" onerror="this.remove()">' : '';
+}
+function codisStickerThumbHtml(id){ const u = CodisStickers.url(codisStickerIdOk(id)); return u ? '<img class="stk-mini" src="' + escapeHtml(u) + '" alt="" draggable="false" loading="lazy" onerror="this.remove()">' : ''; }
+/* صف الاختيار داخل محرر المكافأة */
+function codisStickerRowInner(prefix, id){
+  const o = id ? CodisStickers.get(id) : null, u = id ? CodisStickers.url(id) : '';
+  const th = u ? '<img src="' + escapeHtml(u) + '" alt="" draggable="false" onerror="this.remove()">' : codisIcon('gift');
+  const label = !id ? 'إضافة ستيكر' : (u ? 'تغيير الستيكر' : 'ستيكر محفوظ');
+  const sub = !id ? 'اختياري — صورة تُلصق على بطاقة المكافأة' : (u && o ? o.name : 'صورته غير متوفرة حالياً');
+  return '<button type="button" class="stk-pick" onclick="codisOpenStickerPicker(\'' + prefix + '\')"><span class="stk-th' + (u ? ' has' : '') + '">' + th + '</span><span class="stk-tx"><b>' + label + '</b><i>' + escapeHtml(sub) + '</i></span></button>' +
+    (id ? '<button type="button" class="stk-x" aria-label="إزالة الستيكر" onclick="codisSetSticker(\'' + prefix + '\', \'\')">' + ICONS.close + '</button>' : '');
+}
+function codisStickerRowHtml(prefix, id){
+  id = codisStickerIdOk(id) || '';
+  return '<div class="stk-row" id="' + prefix + '-stk-row">' + codisStickerRowInner(prefix, id) + '</div><input type="hidden" id="' + prefix + '-sticker" value="' + id + '">';
+}
+function codisSetSticker(prefix, id){
+  const h = document.getElementById(prefix + '-sticker'); if(!h) return;
+  h.value = codisStickerIdOk(id) || ''; const r = document.getElementById(prefix + '-stk-row'); if(r) r.innerHTML = codisStickerRowInner(prefix, h.value);
+}
+/* معاينة: نفس وجه البطاقة الحقيقي بقيم الفورم الحالية (الاسم/الندرة/القائمة) مع الستيكر المحدد */
+function codisStickerPreviewHtml(prefix, id){
+  const g = k=>document.getElementById(prefix + '-' + k), room = g('room') ? g('room').value : 'tasks', cfg = econCfg().rarities;
+  const rar = (room === 'learn' ? cfg[0] : (econRarityById(g('rarity') ? g('rarity').value : '') || cfg[0])), nm = (g('name') && g('name').value.trim()) || 'اسم المكافأة';
+  try{ return econStoreFaceHtml({ room:room, name:nm, stickerId:id }, rar, { label:nm }); }catch(x){ return ''; }
+}
+var stickerSheet = null;
+function closeStickerPicker(){
+  const s = stickerSheet; if(!s) return; stickerSheet = null;
+  document.removeEventListener('keydown', s.onKey, true); s.root.classList.remove('is-open'); codisSfx('close', { ctx:'sheet' });
+  setTimeout(()=>s.root.remove(), 220); try{ s.opener && s.opener.isConnected && s.opener.focus({ preventScroll:true }); }catch(e){}
+}
+function codisOpenStickerPicker(prefix){
+  if(stickerSheet) return;
+  const hid = document.getElementById(prefix + '-sticker'); if(!hid) return;
+  const cur = codisStickerIdOk(hid.value) || '', root = document.createElement('div'); root.className = 'cd-ov stk-ov';
+  root.innerHTML = '<div class="cd-back"></div><div class="cd-sheet stk-sheet" role="dialog" aria-modal="true" aria-label="مكتبة الستيكرات"><div class="cd-grab" aria-hidden="true"></div>' +
+    '<div class="cd-head"><h2 class="cd-title">مكتبة الستيكرات</h2><button type="button" class="cd-close" aria-label="إغلاق">' + ICONS.close + '</button></div>' +
+    '<div class="stk-bar"><input type="search" class="stk-q" placeholder="ابحث: شاورمة، چاي، كنافة…" aria-label="بحث بالستيكرات" autocomplete="off" enterkeyhint="search"><div class="stk-cats" role="group" aria-label="التصنيفات"></div></div>' +
+    '<div class="cd-body stk-body"><div class="stk-grid" role="listbox" aria-label="الستيكرات"></div></div><div class="stk-foot"></div></div>';
+  document.body.appendChild(root);
+  const st = { root:root, opener:document.activeElement, onKey:ev=>{ if(ev.key === 'Escape'){ ev.stopPropagation(); closeStickerPicker(); } } };
+  stickerSheet = st; document.addEventListener('keydown', st.onKey, true); codisSfx('open', { ctx:'sheet' });
+  const q = root.querySelector('.stk-q'), cats = root.querySelector('.stk-cats'), grid = root.querySelector('.stk-grid'), foot = root.querySelector('.stk-foot');
+  let cat = '', sel = cur;
+  const paintCats = ()=>{
+    const cs = CodisStickers.cats(); cats.style.display = cs.length ? '' : 'none';
+    cats.innerHTML = '<button type="button" class="stk-chip' + (cat ? '' : ' is-on') + '" data-c="" aria-pressed="' + (cat ? 'false' : 'true') + '">الكل</button>' +
+      cs.map(c=>'<button type="button" class="stk-chip' + (cat === c.id ? ' is-on' : '') + '" data-c="' + c.id + '" aria-pressed="' + (cat === c.id ? 'true' : 'false') + '">' + escapeHtml(c.name) + '</button>').join('');
+  };
+  const paintGrid = ()=>{
+    const list = CodisStickers.search(q.value, cat);
+    if(!CodisStickers.count()){ grid.innerHTML = '<div class="stk-empty">المكتبة فاضية حالياً — صور الستيكرات تنضاف قريباً.</div>'; return; }
+    if(!list.length){ grid.innerHTML = '<div class="stk-empty">ما لكينا ستيكر بهالاسم — جرّب كلمة ثانية أو شيل التصنيف.</div>'; return; }
+    grid.innerHTML = list.map(o=>'<button type="button" class="stk-tile' + (o.id === cur ? ' is-cur' : '') + '" role="option" data-id="' + o.id + '" aria-selected="' + (o.id === sel ? 'true' : 'false') + '"><img src="' + escapeHtml(CodisStickers.url(o.id)) + '" alt="" loading="lazy" decoding="async" draggable="false" onerror="this.remove()"><span>' + escapeHtml(o.name) + '</span></button>').join('');
+  };
+  const paintFoot = ()=>{
+    const o = sel ? CodisStickers.get(sel) : null, ok = !!(o && CodisStickers.has(sel));
+    foot.innerHTML = (ok ? '<div class="stk-pv" aria-hidden="true">' + codisStickerPreviewHtml(prefix, sel) + '</div>' : '') +
+      '<div class="stk-fx">' + (ok ? '<div class="stk-name">' + escapeHtml(o.name) + '</div>' : '<div class="stk-hint">اختر ستيكراً لمعاينته على بطاقة المكافأة</div>') +
+      '<div class="stk-act">' + (ok ? '<button type="button" class="btn btn-primary" data-a="ok">اعتماد الستيكر</button>' : '') +
+      (cur ? '<button type="button" class="btn btn-secondary" data-a="rm">إزالة الستيكر</button>' : '') + '</div></div>';
+  };
+  root.addEventListener('click', ev=>{
+    const t = ev.target.closest('button, .cd-back'); if(!t) return;
+    if(t.classList.contains('cd-back') || t.classList.contains('cd-close')){ closeStickerPicker(); return; }
+    if(t.classList.contains('stk-chip')){ cat = t.dataset.c || ''; codisSfx('open', { ctx:'select' }); paintCats(); paintGrid(); return; }
+    if(t.classList.contains('stk-tile')){
+      sel = t.dataset.id; codisSfx('open', { ctx:'select' });
+      grid.querySelectorAll('.stk-tile').forEach(b=>b.setAttribute('aria-selected', b.dataset.id === sel ? 'true' : 'false')); paintFoot(); return;
+    }
+    if(t.dataset.a === 'ok'){ codisSetSticker(prefix, sel); codisSfx('confirm', { ctx:'switch' }); closeStickerPicker(); return; }
+    if(t.dataset.a === 'rm'){ codisSetSticker(prefix, ''); codisSfx('close', { ctx:'editor' }); closeStickerPicker(); }
+  });
+  q.addEventListener('input', paintGrid);
+  paintCats(); paintGrid(); paintFoot();
+  requestAnimationFrame(()=>root.classList.add('is-open'));
+}
 function econRewardHintText(rarityId, room){ const coin = room === 'learn' ? ECON_LEARN_COIN : econCoinFor(rarityId, econScopeOfRoom(room)); return 'استبدال ' + econFmt(coin) + ' · متجر ' + econFmt(econAutoStore(coin)) + ' · بيع ' + econFmt(econSellValue(coin)); }
 function econRewardEditor(prefix, it){
   const d = it || { name:'', rarity:econCfg().rarities[0].id, weight:10, coinValue:null, storePrice:null, enabled:true, room:settingsRoom };
   return '<div class="eco-form">' +
     econField('اسم المكافأة', '<input type="text" class="eco-txt" id="' + prefix + '-name" maxlength="120" value="' + escapeHtml(d.name) + '" placeholder="مثلاً: تطلب أكل تحبه">') +
+    codisStickerRowHtml(prefix, d.stickerId) +
     '<div class="eco-grid2">' +
     '<div id="' + prefix + '-rarity-wrap"' + (d.room === 'learn' ? ' style="display:none;"' : '') + '>' + econField('الندرة', '<select class="eco-sel" id="' + prefix + '-rarity" onchange="econRewardRarityChanged(\'' + prefix + '\')">' + econRarityOptions().map(o=>'<option value="' + escapeHtml(o[0]) + '"' + (o[0] === d.rarity ? ' selected' : '') + '>' + escapeHtml(o[1]) + '</option>').join('') + '</select>') + '</div>' +
     econField('القائمة', '<select class="eco-sel" id="' + prefix + '-room" onchange="econRewardRarityChanged(\'' + prefix + '\')">' + econRoomOptions().map(o=>'<option value="' + o[0] + '"' + (o[0] === d.room ? ' selected' : '') + '>' + o[1] + '</option>').join('') + '</select>') +
@@ -15309,7 +15470,7 @@ function econReadReward(prefix){
   const num = (id, def)=>{ const raw = g(id).value.trim(); if(raw === '') return def; const n = Number(raw); if(!isFinite(n) || n < 0){ bad = id; return def; } return Math.round(n); };
   const weight = num('weight', 10);
   if(bad){ codisSfx('invalid', { ctx:'unavailable' }); showToast('قيمة غير صالحة — لازم رقم صفر أو أكثر', 'var(--warning)'); g(bad).focus(); return null; }
-  return { name:name, rarity:(g('room').value === 'learn' ? econCfg().rarities[0].id : g('rarity').value), room:g('room').value, weight:weight, coinValue:null, storePrice:null, enabled:g('on').checked };
+  return { name:name, rarity:(g('room').value === 'learn' ? econCfg().rarities[0].id : g('rarity').value), room:g('room').value, weight:weight, coinValue:null, storePrice:null, enabled:g('on').checked, stickerId:codisStickerIdOk((g('sticker') || {}).value) };
 }
 function econAddReward(){
   const v = econReadReward('eco-new-r'); if(!v) return;
@@ -15347,7 +15508,7 @@ function econRenderRewards(){
   items.forEach(it=>{
     const rar = econRarityById(it.rarity) || econCfg().rarities[0], coin = econEffCoin(it, rar), price = econEffStore(it, rar);
     const row = document.createElement('div'); row.className = 'eco-item' + (it.enabled ? '' : ' is-off');
-    row.innerHTML = '<div class="eco-item-main"><div class="eco-item-top">' + (it.room === 'learn' ? '' : econRarityBadge(rar.tone, rar.id, rar.name, rar.order)) + '<span class="eco-item-name">' + escapeHtml(it.name) + '</span></div>' +
+    row.innerHTML = '<div class="eco-item-main"><div class="eco-item-top">' + (it.room === 'learn' ? '' : econRarityBadge(rar.tone, rar.id, rar.name, rar.order)) + codisStickerThumbHtml(it.stickerId) + '<span class="eco-item-name">' + escapeHtml(it.name) + '</span></div>' +
       '<div class="eco-item-meta"><span>استبدال ' + econFmt(coin) + '</span><span>متجر ' + econFmt(price) + '</span><span>بيع ' + econFmt(econSellValue(coin)) + '</span>' + (it.enabled ? '' : '<span>معطّلة</span>') + '</div></div>' +
       '<div class="eco-item-acts"><button type="button" class="chip-act" onclick="econToggleReward(\'' + it.id + '\')" aria-pressed="' + (it.enabled ? 'true' : 'false') + '">' + (it.enabled ? 'تعطيل' : 'تفعيل') + '</button>' +
       '<button type="button" class="chip-act" onclick="econEdit(\'' + it.id + '\')">' + (econEditing === it.id ? 'إغلاق' : 'تعديل') + '</button>' +
@@ -15505,10 +15666,10 @@ function econStoreArtAr(it, rar){
 /* وجه البطاقة داخل الإطار الموحّد 4:5 (يومي/أسبوعي/شهري/الأستاذ/بلا صورة) — المصدر الواحد للمتجر والتفاصيل */
 function econStoreFaceHtml(it, rar, o){
   o = o || {};
-  if(econStoreMonthlyKey(it, rar)) return codisMonthlyCardHtml({ kind:'reward', scope:'monthly', room:it.room, rarityTone:rar.tone, item:it.name, rarityName:rar.name }, { plain:true, price:o.price, label:o.label });
-  if(econStoreWeeklyKey(it, rar)) return codisWeeklyCardHtml({ kind:'reward', scope:'weekly', room:it.room, rarityTone:rar.tone, item:it.name }, { plain:true, price:o.price, label:o.label });
-  if(econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) return codisRewardCardHtml({ kind:'reward', scope:'daily', room:it.room, rarityTone:rar.tone, item:it.name }, { plain:true, price:o.price, label:o.label });
-  return codisPlainCardHtml(it.name, rar, { label:o.label });
+  if(econStoreMonthlyKey(it, rar)) return codisMonthlyCardHtml({ kind:'reward', scope:'monthly', room:it.room, rarityTone:rar.tone, item:it.name, rarityName:rar.name, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label });
+  if(econStoreWeeklyKey(it, rar)) return codisWeeklyCardHtml({ kind:'reward', scope:'weekly', room:it.room, rarityTone:rar.tone, item:it.name, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label });
+  if(econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) return codisRewardCardHtml({ kind:'reward', scope:'daily', room:it.room, rarityTone:rar.tone, item:it.name, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label });
+  return codisPlainCardHtml(it.name, rar, { label:o.label, stickerId:it.stickerId });
 }
 /* ===== قلب البطاقة (وجه ← ظهر) — عرض فقط =====
    front = رسم البطاقة الأصلي كما هو، back = معلومات البطاقة الفعلية من بياناتها (صفوف عنوان/قيمة). النقر/اللمس/Enter/Space يقلبها ويعيدها.
@@ -15667,7 +15828,7 @@ function econInventoryHtml(){
       '</div>' : '') + '</div><div class="shop-grid" role="list">';
     owned.forEach((it, i)=>{
       const sv = CodisInventory.sellValue(it), busy = econSellBusy, can = sv > 0, on = !!econSelSet[it.uid], uid = escapeHtml(it.uid);
-      const art = econPackTileHtml({ id:it.uid, room:it.room, name:it.name }, { id:it.rarity, name:it.rarityName, tone:it.rarityTone, order:it.rarityOrder }).replace(' role="listitem"', '');   /* نفس بطاقة المتجر والبكج */
+      const art = econPackTileHtml({ id:it.uid, room:it.room, name:it.name, stickerId:it.stickerId }, { id:it.rarity, name:it.rarityName, tone:it.rarityTone, order:it.rarityOrder }).replace(' role="listitem"', '');   /* نفس بطاقة المتجر والبكج */
       const cap = '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span></div>';
       if(sm){
         const inner = '<div class="own-art">' + art + (can ? '<span class="own-check" aria-hidden="true">' + (on ? ICONS.check : '') + '</span>' : '') + '</div>' + cap;
@@ -17477,7 +17638,7 @@ function econPackTileHtml(it, rar){
   if(it.kind === 'cosmetic') return '<div class="pk-tile is-cosmetic" role="listitem" data-id="' + escapeHtml(it.id) + '">' + econCosmeticPreviewHtml(CodisCosmetics.def(it.cosmeticId)) + '</div>';   /* البطاقة نفسها بالمظهر مطبّقاً */
   if(it.kind === 'pass') return '<div class="pk-tile is-pass" role="listitem" data-id="' + escapeHtml(it.id) + '">' + codisPassCardHtml(it, { plain:true }) + '</div>';
   const plain = !econStoreArtAr(it, rar);
-  const art = plain ? '<div class="pk-plain">' + codisPlainCardHtml(it.name, rar) + '</div>' : econStoreFaceHtml(it, rar, { label:it.name });
+  const art = plain ? '<div class="pk-plain">' + codisPlainCardHtml(it.name, rar, { stickerId:it.stickerId }) + '</div>' : econStoreFaceHtml(it, rar, { label:it.name });
   return '<div class="pk-tile' + (plain ? ' is-plain' : '') + '" role="listitem" data-id="' + escapeHtml(it.id) + '">' + art + '</div>';
 }
 function econPackPaint(){
@@ -18498,6 +18659,7 @@ function codisBackLayer(){
   const open = id=>{ const el = document.getElementById(id); return !!el && el.style.display !== 'none' && el.style.display !== ''; };
   const L = (id, act)=>({ act:act, el:document.getElementById(id) });
   if(econBulkZoomEl) return { act:econBulkZoomClose, el:econBulkZoomEl };
+  if(stickerSheet) return { act:closeStickerPicker, el:stickerSheet.root };
   if(graceSheet) return { act:closeGraceSheet, el:graceSheet.root };
   if(open('codis-confirm-modal')) return L('codis-confirm-modal', ()=>resolveCodisConfirm(false));
   if(open('dq-modal')) return L('dq-modal', ()=>dqEsc());
