@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.12.0">
+<meta name="codis-version" content="3.13.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -3090,7 +3090,7 @@ html.codis-locked{ overflow:hidden; }
 .rwc-stage{ position:relative; width:min(100cqw, calc(100cqh * var(--ar))); aspect-ratio:var(--ar-css); container-type:inline-size; }
 .rwc-art{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; -webkit-user-drag:none; filter:drop-shadow(0 0 .9rem var(--rwc-glow, transparent)); }
 .rwc-slot{ position:absolute; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; color:#e9e6dc; }
-.rwc-name span{ display:block; width:100%; font-size:6.4cqw; font-weight:800; line-height:1.18; color:#f4f1e8; overflow-wrap:anywhere; padding:0 1.5cqw; }
+.rwc-name span{ display:block; width:100%; font-size:6.4cqw; font-weight:800; line-height:1.18; color:#f4f1e8; overflow-wrap:break-word; padding:0 1.5cqw; }
 .rwc-price span{ display:inline-flex; align-items:center; justify-content:center; gap:1cqw; font-size:3.6cqw; font-weight:700; line-height:1; color:var(--rwc-ink, #e9e6dc); }
 .rwc-price svg{ width:1.15em; height:1.15em; flex:none; }
 .rwc-c { --rwc-ink:#cfd3d9; --rwc-glow:rgba(207,211,217,.25); }
@@ -3100,7 +3100,7 @@ html.codis-locked{ overflow:hidden; }
 .rwc-ss{ --rwc-ink:#ffd978; --rwc-glow:rgba(255,217,120,.7); }
 @media (prefers-reduced-motion:reduce){ .rwc-wrap{ transform:none; } }
 /* بطاقة المكافأة الأسبوعية (wkc): تستعمل الصندوق الموحد نفسه (.rwc)؛ التوهج بلون الطبقة من .rwc-art */
-.wkc-name span{ display:block; width:100%; font-size:7cqw; font-weight:800; line-height:1.15; color:#f4f1e8; overflow-wrap:anywhere; text-shadow:0 1px 0 rgb(var(--lo-rgb) / .6); padding:0 1cqw; }
+.wkc-name span{ display:block; width:100%; font-size:7cqw; font-weight:800; line-height:1.15; color:#f4f1e8; overflow-wrap:break-word; text-shadow:0 1px 0 rgb(var(--lo-rgb) / .6); padding:0 1cqw; }
 .wkc-row{ display:inline-flex; align-items:center; justify-content:center; gap:2.2cqw; width:max-content; max-width:none; white-space:nowrap; font-size:5cqw; line-height:1; color:var(--rwc-ink, #e9e6dc); }
 .wkc-tier{ display:inline-flex; align-items:baseline; gap:1.4cqw; }
 .wkc-tier b{ font-family:"Avenir Next", "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif; font-weight:900; letter-spacing:.12em; margin-inline-end:-.12em; text-shadow:0 0 .7em var(--rwc-glow, transparent); }
@@ -3275,7 +3275,7 @@ html.codis-locked{ overflow:hidden; }
 .pnc.pnc-low   { --rwc-ink:#b9c6d8; --rwc-glow:rgba(150,170,200,.16); }
 .pnc.pnc-medium{ --rwc-ink:#e6bd7a; --rwc-glow:rgba(224,176,76,.18); }
 .pnc.pnc-high  { --rwc-ink:#ff9a90; --rwc-glow:rgb(var(--danger-rgb) / .24); }
-.pnc-name span{ display:block; width:100%; font-size:7.2cqw; font-weight:800; line-height:1.2; color:#2b1c10; text-shadow:0 1px 0 rgba(255,236,204,.38); overflow-wrap:anywhere; padding:0 1cqw; }
+.pnc-name span{ display:block; width:100%; font-size:7.2cqw; font-weight:800; line-height:1.2; color:#2b1c10; text-shadow:0 1px 0 rgba(255,236,204,.38); overflow-wrap:break-word; padding:0 1cqw; }
 .pnc-info{ flex-direction:column; }
 .pnc-stack{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.28em; max-width:100%; font-size:6cqw; line-height:1.15; text-align:center; }
 .pnc-sev{ font-weight:800; font-size:1em; color:var(--rwc-ink, #e9e6dc); text-shadow:0 0 .7em var(--rwc-glow, transparent), 0 1px 0 rgb(var(--lo-rgb) / .6); white-space:nowrap; }
@@ -3287,7 +3287,7 @@ html.codis-locked{ overflow:hidden; }
 .pwc.pwc-medium{ --rwc-ink:#f0c98a; --rwc-glow:rgba(224,176,76,.20); }
 .pwc.pwc-high  { --rwc-ink:#ffaaa0; --rwc-glow:rgb(var(--danger-rgb) / .26); }
 .pwc-title span{ display:block; max-width:100%; font-size:6cqw; font-weight:800; line-height:1.2; letter-spacing:0; white-space:nowrap; color:var(--rwc-ink); text-shadow:0 0 .7em var(--rwc-glow), 0 1px 0 rgb(var(--lo-rgb) / .65); }
-.pwc-name span{ display:block; width:100%; font-size:8.2cqw; font-weight:800; line-height:1.2; color:#2b1c10; text-shadow:0 1px 0 rgba(255,236,204,.4); overflow-wrap:anywhere; padding:0 1cqw; }
+.pwc-name span{ display:block; width:100%; font-size:8.2cqw; font-weight:800; line-height:1.2; color:#2b1c10; text-shadow:0 1px 0 rgba(255,236,204,.4); overflow-wrap:break-word; padding:0 1cqw; }
 .pwc-cost span{ direction:rtl; display:inline-flex; align-items:center; justify-content:center; gap:.4em; max-width:100%; font-size:5.4cqw; font-weight:700; line-height:1.2; white-space:nowrap; color:#4a3320; }
 .pwc-cost .eco-coin{ font-size:inherit; color:inherit; }
 .pwc-cost .eco-coin svg{ width:1.15em; height:1.15em; }
@@ -3295,7 +3295,7 @@ html.codis-locked{ overflow:hidden; }
 .mwc.mwc-low   { --rwc-ink:#e3b7ad; --rwc-glow:rgba(190,60,50,.18); }
 .mwc.mwc-medium{ --rwc-ink:#ffb8ac; --rwc-glow:rgba(235,60,50,.24); }
 .mwc.mwc-high  { --rwc-ink:#ffcfc6; --rwc-glow:rgba(255,50,40,.34); }
-.mwc-name span{ display:block; width:100%; font-size:8.2cqw; font-weight:800; line-height:1.2; color:#f6e6d6; text-shadow:0 1px 0 rgb(var(--lo-rgb) / .7); overflow-wrap:anywhere; padding:0 1cqw; }
+.mwc-name span{ display:block; width:100%; font-size:8.2cqw; font-weight:800; line-height:1.2; color:#f6e6d6; text-shadow:0 1px 0 rgb(var(--lo-rgb) / .7); overflow-wrap:break-word; padding:0 1cqw; }
 .mwc-info{ flex-direction:column; }
 .mwc-stack{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.3em; max-width:100%; font-size:6.4cqw; line-height:1.2; text-align:center; direction:rtl; }
 .mwc-sev{ font-weight:800; color:var(--rwc-ink); text-shadow:0 0 .7em var(--rwc-glow), 0 1px 0 rgb(var(--lo-rgb) / .7); white-space:nowrap; }
@@ -3831,7 +3831,7 @@ html.ca-on #outcome-overlay.is-reward .outcome-scrim{ background:rgb(var(--lo-rg
 .scx-teacher{ --rwc-glow:rgba(190,60,60,.40); }
 .scx-plate{ position:absolute; display:flex; align-items:center; justify-content:center; overflow:hidden; text-align:center; }
 .scx-row{ display:flex; align-items:center; justify-content:center; gap:2cqw; width:100%; direction:rtl; font-size:6.2cqw; line-height:1.12; font-weight:800; color:#3a2410; }
-.scx-name{ flex:1 1 auto; min-width:0; text-align:center; overflow-wrap:anywhere; text-shadow:0 1px 0 rgba(255,240,200,.55); display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
+.scx-name{ flex:1 1 auto; min-width:0; text-align:center; overflow-wrap:break-word; text-shadow:0 1px 0 rgba(255,240,200,.55); display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
 .scx-coin{ flex:none; display:inline-flex; align-items:center; gap:.5cqw; direction:ltr; font-size:.82em; line-height:1; padding:.5cqw 1.8cqw; border-radius:999px; background:rgba(58,36,16,.14); border:1px solid rgba(58,36,16,.38); color:#3a2410; font-variant-numeric:tabular-nums; }
 .scx-coin svg{ width:1.05em; height:1.05em; flex:none; }
 .scx-art{ pointer-events:none; user-select:none; -webkit-user-drag:none; }
@@ -3916,7 +3916,7 @@ html.ca-on #outcome-overlay.is-reward .outcome-scrim{ background:rgb(var(--lo-rg
 .bk-cell.is-special{ border-color:var(--gold-a30); box-shadow:0 0 18px rgb(var(--gold-rgb) / .16), inset 0 1px 0 rgb(var(--hi-rgb) / .08); }
 .bk-cell[data-tone="ss"]{ box-shadow:0 0 18px rgba(255,208,110,.18), inset 0 1px 0 rgb(var(--hi-rgb) / .08); }
 .bk-card{ width:100%; display:grid; place-items:center; transform-origin:50% 60%; }
-.bk-name{ margin:0; width:100%; font-size:12.5px; font-weight:700; line-height:1.4; color:var(--text); text-align:center; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.bk-name{ margin:0; width:100%; font-size:12.5px; font-weight:700; line-height:1.4; color:var(--text); text-align:center; overflow-wrap:break-word; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
 .bk-meta{ display:flex; justify-content:center; width:100%; min-height:20px; }
 .bk-meta .rar-badge{ max-width:100%; }
 .bk-chip{ display:inline-flex; align-items:center; justify-content:center; gap:4px; max-width:100%; padding:2px 8px; border-radius:var(--r-full); font-size:10.5px; white-space:nowrap; font-weight:800; color:rgb(var(--sec-rgb)); background:rgba(var(--sec-rgb),.14); border:1px solid rgba(var(--sec-rgb),.5); }
@@ -3975,7 +3975,7 @@ html.ca-on #outcome-overlay.is-reward .outcome-scrim{ background:rgb(var(--lo-rg
 .cfp-gem{ display:grid; place-items:center; width:34cqw; aspect-ratio:1; transform:rotate(45deg); border-radius:5cqw; border:1px solid color-mix(in srgb, var(--rwc-ink) 70%, transparent);
   background:linear-gradient(135deg, color-mix(in srgb, var(--rwc-ink) 34%, #0b0e13), #0b0e13 72%); box-shadow:0 0 9cqw var(--rwc-glow), inset 0 0 0 2cqw rgb(var(--lo-rgb) / .25); }
 .cfp-gem b{ transform:rotate(-45deg); font:900 12cqw/1 "Avenir Next", "Segoe UI", Arial, system-ui, sans-serif; color:var(--rwc-ink); letter-spacing:.02em; direction:ltr; text-shadow:0 0 4cqw var(--rwc-glow); }
-.cfp-name{ width:100%; padding:2.6cqw 3cqw; border-radius:3cqw; text-align:center; font-size:7.4cqw; font-weight:800; line-height:1.25; color:#f4f1e8; overflow-wrap:anywhere;
+.cfp-name{ width:100%; padding:2.6cqw 3cqw; border-radius:3cqw; text-align:center; font-size:7.4cqw; font-weight:800; line-height:1.25; color:#f4f1e8; overflow-wrap:break-word;
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; background:rgb(var(--lo-rgb) / .36); border:1px solid color-mix(in srgb, var(--rwc-ink) 30%, transparent); }
 
 /* ── السياق: الشبكات الكثيفة (المتجر/بحوزتك/البكج) زواياها أصغر؛ الإطار يأخذ عرض البلاطة كاملاً ── */
@@ -4053,7 +4053,7 @@ html[dir="ltr"] #eco-store-body .st-part-title::after, html[dir="ltr"] #eco-stor
 .st-tile .store-open:focus-visible{ outline:2px solid var(--rwc-ink, var(--aqua)); outline-offset:3px; }
 .st-face{ position:relative; }
 .st-cap{ display:grid; gap:1px; min-width:0; padding:0 2px; text-align:center; }
-.st-tile .shop-name{ display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; min-height:0; font-size:var(--tile-name); font-weight:700; line-height:1.35; color:var(--text); overflow-wrap:anywhere; }
+.st-tile .shop-name{ display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; min-height:0; font-size:var(--tile-name); font-weight:700; line-height:1.35; color:var(--text); overflow-wrap:break-word; }
 .st-tile .shop-room, .st-tile .shop-sub, .st-sub{ display:block; font-size:var(--tile-sub); line-height:1.4; color:var(--text-3, var(--text-2)); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .st-tags{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px; margin-top:3px; }
 .st-tag{ padding:1px 7px; border-radius:var(--r-full); font-size:10px; font-weight:800; line-height:1.5; white-space:nowrap; color:var(--pc, var(--gold-soft)); background:rgba(var(--pc-rgb, 217,180,92),.12); border:1px solid rgba(var(--pc-rgb, 217,180,92),.34); }
@@ -4607,7 +4607,7 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .bk-zoom-back{ position:absolute; inset:0; background:rgb(var(--lo-rgb) / .84); }
 .bk-zoom-card{ position:relative; width:min(78vw, 300px); display:grid; gap:12px; justify-items:center; }
 .bk-zoom-card .cflip{ width:100%; --card-r:16px; } .bk-zoom-card .cflip .pk-tile{ width:100%; }
-.bk-zoom-name{ margin:0; text-align:center; font-size:16px; font-weight:800; overflow-wrap:anywhere; } .bk-zoom-hint{ margin:-6px 0 0; font-size:12px; color:var(--text-3, var(--text-2)); }
+.bk-zoom-name{ margin:0; text-align:center; font-size:16px; font-weight:800; overflow-wrap:break-word; } .bk-zoom-hint{ margin:-6px 0 0; font-size:12px; color:var(--text-3, var(--text-2)); }
 .bk-zoom-x{ min-height:44px; min-width:140px; }
 @media (prefers-reduced-motion:reduce){ .bk-zoom{ transition:none; } .bk-modal.is-run .bk-cell{ animation:none !important; } }
 
@@ -4784,17 +4784,12 @@ html, body, body *{ touch-action:pan-x pan-y; }
   radial-gradient(circle at 50% 46%, rgba(var(--c1), .22), transparent 58%),
   radial-gradient(rgba(var(--c1), .10) 1.1px, transparent 1.6px) 0 0 / 9px 9px,
   radial-gradient(130% 100% at 50% 45%, rgba(14,12,10,.80), rgba(4,4,6,.94)); }
-.bcx-rays{ position:absolute; left:50%; top:46%; width:190vmax; height:190vmax; margin:-95vmax 0 0 -95vmax; pointer-events:none; opacity:.0;
-  background:repeating-conic-gradient(from 0deg, rgba(var(--c1), .16) 0deg 7deg, transparent 7deg 22deg);
-  -webkit-mask:radial-gradient(circle, #000 0, rgba(0,0,0,.6) 22%, transparent 52%); mask:radial-gradient(circle, #000 0, rgba(0,0,0,.6) 22%, transparent 52%);
-  animation:bcx-rays-in .9s .55s ease-out forwards, bcx-spin 26s linear infinite; }
-.bcx-rays.is-x2{ background:repeating-conic-gradient(from 0deg, rgba(var(--c2), .2) 0deg 5deg, transparent 5deg 15deg, rgba(var(--c1), .16) 15deg 21deg, transparent 21deg 30deg); }
 @keyframes bcx-spin{ to{ transform:rotate(360deg); } }
 @keyframes bcx-rays-in{ to{ opacity:1; } }
 .bcx-fx{ position:absolute; inset:0; pointer-events:none; }
 .bcx-stage{ position:relative; display:flex; flex-direction:column; align-items:center; gap:16px; padding:0 18px; perspective:1100px; }
-.bcx-card{ position:relative; transform-origin:50% 50%; transform-style:preserve-3d; will-change:transform; }
-.bcx-face{ position:relative; border-radius:var(--card-r, 12px); filter:drop-shadow(7px 9px 0 rgba(10,8,6,.55)) drop-shadow(0 0 26px rgba(var(--c1), .35)); }
+.bcx-card{ position:relative; transform-origin:50% 50%; }
+.bcx-face{ position:relative; border-radius:var(--card-r, 12px); }
 .bcx-face > *{ width:100%; }
 .bcx-sheen{ position:absolute; inset:0; border-radius:var(--card-r, 12px); overflow:hidden; pointer-events:none; mix-blend-mode:screen; }
 .bcx-sheen i{ position:absolute; top:-10%; bottom:-10%; left:0; width:38%; background:linear-gradient(90deg, transparent, rgba(255,255,255,.55), rgba(var(--c1), .35), transparent); transform:translateX(-170%) skewX(-18deg); }
@@ -4825,8 +4820,6 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .bcx-flare{ position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(255,250,230,.95), rgba(var(--c1), .55) 30%, transparent 62%); }
 .bcx-hole{ position:absolute; border-radius:var(--card-r, 12px); border:2px dashed rgba(var(--c1), .75); background:radial-gradient(rgba(0,0,0,.45), rgba(0,0,0,.2));
   clip-path:polygon(0 3%, 6% 0, 14% 2%, 22% 0, 31% 3%, 40% 0, 50% 2%, 60% 0, 70% 3%, 79% 0, 88% 2%, 96% 0, 100% 4%, 98% 14%, 100% 24%, 97% 35%, 100% 46%, 98% 57%, 100% 68%, 97% 79%, 100% 90%, 97% 100%, 86% 97%, 75% 100%, 63% 97%, 52% 100%, 41% 97%, 30% 100%, 19% 97%, 8% 100%, 0 96%, 2% 85%, 0 74%, 3% 62%, 0 50%, 2% 38%, 0 26%, 3% 14%); }
-.bcx.lv-6 .bcx-face, .bcx.lv-7 .bcx-face{ filter:drop-shadow(7px 9px 0 rgba(10,8,6,.55)) drop-shadow(0 0 30px rgba(var(--c1), .55)); }
-.bcx.lv-8 .bcx-face, .bcx.lv-9 .bcx-face{ filter:drop-shadow(7px 9px 0 rgba(10,8,6,.55)) drop-shadow(0 0 34px rgba(var(--c1), .7)) drop-shadow(0 0 70px rgba(var(--c2), .45)); }
 .bcx.lv-9 .bcx-ticket{ box-shadow:5px 6px 0 rgba(10,8,6,.6), inset 0 0 0 3px #fbf3df, inset 0 0 0 4px rgb(var(--c2)), 0 0 30px rgba(var(--c1), .6); }
 .bcx.is-out{ pointer-events:none; }
 @media (prefers-reduced-motion:reduce){ .bcx-rays{ animation:none; opacity:.8; } }
@@ -4838,6 +4831,25 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .st-tile .shop-acts .tmr-chip.is-run{ order:-1; }
 .acct-sync.is-pending .acct-dot, .acct-sync.is-offline .acct-dot{ background:var(--warning); }
 .acct-sync.is-expired .acct-dot, .acct-sync.is-error .acct-dot{ background:var(--danger); }
+
+/* CODIS-STABILITY (3.13.0): مشهد الشراء بمستويات أداء + معاينة + أسماء */
+.bcx-glow{ position:absolute; left:50%; top:46%; width:min(150vw, 640px); height:min(150vw, 640px); margin:calc(min(150vw, 640px) / -2) 0 0 calc(min(150vw, 640px) / -2); pointer-events:none;
+  background:radial-gradient(circle, rgba(var(--c1), .34), rgba(var(--c2), .14) 42%, transparent 68%); }
+.bcx-rayc{ position:absolute; left:50%; top:46%; width:190vmax; height:190vmax; margin:-95vmax 0 0 -95vmax; pointer-events:none; opacity:0; animation:bcx-rays-in .9s .55s ease-out forwards; }
+.bcx-rayc.is-spin{ animation:bcx-rays-in .9s .55s ease-out forwards, bcx-spin 26s linear infinite; }
+@keyframes bcx-spin{ to{ transform:rotate(360deg); } }
+@keyframes bcx-rays-in{ to{ opacity:1; } }
+.bcx.fx-full .bcx-card{ transform-style:preserve-3d; }
+.bcx.fx-full .bcx-face{ filter:drop-shadow(7px 9px 0 rgba(10,8,6,.55)) drop-shadow(0 0 22px rgba(var(--c1), .45)); }
+.bcx.fx-lite .bcx-face{ filter:drop-shadow(6px 8px 0 rgba(10,8,6,.5)); }
+.bcx.fx-min .bcx-face{ box-shadow:5px 7px 0 rgba(10,8,6,.5); }
+.bcx.fx-lite .bcx-sheen, .bcx.fx-min .bcx-sheen{ mix-blend-mode:normal; opacity:.55; }
+.bcx.fx-min .bcx-ticket{ -webkit-mask:none; mask:none; }
+.bcx, .peek, #eco-store-body [role="list"] > *{ -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+.bcx input, .peek input, #eco-store-body [role="list"] > * input, #eco-store-body [role="list"] > * textarea{ -webkit-user-select:text; user-select:text; }
+.bcx-name{ max-width:min(80vw, 300px); white-space:normal; overflow:visible; text-overflow:clip; overflow-wrap:break-word; text-align:center; line-height:1.3; }
+.is-peek :is(.shop-name, .st-cap, .bk-name){ display:block; -webkit-line-clamp:none; line-clamp:none; overflow:visible; max-height:none; }
+.nm-ell{ display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; }
 </style>
 </head>
 <body>
@@ -14117,6 +14129,24 @@ function codisFitLazy(root){
 /* يصغّر خط الاسم (بوحدة cqw فيبقى متناسباً مع حجم البطاقة) حتى يدخل في الخانة بلا قص أو تجاوز */
 function codisFitRewardCard(root){
   if(!root) return;
+  codisFitRewardCardCore(root);
+  try{ codisNameGuard(root); }catch(x){}
+}
+/* آخر خط دفاع: بعد الملاءمة بالتصغير، أي اسم ما زال أطول من خانته يُقصّ بـ… عند آخر سطر ممكن (لا كسر وسط الكلمة ولا قص صامت) */
+function codisNameGuard(root){
+  root.querySelectorAll('.rwc-name, .wkc-name, .pnc-name, .pwc-name, .mwc-name, .cfp-name').forEach(box=>{
+    const t = box.firstElementChild || box;
+    if(!box.clientHeight || !box.clientWidth) return;
+    t.classList.remove('nm-ell'); t.style.removeProperty('-webkit-line-clamp');
+    if(t.scrollWidth > box.clientWidth + 1 || t.offsetHeight > box.clientHeight + 1){
+      const lh = parseFloat(getComputedStyle(t).lineHeight) || (parseFloat(getComputedStyle(t).fontSize) * 1.2) || 14;
+      t.style.setProperty('-webkit-line-clamp', String(Math.max(1, Math.floor(box.clientHeight / lh))));
+      t.classList.add('nm-ell');
+    }
+  });
+}
+function codisFitRewardCardCore(root){
+  if(!root) return;
   try{ CodisCardAmb.apply(root); }catch(x){}
   try{ codisFitSpecialPlates(root); }catch(x){}
 
@@ -15394,6 +15424,7 @@ function econRarityOptions(){ return econCfg().rarities.map(r=>[r.id, r.id + ' �
 function econRoomOptions(){ return econListIds().map(r=>[r, r === 'weekly' || r === 'monthly' ? econRoomLabel(r) : 'يومية · ' + econRoomLabel(r)]); }
 function econSevOptions(){ return econSeverities().map(s=>[s, econSevLabel(s)]); }
 function econRenderAll(){
+  { let cine = false; try{ cine = CodisBuyCine.isOpen(); }catch(e){} if(cine){ window.__econDefer = true; return; } }   /* CODIS-STABILITY: لا إعادة بناء أثناء مشهد الشراء */
   Object.keys(ECON_PAGES).forEach(k=>{ const p = document.getElementById('settings-page-' + k); if(p && p.style.display !== 'none') window[ECON_PAGES[k]](); });
   econRenderRewards(); econRenderPunish(); econRenderHome();
 }
@@ -15921,6 +15952,95 @@ const CodisPush = (function(){
 
 /* — مشهد الشراء: يُشغَّل بعد نجاح CodisEconomy.purchase فقط، بسعرها المدفوع (r.price) ونسختها (r.owned.uid). لا يمنح ولا يخصم شيئاً.
      المستوى من CodisRevealLevels.levelOfValue(السعر) — نفس حدود كشف الصناديق التسعة — والحركة عبر CodisMotion.run (يحترم تقليل الحركة) — */
+/* CODIS-STABILITY — مستويات الأداء + حارس الانهيار + سجل أخطاء صغير (يُستعمل من مشهد الشراء) */
+const CodisFx = (function(){
+  'use strict';
+  const ls = (k, v)=>{ try{ if(v === undefined) return localStorage.getItem(k); if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){} return null; };
+  const ios = ()=>{ const ua = navigator.userAgent || ''; return /iP(hone|ad|od)/.test(ua) || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1); };
+  function log(kind, msg){ try{ const a = JSON.parse(ls('codis_errlog') || '[]'); a.push({ t:Date.now(), k:kind, m:String(msg).slice(0, 200) }); ls('codis_errlog', JSON.stringify(a.slice(-30))); }catch(e){} }
+  /* المستوى لا يعتمد على عدد الأنوية وحده: تقليل الحركة · سقف انهيار سابق · ذاكرة الجهاز · توفير البيانات · آيفون/آيباد ← lite · حجم الشاشة×DPR */
+  function tier(){
+    if(CodisMotion.isReduced()) return 'min';
+    if(ls('codis_fx_cap') === 'min' && Number(ls('codis_fx_cap_n') || 0) > 0) return 'min';
+    let t = 'full';
+    const mem = navigator.deviceMemory, hc = navigator.hardwareConcurrency || 8, c = navigator.connection, dpr = window.devicePixelRatio || 1;
+    if(mem && mem <= 2) t = 'min'; else if((mem && mem <= 4) || hc <= 4 || (c && c.saveData)) t = 'lite';
+    if(t === 'full' && ios()) t = 'lite';
+    if(t === 'full' && innerWidth * innerHeight * dpr * dpr > 6e6) t = 'lite';
+    return t;
+  }
+  function recipe(rc, fx){
+    const o = Object.assign({}, rc);
+    if(fx === 'lite'){ o.scraps = Math.min(o.scraps, 12); o.rain = Math.min(o.rain, 10); o.conf = Math.min(o.conf, 14); o.ring = Math.min(o.ring, 2); o.spin = 0; o.sheen = Math.min(o.sheen, 2); }
+    else if(fx === 'min'){ o.scraps = Math.min(o.scraps, 6); o.rain = 0; o.conf = 0; o.ring = Math.min(o.ring, 1); o.spin = 0; o.sheen = 1; o.rays = 0; o.shake = Math.min(o.shake, 1); }
+    return o;
+  }
+  /* أشعة الكشف: canvas صغير (384px) يُكبَّر بالـCSS بدل طبقة conic 1600px بقناع (كانت ~90MB على DPR3) */
+  function paintRays(cv, rgb1, rgb2, x2){
+    try{
+      const N = 384, c = N / 2; cv.width = N; cv.height = N; const g = cv.getContext('2d'); if(!g) return false;
+      g.translate(c, c);
+      const wedge = (a0, a1, col, al)=>{ g.beginPath(); g.moveTo(0, 0); g.arc(0, 0, c * 1.5, a0 * Math.PI / 180, a1 * Math.PI / 180); g.closePath(); g.fillStyle = 'rgba(' + col + ',' + al + ')'; g.fill(); };
+      for(let a = 0; a < 360; a += (x2 ? 30 : 22)){ if(x2){ wedge(a, a + 5, rgb2, .2); wedge(a + 15, a + 21, rgb1, .16); } else wedge(a, a + 7, rgb1, .16); }
+      g.globalCompositeOperation = 'destination-in';
+      const gr = g.createRadialGradient(0, 0, 0, 0, 0, c);
+      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(.31, 'rgba(0,0,0,.6)'); gr.addColorStop(.735, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = gr; g.fillRect(-c, -c, N, N);
+      return true;
+    }catch(e){ log('rays', e && e.message); return false; }
+  }
+  /* sentinel: يُكتب عند فتح المشهد ويُمحى عند إغلاقه؛ بقاؤه عند الإقلاع = الصفحة ماتت أثناء المشهد ← 3 مشاهد قادمة بأخف مستوى */
+  function begin(fx){
+    ls('codis_cine_open', String(Date.now()));
+    if(fx === 'min'){ const n = Number(ls('codis_fx_cap_n') || 0); if(n > 0) ls('codis_fx_cap_n', String(n - 1)); }
+  }
+  function end(){ ls('codis_cine_open', null); }
+  function boot(){
+    const t = ls('codis_cine_open');
+    if(t){ ls('codis_cine_open', null); ls('codis_fx_cap', 'min'); ls('codis_fx_cap_n', '3'); log('cine-crash', 'page died during purchase scene @' + t); }
+    window.addEventListener('error', e=>log('error', (e.message || '') + ' @' + (e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
+    window.addEventListener('unhandledrejection', e=>log('reject', e.reason && (e.reason.message || e.reason)));
+  }
+  boot();
+  return { tier:tier, recipe:recipe, paintRays:paintRays, begin:begin, end:end, log:log, ios:ios };
+})();
+
+/* آخر شراء: يُسجَّل بعد نجاح المعاملة الذرّية؛ إن لم يكتمل المشهد (انهيار/إغلاق الصفحة) يظهر إشعار اطمئنان عند العودة — لا خصم مكرر ولا ضياع */
+const CodisBuyRecovery = (function(){
+  'use strict';
+  const K = 'codis_last_purchase';
+  const rd = ()=>{ try{ return JSON.parse(localStorage.getItem(K) || 'null'); }catch(e){ return null; } };
+  const wr = o=>{ try{ if(o) localStorage.setItem(K, JSON.stringify(o)); else localStorage.removeItem(K); }catch(e){} };
+  function mark(r){ wr({ uid:r.owned.uid, name:r.owned.name, price:r.price, ts:Date.now(), seen:0 }); }
+  function seen(){ const o = rd(); if(o){ o.seen = 1; wr(o); } }
+  function check(){
+    const o = rd(); if(!o || o.seen) return false;
+    try{ if(CodisBuyCine.isOpen()) return false; }catch(e){}
+    if(Date.now() - o.ts > 864e5){ wr(null); return false; }
+    let it = null; try{ it = CodisInventory.get(o.uid); }catch(e){}
+    o.seen = 1; wr(o);
+    if(!it || it.status !== 'owned') return false;
+    try{ showToast('اكتمل شراؤك: «' + o.name + '» — موجودة ببحوزتك (انخصم المبلغ مرة وحدة)', 'var(--success)', 'gift'); }catch(e){}
+    return true;
+  }
+  setTimeout(check, 2500);
+  document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) check(); });
+  window.addEventListener('pageshow', ()=>{ setTimeout(check, 400); });
+  return { mark:mark, seen:seen, check:check };
+})();
+
+/* بعد إغلاق المشهد: إعادة رسم واحدة للمتجر (كل ما طُلب أثناءه أُجّل) + وسم «اشتريتها» */
+function econAfterCine(){
+  window.__econDefer = false;
+  try{ econRenderAll(); }catch(e){}
+  try{ const id = econLastBought; if(id){ const el = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === id); if(el) el.classList.add('is-bought'); } }catch(e){}
+}
+function econMarkBusy(id){
+  try{ const q = (window.CSS && CSS.escape) ? CSS.escape(id) : String(id).replace(/"/g, '');
+    document.querySelectorAll('#eco-store-body .shop-card[data-id="' + q + '"]').forEach(c=>{ c.classList.add('is-busy'); c.setAttribute('aria-busy', 'true'); c.querySelectorAll('.btn').forEach(b=>{ b.disabled = true; }); });
+  }catch(e){}
+}
+
 const CodisBuyCine = (function(){
   'use strict';
   /* لكل مستوى وصفة تصاعدية: مدة السحب، المسكة، قصاصات الورق، الحلقات، اللمعة، الثقب الورقي، الأشعة، المطر، القصاصات الملونة، الاهتزاز، الوهج */
@@ -15940,25 +16060,24 @@ const CodisBuyCine = (function(){
   const later = (fn, ms)=>{ if(!s) return; const st = s; st.tm.push(setTimeout(()=>{ if(s === st) fn(); }, ms)); };
   const rnd = (a, b)=>a + Math.random() * (b - a);
   function el(cls, parent, css){ const e = document.createElement('div'); e.className = cls; if(css) e.style.cssText = css; (parent || s.fx).appendChild(e); return e; }
-  function burst(rc, lite, cx, cy){
-    const n = k=>lite ? Math.ceil(k / 2) : k;
+  function burst(rc, cx, cy){
     for(let i = 0; i < rc.ring; i++){
       const r = el('bcx-ring', null, 'left:' + cx + 'px;top:' + cy + 'px');
       codisAnim(r, [{ transform:'translate(-50%,-50%) scale(.25)', opacity:.95 }, { transform:'translate(-50%,-50%) scale(' + (2.2 + i * .7) + ')', opacity:0 }], { dur:760 + i * 200, delay:i * 120, ease:tok('--ease') || 'ease-out', fill:'both' });
     }
-    for(let i = 0; i < n(rc.scraps); i++){
+    for(let i = 0; i < rc.scraps; i++){
       const a = rnd(0, Math.PI * 2), d = rnd(110, 250), w = rnd(8, 18), sp = el('bcx-scrap' + (i % 3 === 0 ? ' is-tint' : ''), null, 'left:' + cx + 'px;top:' + cy + 'px;width:' + w + 'px;height:' + (w * rnd(.6, 1.2)) + 'px;clip-path:polygon(' +
         [0, 1, 2, 3, 4].map(k=>Math.round(rnd(0, 100)) + '% ' + Math.round([0, 30, 100, 70, 10][k] + rnd(-10, 10)) + '%').join(',') + ')');
       const x = Math.cos(a) * d, y = Math.sin(a) * d;
       codisAnim(sp, [{ transform:'translate(-50%,-50%) rotate(0)', opacity:1 }, { transform:'translate(calc(-50% + ' + x * .7 + 'px),calc(-50% + ' + (y * .7 - 30) + 'px)) rotate(' + rnd(-200, 200) + 'deg)', opacity:1, offset:.55 },
         { transform:'translate(calc(-50% + ' + x + 'px),calc(-50% + ' + (y + 90) + 'px)) rotate(' + rnd(-360, 360) + 'deg)', opacity:0 }], { dur:rnd(900, 1400), ease:'cubic-bezier(.2,.7,.4,1)', fill:'both' });
     }
-    for(let i = 0; i < n(rc.rain); i++){
+    for(let i = 0; i < rc.rain; i++){
       const r = el('bcx-drop', null, 'left:' + rnd(2, 98) + '%;height:' + rnd(40, 120) + 'px');
       codisAnim(r, [{ transform:'translateY(-20vh)', opacity:0 }, { opacity:.9, offset:.15 }, { transform:'translateY(110vh)', opacity:0 }], { dur:rnd(900, 1700), delay:rnd(0, 700), ease:'linear', fill:'both' });
     }
     const pal = ['rgb(var(--c1))', 'rgb(var(--c2))', '#ffd76a', '#fff6dc'];
-    for(let i = 0; i < n(rc.conf); i++){
+    for(let i = 0; i < rc.conf; i++){
       const c = el('bcx-conf', null, 'left:' + rnd(0, 100) + '%;background:' + pal[i % pal.length] + ';width:' + rnd(5, 9) + 'px;height:' + rnd(9, 15) + 'px');
       codisAnim(c, [{ transform:'translate3d(0,-12vh,0) rotate(0)', opacity:1 }, { transform:'translate3d(' + rnd(-60, 60) + 'px,108vh,0) rotate(' + rnd(-720, 720) + 'deg)', opacity:.9 }], { dur:rnd(1600, 2600), delay:rnd(0, 500), ease:'cubic-bezier(.25,.6,.5,1)', fill:'both' });
     }
@@ -15966,29 +16085,39 @@ const CodisBuyCine = (function(){
     if(rc.shake){ const a = rc.shake * 3; codisAnim(s.stage, [{ transform:'translate(0,0)' }, { transform:'translate(' + a + 'px,-' + a + 'px)' }, { transform:'translate(-' + a + 'px,' + (a - 1) + 'px)' }, { transform:'translate(' + (a - 1) + 'px,' + a + 'px)' }, { transform:'translate(0,0)' }], { dur:340, ease:'linear' }); }
     const sh = s.root.querySelector('.bcx-sheen i');
     for(let i = 0; sh && i < rc.sheen; i++) codisAnim(sh, [{ transform:'translateX(-170%) skewX(-18deg)' }, { transform:'translateX(330%) skewX(-18deg)' }], { dur:820, delay:i * 700, ease:'cubic-bezier(.5,0,.3,1)', fill:'none' });
+    /* كل الجسيمات تنتهي خلال ~3.2ث: تُزال العقد بعدها فلا تبقى طبقات/حركات خلف المشهد */
+    later(()=>{ try{ s.fx.getAnimations({ subtree:true }).forEach(a=>a.cancel()); }catch(e){} while(s.fx.firstChild) s.fx.removeChild(s.fx.firstChild); }, 3600);
+  }
+  function showActs(){
+    if(!s || s.acts || s.closing) return;
+    const root = s.root, a = root.querySelector('.bcx-acts'); a.hidden = false; s.acts = true;
+    codisAnim(a, [{ transform:'translateY(14px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:300, ease:tok('--ease-glide') || 'ease-out', fill:'both' });
+    try{ root.querySelector('.bcx-use').focus({ preventScroll:true }); }catch(e){}
   }
   function play(r, it){
     try{
       if(s || !r || !r.ok || !r.owned || !it) return false;
       const rar = econRarityById(it.rarity); if(!rar) return false;
-      const price = Math.max(0, Number(r.price) || 0), lv = CodisRevealLevels.levelOfValue(price), info = CodisRevealLevels.info(lv), rc = R[lv];
-      const reduced = CodisMotion.isReduced(), lite = reduced || (navigator.hardwareConcurrency || 8) <= 4;
+      const price = Math.max(0, Number(r.price) || 0), lv = CodisRevealLevels.levelOfValue(price), info = CodisRevealLevels.info(lv);
+      const reduced = CodisMotion.isReduced(), fx = CodisFx.tier(), rc = CodisFx.recipe(R[lv], fx), lite = fx !== 'full';
       const src = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === it.id);
       const sr = src ? (src.querySelector('.cflip') || src).getBoundingClientRect() : null;
       const origin = (sr && sr.width > 20 && sr.bottom > 0 && sr.top < innerHeight) ? sr : null;
       const dur = CodisDuration.parse(r.owned.name);
       const bx = document.body.getBoundingClientRect(), W = Math.round(Math.min(250, Math.min(innerWidth, bx.width || innerWidth) * .6, (innerHeight - 260) * .8));
       const root = document.createElement('div');
-      root.className = 'bcx lv-' + lv + (reduced ? ' is-reduced' : ''); root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'حصلت على ' + r.owned.name);
+      root.className = 'bcx lv-' + lv + ' fx-' + fx + (reduced ? ' is-reduced' : ''); root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'حصلت على ' + r.owned.name);
       root.style.setProperty('--c1', info.rgb); root.style.setProperty('--c2', info.rgb2);
       let pips = ''; for(let i = 1; i <= 9; i++) pips += '<i class="' + (i <= lv ? 'on' : '') + '"></i>';
-      root.innerHTML = '<div class="bcx-scrim"></div>' + (rc.rays ? '<div class="bcx-rays' + (rc.rays > 1 ? ' is-x2' : '') + '" aria-hidden="true"></div>' : '') + '<div class="bcx-fx" aria-hidden="true"></div>' +
+      root.innerHTML = '<div class="bcx-scrim"></div><div class="bcx-glow" aria-hidden="true"></div>' + (rc.rays ? '<canvas class="bcx-rayc' + (fx === 'full' ? ' is-spin' : '') + '" aria-hidden="true"></canvas>' : '') + '<div class="bcx-fx" aria-hidden="true"></div>' +
         '<div class="bcx-stage"><div class="bcx-card" style="width:' + W + 'px"><div class="bcx-face">' + econStoreFaceHtml(it, rar, { price:price }) + '</div><span class="bcx-sheen" aria-hidden="true"><i></i></span></div>' +
         '<div class="bcx-ticket"><b>صارت إلك</b><span class="bcx-name" dir="auto">' + escapeHtml(r.owned.name) + '</span><span class="bcx-paid">دفعت ' + econCoin(price) + '</span>' + (dur ? '<span class="bcx-tmr">' + CODIS_TMR_SVG + 'مؤقت ' + escapeHtml(CodisDuration.label(dur.min)) + ' يبدأ عند الاستخدام</span>' : '') + '<span class="bcx-pips" role="img" aria-label="مستوى الكشف ' + lv + ' من 9">' + pips + '</span></div>' +
         '<div class="bcx-acts" hidden><button type="button" class="btn btn-primary bcx-use"' + (dur ? ' aria-label="استخدام — يبدأ مؤقت ' + escapeHtml(CodisDuration.label(dur.min)) + '"' : '') + '>' + (dur ? CODIS_PLAY_SVG : '') + '<span>استخدام</span></button>' +
         '<button type="button" class="btn btn-secondary bcx-keep"><span>تخزين</span></button></div></div>';
+      const cv = root.querySelector('.bcx-rayc'); if(cv && !CodisFx.paintRays(cv, info.rgb, info.rgb2, rc.rays > 1)) cv.remove();
       document.body.appendChild(root);
-      s = { root:root, uid:r.owned.uid, fx:root.querySelector('.bcx-fx'), stage:root.querySelector('.bcx-stage'), card:root.querySelector('.bcx-card'), tm:[], acting:false, prev:document.activeElement, acts:false };
+      CodisFx.begin(fx);
+      s = { root:root, uid:r.owned.uid, fx:root.querySelector('.bcx-fx'), stage:root.querySelector('.bcx-stage'), card:root.querySelector('.bcx-card'), tm:[], acting:false, prev:document.activeElement, acts:false, tier:fx, lv:lv };
       root.querySelector('.bcx-use').onclick = useNow; root.querySelector('.bcx-keep').onclick = keep;
       root.querySelector('.bcx-scrim').onclick = ()=>{ if(s && s.acts) keep(); };
       root.addEventListener('keydown', onKey);
@@ -16008,14 +16137,11 @@ const CodisBuyCine = (function(){
       ], { dur:T, ease:ease, fill:'both' });
       const tk = root.querySelector('.bcx-ticket');
       codisAnim(tk, [{ transform:'translateY(18px) rotate(-3deg)', opacity:0 }, { transform:'translateY(-3px) rotate(1deg)', opacity:1, offset:.7 }, { transform:'translateY(0) rotate(0)', opacity:1 }], { dur:420, delay:T * .86, ease:ease, fill:'both' });
-      later(()=>{ if(!reduced){ const fr2 = s.card.getBoundingClientRect(), fb = s.fx.getBoundingClientRect(); burst(rc, lite, fr2.left + fr2.width / 2 - fb.left, fr2.top + fr2.height / 2 - fb.top); } }, Math.round(T * .86));
-      later(()=>{
-        const a = root.querySelector('.bcx-acts'); a.hidden = false; s.acts = true;
-        codisAnim(a, [{ transform:'translateY(14px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:300, ease:ease, fill:'both' });
-        try{ root.querySelector('.bcx-use').focus({ preventScroll:true }); }catch(e){}
-      }, T + rc.hold + 200);
+      later(()=>{ if(!reduced){ const fr2 = s.card.getBoundingClientRect(), fb = s.fx.getBoundingClientRect(); burst(rc, fr2.left + fr2.width / 2 - fb.left, fr2.top + fr2.height / 2 - fb.top); } }, Math.round(T * .86));
+      later(showActs, T + rc.hold + 200);
+      later(showActs, T + rc.hold + 2600);   /* مؤقّت أمان: لو تعطّلت الحركة يظهر «استخدام/تخزين» على أي حال */
       return true;
-    }catch(e){ console.error('CodisBuyCine:', e); try{ if(s && s.root) s.root.remove(); }catch(x){} s = null; return false; }
+    }catch(e){ console.error('CodisBuyCine:', e); CodisFx.log('cine-play', e && e.message); try{ if(s && s.root) s.root.remove(); }catch(x){} s = null; CodisFx.end(); return false; }
   }
   function onKey(e){ if(e.key === 'Escape'){ e.preventDefault(); keep(); } else if(e.key === 'Tab' && s){ const b = Array.prototype.filter.call(s.root.querySelectorAll('button'), x=>!x.closest('[hidden]')); if(!b.length) return; const i = b.indexOf(document.activeElement); if(e.shiftKey && i <= 0){ e.preventDefault(); b[b.length - 1].focus(); } else if(!e.shiftKey && i === b.length - 1){ e.preventDefault(); b[0].focus(); } } }
   function close(after){
@@ -16023,14 +16149,24 @@ const CodisBuyCine = (function(){
     st.root.classList.add('is-out');
     st.root.querySelectorAll('button').forEach(b=>{ b.disabled = true; });
     let fin = false;
-    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); try{ st.root.remove(); }catch(e){} if(s === st) s = null; try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
+    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); try{ st.root.getAnimations({ subtree:true }).forEach(a=>a.cancel()); }catch(e){} try{ st.root.remove(); }catch(e){} if(s === st) s = null; CodisFx.end(); try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
     const a = codisAnim(st.root, [{ opacity:1 }, { opacity:0 }], { dur:220, ease:'linear', fill:'forwards', done:end });
     if(!a) end(); else setTimeout(end, 320);   /* صفحة بالخلفية لا تُكمل الحركة — التنظيف مضمون */
   }
+  /* إغلاق فوري بلا حركة (الصفحة تنتقل للخلفية/تُغلق): تُحرَّر كل الطبقات؛ الشراء مكتمل أصلاً والاسترداد يُبلغ المستخدم عند العودة */
+  function fastClose(why){
+    if(!s) return; const st = s; st.closing = true; st.tm.forEach(clearTimeout);
+    try{ st.root.getAnimations({ subtree:true }).forEach(a=>a.cancel()); }catch(e){}
+    try{ st.root.remove(); }catch(e){}
+    s = null; CodisFx.end(); CodisFx.log('cine-fastclose', why);
+    try{ econAfterCine(); }catch(e){}
+  }
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && s) fastClose('hidden'); });
+  window.addEventListener('pagehide', ()=>{ if(s) fastClose('pagehide'); });
   /* «تخزين»: المكافأة أصلاً مملوكة منذ نجاح الشراء — الإغلاق لا يستهلك شيئاً */
-  function keep(){ if(!s || s.acting) return; s.acting = true; close(()=>{ try{ econRenderAll(); }catch(e){} showToast('انحفظت ببحوزتك', 'var(--success)', 'gift'); }); }
+  function keep(){ if(!s || s.acting) return; s.acting = true; CodisBuyRecovery.seen(); close(()=>{ try{ econAfterCine(); }catch(e){} showToast('انحفظت ببحوزتك', 'var(--success)', 'gift'); }); }
   function useNow(){
-    if(!s || s.acting) return; s.acting = true;
+    if(!s || s.acting) return; s.acting = true; CodisBuyRecovery.seen();
     const uid = s.uid, it = CodisInventory.get(uid); let ok = false, msg = 'هذي المكافأة ما عدت بحوزتك';
     if(it && it.status === 'owned'){
       const d = CodisDuration.parse(it.name);
@@ -16038,9 +16174,9 @@ const CodisBuyCine = (function(){
       else { const r2 = CodisEconomy.markUsed(uid); ok = !!(r2 && r2.ok); msg = ok ? 'انسجّلت كمستخدَمة' : (r2 && r2.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : 'تعذّر التنفيذ'); }
     }
     if(ok){ try{ codisSfx('confirm', { ctx:'use' }); }catch(e){} }
-    close(()=>{ try{ econRenderAll(); }catch(e){} showToast(msg, ok ? 'var(--success)' : 'var(--warning)', ok ? 'check' : undefined); });
+    close(()=>{ try{ econAfterCine(); }catch(e){} showToast(msg, ok ? 'var(--success)' : 'var(--warning)', ok ? 'check' : undefined); });
   }
-  return { play:play, keep:keep, isOpen:()=>!!s, el:()=>s && s.root, _state:()=>s };
+  return { play:play, keep:keep, fastClose:fastClose, isOpen:()=>!!s, el:()=>s && s.root, _state:()=>s };
 })();
 
 /* — معاينة بطاقة المتجر بالضغط المطوّل: البطاقة الحقيقية نفسها (لا نسخة) تُنقل لطبقة أمامية بحركة FLIP من موضعها ثم تعود له.
@@ -16064,6 +16200,15 @@ const CodisCardPeek = (function(){
   /* التمرير باللمس يُطلق pointercancel من المتصفح نفسه؛ والفأرة تُلغى بالحركة (SLOP) */
   document.addEventListener('contextmenu', e=>{ if(p || (e.target.closest && e.target.closest('.peek'))) e.preventDefault(); });
   document.addEventListener('click', e=>{ if(blockUntil && Date.now() < blockUntil){ e.preventDefault(); e.stopPropagation(); blockUntil = 0; } }, true);
+  function codisSafeInsets(){
+    try{ const d = document.createElement('div'); d.style.cssText = 'position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0';
+      document.body.appendChild(d); const cs = getComputedStyle(d), o = { t:parseFloat(cs.paddingTop) || 0, b:parseFloat(cs.paddingBottom) || 0 }; d.remove(); return o; }catch(e){ return { t:0, b:0 }; }
+  }
+  /* منع ظهور مقابض تحديد النص (iOS) أثناء الضغط المطوّل/المعاينة — فقط داخل البطاقات والمعاينة، لا الحقول */
+  document.addEventListener('selectstart', e=>{
+    const n = e.target && (e.target.nodeType === 1 ? e.target : e.target.parentElement);
+    if(n && n.closest && n.closest('#eco-store-body [role="list"] > *, .peek, .bcx') && !n.closest('input, textarea, select, [contenteditable]')) e.preventDefault();
+  }, true);
   function open(card){
     if(s || !card.isConnected) return;
     const r = card.getBoundingClientRect(); if(!(r.width > 0)) return;
@@ -16083,9 +16228,14 @@ const CodisCardPeek = (function(){
     /* CODIS-OFFLINE (جودة): كانت البطاقة تُرسَم بحجمها الصغير ثم تُكبَّر بـtransform+will-change فتُمدَّد صورة الطبقة (بكسلة/بهتان).
        الآن تُرسَم فعلاً بالحجم النهائي (zoom) داخل غلاف fly، والحركة FLIP تبدأ مصغَّرة 1/k وتصل 1 — التركيب يعتمد أكبر مقياس بالحركة فتبقى الحدة كاملة. */
     const o = ov.getBoundingClientRect();
-    const vw = o.width, vh = o.height, k = Math.max(1, Math.min(2.3, vw * .8 / r.width, vh * .64 / r.height));
-    const zoomOk = k > 1.02 && !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
-    const fw = r.width * k, fh = r.height * k, fl = (vw - fw) / 2, ft = (vh - fh) / 2 - 12;
+    /* CODIS-STABILITY: المقياس من عرض إطار الصورة (4:5) لا من ارتفاع البلاطة كاملة ⇒ كل البطاقات بنفس الحجم؛ والارتفاع يُحسب بعد إلغاء قص الاسم ليظهر كاملاً */
+    const vv = window.visualViewport, vw = o.width, vh = Math.min(o.height, vv ? vv.height : o.height), si = codisSafeInsets();
+    const topPad = si.t + 64, botPad = si.b + 64, availH = Math.max(120, vh - topPad - botPad);
+    const frEl = card.querySelector('.cflip, .rwc, .scx-hc-art, .pcd-frame, .cfp'), frW = (frEl && frEl.getBoundingClientRect().width > 20) ? frEl.getBoundingClientRect().width : r.width;
+    const th = Math.max(r.height, card.scrollHeight || 0);
+    const k = Math.max(.5, Math.min(2.6, vw * .84 / frW, 360 / frW, availH / th));
+    const zoomOk = Math.abs(k - 1) > .02 && !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
+    const fw = r.width * k, fh = th * k, fl = (vw - fw) / 2, ft = topPad + (availH - fh) / 2;
     const dx = ((r.left - o.left) + r.width / 2) - (fl + fw / 2), dy = ((r.top - o.top) + r.height / 2) - (ft + fh / 2);
     let fly = null;
     if(zoomOk){
@@ -16100,7 +16250,7 @@ const CodisCardPeek = (function(){
     } else {   /* متصفح بلا zoom: المسار القديم لكن بلا will-change/3D ليُعاد تصيير الطبقة بالمقياس النهائي */
       host.appendChild(card); card.classList.add('peek-nofly');
       Object.assign(card.style, { position:'fixed', left:(r.left - o.left) + 'px', top:(r.top - o.top) + 'px', width:r.width + 'px', margin:'0', zIndex:'2' });
-      const ddx = (o.left + vw / 2) - (r.left + r.width / 2), ddy = (o.top + vh / 2) - (r.top + r.height / 2) - 12, to = 'translate(' + ddx + 'px,' + ddy + 'px) scale(' + k + ')';
+      const ddx = (o.left + vw / 2) - (r.left + r.width / 2), ddy = (o.top + ft + fh / 2) - (r.top + r.height / 2), to = 'translate(' + ddx + 'px,' + ddy + 'px) scale(' + k + ')';
       s = { card:card, ph:ph, ov:ov, r:r, prev:document.activeElement };
       card.style.transform = to;
       codisAnim(card, [{ transform:'translate(0,0) scale(1)' }, { transform:'translate(' + ddx * .9 + 'px,' + (ddy * .9 - 10) + 'px) scale(' + k * 1.04 + ')', offset:.7 }, { transform:to }], { dur:560, ease:tok('--ease-glide') || 'cubic-bezier(.25,1.08,.4,1)' });
@@ -16110,7 +16260,7 @@ const CodisCardPeek = (function(){
     ov.addEventListener('keydown', e=>{ if(e.key === 'Escape'){ e.preventDefault(); close(); } });
     try{ ov.querySelector('.peek-x').focus({ preventScroll:true }); }catch(e){}
   }
-  function close(){
+  function close(instant){
     if(!s || s.closing) return; const st = s; st.closing = true;
     const back = st.ph.isConnected, o = st.ov.getBoundingClientRect(), tgt = st.fly || st.card;
     let to = 'translate(0px,0px) scale(1)';
@@ -16133,8 +16283,13 @@ const CodisCardPeek = (function(){
     const cur = (st.fly ? 'translate(0px,0px) scale(1)' : st.card.style.transform);
     const kf = back ? [{ transform:cur }, { transform:to }] : [{ transform:cur, opacity:1 }, { transform:cur + ' scale(.9)', opacity:0 }];
     const a = codisAnim(tgt, kf, { dur:360, ease:tok('--ease-ios') || 'cubic-bezier(.32,.72,0,1)', fill:'forwards', done:done });
-    if(!a) done(); else setTimeout(done, 460);
+    if(instant === 'instant') done(); else if(!a) done(); else setTimeout(done, 460);
   }
+  /* تدوير الشاشة/تغيّر العرض: الهندسة المحسوبة لم تعد صالحة ← إغلاق فوري نظيف */
+  let lastW = window.innerWidth;
+  window.addEventListener('orientationchange', ()=>{ if(s) close('instant'); });
+  window.addEventListener('resize', ()=>{ const w = window.innerWidth; if(s && Math.abs(w - lastW) > 40) close('instant'); lastW = w; });
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && s) close('instant'); });
   return { close:close, isOpen:()=>!!s, el:()=>s && s.ov, _open:open };
 })();
 
@@ -16762,6 +16917,7 @@ function econStoreNavBind(){
 }
 let econLastBal = null, econStoreEnterAt = 0;
 function econRenderStore(){
+  { let cine = false; try{ cine = CodisBuyCine.isOpen(); }catch(e){} if(cine){ window.__econDefer = true; return; } }
   const box = document.getElementById('eco-store-body'); if(!box) return;
   const ownKeep = (document.getElementById('eco-own-sheet') || {}).scrollTop || 0;
   if(econClosedOpen) econClosedMarkSeen(econClosedView);   /* CODIS-PERF: العرض المفتوح يُعدّ مقروءاً */
@@ -16870,9 +17026,9 @@ async function econBuy(id){
     if(data.wallet.balance < price){ codisSfx('invalid', { ctx:'funds' }); showToast('الرصيد غير كافٍ — ينقصك ' + econFmt(price - data.wallet.balance) + ' كوين', 'var(--warning)'); return; }
     const ok = await codisConfirm(CodisCopy.buy(it.name, econFmt(price), econFmt(data.wallet.balance - price)));
     if(!ok) return;
-    econBusyId = id; econRenderStore();
+    econBusyId = id; econMarkBusy(id);
     const r = CodisEconomy.purchase(id);
-    if(r.ok){ boughtId = id; econLastBought = id; codisSfx('store.buy', { ctx:'card' }); if(!CodisBuyCine.play(r, it)) showToast('تم الشراء: ' + it.name + ' (−' + econFmt(r.price) + ') — صارت بحوزتك', 'var(--success)', 'gift'); CodisEvents.emit('ECON_PURCHASE', { name:it.name, price:r.price }); }
+    if(r.ok){ boughtId = id; econLastBought = id; codisSfx('store.buy', { ctx:'card' }); CodisBuyRecovery.mark(r); if(!CodisBuyCine.play(r, it)) CodisBuyRecovery.seen(), showToast('تم الشراء: ' + it.name + ' (−' + econFmt(r.price) + ') — صارت بحوزتك', 'var(--success)', 'gift'); CodisEvents.emit('ECON_PURCHASE', { name:it.name, price:r.price }); }
     else { codisSfx('invalid', { ctx:'funds' }); showToast(r.reason === 'insufficient' ? 'الرصيد غير كافٍ' : r.reason === 'unavailable' ? 'المكافأة غير متاحة' : r.reason === 'save' ? 'تعذّر الحفظ — لم يُخصم شيء' : 'تعذّر الشراء', 'var(--warning)'); }
   } finally {
     econStoreBusy = false; econBusyId = null; econRenderAll();
