@@ -132,13 +132,13 @@
   const card = document.querySelector('#eco-store-body .shop-card[data-id]');
   if(card){
     const grid = card.parentNode, idx = Array.prototype.indexOf.call(grid.children, card);
-    CodisCardPeek._open(card); await sleep(650);
+    CodisCardPeek._open(card); await sleep(650); document.getAnimations().forEach(a=>{ try{ a.finish(); }catch(e){} });   /* الجزء المخفي من الجلسة لا يرسم إطارات: نُنهي الحركة يدوياً */
     T('peek: overlay open with the real card', CodisCardPeek.isOpen() && document.querySelector('.peek .shop-card') === card && !!grid.querySelector('.peek-ph'));
-    const r = card.getBoundingClientRect();
+    const flyEl = document.querySelector('.peek-fly'), r = (flyEl || card).getBoundingClientRect();   /* CODIS-OFFLINE: الغلاف peek-fly هو المقيس (البطاقة بداخله zoom) */
     const ob = document.querySelector('.peek').getBoundingClientRect();
     T('peek: card centred in the app frame and enlarged', Math.abs((r.left + r.width / 2) - (ob.left + ob.width / 2)) < 30 && r.width > 120, Math.round(r.left + r.width / 2) + ' / ' + Math.round(ob.left + ob.width / 2));
     CodisCardPeek.close(); await sleep(500);
-    T('peek: card back in its slot, overlay removed', !CodisCardPeek.isOpen() && !document.querySelector('.peek') && !grid.querySelector('.peek-ph') && grid.children[idx] === card && !card.style.transform);
+    T('peek: card back in its slot, overlay removed', !CodisCardPeek.isOpen() && !document.querySelector('.peek') && !grid.querySelector('.peek-ph') && grid.children[idx] === card && !card.style.transform && !card.style.zoom && !grid.querySelector('.peek-fly'));
   } else T('store has a card to peek', false);
   /* CODIS-PEEK-ALL: كل أنواع عناصر المتجر + عنصر «مستقبلي» يُضاف لقائمة + النقرة القصيرة على البكج باقية */
   { const body = document.getElementById('eco-store-body'), kinds = {};
