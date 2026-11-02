@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<meta name="codis-version" content="3.12.0">
+<meta name="codis-version" content="3.12.1">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4838,6 +4838,11 @@ html, body, body *{ touch-action:pan-x pan-y; }
 .st-tile .shop-acts .tmr-chip.is-run{ order:-1; }
 .acct-sync.is-pending .acct-dot, .acct-sync.is-offline .acct-dot{ background:var(--warning); }
 .acct-sync.is-expired .acct-dot, .acct-sync.is-error .acct-dot{ background:var(--danger); }
+
+/* CODIS-SMOOTH: بطاقة قلب ساكنة غير مقلوبة = مسطّحة (لا طبقات GPU)؛ is-3d أو is-flipped = نفس قواعد القلب الأصلية حرفياً */
+.cflip:not(.is-3d):not(.is-flipped) .cflip-in{ transform-style:flat; }
+.cflip:not(.is-3d):not(.is-flipped) .cflip-f{ transform:none; -webkit-backface-visibility:visible; backface-visibility:visible; }
+.cflip:not(.is-3d):not(.is-flipped) .cflip-b{ transform:none; visibility:hidden; -webkit-backface-visibility:visible; backface-visibility:visible; }
 </style>
 </head>
 <body>
@@ -13801,7 +13806,7 @@ function codisFitSpecialPlates(root){
     const n = t.querySelector('.scx-name') || t;
     const over = ()=>t.offsetHeight > box.clientHeight * 0.96 || n.scrollHeight > n.clientHeight + 1 || n.scrollWidth > n.clientWidth + 1;
     let size = 6.2; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 3 && over(); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.2, 3, 40, ()=>(over()));
   });
 }
 /* بطاقتا العطلة: صورة فنية واحدة لكل نوع في كل المواضع (متجر · مخزون · بكج · كشف) مع نسخة مصغّرة عند o.mini */
@@ -14081,14 +14086,28 @@ const CodisArt = (function(){
 })();
 /* ملاءمة الخط مرة واحدة لكل خانة بنفس المقاس والنص: إعادة الاستدعاء (ResizeObserver / fonts.ready / إعادة الرسم) لا تعيد حلقة القياس المكلفة،
    وخانات متطابقة (نفس الصنف والمقاس والنص) تأخذ نتيجة محفوظة بلا قياس. أي تغيّر بالمقاس أو النص أو حالة الخطوط يعيد القياس */
+/* CODIS-SMOOTH: نفس حلقة التصغير القديمة (size, size-step, … حتى min أو n خطوات، يتوقف عند أول حجم لا يفيض) لكن ببحث ثنائي.
+   التسلسل يُبنى بالطرح المتكرر نفسه فالأحجام مطابقة رقمياً؛ والقياس ~log2(n) بدل n (كل قياس = إعادة تخطيط) */
+function codisFitShrink(t, size, step, min, n, over){
+  const seq = [size]; for(let i = 0; i < n && seq[i] > min; i++) seq.push(seq[i] - step);
+  const last = seq.length - 1; if(!last || !over()) return size;
+  let lo = 0, hi = last;
+  while(hi - lo > 1){ const mid = (lo + hi) >> 1; t.style.fontSize = seq[mid] + 'cqw'; if(over()) lo = mid; else hi = mid; }
+  t.style.fontSize = seq[hi] + 'cqw'; return seq[hi];
+}
 const codisFitMemo = new Map();
 function codisFitEach(list, fn){
   const fs = document.fonts ? document.fonts.status : '';
+  const jobs = [];   /* CODIS-SMOOTH: مرحلة قراءة (إعادة تخطيط واحدة) ثم مرحلة كتابة — بدل قراءة/كتابة متناوبة لكل بطاقة */
   for(let i = 0; i < list.length; i++){
     const box = list[i], t = box.firstElementChild; if(!t || box.closest('.fit-wait')) continue;   /* بطاقة بعيدة عن الشاشة تنتظر دورها في codisFitLazy */
     const w = box.clientWidth, h = box.clientHeight; if(!w || !h) continue;
     const key = box.className + '|' + w + 'x' + h + '|' + fs + '|' + box.textContent;
     if(box._codisFit === key) continue;
+    jobs.push([box, t, key]);
+  }
+  for(let j = 0; j < jobs.length; j++){
+    const box = jobs[j][0], t = jobs[j][1], key = jobs[j][2];
     const ar = t.querySelector('.wkc-tier i'), m = codisFitMemo.get(key);
     if(m){ t.style.cssText = m[0]; if(ar) ar.style.display = m[1]; }
     else { fn(box); if(codisFitMemo.size > 600) codisFitMemo.clear(); codisFitMemo.set(key, [t.style.cssText, ar ? ar.style.display : '']); }
@@ -14124,12 +14143,12 @@ function codisFitRewardCard(root){
   codisFitEach(root.querySelectorAll('.pnc-name'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 7.2; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 3.8 && (t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth); i++){ size -= 0.25; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.25, 3.8, 40, ()=>((t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth)));
   });
   codisFitEach(root.querySelectorAll('.pnc-info'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 6; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 3 && (t.offsetHeight > box.clientHeight * 0.96 || t.scrollWidth > box.clientWidth * 0.96); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.2, 3, 40, ()=>((t.offsetHeight > box.clientHeight * 0.96 || t.scrollWidth > box.clientWidth * 0.96)));
   });
 
   /* العقوبة الأسبوعية: العنوان في اللوحة الداكنة (سطر واحد) والاسم في الورقة (يلتف) والتكلفة في أسفلها؛ كلٌّ يصغَّر حتى يدخل خانته */
@@ -14137,31 +14156,31 @@ function codisFitRewardCard(root){
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     const isT = box.classList.contains('pwc-title');
     let size = isT ? 6 : 5.4; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 3 && (t.scrollWidth > box.clientWidth * 0.96 || t.offsetHeight > box.clientHeight); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.2, 3, 40, ()=>((t.scrollWidth > box.clientWidth * 0.96 || t.offsetHeight > box.clientHeight)));
   });
   codisFitEach(root.querySelectorAll('.pwc-name'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 8.2; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 50 && size > 3.8 && (t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth); i++){ size -= 0.25; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.25, 3.8, 50, ()=>((t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth)));
   });
 
   /* العقوبة الشهرية: الاسم في اللوحة العليا (يلتف) والشدة + التكلفة في السفلى؛ كلٌّ يصغَّر حتى يدخل لوحته */
   codisFitEach(root.querySelectorAll('.mwc-name'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 8.2; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 50 && size > 3.8 && (t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth); i++){ size -= 0.25; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.25, 3.8, 50, ()=>((t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth)));
   });
   codisFitEach(root.querySelectorAll('.mwc-info'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 6.4; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 3 && (t.offsetHeight > box.clientHeight * 0.96 || t.scrollWidth > box.clientWidth * 0.96); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.2, 3, 40, ()=>((t.offsetHeight > box.clientHeight * 0.96 || t.scrollWidth > box.clientWidth * 0.96)));
   });
 
   /* الأسبوعي: اسم المكافأة يلتف ويصغَّر حتى يدخل لوحته؛ وسطر الطبقة/الكوين يصغَّر حتى يدخل عرضه كاملاً */
   codisFitEach(root.querySelectorAll('.wkc-name'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 7; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 4.2 && (t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth); i++){ size -= 0.25; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.25, 4.2, 40, ()=>((t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth)));
   });
   codisFitEach(root.querySelectorAll('.wkc-info'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientWidth) return;
@@ -14169,13 +14188,13 @@ function codisFitRewardCard(root){
     const ar = t.querySelector('.wkc-tier i'); if(ar) ar.style.display = '';
     const top = Math.min(6.2, (box.clientHeight * 0.62) / unit); let size = top; t.style.fontSize = size + 'cqw';
     const over = ()=>t.offsetWidth > box.clientWidth * 0.96;
-    for(let i = 0; i < 40 && size > 4.4 && over(); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; }
-    if(over() && ar){ ar.style.display = 'none'; size = top; t.style.fontSize = size + 'cqw'; for(let i = 0; i < 40 && size > 3 && over(); i++){ size -= 0.2; t.style.fontSize = size + 'cqw'; } }
+    size = codisFitShrink(t, size, 0.2, 4.4, 40, ()=>(over()));
+    if(over() && ar){ ar.style.display = 'none'; size = top; t.style.fontSize = size + 'cqw'; size = codisFitShrink(t, size, 0.2, 3, 40, ()=>(over())); }
   });
   codisFitEach(root.querySelectorAll('.rwc-name'), box=>{
     const t = box.firstElementChild; if(!t || !box.clientHeight) return;
     let size = 6.4; t.style.fontSize = size + 'cqw';
-    for(let i = 0; i < 40 && size > 2.6 && (t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth); i++){ size -= 0.3; t.style.fontSize = size + 'cqw'; }
+    size = codisFitShrink(t, size, 0.3, 2.6, 40, ()=>((t.offsetHeight > box.clientHeight || t.scrollWidth > box.clientWidth)));
   });
 }
 /* المتجر: البطاقات قد تُرسم والصفحة مخفية (قياساتها صفر)، فنعيد الملاءمة تلقائياً عند ظهورها أو تغيّر مقاسها */
@@ -15936,7 +15955,7 @@ const CodisBuyCine = (function(){
     { pull:1060, grip:440, scraps:30, ring:3, sheen:3, hole:1, rays:2, rain:0, conf:64, shake:2, spin:1, flare:1, hold:420 }
   ];
   let s = null;
-  const tok = n=>{ try{ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }catch(e){ return ''; } };
+  const tokC = {}, tok = n=>{ if(n in tokC) return tokC[n]; try{ return (tokC[n] = getComputedStyle(document.documentElement).getPropertyValue(n).trim()); }catch(e){ return ''; } };   /* CODIS-SMOOTH: --ease* ثابتة في :root */
   const later = (fn, ms)=>{ if(!s) return; const st = s; st.tm.push(setTimeout(()=>{ if(s === st) fn(); }, ms)); };
   const rnd = (a, b)=>a + Math.random() * (b - a);
   function el(cls, parent, css){ const e = document.createElement('div'); e.className = cls; if(css) e.style.cssText = css; (parent || s.fx).appendChild(e); return e; }
@@ -16050,7 +16069,7 @@ const CodisCardPeek = (function(){
   const HOLD = 420, SLOP = 10;
   let p = null, s = null, blockUntil = 0;
   const clearP = ()=>{ if(p){ clearTimeout(p.t); p = null; } };
-  const tok = n=>{ try{ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }catch(e){ return ''; } };
+  const tokC = {}, tok = n=>{ if(n in tokC) return tokC[n]; try{ return (tokC[n] = getComputedStyle(document.documentElement).getPropertyValue(n).trim()); }catch(e){ return ''; } };   /* CODIS-SMOOTH: --ease* ثابتة في :root */
   document.addEventListener('pointerdown', e=>{
     if(s || (e.pointerType === 'mouse' && e.button !== 0)) return;
     /* CODIS-PEEK-ALL: أي عنصر بالمتجر = ابن مباشر لقائمة داخل المتجر (الحالي والمستقبلي)؛ أزرار الإجراء وحدها لا تبدأ المعاينة */
@@ -16064,6 +16083,23 @@ const CodisCardPeek = (function(){
   /* التمرير باللمس يُطلق pointercancel من المتصفح نفسه؛ والفأرة تُلغى بالحركة (SLOP) */
   document.addEventListener('contextmenu', e=>{ if(p || (e.target.closest && e.target.closest('.peek'))) e.preventDefault(); });
   document.addEventListener('click', e=>{ if(blockUntil && Date.now() < blockUntil){ e.preventDefault(); e.stopPropagation(); blockUntil = 0; } }, true);
+  /* CODIS-SMOOTH: هل zoom يطبَّق صحيحاً على وحدات الحاوية؟ (Chrome الحديث نعم؛ WebKit/iOS يضاعفها) — يُفحص مرة واحدة */
+  let zoomSound;
+  function codisZoomSound(){
+    if(zoomSound !== undefined) return zoomSound;
+    zoomSound = false;
+    try{
+      const ua = navigator.userAgent || '', webkit = /iP(hone|ad|od)/.test(ua) || (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1) || (/AppleWebKit/.test(ua) && !/(Chrome|Chromium|Edg)\//.test(ua));
+      if(!window.__codisNoZoom && !webkit && window.CSS && CSS.supports && CSS.supports('zoom', '2')){
+        const o = document.createElement('div'), i = document.createElement('div');
+        o.style.cssText = 'position:fixed;left:0;top:0;width:100px;height:4px;zoom:2;container-type:inline-size;visibility:hidden;pointer-events:none';
+        i.style.cssText = 'width:50cqw;height:2px'; o.appendChild(i); document.body.appendChild(o);
+        const wo = o.getBoundingClientRect().width, wi = i.getBoundingClientRect().width; o.remove();
+        zoomSound = wo > 150 && Math.abs(wi / wo - .5) < .03;
+      }
+    }catch(e){ zoomSound = false; }
+    return zoomSound;
+  }
   function open(card){
     if(s || !card.isConnected) return;
     const r = card.getBoundingClientRect(); if(!(r.width > 0)) return;
@@ -16084,15 +16120,22 @@ const CodisCardPeek = (function(){
        الآن تُرسَم فعلاً بالحجم النهائي (zoom) داخل غلاف fly، والحركة FLIP تبدأ مصغَّرة 1/k وتصل 1 — التركيب يعتمد أكبر مقياس بالحركة فتبقى الحدة كاملة. */
     const o = ov.getBoundingClientRect();
     const vw = o.width, vh = o.height, k = Math.max(1, Math.min(2.3, vw * .8 / r.width, vh * .64 / r.height));
-    const zoomOk = k > 1.02 && !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
-    const fw = r.width * k, fh = r.height * k, fl = (vw - fw) / 2, ft = (vh - fh) / 2 - 12;
-    const dx = ((r.left - o.left) + r.width / 2) - (fl + fw / 2), dy = ((r.top - o.top) + r.height / 2) - (ft + fh / 2);
+    const zoomOk = k > 1.02 && codisZoomSound(), widthMode = k > 1.02 && !zoomOk;
+    const fw = r.width * k, fl = (vw - fw) / 2; let fh = r.height * k, ft = (vh - fh) / 2 - 12;
+    const dx = ((r.left - o.left) + r.width / 2) - (fl + fw / 2); let dy = ((r.top - o.top) + r.height / 2) - (ft + fh / 2);
     let fly = null;
-    if(zoomOk){
+    if(zoomOk || widthMode){
       fly = document.createElement('div'); fly.className = 'peek-fly';
       Object.assign(fly.style, { position:'fixed', left:fl + 'px', top:ft + 'px', width:fw + 'px', height:fh + 'px', zIndex:'2' });
       host.appendChild(fly); fly.appendChild(card);
-      Object.assign(card.style, { zoom:String(k), width:r.width + 'px', margin:'0' });
+      if(zoomOk) Object.assign(card.style, { zoom:String(k), width:r.width + 'px', margin:'0' });
+      else {   /* CODIS-SMOOTH (WebKit): رسم بالعرض النهائي بلا zoom؛ الارتفاع الفعلي يُقاس ويُوسَّط */
+        Object.assign(card.style, { width:fw + 'px', margin:'0' }); fly.style.transform = 'none';
+        const h2 = card.getBoundingClientRect().height;
+        if(h2 > 0 && h2 < r.height * (1 + (k - 1) / 2)){   /* عنصر بمقاسات ثابتة (صندوق البكج): لا يتجاوب مع العرض ⇒ تكبير بالمقياس نفسه */
+          Object.assign(card.style, { width:r.width + 'px', transformOrigin:(getComputedStyle(card).direction === 'rtl' ? '100% 0' : '0 0'), transform:'scale(' + k + ')' });
+        } else if(h2 > 0){ fh = h2; ft = Math.max(8, (vh - fh) / 2 - 12); fly.style.top = ft + 'px'; fly.style.height = fh + 'px'; dy = ((r.top - o.top) + r.height / 2) - (ft + fh / 2); }
+      }
       s = { card:card, ph:ph, ov:ov, r:r, prev:document.activeElement, fly:fly, k:k, fl:fl, ft:ft, fw:fw, fh:fh };
       const from = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (1 / k) + ')';
       fly.style.transform = 'none';   /* الحالة النهائية مكتوبة أولاً؛ الحركة تنطلق منها فقط (تقليل الحركة/تعذّر الحركة ← النهائية فوراً) */
@@ -16124,7 +16167,7 @@ const CodisCardPeek = (function(){
     const done = ()=>{
       if(fin) return; fin = true;
       try{ tgt.getAnimations().forEach(a=>a.cancel()); }catch(e){}
-      st.card.classList.remove('is-peek', 'peek-nofly'); ['position', 'left', 'top', 'width', 'margin', 'zIndex', 'transform', 'opacity', 'zoom'].forEach(k=>{ st.card.style[k] = ''; });
+      st.card.classList.remove('is-peek', 'peek-nofly'); ['position', 'left', 'top', 'width', 'margin', 'zIndex', 'transform', 'transformOrigin', 'opacity', 'zoom'].forEach(k=>{ st.card.style[k] = ''; });
       if(back) st.ph.parentNode.insertBefore(st.card, st.ph); else st.card.remove();
       if(st.fly) st.fly.remove();
       st.ph.remove(); st.ov.remove(); if(s === st) s = null;
@@ -16521,6 +16564,12 @@ function codisCardBackHtml(title, rows, o){
 }
 function codisFlipToggle(el){
   const on = !el.classList.contains('is-flipped');
+  /* CODIS-SMOOTH: تفعيل 3D قبل بدء الدوران (قراءة offsetWidth تثبّت الحالة) ثم إسقاطه بعد عودة البطاقة لوجهها */
+  if(!el.classList.contains('is-3d')){ el.classList.add('is-3d'); void el.offsetWidth; }
+  clearTimeout(el._flat3d);
+  if(!on){ const inn = el.querySelector('.cflip-in'), flat = ()=>{ clearTimeout(el._flat3d); if(inn) inn.removeEventListener('transitionend', onEnd); if(!el.classList.contains('is-flipped')) el.classList.remove('is-3d'); };
+    const onEnd = e=>{ if(e.target === inn && e.propertyName === 'transform') flat(); };
+    if(inn) inn.addEventListener('transitionend', onEnd); el._flat3d = setTimeout(flat, 900); }
   el.classList.toggle('is-flipped', on); el.setAttribute('aria-pressed', on ? 'true' : 'false');
   const f = el.querySelector('.cflip-f'), b = el.querySelector('.cflip-b');
   if(f) f.setAttribute('aria-hidden', on ? 'true' : 'false');
@@ -16754,7 +16803,7 @@ function econStoreNavSync(){
   const box = document.getElementById('eco-store-body'), sc = econStoreScroller(); if(!box || !sc || !econStoreIsOpen()) return;
   const lim = sc.getBoundingClientRect().top + 120; let cur = ECON_STORE_PARTS[0][0];
   ECON_STORE_PARTS.forEach(p=>{ const el = document.getElementById(p[0]); if(el && el.getBoundingClientRect().top <= lim) cur = p[0]; });
-  Array.prototype.forEach.call(box.querySelectorAll('.st-nav button'), b=>{ const on = b.getAttribute('data-to') === cur; b.classList.toggle('is-on', on); if(on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  Array.prototype.forEach.call(box.querySelectorAll('.st-nav button'), b=>{ const on = b.getAttribute('data-to') === cur; if(b.classList.contains('is-on') === on) return; b.classList.toggle('is-on', on); if(on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });   /* CODIS-SMOOTH */
 }
 function econStoreNavBind(){
   if(econNavBound) return; const sc = econStoreScroller(); if(!sc) return; econNavBound = true;
@@ -16860,6 +16909,11 @@ async function econBuyFromDetail(){
   await econBuy(id);
   if(econLastBought === id) econCloseDetail(); else if(econDetailId) econPaintDetail();
 }
+/* CODIS-SMOOTH: نفس ما يرسمه econStoreCardHtml لزر البطاقة المشغولة (صنف is-busy + معطّل + «جارٍ الشراء…») بلا إعادة بناء المتجر */
+function econMarkBusy(id){
+  try{ Array.prototype.forEach.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>{ if(c.dataset.id !== id) return; const b = c.querySelector('.shop-buy'); if(!b) return;
+    b.classList.add('is-busy'); b.disabled = true; b.setAttribute('aria-disabled', 'true'); b.textContent = 'جارٍ الشراء…'; }); }catch(e){}
+}
 async function econBuy(id){
   if(econStoreBusy) return; econStoreBusy = true;
   let boughtId = null;
@@ -16870,13 +16924,16 @@ async function econBuy(id){
     if(data.wallet.balance < price){ codisSfx('invalid', { ctx:'funds' }); showToast('الرصيد غير كافٍ — ينقصك ' + econFmt(price - data.wallet.balance) + ' كوين', 'var(--warning)'); return; }
     const ok = await codisConfirm(CodisCopy.buy(it.name, econFmt(price), econFmt(data.wallet.balance - price)));
     if(!ok) return;
-    econBusyId = id; econRenderStore();
+    econBusyId = id; econMarkBusy(id);
     const r = CodisEconomy.purchase(id);
     if(r.ok){ boughtId = id; econLastBought = id; codisSfx('store.buy', { ctx:'card' }); if(!CodisBuyCine.play(r, it)) showToast('تم الشراء: ' + it.name + ' (−' + econFmt(r.price) + ') — صارت بحوزتك', 'var(--success)', 'gift'); CodisEvents.emit('ECON_PURCHASE', { name:it.name, price:r.price }); }
     else { codisSfx('invalid', { ctx:'funds' }); showToast(r.reason === 'insufficient' ? 'الرصيد غير كافٍ' : r.reason === 'unavailable' ? 'المكافأة غير متاحة' : r.reason === 'save' ? 'تعذّر الحفظ — لم يُخصم شيء' : 'تعذّر الشراء', 'var(--warning)'); }
   } finally {
-    econStoreBusy = false; econBusyId = null; econRenderAll();
-    if(boughtId){ const el = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === boughtId); if(el) el.classList.add('is-bought'); }
+    econStoreBusy = false; econBusyId = null;
+    /* CODIS-SMOOTH: مشهد الشراء مفتوح ⇒ «تخزين/استخدام» يعيدان رسم المتجر عند الإغلاق أصلاً (ووسم is-bought يضيع بذلك الرسم)؛ الرسم هنا كان يجمّد أول إطار من المشهد */
+    const cineOpen = CodisBuyCine.isOpen();
+    if(!cineOpen) econRenderAll();
+    if(boughtId && !cineOpen){ const el = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === boughtId); if(el) el.classList.add('is-bought'); }
   }
 }
 async function econSell(uid){
