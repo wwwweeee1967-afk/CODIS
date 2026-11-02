@@ -124,18 +124,65 @@ $$;
 revoke all on function public.push_claim_due(int), public.push_drop_endpoint(text) from public, anon, authenticated;
 grant execute on function public.push_claim_due(int), public.push_drop_endpoint(text) to service_role;
 
--- ---------- 5) schedule: every minute, call the Edge Function (needs pg_cron + pg_net + Vault) ----------
--- Run this block ONCE after deploying the function and storing two Vault secrets (see docs/CODIS_PUSH_SETUP.md):
---   codis_push_url          = https://<project-ref>.supabase.co/functions/v1/codis-push
---   codis_push_cron_secret  = the same random value you set as the CODIS_CRON_SECRET function secret
---
--- create extension if not exists pg_cron;
--- create extension if not exists pg_net;
--- select cron.unschedule('codis-push-due') where exists (select 1 from cron.job where jobname = 'codis-push-due');
--- select cron.schedule('codis-push-due', '* * * * *', $cron$
---   select net.http_post(
---     url     := (select decrypted_secret from vault.decrypted_secrets where name = 'codis_push_url'),
---     headers := jsonb_build_object('Content-Type', 'application/json',
---                  'x-codis-cron', (select decrypted_secret from vault.decrypted_secrets where name = 'codis_push_cron_secret')),
---     body    := '{}'::jsonb);
--- $cron$);
+-- ---------- 5) zero-config keys (CODIS-PUSH-AUTO) ----------
+-- No secret ever lives in a file or in the page:
+--   • the Edge Function generates the VAPID key pair itself on its first run and stores it in Vault (push_keys_init),
+--   • the page reads only the PUBLIC key (push_vapid_public),
+--   • the cron secret is generated here, inside the database, and stored in Vault.
+create extension if not exists pg_cron;
+create extension if not exists pg_net;
+
+create or replace function public.push_vapid_public()
+returns text language sql stable security definer set search_path = public as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'codis_vapid_public' limit 1;
+$$;
+revoke all on function public.push_vapid_public() from public;
+grant execute on function public.push_vapid_public() to anon, authenticated, service_role;
+
+create or replace function public.push_keys()
+returns table(pub text, priv text, cron text) language sql stable security definer set search_path = public as $$
+  select (select decrypted_secret from vault.decrypted_secrets where name = 'codis_vapid_public' limit 1),
+         (select decrypted_secret from vault.decrypted_secrets where name = 'codis_vapid_private' limit 1),
+         (select decrypted_secret from vault.decrypted_secrets where name = 'codis_push_cron_secret' limit 1);
+$$;
+revoke all on function public.push_keys() from public, anon, authenticated;
+grant execute on function public.push_keys() to service_role;
+
+create or replace function public.push_keys_init(p_pub text, p_priv text)
+returns boolean language plpgsql security definer set search_path = public as $$
+begin
+  if p_pub !~ '^[A-Za-z0-9_-]{80,100}$' or p_priv !~ '^[A-Za-z0-9_-]{40,50}$' then raise exception 'invalid key' using errcode = '22023'; end if;
+  if exists (select 1 from vault.secrets where name = 'codis_vapid_public') then return false; end if;   -- created once, never replaced
+  begin
+    perform vault.create_secret(p_priv, 'codis_vapid_private');
+    perform vault.create_secret(p_pub, 'codis_vapid_public');
+  exception when unique_violation then return false;   -- a concurrent first run won; its keys stay
+  end;
+  return true;
+end $$;
+revoke all on function public.push_keys_init(text, text) from public, anon, authenticated;
+grant execute on function public.push_keys_init(text, text) to service_role;
+
+do $$ begin
+  if not exists (select 1 from vault.secrets where name = 'codis_push_cron_secret') then
+    perform vault.create_secret(encode(extensions.gen_random_bytes(32), 'hex'), 'codis_push_cron_secret');
+  end if;
+end $$;
+
+-- ---------- 6) schedule: every minute the database calls the Edge Function ----------
+-- Deploy supabase/functions/codis-push FIRST, with "Verify JWT" OFF — the cron secret header is the gate.
+select cron.unschedule('codis-push-due') where exists (select 1 from cron.job where jobname = 'codis-push-due');
+select cron.schedule('codis-push-due', '* * * * *', $cron$
+  select net.http_post(
+    url     := 'https://hkrqiqzkkjmokjabovpq.supabase.co/functions/v1/codis-push',
+    headers := jsonb_build_object('Content-Type', 'application/json',
+                 'x-codis-cron', (select decrypted_secret from vault.decrypted_secrets where name = 'codis_push_cron_secret' limit 1)),
+    body    := '{}'::jsonb);
+$cron$);
+
+-- first run now: the function creates the VAPID keys immediately (no waiting for the first minute)
+select net.http_post(
+  url     := 'https://hkrqiqzkkjmokjabovpq.supabase.co/functions/v1/codis-push',
+  headers := jsonb_build_object('Content-Type', 'application/json',
+               'x-codis-cron', (select decrypted_secret from vault.decrypted_secrets where name = 'codis_push_cron_secret' limit 1)),
+  body    := '{}'::jsonb);
