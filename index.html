@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><meta name="codis-version" content="3.14.1">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.14.2">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -4851,6 +4851,10 @@ html, body, body *{ touch-action:pan-x pan-y; }
 
 /* CODIS-BUTTER: خانات المتجر البعيدة عن الشاشة لا تُحسب ولا تُرسم حتى تقترب (المقاس يُتذكّر بعد أول رسم) */
 .codis-cv #eco-store-body [role="list"] > *{ content-visibility:auto; contain-intrinsic-size:auto 240px; }
+
+/* CODIS-RAYS: الأشعة على canvas بحجم المشهد — نفس ظهور الشفافية؛ تقليل الحركة = ثابتة بشفافية .8 كما كانت */
+.bcx-rays-cv{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; animation:bcx-rays-in .9s .55s ease-out forwards; }
+@media (prefers-reduced-motion:reduce){ .bcx-rays-cv{ animation:none; opacity:.8; } }
 </style>
 </head>
 <body>
@@ -16101,6 +16105,42 @@ const CodisBuyCine = (function(){
     const sh = s.root.querySelector('.bcx-sheen i');
     for(let i = 0; sh && i < rc.sheen; i++) codisAnim(sh, [{ transform:'translateX(-170%) skewX(-18deg)' }, { transform:'translateX(330%) skewX(-18deg)' }], { dur:820, delay:i * 700, ease:'cubic-bezier(.5,0,.3,1)', fill:'none' });
   }
+  /* CODIS-RAYS: الأشعة نفسها على canvas بحجم المشهد (بدل طبقة 140vmax دوّارة + طبقة قناع) — نفس الهندسة والألوان والدوران حرفياً */
+  function raysStart(st, cv, rgb1, rgb2, x2, still){
+    const ctx = cv.getContext && cv.getContext('2d'); if(!ctx || !ctx.createConicGradient){ return null; }
+    const R = { cv:cv, ctx:ctx, t0:performance.now(), raf:0, w:0, h:0, dpr:0, on:true };
+    const stops = [];   /* [deg0, deg1, rgba] لكل قطعة ملوّنة؛ الباقي شفاف — نفس repeating-conic-gradient */
+    if(x2){ for(let a = 0; a < 360; a += 30){ stops.push([a, a + 5, 'rgba(' + rgb2 + ',.2)']); stops.push([a + 15, a + 21, 'rgba(' + rgb1 + ',.16)']); } }
+    else { for(let a = 0; a < 360; a += 22) stops.push([a, a + 7, 'rgba(' + rgb1 + ',.16)']); }
+    const CLR = 'rgba(0,0,0,0)';
+    function size(){
+      const w = cv.clientWidth, h = cv.clientHeight, d = window.devicePixelRatio || 1;
+      if(w === R.w && h === R.h && d === R.dpr) return; R.w = w; R.h = h; R.dpr = d;
+      cv.width = Math.max(1, Math.round(w * d)); cv.height = Math.max(1, Math.round(h * d));
+    }
+    function draw(now){
+      if(!R.on) return;
+      size();
+      const w = R.w, h = R.h, d = R.dpr, cx = w * .5, cy = h * .46, vmax = Math.max(window.innerWidth, window.innerHeight) / 100;
+      const ang = still ? 0 : ((((R.at !== undefined ? R.at : now - R.t0)) % 26000) / 26000) * Math.PI * 2;   /* R.at: تثبيت زمن للاختبار فقط */
+      ctx.setTransform(d, 0, 0, d, 0, 0); ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, w, h);
+      const g = ctx.createConicGradient(-Math.PI / 2 + ang, cx, cy);
+      let last = 0;
+      stops.forEach(p=>{ const a0 = Math.min(p[0], 360) / 360, a1 = Math.min(p[1], 360) / 360; if(a0 >= 1) return;
+        g.addColorStop(Math.max(last, a0), CLR); g.addColorStop(a0, p[2]); g.addColorStop(a1, p[2]); g.addColorStop(a1, CLR); last = a1; });
+      if(last < 1) g.addColorStop(1, CLR);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'destination-in';
+      const r1 = 69.862 * vmax, m = ctx.createRadialGradient(cx, cy, 0, cx, cy, r1);
+      m.addColorStop(0, 'rgba(0,0,0,1)'); m.addColorStop(29.557 / 69.862, 'rgba(0,0,0,.6)'); m.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = m; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+      if(!still) R.raf = requestAnimationFrame(draw);
+    }
+    draw(R.t0);
+    return R;
+  }
+  function raysStop(R){ if(!R) return; R.on = false; if(R.raf) cancelAnimationFrame(R.raf); try{ R.cv.width = 1; R.cv.height = 1; }catch(e){} }
   function play(r, it){
     try{
       if(s || !r || !r.ok || !r.owned || !it) return false;
@@ -16117,12 +16157,13 @@ const CodisBuyCine = (function(){
       root.className = 'bcx lv-' + lv + (reduced ? ' is-reduced' : ''); root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'حصلت على ' + r.owned.name);
       root.style.setProperty('--c1', info.rgb); root.style.setProperty('--c2', info.rgb2);
       let pips = ''; for(let i = 1; i <= 9; i++) pips += '<i class="' + (i <= lv ? 'on' : '') + '"></i>';
-      root.innerHTML = '<div class="bcx-scrim"></div>' + (rc.rays ? '<div class="bcx-rays' + (rc.rays > 1 ? ' is-x2' : '') + '" aria-hidden="true"></div>' : '') + '<div class="bcx-fx" aria-hidden="true"></div>' +
+      root.innerHTML = '<div class="bcx-scrim"></div>' + (rc.rays ? '<canvas class="bcx-rays-cv" aria-hidden="true"></canvas>' : '') + '<div class="bcx-fx" aria-hidden="true"></div>' +
         '<div class="bcx-stage"><div class="bcx-card" style="width:' + W + 'px"><div class="bcx-face">' + econStoreFaceHtml(it, rar, { price:price }) + '</div><span class="bcx-sheen" aria-hidden="true"><i></i></span></div>' +
         '<div class="bcx-ticket"><b>صارت إلك</b><span class="bcx-name" dir="auto">' + escapeHtml(r.owned.name) + '</span><span class="bcx-paid">دفعت ' + econCoin(price) + '</span>' + (dur ? '<span class="bcx-tmr">' + CODIS_TMR_SVG + 'مؤقت ' + escapeHtml(CodisDuration.label(dur.min)) + ' يبدأ عند الاستخدام</span>' : '') + '<span class="bcx-pips" role="img" aria-label="مستوى الكشف ' + lv + ' من 9">' + pips + '</span></div>' +
         '<div class="bcx-acts" hidden><button type="button" class="btn btn-primary bcx-use"' + (dur ? ' aria-label="استخدام — يبدأ مؤقت ' + escapeHtml(CodisDuration.label(dur.min)) + '"' : '') + '>' + (dur ? CODIS_PLAY_SVG : '') + '<span>استخدام</span></button>' +
         '<button type="button" class="btn btn-secondary bcx-keep"><span>تخزين</span></button></div></div>';
       document.body.appendChild(root);
+      { const rcv = root.querySelector('.bcx-rays-cv'); if(rcv) root._rays = raysStart(null, rcv, info.rgb, info.rgb2, rc.rays > 1, CodisMotion.isReduced()); }   /* CODIS-RAYS */
       CodisCrumb.mark('cine:shown', 'lv' + lv); requestAnimationFrame(()=>requestAnimationFrame(()=>{ if(s && s.root === root) CodisCrumb.mark('cine:frame', 'lv' + lv); }));
       s = { root:root, uid:r.owned.uid, fx:root.querySelector('.bcx-fx'), stage:root.querySelector('.bcx-stage'), card:root.querySelector('.bcx-card'), tm:[], acting:false, prev:document.activeElement, acts:false };
       root.querySelector('.bcx-use').onclick = useNow; root.querySelector('.bcx-keep').onclick = keep;
@@ -16151,7 +16192,7 @@ const CodisBuyCine = (function(){
         try{ root.querySelector('.bcx-use').focus({ preventScroll:true }); }catch(e){}
       }, T + rc.hold + 200);
       return true;
-    }catch(e){ console.error('CodisBuyCine:', e); try{ if(s && s.root) s.root.remove(); }catch(x){} s = null; return false; }
+    }catch(e){ console.error('CodisBuyCine:', e); try{ if(s && s.root){ raysStop(s.root._rays); s.root.remove(); } }catch(x){} s = null; return false; }
   }
   function onKey(e){ if(e.key === 'Escape'){ e.preventDefault(); keep(); } else if(e.key === 'Tab' && s){ const b = Array.prototype.filter.call(s.root.querySelectorAll('button'), x=>!x.closest('[hidden]')); if(!b.length) return; const i = b.indexOf(document.activeElement); if(e.shiftKey && i <= 0){ e.preventDefault(); b[b.length - 1].focus(); } else if(!e.shiftKey && i === b.length - 1){ e.preventDefault(); b[0].focus(); } } }
   function close(after){
@@ -16159,7 +16200,7 @@ const CodisBuyCine = (function(){
     st.root.classList.add('is-out');
     st.root.querySelectorAll('button').forEach(b=>{ b.disabled = true; });
     let fin = false;
-    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); try{ st.root.remove(); }catch(e){} if(s === st) s = null; CodisCrumb.idle(); try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
+    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); raysStop(st.root._rays); try{ st.root.remove(); }catch(e){} if(s === st) s = null; CodisCrumb.idle(); try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
     const a = codisAnim(st.root, [{ opacity:1 }, { opacity:0 }], { dur:220, ease:'linear', fill:'forwards', done:end });
     if(!a) end(); else setTimeout(end, 320);   /* صفحة بالخلفية لا تُكمل الحركة — التنظيف مضمون */
   }
