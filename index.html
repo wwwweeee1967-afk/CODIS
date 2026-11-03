@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#05070B">
 <meta name="color-scheme" content="dark">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><meta name="codis-version" content="3.14.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><meta name="codis-version" content="3.14.1">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -6557,6 +6557,41 @@ function saveData(){
   if(ok && typeof CodisAccount !== 'undefined'){ try{ CodisAccount.noteChange(); }catch(e){} }   // مزامنة الحساب (إن وُجد)
   return ok;
 }
+/* CODIS-CRUMBS: آخر مرحلة قبل أي توقف مفاجئ (iOS يقتل الصفحة عند امتلاء الذاكرة بلا رسالة). محلي فقط، لا يُرسل لأي مكان */
+const CodisCrumb = (function(){
+  'use strict';
+  const K = 'codis_crumb', E = 'codis_crumb_err';
+  let prev = null; try{ prev = JSON.parse(localStorage.getItem(K) || 'null'); }catch(e){}
+  let errs = []; try{ errs = JSON.parse(localStorage.getItem(E) || '[]') || []; }catch(e){}
+  const ver = ()=>{ try{ return document.querySelector('meta[name="codis-version"]').content; }catch(e){ return '?'; } };
+  let seq = 0;
+  function mark(step, extra){ seq++; try{ localStorage.setItem(K, JSON.stringify({ s:step, x:extra === undefined ? '' : String(extra).slice(0, 60), t:Date.now(), v:ver() })); }catch(e){} }
+  /* مرحلة قصيرة انتهت بسلام: ترجع idle بعد ms ما لم تُسجَّل مرحلة أخرى بعدها */
+  function settle(ms){ const n = seq; setTimeout(()=>{ if(seq === n) mark('idle'); }, ms || 2000); }
+  const idle = ()=>mark('idle');
+  function err(m){ try{ errs.push(new Date().toISOString().slice(11, 19) + ' ' + String(m).slice(0, 160)); errs = errs.slice(-5); localStorage.setItem(E, JSON.stringify(errs)); }catch(e){} }
+  window.addEventListener('error', e=>err((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
+  window.addEventListener('unhandledrejection', e=>err('promise: ' + (e.reason && (e.reason.message || e.reason))));
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden) idle(); });
+  window.addEventListener('pagehide', idle);
+  /* بطاقة التشخيص: فقط إن ماتت الصفحة آخر مرة أثناء مرحلة (ليست idle) خلال آخر 20 دقيقة */
+  function report(){
+    if(!prev || prev.s === 'idle' || Date.now() - prev.t > 20 * 60 * 1000) return;
+    const box = document.createElement('div');
+    box.id = 'codis-crumb-card'; box.setAttribute('role', 'alert');
+    box.style.cssText = 'position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px);z-index:9999;padding:12px 14px;border-radius:14px;background:#1b1f27;color:#f2f4f7;font:13px/1.5 system-ui,sans-serif;direction:rtl;box-shadow:0 8px 24px rgba(0,0,0,.5);border:1px solid #3a4150';
+    const when = new Date(prev.t).toLocaleTimeString('ar-IQ', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    box.innerHTML = '<b style="display:block;margin-bottom:4px">تشخيص: التطبيق توقّف آخر مرة</b>' +
+      '<div dir="ltr" style="text-align:left;font:12px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;word-break:break-all">' +
+      ('step: ' + prev.s + (prev.x ? ' (' + prev.x + ')' : '') + '\nversion: ' + prev.v + ' · at ' + when + '\nscreen: ' + screen.width + 'x' + screen.height + ' @' + (window.devicePixelRatio || 1) + 'x\n' + (navigator.userAgent.match(/OS [\d_]+/) || [''])[0] + (errs.length ? '\nerrors:\n' + errs.join('\n') : '')).replace(/[<>&]/g, c=>({ '<':'&lt;', '>':'&gt;', '&':'&amp;' })[c]) +
+      '</div><div style="margin-top:6px;color:#aab2c0">صوّر هذي البطاقة وابعثها حتى يتصلّح السبب بالضبط.</div>' +
+      '<button type="button" style="margin-top:8px;width:100%;min-height:40px;border:0;border-radius:10px;background:#2e3644;color:#fff;font:600 14px system-ui,sans-serif">تم</button>';
+    box.querySelector('button').onclick = ()=>{ box.remove(); try{ localStorage.removeItem(E); }catch(e){} errs = []; };
+    document.body.appendChild(box);
+  }
+  return { mark:mark, idle:idle, settle:settle, report:report, last:()=>prev };
+})();
+CodisCrumb.mark('boot');
 let data = loadData();
 /* CODIS-OFFLINE: إن اختفت نسخة localStorage (إخلاء المتصفح/تنظيف) تُستعاد نسخة العمل من IndexedDB لنفس المالك — مرة واحدة ثم إعادة تحميل */
 (function(){
@@ -15534,7 +15569,7 @@ function econStoreReopen(){
   }
   econRenderStore();
 }
-function econOpenStore(){ econStoreEnterAt = Date.now(); econOpenLayer('eco-store', econStoreReopen); }
+function econOpenStore(){ CodisCrumb.mark('store:open'); econStoreEnterAt = Date.now(); econOpenLayer('eco-store', econStoreReopen); CodisCrumb.settle(3000); }
 function econOpenLog(){ econOpenLayer('eco-log', econRenderLog); }   // سجل الكوينز: نفس صفحة السجل ودالة رسمها القائمتان، فقط مدخلها صار شارة الرصيد
 function econCloseStore(opts){
   const st = econStoreSaved; if(!st) return;
@@ -16000,7 +16035,7 @@ const CodisPush = (function(){
     if(nudged || granted()) return; nudged = true;
     setTimeout(()=>showToast(('Notification' in window) ? 'حتى يوصلك تنبيه لما يخلص الوقت: فعّل «إشعارات المتصفح» من الإعدادات' : unsupportedText(), 'var(--text-2)'), 1600);
   }
-  window.addEventListener('load', ()=>{ setTimeout(()=>{ registration(); try{ CodisTimers.tick(); }catch(e){} }, 300); });
+  window.addEventListener('load', ()=>{ setTimeout(()=>{ registration(); try{ CodisTimers.tick(); }catch(e){} }, 300); setTimeout(()=>{ try{ CodisCrumb.report(); CodisCrumb.mark('idle'); }catch(e){} }, 1500); });   /* CODIS-CRUMBS */
   /* CODIS-PUSH-AUTO: جهاز فعّل الإشعارات (إذن ممنوح + مفعّلة بالإعدادات) يُسجَّل/يُجدَّد اشتراكه بالخادم مرة بالجلسة بعد الدخول —
      يشمل الأجهزة التي فعّلتها قبل تهيئة الخادم. عملية idempotent (upsert بنفس endpoint) */
   let autoDone = false;
@@ -16039,6 +16074,7 @@ const CodisBuyCine = (function(){
   const rnd = (a, b)=>a + Math.random() * (b - a);
   function el(cls, parent, css){ const e = document.createElement('div'); e.className = cls; if(css) e.style.cssText = css; (parent || s.fx).appendChild(e); return e; }
   function burst(rc, lite, cx, cy){
+    CodisCrumb.mark('cine:burst', 'conf' + rc.conf + ' scr' + rc.scraps + ' rain' + rc.rain);
     const n = k=>lite ? Math.ceil(k / 2) : k;
     for(let i = 0; i < rc.ring; i++){
       const r = el('bcx-ring', null, 'left:' + cx + 'px;top:' + cy + 'px');
@@ -16070,6 +16106,7 @@ const CodisBuyCine = (function(){
       if(s || !r || !r.ok || !r.owned || !it) return false;
       const rar = econRarityById(it.rarity); if(!rar) return false;
       const price = Math.max(0, Number(r.price) || 0), lv = CodisRevealLevels.levelOfValue(price), info = CodisRevealLevels.info(lv), rc = R[lv];
+      CodisCrumb.mark('cine:build', 'lv' + lv);
       const reduced = CodisMotion.isReduced(), lite = reduced || (navigator.hardwareConcurrency || 8) <= 4;
       const src = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === it.id);
       const sr = src ? (src.querySelector('.cflip') || src).getBoundingClientRect() : null;
@@ -16086,6 +16123,7 @@ const CodisBuyCine = (function(){
         '<div class="bcx-acts" hidden><button type="button" class="btn btn-primary bcx-use"' + (dur ? ' aria-label="استخدام — يبدأ مؤقت ' + escapeHtml(CodisDuration.label(dur.min)) + '"' : '') + '>' + (dur ? CODIS_PLAY_SVG : '') + '<span>استخدام</span></button>' +
         '<button type="button" class="btn btn-secondary bcx-keep"><span>تخزين</span></button></div></div>';
       document.body.appendChild(root);
+      CodisCrumb.mark('cine:shown', 'lv' + lv); requestAnimationFrame(()=>requestAnimationFrame(()=>{ if(s && s.root === root) CodisCrumb.mark('cine:frame', 'lv' + lv); }));
       s = { root:root, uid:r.owned.uid, fx:root.querySelector('.bcx-fx'), stage:root.querySelector('.bcx-stage'), card:root.querySelector('.bcx-card'), tm:[], acting:false, prev:document.activeElement, acts:false };
       root.querySelector('.bcx-use').onclick = useNow; root.querySelector('.bcx-keep').onclick = keep;
       root.querySelector('.bcx-scrim').onclick = ()=>{ if(s && s.acts) keep(); };
@@ -16108,7 +16146,7 @@ const CodisBuyCine = (function(){
       codisAnim(tk, [{ transform:'translateY(18px) rotate(-3deg)', opacity:0 }, { transform:'translateY(-3px) rotate(1deg)', opacity:1, offset:.7 }, { transform:'translateY(0) rotate(0)', opacity:1 }], { dur:420, delay:T * .86, ease:ease, fill:'both' });
       later(()=>{ if(!reduced){ const fr2 = s.card.getBoundingClientRect(), fb = s.fx.getBoundingClientRect(); burst(rc, lite, fr2.left + fr2.width / 2 - fb.left, fr2.top + fr2.height / 2 - fb.top); } }, Math.round(T * .86));
       later(()=>{
-        const a = root.querySelector('.bcx-acts'); a.hidden = false; s.acts = true;
+        const a = root.querySelector('.bcx-acts'); a.hidden = false; s.acts = true; CodisCrumb.mark('cine:buttons');
         codisAnim(a, [{ transform:'translateY(14px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:300, ease:ease, fill:'both' });
         try{ root.querySelector('.bcx-use').focus({ preventScroll:true }); }catch(e){}
       }, T + rc.hold + 200);
@@ -16121,7 +16159,7 @@ const CodisBuyCine = (function(){
     st.root.classList.add('is-out');
     st.root.querySelectorAll('button').forEach(b=>{ b.disabled = true; });
     let fin = false;
-    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); try{ st.root.remove(); }catch(e){} if(s === st) s = null; try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
+    const end = ()=>{ if(fin) return; fin = true; st.tm.forEach(clearTimeout); try{ st.root.remove(); }catch(e){} if(s === st) s = null; CodisCrumb.idle(); try{ if(st.prev && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){} if(after) after(); };
     const a = codisAnim(st.root, [{ opacity:1 }, { opacity:0 }], { dur:220, ease:'linear', fill:'forwards', done:end });
     if(!a) end(); else setTimeout(end, 320);   /* صفحة بالخلفية لا تُكمل الحركة — التنظيف مضمون */
   }
@@ -16195,6 +16233,7 @@ const CodisCardPeek = (function(){
     chain.forEach(a=>{ const w = document.createElement('div'); w.className = a.className; w.style.display = 'contents';
       Array.prototype.forEach.call(a.attributes, at=>{ if(/^(data-|role$)/.test(at.name)) w.setAttribute(at.name, at.value); }); host.appendChild(w); host = w; });
     card.classList.add('is-peek'); CodisArt.full(card);   /* CODIS-BUTTER */
+    CodisCrumb.mark('peek:open');
     /* CODIS-OFFLINE (جودة): كانت البطاقة تُرسَم بحجمها الصغير ثم تُكبَّر بـtransform+will-change فتُمدَّد صورة الطبقة (بكسلة/بهتان).
        الآن تُرسَم فعلاً بالحجم النهائي (zoom) داخل غلاف fly، والحركة FLIP تبدأ مصغَّرة 1/k وتصل 1 — التركيب يعتمد أكبر مقياس بالحركة فتبقى الحدة كاملة. */
     const o = ov.getBoundingClientRect();
@@ -16250,7 +16289,7 @@ const CodisCardPeek = (function(){
       if(back) st.ph.parentNode.insertBefore(st.card, st.ph); else st.card.remove();
       CodisArt.thumb(st.card);   /* CODIS-BUTTER */
       if(st.fly) st.fly.remove();
-      st.ph.remove(); st.ov.remove(); if(s === st) s = null;
+      st.ph.remove(); st.ov.remove(); if(s === st) s = null; CodisCrumb.idle();
       try{ if(st.prev && st.prev.isConnected && st.prev.focus) st.prev.focus({ preventScroll:true }); }catch(e){}
     };
     const cur = (st.fly ? 'translate(0px,0px) scale(1)' : st.card.style.transform);
@@ -16918,7 +16957,7 @@ function econRenderStore(){
   box.classList.toggle('is-enter', !econCalm() && Date.now() - econStoreEnterAt < 700);
   codisFitLazy(box); codisWatchRewardCards(box);
   econVaultSync(); econStoreNavBind(); econStoreNavSync();
-  box._codisSig = econStoreSig();
+  box._codisSig = econStoreSig(); CodisCrumb.mark('store:built', box.getElementsByTagName('*').length); CodisCrumb.settle(2000);
   if(ownKeep){ const os = document.getElementById('eco-own-sheet'); if(os) os.scrollTop = ownKeep; }
   if(econDetailId) econPaintDetail();
 }
@@ -17017,8 +17056,9 @@ async function econBuy(id){
     if(data.wallet.balance < price){ codisSfx('invalid', { ctx:'funds' }); showToast('الرصيد غير كافٍ — ينقصك ' + econFmt(price - data.wallet.balance) + ' كوين', 'var(--warning)'); return; }
     const ok = await codisConfirm(CodisCopy.buy(it.name, econFmt(price), econFmt(data.wallet.balance - price)));
     if(!ok) return;
+    CodisCrumb.mark('buy:confirmed', price);
     econBusyId = id; econMarkBusy(id);
-    const r = CodisEconomy.purchase(id);
+    const r = CodisEconomy.purchase(id); CodisCrumb.mark('buy:saved', r && r.ok ? 'ok' : (r && r.reason));
     if(r.ok){ boughtId = id; econLastBought = id; codisSfx('store.buy', { ctx:'card' }); if(!CodisBuyCine.play(r, it)) showToast('تم الشراء: ' + it.name + ' (−' + econFmt(r.price) + ') — صارت بحوزتك', 'var(--success)', 'gift'); CodisEvents.emit('ECON_PURCHASE', { name:it.name, price:r.price }); }
     else { codisSfx('invalid', { ctx:'funds' }); showToast(r.reason === 'insufficient' ? 'الرصيد غير كافٍ' : r.reason === 'unavailable' ? 'المكافأة غير متاحة' : r.reason === 'save' ? 'تعذّر الحفظ — لم يُخصم شيء' : 'تعذّر الشراء', 'var(--warning)'); }
   } finally {
