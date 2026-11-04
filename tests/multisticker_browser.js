@@ -11,6 +11,15 @@
   T('list cleaned: bad/duplicate dropped, capped at 3', codisStickerIdOk('a+falafel+falafel+X!+tea_glass+kunafa+donut') === 'falafel+tea_glass+kunafa', codisStickerIdOk('a+falafel+falafel+X!+tea_glass+kunafa+donut'));
   T('garbage ⇒ null', codisStickerIdOk('++') === null && codisStickerIdOk(5) === null && codisStickerIdOk('') === null);
 
+  /* 1b) LOAD-TIME SAFETY (3.17.2 regression): codisStickerIdOk runs inside loadData() BEFORE later consts exist, so it must never
+     depend on one (TDZ crash that bricked accounts holding stickerId:'') and must never throw whatever the stored value is */
+  T('codisStickerIdOk has no dependency on later-declared constants', !/CODIS_STICKER_MAX|CodisStickers|CodisAtmos/.test(String(codisStickerIdOk)));
+  T('empty / odd stored values ⇒ null (no crash)', ['', ' ', '+', '++a', 'A', 'bad id!', 'x', '0', 'a+', '+falafel+'].every(v=>{ try{ const r = codisStickerIdOk(v); return r === null || r === 'falafel'; }catch(e){ return false; } }));
+  T('non-string stored values never throw', [undefined, null, 0, 5, {}, [], ['falafel'], true, NaN, () => 1].every(v=>{ try{ return codisStickerIdOk(v) === null; }catch(e){ return false; } }));
+  T('huge / hostile strings are safe', (()=>{ try{ return codisStickerIdOk('a'.repeat(1e5)) === null && codisStickerIdOk('falafel+'.repeat(5e4)) === 'falafel'; }catch(e){ return false; } })());
+  T('layer survives an atmosphere failure (sticker still renders)', (()=>{ const real = CodisAtmos.html; CodisAtmos.html = ()=>{ throw new Error('boom'); };
+    try{ return /class="rwc-stk rwc-stk-d"/.test(codisStickerLayerHtml({ stickerId:'falafel' }, 'd', 'C')); } finally { CodisAtmos.html = real; } })());
+
   /* 2) rendering: main sticker tag byte-identical; extras are separate, ordered under it */
   const e = { kind:'reward', scope:'daily', rarityTone:'C', item:'x', coinValue:5 };
   const one = codisRewardCardHtml(Object.assign({}, e, { stickerId:'falafel' }), { plain:true });

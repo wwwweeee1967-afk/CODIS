@@ -22,12 +22,17 @@ def rep(old, new, label, n=1):
 # ---------------------------------------------------------------- 1. قاعدة البيانات: قائمة مرتّبة بنفس الحقل
 rep("""function codisStickerIdOk(v){ return (typeof v === 'string' && /^[a-z0-9_]{2,32}$/.test(v)) ? v : null; }""",
     """/* CODIS-MULTI-STICKER: stickerId = معرّف واحد أو قائمة مرتّبة 'a+b+c' (الأول هو الرئيسي، 3 كحد أقصى). المفرد القديم يرجع كما هو حرفياً */
-const CODIS_STICKER_MAX = 3;
+const CODIS_STICKER_MAX = 3;   /* للواجهة فقط (المنتقي/النصوص) — لا تستعمله دوال تُستدعى وقت التحميل: const لا يُقرأ قبل سطره (TDZ) */
 function codisStickerIdOk(v){
-  if(typeof v !== 'string') return null;
-  if(/^[a-z0-9_]{2,32}$/.test(v)) return v;
-  const a = []; v.split('+').forEach(x=>{ if(/^[a-z0-9_]{2,32}$/.test(x) && a.indexOf(x) === -1 && a.length < CODIS_STICKER_MAX) a.push(x); });
-  return a.length ? a.join('+') : null;
+  /* تُستدعى وقت التحميل من تطبيع البيانات: لا تعتمد على أي ثابت/كائن يُعرَّف لاحقاً بالملف، ولا ترمي خطأً أبداً (أي قيمة غريبة ⇒ لا ستيكر) */
+  try{
+    if(typeof v !== 'string') return null;
+    if(/^[a-z0-9_]{2,32}$/.test(v)) return v;
+    if(v.indexOf('+') === -1) return null;
+    const a = [];
+    v.split('+').forEach(x=>{ if(/^[a-z0-9_]{2,32}$/.test(x) && a.indexOf(x) === -1 && a.length < 3) a.push(x); });
+    return a.length ? a.join('+') : null;
+  }catch(e){ return null; }
 }
 function codisStickerList(v){ const ok = codisStickerIdOk(v); return ok ? ok.split('+') : []; }""", 'id ok')
 
@@ -39,7 +44,8 @@ rep("""function codisStickerLayerHtml(e, fam, k){
   const ids = codisStickerList(e && e.stickerId).filter(x=>CodisStickers.url(x));   /* ما له صورة فقط؛ أول المتوفر هو الرئيسي */
   if(!ids.length) return '';
   const u = CodisStickers.url(ids[0]);
-  return CodisAtmos.html(ids.join('+'), fam, k) + CodisAtmos.extras(ids, fam) + '<img class="rwc-stk rwc-stk-' + fam + '" src="' + escapeHtml(u) + '" alt="" draggable="false" decoding="async" onerror="this.remove()">';
+  let atm = ''; try{ atm = CodisAtmos.html(ids.join('+'), fam, k) + CodisAtmos.extras(ids, fam); }catch(x){ atm = ''; }   /* الزخرفة اختيارية: أي علّة بها لا تكسر البطاقة ولا الستيكر */
+  return atm + '<img class="rwc-stk rwc-stk-' + fam + '" src="' + escapeHtml(u) + '" alt="" draggable="false" decoding="async" onerror="this.remove()">';
 }""", 'layer')
 
 rep(""".cfp > .rwc-atm{ z-index:2; }""", """.cfp > .rwc-atm{ z-index:2; }
