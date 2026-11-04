@@ -149,6 +149,20 @@ S = [
  ('party_cake', 'celebrate', 'كيكة احتفال', 'كيكة حفلة عيد ميلاد شمعة بالونات حفلة مناسبة birthday party cake balloons', 'a small layered celebration cake with lit candles, a party hat and a bunch of balloons tied to it', 'cake pink-white, balloons bright mix, candle flame'),
  ('medal', 'celebrate', 'ميدالية', 'ميدالية وسام انجاز فوز مركز اول medal', 'a gold star medal hanging from a red and white ribbon', 'medal gold, ribbon red'),
  ('crown', 'celebrate', 'تاج', 'تاج ملك ملكي يوم ملكي vip crown king', 'a royal red velvet crown with gold arches and jewels', 'velvet red, gold, jewels'),
+ # --- CODIS-STICKERS-13 (13 ستيكراً جديداً) ---
+ ('social_media', 'digital', 'سوشال ميديا', 'سوشال ميديا سوشيال سوشل مواقع التواصل تواصل اجتماعي انستغرام انستا تيك توك تكتوك يوتيوب تلكرام تلغرام فيسبوك سناب تصفح سكرول مشاهدة ريلز social media instagram tiktok youtube telegram scroll', 'a cluster of four glossy rounded social-app tiles (camera-gradient, music-note, play button, paper plane) with a small golden crown on top', 'gradient pink-orange, black, red, sky blue'),
+ ('cigarettes', 'shop', 'سكائر', 'سكائر سجائر سيجارة سيكارة سجاير سكاير جكارة جكاره دخان تدخين تبغ علبة سكائر علبة دخان cigarettes cigarette smoke smoking tobacco pack', 'an open red cigarette pack with a gold crown mark and a few cigarettes sticking out, two loose cigarettes lying in front', 'pack red, filter orange, paper white'),
+ ('jummar_palm', 'iraqi', 'جمّار نخيل', 'جمار جمارة جمار نخيل جمار النخلة قلب النخلة قلب النخل قلب نخل نخلة نخل نخيل خضرة نخلة عراقي بصرة palm heart hearts of palm jummar jumar', 'a freshly cut white palm heart (jummar): a tender cream-colored cylinder of layered sheaths with ribbed texture, a few green palm fronds behind it', 'cream white, pale green, palm green'),
+ ('lettuce_head', 'iraqi', 'خس', 'خس خسة راس خس رأس خس ورق خس سلطة خضار خضرة اخضر سلطه lettuce salad romaine greens vegetable', 'a fresh green lettuce head with crisp ruffled leaves and visible pale ribs', 'leaf green, light lime, rib cream'),
+ ('iraqi_samoon', 'iraqi', 'صمون عراقي', 'صمون صموني صمونة خبز صمون عراقي خبز رغيف فطور مخبز تنور سمون samoon samoun iraqi bread loaf', 'golden Iraqi samoon diamond-shaped loaves with crisp crust and sesame flecks, stacked in a woven basket', 'bread golden, crust brown, basket tan'),
+ ('pickles', 'iraqi', 'طرشي', 'طرشي تورشي مخلل مخللات مخلل خيار مخلل عراقي طرشي عراقي مرطبان خيار مملح فلفل مخلل pickles pickle turshi jar cucumber', 'a glass jar packed with pickled cucumbers, peppers and carrots under a red lid, with a few loose pickles beside it', 'pickle green, pepper red, carrot orange'),
+ ('mushrooms', 'food', 'فطر', 'فطر فطريات مشروم مشرم شامبينيون فطر ابيض فطر طازج mushroom mushrooms champignon', 'a group of fresh white button mushrooms, whole and sliced, with parsley leaves', 'cream white, brown cap, parsley green'),
+ ('shish_shawarma', 'food', 'شيش شاورما', 'شيش شاورما شاورمة شاورما شيش سيخ شاورما شاورما عمودي سيخ لحم شاورما دجاج شاورما لحم شواء مشويات دوّار doner spit shawarma shish rotisserie', 'a tall vertical rotating shawarma spit of stacked seasoned meat roasting over flames, with a wrapped shawarma sandwich in front', 'roast orange, flame yellow, wrap cream'),
+ ('chicken_tikka_rice', 'iraqi', 'تكة دجاج وتمن', 'تكة دجاج تكه دجاج تمن رز تمّن صحن تمن دجاج مشوي دجاج مشوي ورز صحن دجاج غدا وجبة دجاج رز chicken tikka rice plate grilled chicken', 'a round platter of golden spiced rice topped with two glossy grilled chicken pieces and herbs, a small sauce bowl on the side', 'rice yellow, chicken roast brown, sauce red'),
+ ('italian_saj', 'food', 'صاج إيطالي', 'صاج صاج ايطالي صاج إيطالي صاجي بيتزا رقيقة عجينة رقيقة جبن ريحان طماطم ايطالي إيطالي saj italian flatbread thin pizza margherita', 'a thin crispy Italian saj flatbread pizza with tomato, melting mozzarella and basil, one slice lifting with a cheese pull, on a wooden board', 'tomato red, cheese gold, basil green'),
+ ('fishing_trip', 'out', 'طلعة صيد سمك', 'صيد سمك صيد السمك صيد سمچ طلعة صيد طلعة سمك صنارة قصبة صياد شط نهر دجلة بحيرة قارب زورق سمچ fishing fish trip rod boat lake river', 'a big bass leaping out of splashing water on a fishing line, a fishing rod, a bobber and a small fishing boat at sunset', 'fish green, water blue, sunset orange'),
+ ('cafe_front', 'out', 'كافيه', 'كافيه كافي كوفي شوب مقهى مقهي قهوة كافتيريا كافيه جديد طلعة كافيه واجهة كافيه cafe coffee shop cafeteria storefront', 'a charming cafe storefront with a striped awning, a wooden sign, a street lamp and plants, with a latte-art coffee cup and beans in front', 'awning orange-yellow, wood brown, latte cream'),
+ ('lamb_mandi', 'iraqi', 'مندي لحم', 'مندي لحم لحم مندي مندي لحم غنم لحم غنم ضاني لحم ضاني تمن مندي مطعم يمني رز مندي صحن مندي ولحم mandi lamb meat rice yemeni mutton', 'a large ornate platter of fragrant mandi rice topped with tender roasted lamb, tomato and herb garnish, and a small sauce bowl', 'rice orange-yellow, lamb roast brown, platter bronze'),
 ]
 
 # ---- أسلوب الهوية العام: يُلصق قبل وصف كل ستيكر في ملف المطالبات ----
@@ -219,6 +233,11 @@ ATMOS = {
  # احتفال
  'trophy': 'star confetti spark | hold', 'fireworks': 'burst star spark', 'party_cake': 'confetti ribbon spark', 'medal': 'star ribbon spark | hold',
  'crown': 'gem spark star | hold',
+ # CODIS-STICKERS-13
+ 'social_media': 'heart chat play spark', 'cigarettes': 'smoke ember spark', 'jummar_palm': 'palm leaf herb | hold', 'lettuce_head': 'lettuce leaf drop | hold',
+ 'iraqi_samoon': 'sesame crumb flake | hold', 'pickles': 'drop pickle herb | hold', 'mushrooms': 'leaf herb garlic | hold', 'shish_shawarma': 'herb spice crumb ember | hold',
+ 'chicken_tikka_rice': 'rice herb tomato ember | hold', 'italian_saj': 'basil tomato cheese crumb | hold', 'fishing_trip': 'wave drop ripple', 'cafe_front': 'bean steam spark',
+ 'lamb_mandi': 'rice anise steam herb | hold',
 }
 # لوحات يدوية للستيكرات المرسومة بالكود (بلا صورة نقطية) — من ألوان رسمها الأصلي في tools/sticker_art/art_*.py
 PAL = {

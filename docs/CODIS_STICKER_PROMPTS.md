@@ -85,6 +85,24 @@ Subject: a crunchy taco shell packed with seasoned meat, lettuce, tomato and che
 Subject: a triangle toast club sandwich stacked with ham, cheese, lettuce and tomato. Palette: toast brown, lettuce green, tomato red.
 ```
 
+### `mushrooms` — فطر (موجود)
+
+```
+Subject: a group of fresh white button mushrooms, whole and sliced, with parsley leaves. Palette: cream white, brown cap, parsley green.
+```
+
+### `shish_shawarma` — شيش شاورما (موجود)
+
+```
+Subject: a tall vertical rotating shawarma spit of stacked seasoned meat roasting over flames, with a wrapped shawarma sandwich in front. Palette: roast orange, flame yellow, wrap cream.
+```
+
+### `italian_saj` — صاج إيطالي (موجود)
+
+```
+Subject: a thin crispy Italian saj flatbread pizza with tomato, melting mozzarella and basil, one slice lifting with a cheese pull, on a wooden board. Palette: tomato red, cheese gold, basil green.
+```
+
 ## أكلات عراقية
 
 ### `dolma` — دولمة (موجود)
@@ -139,6 +157,42 @@ Subject: a big dented cooking pot with lid ajar releasing steam, a wooden spoon,
 
 ```
 Subject: a full lunch plate: grilled meat, rice, salad and fried vegetables. Palette: meat brown, rice white, salad green.
+```
+
+### `jummar_palm` — جمّار نخيل (موجود)
+
+```
+Subject: a freshly cut white palm heart (jummar): a tender cream-colored cylinder of layered sheaths with ribbed texture, a few green palm fronds behind it. Palette: cream white, pale green, palm green.
+```
+
+### `lettuce_head` — خس (موجود)
+
+```
+Subject: a fresh green lettuce head with crisp ruffled leaves and visible pale ribs. Palette: leaf green, light lime, rib cream.
+```
+
+### `iraqi_samoon` — صمون عراقي (موجود)
+
+```
+Subject: golden Iraqi samoon diamond-shaped loaves with crisp crust and sesame flecks, stacked in a woven basket. Palette: bread golden, crust brown, basket tan.
+```
+
+### `pickles` — طرشي (موجود)
+
+```
+Subject: a glass jar packed with pickled cucumbers, peppers and carrots under a red lid, with a few loose pickles beside it. Palette: pickle green, pepper red, carrot orange.
+```
+
+### `chicken_tikka_rice` — تكة دجاج وتمن (موجود)
+
+```
+Subject: a round platter of golden spiced rice topped with two glossy grilled chicken pieces and herbs, a small sauce bowl on the side. Palette: rice yellow, chicken roast brown, sauce red.
+```
+
+### `lamb_mandi` — مندي لحم (موجود)
+
+```
+Subject: a large ornate platter of fragrant mandi rice topped with tender roasted lamb, tomato and herb garnish, and a small sauce bowl. Palette: rice orange-yellow, lamb roast brown, platter bronze.
 ```
 
 ## حلويات
@@ -377,6 +431,18 @@ Subject: two paper shopping bags with ribbon handles tipping over, tissue paper 
 Subject: golden comedy and silver tragedy masks side by side. Palette: mask gold, silver grey.
 ```
 
+### `fishing_trip` — طلعة صيد سمك (موجود)
+
+```
+Subject: a big bass leaping out of splashing water on a fishing line, a fishing rod, a bobber and a small fishing boat at sunset. Palette: fish green, water blue, sunset orange.
+```
+
+### `cafe_front` — كافيه (موجود)
+
+```
+Subject: a charming cafe storefront with a striped awning, a wooden sign, a street lamp and plants, with a latte-art coffee cup and beans in front. Palette: awning orange-yellow, wood brown, latte cream.
+```
+
 ## راحة
 
 ### `armchair` — ساعة راحة (موجود)
@@ -585,6 +651,12 @@ Subject: a red sports car with white racing stripes. Palette: racing red, white 
 Subject: a brilliant cut blue diamond sparkling. Palette: ice blue, white sparkle.
 ```
 
+### `cigarettes` — سكائر (موجود)
+
+```
+Subject: an open red cigarette pack with a gold crown mark and a few cigarettes sticking out, two loose cigarettes lying in front. Palette: pack red, filter orange, paper white.
+```
+
 ## عناية
 
 ### `perfume` — عطر (موجود)
@@ -689,6 +761,12 @@ Subject: a floating glowing app-card with a play triangle and a cloud, small key
 
 ```
 Subject: a tablet showing blank text lines resting against a stack of paper books with a cozy mug. Palette: tablet slate, paper cream, mug orange.
+```
+
+### `social_media` — سوشال ميديا (موجود)
+
+```
+Subject: a cluster of four glossy rounded social-app tiles (camera-gradient, music-note, play button, paper plane) with a small golden crown on top. Palette: gradient pink-orange, black, red, sky blue.
 ```
 
 ## مفاجآت

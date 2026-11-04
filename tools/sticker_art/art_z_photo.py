@@ -85,6 +85,20 @@ NEW = {
     'backgammon':    (rrect_d(22, 40, 212, 176, 64), ('#ffe4cc', '#d98d52'), 5, 190, 1),
     'music':         (star_d(128, 128, 112, 98, 12), ('#e6dcff', '#9a7ee0'), -5, 172, 0),
     'lunch':         (circle_d(128, 128, 104), ('#fff2cc', '#e8b048'), 4, 184, 1),
+    # CODIS-STICKERS-13: 13 ستيكراً جديداً (الصفيحة 4 + جمّار مرسوم)
+    'social_media':       (circle_d(128, 128, 104), ('#ffd9ec', '#e66aa8'), -4, 186, 1),
+    'cigarettes':         (rrect_d(26, 26, 204, 204, 62), ('#ffd7d0', '#e07a6a'), 5, 184, 0),
+    'jummar_palm':        (blob_d(128, 128, 104, 100, 4, .05), ('#e9f3c8', '#9cc454'), -4, 200, 1),
+    'lettuce_head':       (scallop_d(128, 128, 104, 12, 6), ('#d4f2c4', '#62b84a'), 4, 186, 0),
+    'iraqi_samoon':       (arch_d(128, 18, 196, 240), ('#ffe8c2', '#e0a24e'), -5, 186, 1),
+    'pickles':            (shield_d(128, 20, 204, 218), ('#e2f2c0', '#86b23c'), 5, 188, 0),
+    'mushrooms':          (circle_d(128, 128, 104), ('#f1e4d6', '#c29a78'), -4, 186, 1),
+    'shish_shawarma':     (star_d(128, 128, 112, 98, 12), ('#ffd9b0', '#e8803c'), 4, 178, 0),
+    'chicken_tikka_rice': (rrect_d(22, 40, 212, 176, 64), ('#fff0c0', '#e8b040'), -4, 190, 1),
+    'italian_saj':        (scallop_d(128, 128, 104, 12, 7), ('#ffd6c8', '#e66a4a'), 5, 188, 0),
+    'fishing_trip':       (blob_d(128, 128, 104, 100, 6, .05), ('#c8e8ff', '#4f9ed8'), -5, 188, 1),
+    'cafe_front':         (arch_d(128, 18, 196, 240), ('#e6d6c4', '#a67c52'), 4, 188, 0),
+    'lamb_mandi':         (rrect_d(22, 40, 212, 176, 64), ('#ffe4b8', '#d9903a'), -4, 192, 1),
 }
 
 def _replace(sid):

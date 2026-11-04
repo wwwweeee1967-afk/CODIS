@@ -8,7 +8,8 @@ import numpy as np
 from PIL import Image, ImageFilter, ImageDraw
 from scipy import ndimage
 here = os.path.dirname(os.path.abspath(__file__)); root = os.path.dirname(here)
-SHEETS = {1: os.path.join(root, 'assets', 'sticker_sheets', 'sheet1.webp'), 2: os.path.join(root, 'assets', 'sticker_sheets', 'sheet2.webp')}
+SHEETS = {1: os.path.join(root, 'assets', 'sticker_sheets', 'sheet1.webp'), 2: os.path.join(root, 'assets', 'sticker_sheets', 'sheet2.webp'),
+          4: os.path.join(root, 'assets', 'sticker_sheets', 'sheet4.webp')}   # 4 = صفيحة CODIS-STICKERS-13 (شفافة 1125×750)
 OUT = os.path.join(here, 'sticker_art', 'sprites')
 LONG = 300      # الضلع الأطول للرسمة بعد التكبير (px)
 RIM = 9         # سمك حافة القص البيضاء (px)
@@ -30,6 +31,11 @@ BOX = {
     'billiards': (1, 816, 339, 912, 434), 'darts': (1, 920, 333, 1034, 434), 'theater': (2, 972, 638, 1124, 741),
     'sports_car': (2, 870, 326, 1016, 421), 'diamond': (2, 847, 541, 971, 637), 'rose': (2, 22, 539, 140, 641),
     'medal': (2, 910, 162, 997, 307), 'crown': (2, 624, 161, 757, 296), 'compass': (2, 10, 421, 118, 542),
+    # CODIS-STICKERS-13 (الصفيحة 4): 12 ستيكراً. «جمّار النخيل» لا صندوق له هنا — الرسمة بذلك الموضع من الصفيحة تمر نخيل لا جمّار، فيُرسم باسكربت مستقل (tools/make_jummar_sprite.py)
+    'social_media': (4, 30, 12, 252, 235), 'cigarettes': (4, 252, 8, 418, 230), 'lettuce_head': (4, 672, 12, 895, 240),
+    'iraqi_samoon': (4, 895, 12, 1120, 228), 'pickles': (4, 8, 240, 192, 470), 'mushrooms': (4, 200, 258, 418, 455),
+    'shish_shawarma': (4, 420, 225, 648, 485), 'chicken_tikka_rice': (4, 625, 255, 888, 428), 'italian_saj': (4, 880, 242, 1122, 465),
+    'fishing_trip': (4, 8, 458, 316, 740), 'cafe_front': (4, 330, 478, 638, 736), 'lamb_mandi': (4, 640, 494, 1112, 738),
 }
 
 # CODIS-STICKERS-SHEET3: رسومات الصفيحة الجديدة (assets/stickers/source/new_stickers_sheet.png) تُفصل أولاً بـ tools/extract_sheet3.py
@@ -65,9 +71,15 @@ def crop(sid):
     out[:, :, 3] = np.where(m[ys.min():ys.max() + 1, xs.min():xs.max() + 1], out[:, :, 3], 0)
     return Image.fromarray(out)
 
+# رسمات مستقلة (PNG شفاف جاهز بلا صفيحة): تمرّ بنفس معالجة التكبير والحافة البيضاء. jummar_palm ← tools/make_jummar_sprite.py
+EXTRA = {'jummar_palm': os.path.join(root, 'assets', 'stickers', 'source', 'jummar_palm.png')}
+
 def sprite(sid):
     if sid in BOX3: return sprite3(sid)
-    im = crop(sid); k = LONG / max(im.size)
+    if sid in EXTRA:
+        im = Image.open(EXTRA[sid]).convert('RGBA'); im = im.crop(im.getchannel('A').getbbox())
+    else: im = crop(sid)
+    k = LONG / max(im.size)
     im = im.convert('RGBa').resize((round(im.width * k), round(im.height * k)), Image.LANCZOS).convert('RGBA')
     a = im.getchannel('A'); im = im.convert('RGB').filter(ImageFilter.UnsharpMask(1.4, 60, 2)).convert('RGBA'); im.putalpha(a)
     pad = RIM + 4; W, H = im.width + 2 * pad, im.height + 2 * pad
@@ -84,7 +96,7 @@ def sprite(sid):
 if __name__ == '__main__':
     args = sys.argv[1:]; review = None
     if '--sheet' in args: i = args.index('--sheet'); review = args[i + 1]; del args[i:i + 2]
-    ids = args or list(dict.fromkeys(list(BOX) + list(BOX3))); os.makedirs(OUT, exist_ok=True)
+    ids = args or list(dict.fromkeys(list(BOX) + list(BOX3) + list(EXTRA))); os.makedirs(OUT, exist_ok=True)
     made = [(s, sprite(s)) for s in ids]
     print('sprites:', len(made))
     if review:
