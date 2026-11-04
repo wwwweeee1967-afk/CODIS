@@ -35,6 +35,12 @@ html = open(target, encoding='utf-8').read()
 pat = re.compile(r'/\* CODIS-STICKERS-DATA \*/.*?/\* /CODIS-STICKERS-DATA \*/', re.S)
 if not pat.search(html): sys.exit('data block markers missing in ' + target)
 html = pat.sub(lambda _m: block, html, count=1)
+# CODIS-STICKER-ATMOS: لوحات الألوان (من رسم الستيكر نفسه) + الوصفات + نسخ «باليد» الصغيرة — تُحسب هنا مرة، لا داخل التطبيق
+apat = re.compile(r'/\* CODIS-STICKER-ATMOS-DATA \*/.*?/\* /CODIS-STICKER-ATMOS-DATA \*/', re.S)
+if apat.search(html):
+    import sticker_atmos
+    ablock = sticker_atmos.block(M, set(files))
+    html = apat.sub(lambda _m: ablock, html, count=1)
 open(target, 'w', encoding='utf-8', newline='').write(html)
 
 lines = ['# مطالبات توليد ستيكرات CODIS', '',

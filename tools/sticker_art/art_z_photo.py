@@ -40,6 +40,20 @@ REPLACE = {
     'treasure': (0, 2, 184), 'wrapped_gift': (0, 0, 175), 'backpack': (0, 2, 181), 'new_book': (0, 2, 179),
 }
 
+# CODIS-STICKERS-SHEET3: رسومات الصفيحة الجديدة (sprites من tools/extract_sheet3.py) — نفس المعرّف والخلفية القديمة، الرسم فقط يتبدّل.
+# handheld كان مستبدلاً من الصفيحة 2 ← الآن من الصفيحة الجديدة (نفس خلفيته الأصلية).
+REPLACE.update({
+    'falafel': (0, 2, 186), 'fried_chicken': (0, 2, 186), 'noodles': (0, 2, 186), 'dolma': (0, 2, 186), 'sambusa': (0, 2, 186),
+    'kebab': (0, 2, 186), 'masgouf': (0, 2, 186), 'biryani': (0, 2, 186), 'tashreeb': (0, 2, 186), 'kubba': (0, 2, 186),
+    'kunafa': (0, 2, 186), 'baklava': (0, 2, 186), 'cheesecake': (0, 2, 186), 'waffle': (0, 2, 186), 'croissant': (0, 2, 186),
+    'choco_cake': (0, 2, 186), 'tea_glass': (0, 2, 186), 'espresso': (0, 2, 186), 'park_picnic': (0, 2, 186), 'mall_bag': (0, 2, 186),
+    'dinner_out': (0, 2, 186), 'armchair': (0, 2, 186), 'nap': (0, 2, 186), 'bath': (0, 2, 186), 'sleep_in': (0, 2, 186),
+    'candle_spa': (0, 2, 186), 'board_game': (0, 2, 186), 'handheld': (0, 2, 186), 'puzzle': (0, 2, 186), 'headset': (0, 2, 186),
+    'movie_night': (0, 2, 186), 'anime': (0, 2, 186), 'paint': (0, 2, 186), 'oud': (0, 2, 186), 'pottery': (0, 2, 186),
+    'wrapped_gift': (0, 2, 186), 'shoes': (0, 2, 186), 'wristwatch': (0, 2, 186), 'perfume': (0, 2, 186), 'hair_care': (0, 2, 186),
+    'skincare': (0, 2, 186), 'friends_cups': (0, 2, 186), 'phone_call': (0, 2, 186), 'camping': (0, 2, 186), 'landmark': (0, 2, 186),
+})
+
 # id: (shape, (فاتح, غامق), ميل, box, شرارات)
 NEW = {
     'hot_dog':       (scallop_d(128, 128, 104, 14, 6), ('#c4ece6', '#4fb0a4'), -4, 188, 0),
@@ -63,6 +77,14 @@ NEW = {
     'medal':         (shield_d(128, 20, 204, 218), ('#d2e4ff', '#5888d6'), 4, 189, 0),
     'crown':         (scallop_d(128, 128, 104, 12, 6), ('#eadaff', '#8866cc'), -4, 175, 1),
     'compass':       (circle_d(128, 128, 104), ('#d6efe8', '#72b8a6'), 5, 170, 0),
+    # CODIS-STICKERS-SHEET3: ستيكرات جديدة من الصفيحة الجديدة
+    'tikka':         (rrect_d(26, 26, 204, 204, 62), ('#ffe0c2', '#e88a4a'), 4, 188, 1),
+    'pancakes':      (scallop_d(128, 128, 104, 12, 7), ('#fff0c8', '#ecb45a'), -5, 184, 0),
+    'cat_nap':       (blob_d(128, 128, 104, 100, 6, .05), ('#dce0ff', '#7f86d8'), 4, 188, 1),
+    'domino':        (circle_d(128, 128, 104), ('#d4efd8', '#5fae74'), -4, 176, 0),
+    'backgammon':    (rrect_d(22, 40, 212, 176, 64), ('#ffe4cc', '#d98d52'), 5, 190, 1),
+    'music':         (star_d(128, 128, 112, 98, 12), ('#e6dcff', '#9a7ee0'), -5, 172, 0),
+    'lunch':         (circle_d(128, 128, 104), ('#fff2cc', '#e8b048'), 4, 184, 1),
 }
 
 def _replace(sid):

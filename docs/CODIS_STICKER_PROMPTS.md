@@ -93,10 +93,16 @@ Subject: a triangle toast club sandwich stacked with ham, cheese, lettuce and to
 Subject: a round copper tray of rolled vine-leaf dolma arranged in a spiral with onions and a lemon. Palette: copper, vine green, lemon.
 ```
 
-### `kebab` — كباب وتكة (موجود)
+### `kebab` — مشاوي كباب (موجود)
 
 ```
-Subject: two long skewers of grilled kebab and tikka over glowing charcoal with grilled tomato and onion rings. Palette: charcoal black, ember orange, meat brown.
+Subject: four long skewers of grilled minced-meat kebab, glossy and charred. Palette: charcoal black, ember orange, meat brown.
+```
+
+### `tikka` — مشاوي تكة (موجود)
+
+```
+Subject: four skewers of grilled meat cubes (tikka) with charred edges. Palette: ember orange, meat brown, wood tan.
 ```
 
 ### `masgouf` — مسگوف (موجود)
@@ -127,6 +133,12 @@ Subject: a tray of oval kubba croquettes, one cut open to show spiced meat filli
 
 ```
 Subject: a big dented cooking pot with lid ajar releasing steam, a wooden spoon, okra and tomatoes around it. Palette: pot silver-blue, okra green, tomato red.
+```
+
+### `lunch` — صحن غدا (موجود)
+
+```
+Subject: a full lunch plate: grilled meat, rice, salad and fried vegetables. Palette: meat brown, rice white, salad green.
 ```
 
 ## حلويات
@@ -161,10 +173,16 @@ Subject: two glazed donuts, one pink frosted with colorful sprinkles and one cho
 Subject: a waffle cone with three melting scoops in mismatched flavors, drips running down, a wafer stick. Palette: vanilla cream, strawberry pink, pistachio mint.
 ```
 
-### `waffle` — وافل وبان كيك (موجود)
+### `waffle` — وافل (موجود)
 
 ```
-Subject: a tall stack of fluffy pancakes with a butter pat, maple syrup flowing down, and berries on top. Palette: pancake tan, maple amber, berry blue.
+Subject: stacked golden waffles with syrup and fresh berries on top. Palette: waffle gold, maple amber, berry red-blue.
+```
+
+### `pancakes` — بان كيك (موجود)
+
+```
+Subject: a tall stack of fluffy pancakes with syrup and berries on top. Palette: pancake tan, maple amber, berry red.
 ```
 
 ### `croissant` — كرواسون (موجود)
@@ -367,10 +385,16 @@ Subject: golden comedy and silver tragedy masks side by side. Palette: mask gold
 Subject: a cozy armchair with a plump cushion, a knitted blanket draped over and a small side table with a plant. Palette: calm sage green, wool cream, wood brown.
 ```
 
-### `nap` — غفوة ونوم (موجود)
+### `nap` — نوم (موجود)
 
 ```
-Subject: a fluffy pillow with a sleeping crescent moon resting on it, tiny stars and floating zzz-shaped clouds without letters. Palette: night blue, moon yellow, pillow white.
+Subject: a cozy wooden bed with blue blanket and pillows. Palette: wood brown, blanket blue, pillow white.
+```
+
+### `cat_nap` — غفوة وكسل (موجود)
+
+```
+Subject: a tabby cat curled up asleep on a round cushion with zzz. Palette: tabby orange, cushion navy.
 ```
 
 ### `bath` — حمام دافي (موجود)
@@ -405,10 +429,22 @@ Subject: a lit scented candle in a glass, a clay face mask bowl with a brush and
 Subject: a chunky game controller with colorful round buttons and a tiny sparkle trail, one thumbstick tilted. Palette: controller charcoal, button primary colors.
 ```
 
-### `board_game` — لعبة لوحية (موجود)
+### `board_game` — شطرنج (موجود)
 
 ```
-Subject: a board with chess pieces and a pair of dice, a fan of playing cards behind, a domino tile. Palette: wood brown, felt green, ivory.
+Subject: a wooden chess board with ivory and black pieces. Palette: wood brown, ivory, black.
+```
+
+### `domino` — دومينو (موجود)
+
+```
+Subject: three ivory domino tiles standing together. Palette: ivory, black dots.
+```
+
+### `backgammon` — طاولي (موجود)
+
+```
+Subject: an open wooden backgammon board with checkers. Palette: wood brown, red, ivory.
 ```
 
 ### `handheld` — لعبة موبايل (موجود)
@@ -467,10 +503,16 @@ Subject: a retro television set with rabbit-ear antennas, a blanket-covered couc
 Subject: a small film projector casting a beam on a screen with silhouettes of two snack bowls and a blanket. Palette: beam amber, dark room blue, popcorn gold.
 ```
 
-### `podcast` — بودكاست وموسيقى (موجود)
+### `podcast` — بودكاست (موجود)
 
 ```
 Subject: a vintage microphone beside a vinyl record and floating music-note shapes, headphones hanging on it. Palette: mic chrome, vinyl black, note mint.
+```
+
+### `music` — موسيقى (موجود)
+
+```
+Subject: golden treble clef and floating music notes. Palette: gold, amber.
 ```
 
 ### `anime` — أنمي وكرتون (موجود)

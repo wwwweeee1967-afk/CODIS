@@ -32,6 +32,20 @@ BOX = {
     'medal': (2, 910, 162, 997, 307), 'crown': (2, 624, 161, 757, 296), 'compass': (2, 10, 421, 118, 542),
 }
 
+# CODIS-STICKERS-SHEET3: رسومات الصفيحة الجديدة (assets/stickers/source/new_stickers_sheet.png) تُفصل أولاً بـ tools/extract_sheet3.py
+# إلى PNG شفاف (assets/stickers/source/extracted/<id>.png). لها حافة قص مرسومة أصلاً ⇒ لا تكبير ولا حافة بيضاء إضافية.
+# تتقدّم على BOX أعلاه (handheld كان من الصفيحة 2 وصار من الصفيحة الجديدة).
+EXTRACTED = os.path.join(root, 'assets', 'stickers', 'source', 'extracted')
+sys.path.insert(0, here)
+from extract_sheet3 import BOX as BOX3
+
+def sprite3(sid):
+    im = Image.open(os.path.join(EXTRACTED, sid + '.png')).convert('RGBA')
+    im = im.crop(im.getchannel('A').getbbox())
+    canvas = Image.new('RGBA', (im.width + 4, im.height + 4), (0, 0, 0, 0)); canvas.paste(im, (2, 2))
+    canvas.save(os.path.join(OUT, sid + '.webp'), 'WEBP', quality=94, alpha_quality=100, method=6)
+    return canvas
+
 _cache = {}
 def sheet(n):
     if n not in _cache:
@@ -52,6 +66,7 @@ def crop(sid):
     return Image.fromarray(out)
 
 def sprite(sid):
+    if sid in BOX3: return sprite3(sid)
     im = crop(sid); k = LONG / max(im.size)
     im = im.convert('RGBa').resize((round(im.width * k), round(im.height * k)), Image.LANCZOS).convert('RGBA')
     a = im.getchannel('A'); im = im.convert('RGB').filter(ImageFilter.UnsharpMask(1.4, 60, 2)).convert('RGBA'); im.putalpha(a)
@@ -69,7 +84,7 @@ def sprite(sid):
 if __name__ == '__main__':
     args = sys.argv[1:]; review = None
     if '--sheet' in args: i = args.index('--sheet'); review = args[i + 1]; del args[i:i + 2]
-    ids = args or list(BOX); os.makedirs(OUT, exist_ok=True)
+    ids = args or list(dict.fromkeys(list(BOX) + list(BOX3))); os.makedirs(OUT, exist_ok=True)
     made = [(s, sprite(s)) for s in ids]
     print('sprites:', len(made))
     if review:
