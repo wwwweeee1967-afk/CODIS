@@ -200,6 +200,15 @@ const CodisAtmos = (function(){
   /* تقاطع دائرة/مستطيل بوحدات المشهد */
   const hit = (x, y, r, b, H)=>{ const x1 = b[0], y1 = b[1] * H / 100, x2 = b[2], y2 = b[3] * H / 100; const cx = Math.max(x1, Math.min(x, x2)), cy = Math.max(y1, Math.min(y, y2)); return (x - cx) * (x - cx) + (y - cy) * (y - cy) < r * r; };
 
+  /* الحجم: أصغر موضع لا يقل عن 5.6% من العرض (العناصر الإطارية كانت ~12px على بطاقة الموبايل فتضيع) */
+  /* ظل العنصر بلا فلاتر SVG: نسخة داكنة مزاحة قليلاً للأسفل تحت العنصر نفسه.
+     (feDropShadow داخل صورة SVG يرسمه WebKit/Safari بدقة منخفضة ثم يكبّره ⇒ عناصر ضبابية/باهتة/تختفي على الآيفون؛ الرسم المباشر حاد بكل المحركات) */
+  const darkOf = m=>m.replace(/(fill|stroke)="#[0-9a-fA-F]{3,8}"/g, '$1="#140a05"');
+  function put(x, y, rot, sc, op, mk){
+    const tr = ') rotate(' + f(rot) + ') scale(' + f(sc) + ')"';
+    return '<g transform="translate(' + f(x) + ' ' + f(y + sc * 4.2) + tr + ' opacity="' + f(.3 * op) + '">' + darkOf(mk) + '</g>' +
+      '<g transform="translate(' + f(x) + ' ' + f(y) + tr + (op < 1 ? ' opacity="' + f(op) + '"' : '') + '>' + mk + '</g>';
+  }
   function build(id, fam, k){
     const key = fam + ':' + (fam === 'p' ? '' : k), T0 = T[fam === 'p' ? 'p' : key];
     if(!T0) return null;
@@ -224,29 +233,31 @@ const CodisAtmos = (function(){
     const seq = [motifs[0]]; for(let j = 1; seq.length < 12; j++){ seq.push(motifs[1 + (j - 1) % Math.max(1, motifs.length - 1)] || motifs[0]); if(j % 2 === 1) seq.push(motifs[0]); }
     order.forEach((s, j)=>{
       const m = seq[j], again = j > 0 && m === motifs[0];
-      const sz = s.s * 1.6 * (j === 0 ? 1.2 : again ? .72 : (.86 + r() * .2)), x = s.x + (r() - .5) * 2.2, y = s.y + (r() - .5) * 2.2, rad = sz * .48;
-      if(!free(x, y, rad)) return;
+      const sz0 = Math.max(s.s, 5.6) * 1.8 * (j === 0 ? 1.2 : again ? .72 : (.86 + r() * .2)), x0 = s.x + (r() - .5) * 2.2, y0 = s.y + (r() - .5) * 2.2;
+      /* لا يُحذف عنصر لأنه كبير على مكانه: يصغر تدريجياً (ثم يتوسّط موضعه) حتى يدخل المنطقة الآمنة؛ يُحذف فقط إن لم يتسع حتى بـ60% */
+      let x = x0, y = y0, sz = 0;
+      for(const t of [[1, 0], [.85, 0], [.72, 0], [.72, 1], [.6, 1]]){ const tx = t[1] ? s.x : x0, ty = t[1] ? s.y : y0; if(free(tx, ty, sz0 * t[0] * .48)){ x = tx; y = ty; sz = sz0 * t[0]; break; } }
+      if(!sz) return;
       placed.push({ x:x, y:y, s:sz });
-      body += '<g transform="translate(' + f(x) + ' ' + f(y) + ') rotate(' + f((r() - .5) * 46) + ') scale(' + f(sz / 10) + ')">' + M[m](c, r) + '</g>';
+      { const rot = (r() - .5) * 46; body += put(x, y, rot, sz / 10, 1, M[m](c, r)); }
       /* حبيبات صغيرة حول أول عنصرين فقط: تجمّع مقصود بدل نثر عشوائي */
       if(j < 2) for(let q = 0; q < 2; q++){
-        const a = r() * Math.PI * 2, dist = sz * (.7 + r() * .35), px = x + Math.cos(a) * dist, py = y + Math.sin(a) * dist, ps = sz * (.26 + r() * .1);
-        if(free(px, py, ps * .5)) body += '<g transform="translate(' + f(px) + ' ' + f(py) + ') rotate(' + f(r() * 360) + ') scale(' + f(ps / 10) + ')" opacity=".9">' + M[tiny](c, r) + '</g>';
+        const a = r() * Math.PI * 2, dist = sz * (.7 + r() * .35), px = x + Math.cos(a) * dist, py = y + Math.sin(a) * dist, ps = sz * (.28 + r() * .1);
+        if(free(px, py, ps * .5)){ const rot = r() * 360; body += put(px, py, rot, ps / 10, .9, M[tiny](c, r)); }
       }
     });
     /* أثر صغير ينزل من الستيكر بمحاذاة الحافة (يربطه بالبطاقة) — فقط ما يقع بمكان آمن */
     const tx = sx - st[2] * .12, ty0 = sy + st[2] * .62;
     for(let q = 0; q < 3; q++){
-      const px = tx - q * 1.1 + (r() - .5) * 1.4, py = ty0 + q * 3.4 + r() * 1.2, ps = 2.6 - q * .45;
-      if(free(px, py, ps * .5)) body += '<g transform="translate(' + f(px) + ' ' + f(py) + ') rotate(' + f(r() * 360) + ') scale(' + f(ps / 10) + ')" opacity="' + f(.95 - q * .2) + '">' + M[tiny](c, r) + '</g>';
+      const px = tx - q * 1.1 + (r() - .5) * 1.4, py = ty0 + q * 3.4 + r() * 1.2, ps = 3.2 - q * .5;
+      if(free(px, py, ps * .5)){ const rot = r() * 360; body += put(px, py, rot, ps / 10, .95 - q * .2, M[tiny](c, r)); }
     }
     /* ضوء ناعم: هالة خلف الستيكر تربطه بالبطاقة + لمعة خفيفة عند العنصر البطل. لا تلوين كامل للبطاقة */
     const lt = mix(pal[5], '#fff1d2', .4);   /* ضوء دافئ مشتق من لون الستيكر — لا بقعة لون مشبعة */
     const glow = '<radialGradient id="g"><stop offset=".45" stop-color="' + lt + '" stop-opacity=".42"/><stop offset=".72" stop-color="' + lt + '" stop-opacity=".12"/><stop offset="1" stop-color="' + lt + '" stop-opacity="0"/></radialGradient>' +
-      '<radialGradient id="h"><stop offset="0" stop-color="' + lt + '" stop-opacity=".3"/><stop offset="1" stop-color="' + lt + '" stop-opacity="0"/></radialGradient>' +
-      '<filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy=".35" stdDeviation=".38" flood-color="#0b0604" flood-opacity=".5"/></filter>';
+      '<radialGradient id="h"><stop offset="0" stop-color="' + lt + '" stop-opacity=".3"/><stop offset="1" stop-color="' + lt + '" stop-opacity="0"/></radialGradient>';
     const lights = '<circle cx="' + f(sx) + '" cy="' + f(sy) + '" r="' + f(st[2] * .86) + '" fill="url(#g)"/>' + (placed[0] ? '<circle cx="' + f(placed[0].x) + '" cy="' + f(placed[0].y) + '" r="' + f(placed[0].s * 1.25) + '" fill="url(#h)"/>' : '');
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 ' + f(H) + '" preserveAspectRatio="none"><defs>' + glow + '</defs>' + lights + '<g filter="url(#s)">' + body + '</g></svg>';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 ' + f(H) + '" preserveAspectRatio="none"><defs>' + glow + '</defs>' + lights + body + '</svg>';
     const hold = (T0.hold && d[2]) ? T0.hold : null;
     return { src:'data:image/svg+xml,' + encodeURIComponent(svg), hold:hold, file:d[2], n:placed.length, pts:placed, H:H, block:block };
   }
