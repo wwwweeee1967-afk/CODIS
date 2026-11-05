@@ -1,0 +1,4 @@
+/* STORE · paper layer (end of the store section: it follows the section's own rules). Tags tinted by a per-item colour that JS supplies in
+   its dark-UI form are mixed toward ink so they stay readable on paper. */
+.st-tag{ color:color-mix(in srgb, var(--pc, var(--gold-soft)) 36%, var(--text)); }
+.st-tag.is-off{ color:var(--text-2); }

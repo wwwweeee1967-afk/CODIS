@@ -1,0 +1,34 @@
+    <!-- ============ قسم: المظهر (CODIS-THEME) ============ -->
+    <div id="settings-page-appearance" class="settings-page-section" style="display:none;">
+      <button type="button" class="settings-back-btn" onclick="showSettingsHome()"><svg class="ios-chevron" data-icon="back"></svg>الإعدادات</button>
+      <div class="settings-section-head">
+        <div class="settings-section-title">المظهر</div>
+      </div>
+
+      <div class="settings-grid">
+        <div class="settings-card">
+          <div class="settings-card-head">
+            <div class="settings-icon-badge tone-aqua"><svg data-icon="half" data-size="md"></svg></div>
+            <div style="flex:1; min-width:0;">
+              <div class="settings-card-title">شكل التطبيق</div>
+              <div class="settings-note thm-sub">اختر المظهر المناسب لك. تغييره لا يمسّ أي بيانات.</div>
+            </div>
+          </div>
+          <div class="settings-divider"></div>
+          <div class="thm-opts" id="theme-opts" role="radiogroup" aria-label="شكل التطبيق">
+            <button type="button" class="thm-opt" role="radio" aria-checked="true" data-theme-opt="paper" onclick="CodisTheme.set('paper')">
+              <span class="thm-prev thm-prev-paper" aria-hidden="true"><i class="tp-card"></i><i class="tp-line"></i><i class="tp-line tp-short"></i><i class="tp-pill"></i><i class="tp-dock"></i></span>
+              <span class="thm-name"><span class="thm-title">ورقي</span><span class="thm-desc">ورق معتّق وحبر وزجاج</span></span>
+              <span class="thm-tick" aria-hidden="true"><svg data-icon="check" data-size="sm"></svg></span>
+            </button>
+            <button type="button" class="thm-opt" role="radio" aria-checked="false" data-theme-opt="dark" onclick="CodisTheme.set('dark')">
+              <span class="thm-prev thm-prev-dark" aria-hidden="true"><i class="tp-card"></i><i class="tp-line"></i><i class="tp-line tp-short"></i><i class="tp-pill"></i><i class="tp-dock"></i></span>
+              <span class="thm-name"><span class="thm-title">داكن</span><span class="thm-desc">الزجاج الداكن الأصلي</span></span>
+              <span class="thm-tick" aria-hidden="true"><svg data-icon="check" data-size="sm"></svg></span>
+            </button>
+          </div>
+          <div class="settings-note">يُحفظ الاختيار على هذا الجهاز فقط.</div>
+        </div>
+      </div>
+    </div>
+

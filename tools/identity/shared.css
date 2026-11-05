@@ -1,0 +1,62 @@
+/* CODIS-THEME · rules shared by BOTH looks (paper + dark). This stylesheet is never colour-remapped: it reads tokens only. */
+
+/* ---- Fonts (embedded, offline). ALAMERAH = the whole app · Momken = headings.
+   Both are single-weight display faces, so the face claims 100–900 (no synthetic bold smearing). ALAMERAH has a small x-height:
+   size-adjust lifts it to the optical size of the system face it replaces, and word-spacing opens its tight word gaps.
+   Neither contains Latin letters: those fall back to the system stack (kept after them in --font). ---- */
+@font-face{ font-family:"CodisAlamerah"; src:url(data:font/woff2;base64,__ALAMERAH__) format("woff2"); font-weight:100 900; font-style:normal; font-display:block; size-adjust:120%; }
+@font-face{ font-family:"CodisMomken"; src:url(data:font/woff2;base64,__MOMKEN__) format("woff2"); font-weight:100 900; font-style:normal; font-display:block; }
+:root{
+  --font:"CodisAlamerah", -apple-system, BlinkMacSystemFont, "SF Arabic", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "Noto Sans Arabic", "Dubai", Tahoma, system-ui, sans-serif;
+  --font-title:"CodisMomken", "CodisAlamerah", -apple-system, BlinkMacSystemFont, "SF Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --font-display:var(--font-title);
+}
+html{ font-synthesis:none; }
+*{ word-spacing:.14em; }
+h1, h2, h3, h4, .page-title, .section-title, .settings-section-title, .settings-card-title, .es-title, .write-title, .store-sec-title, .st-part-title,
+.eco-sec-title, .vault-title, .own-sheet-title, .lock-title, .lock-method-title, .gate-title, .rpu-h, .ios-group-title, .rp-title, .outcome-title,
+.dq-title, .cd-title, .av-title, .arch-section-title, .acct-danger-title, #codis-confirm-title, .pk-modal .pkx-id h3{ font-family:var(--font-title); }
+
+/* ---- Appearance page ---- */
+#settings-page-appearance .settings-section-head::before{ content:"CONTROL / APPEARANCE"; content:"CONTROL / APPEARANCE" / ""; }
+.thm-sub{ margin-top:2px; }
+.thm-opts{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-md); margin-bottom:var(--sp-md); }
+.thm-opt{
+  position:relative; display:flex; flex-direction:column; gap:var(--sp-sm); padding:8px 8px 12px; min-width:0;
+  border-radius:var(--r-lg); border:1.5px solid var(--glass-border-strong); background:var(--mat-panel-fill); box-shadow:var(--mat-panel-shadow);
+  color:var(--text); font:inherit; text-align:start; cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.thm-opt:active{ transform:scale(var(--press-card, .985)); }
+.thm-opt[aria-checked="true"]{ border-color:var(--aqua); box-shadow:0 0 0 3px var(--aqua-a24), var(--mat-panel-shadow); }
+.thm-opt:focus-visible{ outline:2px solid var(--aqua); outline-offset:3px; }
+.thm-name{ display:flex; flex-direction:column; gap:2px; padding-inline:4px; min-width:0; }
+.thm-title{ font-size:var(--fs-headline); font-weight:700; line-height:1.3; }
+.thm-desc{ font-size:var(--fs-caption); line-height:1.5; color:var(--text-2); }
+.thm-tick{ position:absolute; top:14px; inset-inline-end:14px; width:24px; height:24px; display:grid; place-items:center; border-radius:50%; background:var(--aqua); color:var(--on-aqua); opacity:0; transform:scale(.6); transition:opacity var(--dur-fast) var(--ease), transform var(--dur-normal) var(--ease-spring); --ctx-ico-n:14; }
+.thm-opt[aria-checked="true"] .thm-tick{ opacity:1; transform:none; }
+/* mini previews: drawn with plain boxes in the colours of each look (fixed on purpose — they show the look, not the current one) */
+.thm-prev{ position:relative; display:block; height:104px; border-radius:calc(var(--r-lg) - 6px); overflow:hidden; box-shadow:inset 0 0 0 1px rgb(0 0 0 / .1); }
+.thm-prev i{ position:absolute; display:block; }
+.thm-prev-paper{ background:#E8DFCC; }
+.thm-prev-paper .tp-card{ inset:12px 12px 34px 12px; border-radius:10px; background:#F6F0E4; box-shadow:0 1px 2px rgb(74 54 34 / .25), inset 0 1px 0 #fff; }
+.thm-prev-paper .tp-line{ top:24px; inset-inline:24px 36px; height:5px; border-radius:3px; background:#342A20; opacity:.78; }
+.thm-prev-paper .tp-short{ top:36px; inset-inline-end:62px; opacity:.4; }
+.thm-prev-paper .tp-pill{ top:50px; inset-inline-start:24px; width:44px; height:12px; border-radius:6px; background:#2F7A74; }
+.thm-prev-paper .tp-dock{ inset:auto 14px 7px 14px; height:20px; border-radius:11px; background:rgb(250 246 237 / .85); box-shadow:0 0 0 1px rgb(52 42 32 / .12), inset 0 1px 0 #fff; }
+.thm-prev-dark{ background:#05070B; }
+.thm-prev-dark .tp-card{ inset:12px 12px 34px 12px; border-radius:10px; background:#10151D; box-shadow:inset 0 0 0 1px rgb(218 230 248 / .1), inset 0 1px 0 rgb(218 230 248 / .08); }
+.thm-prev-dark .tp-line{ top:24px; inset-inline:24px 36px; height:5px; border-radius:3px; background:#F2F5FA; opacity:.85; }
+.thm-prev-dark .tp-short{ top:36px; inset-inline-end:62px; opacity:.4; }
+.thm-prev-dark .tp-pill{ top:50px; inset-inline-start:24px; width:44px; height:12px; border-radius:6px; background:#56CFDB; }
+.thm-prev-dark .tp-dock{ inset:auto 14px 7px 14px; height:20px; border-radius:11px; background:rgb(12 17 25 / .85); box-shadow:0 0 0 1px rgb(218 230 248 / .14), inset 0 1px 0 rgb(218 230 248 / .1); }
+@media (prefers-reduced-motion:reduce){ .thm-opt, .thm-tick{ transition:none; } }
+
+/* ---- Legibility, both looks ----
+   Disabled = a recessed dashed slip, fully readable (labels such as «ينقصك 210» carry information; they used to be half-faded to ~2.7:1).
+   Settings chevrons were 2.3:1. */
+.btn:disabled{ opacity:1; background:var(--glass-strong); color:var(--text-3); border:1px dashed var(--glass-border-strong); box-shadow:none; text-shadow:none; filter:none; }
+.btn:disabled *{ color:inherit; }
+#page-settings .ios-chevron{ opacity:.85; }
+html[data-theme="dark"] .navbtn{ --nav-ico-c:var(--text-2); color:var(--text-2); }   /* dock labels over busy content: 10px text must hold ≥4.5:1 */
+html[data-theme="dark"] .navbtn.active{ color:var(--text); }

@@ -1,0 +1,159 @@
+/* Shared identity layer: the desk, type, the three materials on every common component, and how each material answers a
+   touch (paper presses down, glass compresses, brass sinks). Painted once, no infinite animation, no live blur outside
+   the chrome tier. Room blocks below refine this per room. */
+
+/* ---- The desk: archive paper under a reading lamp ---- */
+html, body{ background-color:var(--bg); }
+body{ background-image:var(--tex-grain); background-size:128px 128px; }
+body::before{
+  inset:0 0 auto 0; height:75vh;
+  background:
+    radial-gradient(80% 52% at 70% -8%, rgb(255 251 240 / .75), transparent 70%),
+    radial-gradient(55% 40% at 4% 22%, rgb(var(--aqua-rgb) / .045), transparent 72%);
+}
+body::after{
+  inset:0; height:auto;
+  background:
+    radial-gradient(130% 95% at 50% 40%, transparent 62%, rgb(var(--lo-rgb) / .10) 100%),
+    radial-gradient(60% 40% at 8% 104%, rgb(var(--gold-rgb) / .07), transparent 70%);
+}
+::selection{ background:rgb(var(--aqua-rgb) / .22); color:var(--text); }
+*{ scrollbar-color:rgb(var(--ink-rgb) / .22) transparent; }
+
+/* ---- Type: room names and sheet titles are set like a printed heading ---- */
+.page-title, .modal h3, .es-title, .settings-detail-title, .notif-center-head h3{ font-family:var(--font-display); }
+.page-title{ font-weight:800; color:var(--text); text-shadow:0 1px 0 rgb(var(--lite-rgb) / .9); }
+.eyebrow{ font-family:var(--font-print); font-weight:400; font-variant:small-caps; text-transform:lowercase; letter-spacing:.14em; font-size:12px; color:var(--text-3); }
+.xp-value, .plan-pct, .cs-name, .cs-tag{ font-family:var(--font-print); font-weight:400; }
+
+/* ---- Top bar: the fade is paper, the three controls are glass beads ---- */
+.topbar-fade{ background:linear-gradient(180deg, var(--bg) 0%, rgb(232 223 204 / .86) 48%, rgb(232 223 204 / 0) 100%); }
+.topbar-mark{ color:var(--text); opacity:1; }
+.notif-bell, .store-btn, .coin-chip{ color:var(--text-2); }
+.notif-bell::after, .store-btn::after, .coin-chip::after{   /* glass rim: a crescent of light on the upper edge */
+  content:''; position:absolute; inset:1px 14% auto; height:42%; border-radius:999px 999px 40% 40% / 100% 100% 60% 60%;
+  background:linear-gradient(180deg, rgb(255 255 255 / .75), rgb(255 255 255 / 0)); pointer-events:none; opacity:.7;
+}
+.coin-chip{ color:var(--gold); }
+
+/* ---- Dock: a slab of real glass laid over the paper ---- */
+.sidebar::before{   /* specular streak along the top rim */
+  content:''; position:absolute; inset:0 8% auto; height:1px; pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgb(255 255 255 / .95) 30%, rgb(255 255 255 / .6) 70%, transparent);
+}
+.sidebar::after{    /* caustic: light gathered inside the lower edge of the glass */
+  content:''; position:absolute; inset:auto 12% 3px; height:10px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(50% 100% at 50% 100%, rgb(var(--aqua-rgb) / .10), transparent 70%);
+}
+.navbtn{ color:var(--text-2); }
+.navbtn.active{ color:var(--text); }
+.nav-indicator{
+  background-image:linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .08) 70%);
+  box-shadow:inset 0 0 0 1px var(--dock-edge), inset 0 1px 0 rgb(255 255 255 / .9), 0 2px 6px -2px rgb(var(--lo-rgb) / .25);
+}
+
+/* ---- Paper panels: matte stock, top light, contact shadow ---- */
+.card, .xp-hud, .ios-list, .settings-card, .task-item, .habit-card, .plan-card, .threshold-box{ background-size:128px 128px, auto; }
+
+/* ---- Buttons: three materials, three ways to answer a touch ---- */
+.btn-primary{   /* verdigris glass over ink: the one action that moves things forward */
+  background:linear-gradient(180deg, rgb(255 255 255 / .18), rgb(255 255 255 / 0) 52%), linear-gradient(180deg, #2E7B75, var(--aqua) 46%, #123F3B);
+  color:var(--on-aqua); border-color:rgb(14 52 48 / .6);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .38), inset 0 -2px 0 rgb(10 36 33 / .3), 0 1px 0 rgb(var(--lite-rgb) / .8), 0 10px 18px -12px rgb(20 70 65 / .7);
+  text-shadow:0 -1px 0 rgb(18 48 45 / .35);
+}
+.btn-primary:active{ box-shadow:inset 0 2px 4px rgb(18 48 45 / .3), 0 1px 0 rgb(var(--lite-rgb) / .8); }
+.btn-secondary{   /* card stock: a printed edge below, pressed (not scaled) on touch */
+  background:var(--tex-grain), linear-gradient(180deg, #FBF7EE, #F1E9DA); background-size:128px 128px, auto;
+  color:var(--text); border-color:rgb(var(--ink-rgb) / .2);
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .9), 0 2px 0 rgb(var(--ink-rgb) / .09), 0 4px 8px -6px rgb(var(--lo-rgb) / .35);
+}
+.btn-secondary:active{ transform:var(--press-paper); opacity:1; box-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .16), 0 1px 0 rgb(var(--ink-rgb) / .06); }
+.btn-achievement{   /* brass plate */
+  background:linear-gradient(180deg, rgb(255 255 255 / .22), rgb(255 255 255 / 0) 55%), linear-gradient(180deg, #C9A257, #A87D30 55%, #8E6824);
+  color:#FBF3DE; border-color:rgb(96 66 18 / .5); text-shadow:0 -1px 0 rgb(80 54 12 / .45);
+  box-shadow:inset 0 1px 0 rgb(255 240 200 / .6), inset 0 -2px 0 rgb(80 54 12 / .25), 0 8px 16px -10px rgb(120 84 20 / .65);
+}
+.btn-achievement:active{ transform:var(--press-paper); box-shadow:inset 0 2px 4px rgb(80 54 12 / .35); }
+.btn-destructive{ color:var(--danger-ink); border-color:rgb(var(--danger-rgb) / .38); background:rgb(var(--danger-rgb) / .04); }
+.btn-quiet{ color:var(--text-2); }
+@media (hover:hover){
+  .btn-secondary:hover{ background:var(--tex-grain), linear-gradient(180deg, #FDFAF3, #F4EDE0); border-color:rgb(var(--ink-rgb) / .28); }
+  .btn-primary:hover{ filter:brightness(1.04); }
+}
+
+
+/* ---- Fields: a recessed slip of paper; focus inks a verdigris rule ---- */
+textarea, input[type=text], input[type=number], input[type=password], input[type=time]{
+  background:linear-gradient(180deg, rgb(var(--ink-rgb) / .035), rgb(255 252 244 / .55) 40%); color:var(--text);
+  border-color:rgb(var(--ink-rgb) / .18); box-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .12);
+}
+textarea:focus, input[type=text]:focus, input[type=number]:focus, input[type=password]:focus, input[type=time]:focus{
+  background:rgb(255 252 245 / .9); border-color:var(--aqua); box-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .08), 0 0 0 3px rgb(var(--aqua-rgb) / .14);
+}
+input[type=time]{ color-scheme:light; }
+::placeholder{ color:var(--text-3); opacity:1; }
+
+/* ---- Switch: a brass-less paper slot with an ivory bead ---- */
+.ios-switch{ background:rgb(var(--ink-rgb) / .12); border-color:rgb(var(--ink-rgb) / .16); box-shadow:inset 0 1px 3px rgb(var(--lo-rgb) / .22); }
+.ios-switch::before{ background:linear-gradient(180deg, #FFFDF8, #EFE7D7); box-shadow:0 1px 3px rgb(var(--lo-rgb) / .35), inset 0 -1px 0 rgb(var(--ink-rgb) / .08); }
+.ios-switch:checked{ background:linear-gradient(180deg, #2A7069, var(--aqua)); border-color:rgb(14 52 48 / .55); }
+
+/* ---- Pills & badges: printed label tags ---- */
+.pill, .count-badge, .ios-row-badge{ box-shadow:inset 0 0 0 1px rgb(var(--ink-rgb) / .06); }
+.pill-gold{ color:var(--gold); }
+
+/* ---- Progress: an engraved groove, inked fill ---- */
+.xp-track{ background:rgb(var(--ink-rgb) / .08); box-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .18), 0 1px 0 rgb(var(--lite-rgb) / .8); }
+.xp-fill{ background:linear-gradient(90deg, var(--aqua-deep), #3B8B84); }
+.xp-hud .xp-track::before, .xp-hud .xp-track::after{ background:rgb(var(--ink-rgb) / .55); }
+.xp-hud:has(.xp-status.reward) .xp-fill{ background:linear-gradient(90deg, #8E6824, #C49A4C); }
+.xp-hud:has(.xp-status.punish) .xp-fill{ background:linear-gradient(90deg, #8E3029, var(--danger)); }
+.xp-status.reward{ color:var(--gold); }
+
+/* ---- Day tabs: index tabs cut from the same paper ---- */
+.day-tab{ background:linear-gradient(180deg, rgb(255 252 245 / .7), rgb(255 252 245 / .35)); border-color:rgb(var(--ink-rgb) / .13); box-shadow:inset 0 1px 0 rgb(255 255 255 / .7); }
+.day-tab.active{ background:linear-gradient(180deg, rgb(var(--aqua-rgb) / .16), rgb(var(--aqua-rgb) / .08)); border-color:rgb(var(--aqua-rgb) / .45); color:var(--aqua-deep); box-shadow:inset 0 1px 0 rgb(255 255 255 / .6), 0 2px 6px -3px rgb(var(--aqua-rgb) / .5); }
+.day-tab.locked{ opacity:.6; }
+.day-tab.holiday{ border-style:dashed; background:repeating-linear-gradient(135deg, rgb(var(--ink-rgb) / .035) 0 6px, transparent 6px 12px); }
+
+/* ---- Empty states: an inked stamp on a blank sheet ---- */
+.es-mark{ border-radius:50%; box-shadow:inset 0 0 0 1.5px rgb(var(--ink-rgb) / .28), 0 0 0 5px rgb(var(--ink-rgb) / .04); background:transparent; }
+.es-copy{ color:var(--text-2); }
+
+/* ---- Icon tiles: inked seals ---- */
+.ios-row-icon, .settings-icon-badge, .discipline-modal-icon, .es-mark{ box-shadow:inset 0 0 0 1px var(--tile-edge, rgb(var(--ink-rgb) / .14)), inset 0 1px 0 rgb(255 255 255 / .6); }
+
+/* ---- Sheets: a sheet of paper resting on a glass tray ---- */
+.modal-overlay{ background:var(--mat-scrim); }
+.modal{
+  border:1px solid rgb(255 253 248 / .95); border-bottom:0; background-size:128px 128px, auto;
+  box-shadow:0 -1px 0 rgb(var(--ink-rgb) / .10), 0 -22px 50px -10px rgb(var(--lo-rgb) / .35), inset 0 1px 0 #fff, inset 0 0 0 1px rgb(255 255 255 / .35);
+}
+.modal::before{ background:rgb(var(--ink-rgb) / .2); box-shadow:0 1px 0 rgb(255 255 255 / .8); }
+.modal h3{ color:var(--text); }
+.confirm-detail{ background:rgb(var(--ink-rgb) / .04); border-style:dashed; }
+.confirm-detail.is-irreversible{ background:rgb(var(--danger-rgb) / .07); border-style:solid; }
+
+/* ---- Toast: a glass slip ---- */
+.toast{
+  background:var(--mat-chrome-sheen), rgb(250 246 237 / .86); color:var(--text);
+  border-color:rgb(255 253 248 / .95);
+  box-shadow:0 0 0 1px rgb(var(--ink-rgb) / .10), 0 14px 30px -14px rgb(var(--lo-rgb) / .5), inset 0 1px 0 #fff;
+}
+
+/* ---- Notifications: paper slips in a tray ---- */
+.notif-row{ background:linear-gradient(180deg, rgb(255 252 245 / .8), rgb(255 252 245 / .5)); border-color:rgb(var(--ink-rgb) / .12); box-shadow:0 1px 0 rgb(var(--ink-rgb) / .05); }
+.notif-row.is-unread{ background:linear-gradient(180deg, rgb(var(--aqua-rgb) / .10), rgb(var(--aqua-rgb) / .04)); border-color:rgb(var(--aqua-rgb) / .32); }
+.notif-filter-tab{ background:rgb(255 252 245 / .55); }
+.notif-filter-tab.active{ background:linear-gradient(180deg, #2E7B75, var(--aqua)); color:var(--on-aqua); box-shadow:inset 0 1px 0 rgb(255 255 255 / .35); }
+.notif-bell-badge{ border-color:var(--bg); }
+
+/* ---- Focus: an inked verdigris outline everywhere ---- */
+:focus-visible{ outline-color:var(--aqua); }
+
+/* ---- Legibility: chevrons and quiet glyphs must hold 3:1 on paper (they were 2:1) ---- */
+.ios-chevron, #page-settings .ios-chevron{ opacity:.8; color:var(--text-2); }
+.settings-back-btn .ios-chevron, #page-settings .settings-back-btn .ios-chevron{ opacity:1; color:currentColor; }
+.day-tab.locked, #page-tasks .day-tab.locked, #page-learn .day-tab.locked{ opacity:1; color:var(--text-3); }
+.day-tab.locked .dcount{ color:var(--text-3); }

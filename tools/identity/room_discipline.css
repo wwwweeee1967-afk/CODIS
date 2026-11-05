@@ -1,0 +1,39 @@
+/* DISCIPLINE · "the conduct register": a register bound in burgundy cloth. Each habit is a register card with a
+   tally margin (five-bar gate marks), the held line is a stitched bookmark ribbon. "أكتسبها" is written in solid ink,
+   "أتخلص منها" in a cooler slate ink with a broken rule — the difference reads without colour, and nothing shouts. */
+#page-habits, .sidebar{
+  --disc-accent:#8E3F4A;
+  --disc-accent-ink:#7A3540;
+  --disc-accent-a08:rgb(142 63 74 / .07);
+  --disc-accent-a14:rgb(142 63 74 / .12);
+  --disc-accent-a24:rgb(142 63 74 / .22);
+  --disc-accent-a40:rgb(142 63 74 / .36);
+  --disc-accent-a60:rgb(142 63 74 / .55);
+  --disc-steel:#6E7A86;
+  --disc-hair:rgb(var(--ink-rgb) / .1);
+  --disc-hair-strong:rgb(var(--ink-rgb) / .17);
+  --disc-recess:rgb(var(--ink-rgb) / .05);
+}
+#page-habits{
+  --disc-steel-ink:#4E5B68;
+  --disc-panel:var(--tex-grain), linear-gradient(180deg, #F7F1E5, #F0E7D7);
+  --disc-card:linear-gradient(180deg, #FAF6EC, #F3EBDC);
+  --disc-tally:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 22'%3E%3Cg stroke='%238E3F4A' stroke-opacity='.22' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M6 4v14M11 4v14M16 4v14M21 4v14M3 15L24 6'/%3E%3C/g%3E%3C/svg%3E");
+}
+#page-habits .page-title{ font-family:var(--font-display); }
+
+/* register card: a ribbon stitched on the inline-start edge, a faint tally strip in the margin */
+#page-habits .habit-card{
+  background:var(--disc-tally) no-repeat, var(--tex-grain), var(--disc-card);
+  background-size:40px 22px, 128px 128px, auto;
+  background-position:left 12px bottom 10px, 0 0, 0 0;
+  border-color:rgb(var(--ink-rgb) / .14);
+  box-shadow:inset 0 1px 0 #fff, 0 1px 0 rgb(var(--lo-rgb) / .06), 0 10px 22px -16px rgb(var(--lo-rgb) / .45);
+}
+#page-habits:dir(ltr) .habit-card{ background-position:right 12px bottom 10px, 0 0, 0 0; }
+#page-habits[data-mode="quit"] .habit-card{ --disc-card:linear-gradient(180deg, #F5F3EC, #ECE8DE); }
+#page-habits .hbx .hb-glance > span{ background:rgb(var(--ink-rgb) / .035); box-shadow:inset 0 0 0 1px rgb(var(--ink-rgb) / .07); }
+#page-habits .disc-mode.is-active{ background:linear-gradient(180deg, rgb(142 63 74 / .12), rgb(142 63 74 / .05)), #F8F2E6; box-shadow:inset 0 1px 0 #fff, 0 2px 8px -4px rgb(142 63 74 / .35); }
+#page-habits .disc-mode{ background:linear-gradient(180deg, #FAF6EC, #F2EADB); }
+#page-habits .streak-ring .ring-track, #page-habits .streak-ring circle:first-child{ stroke:rgb(var(--ink-rgb) / .1); }
+#page-habits .btn-primary, #page-habits .add-habit .btn-primary{ color:#FBF3E8; text-shadow:0 -1px 0 rgb(60 20 28 / .4); }

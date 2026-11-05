@@ -1,0 +1,44 @@
+/* TEACHER · "the manuscript": vellum pages in indigo iron-gall, a chapter heading with a fleuron, margin notes, a study
+   path drawn as a dotted route between stations, and the mastery console bound like a book's frontispiece. */
+#page-learn{
+  --learn-ink:#3F4D86;
+  --learn-ink-a40:rgb(63 77 134 / .4);
+  --learn-line:rgb(63 77 134 / .16);
+  --learn-line-strong:rgb(63 77 134 / .3);
+  --learn-s1:linear-gradient(180deg, #F6EEDC, #F0E5CE);
+  --learn-s2:rgb(63 77 134 / .05);
+  --learn-s3:rgb(63 77 134 / .09);
+  --learn-tray:rgb(63 77 134 / .06);
+  --learn-tray-edge:inset 0 1px 2px rgb(var(--lo-rgb) / .14), inset 0 0 0 1px rgb(63 77 134 / .1);
+  --learn-raise:0 1px 2px rgb(var(--lo-rgb) / .18), inset 0 1px 0 rgb(255 255 255 / .8);
+  --learn-track:rgb(63 77 134 / .12);
+  --learn-fill:#3E6E8C;
+  --vellum:var(--tex-grain), linear-gradient(180deg, #F7EFDD, #EFE3CA);
+}
+#page-learn .page-title{ font-family:var(--font-display); color:#2E3150; }
+
+/* the console as a frontispiece: double ruled frame inside the page */
+#page-learn .xp-hud{
+  background:var(--vellum); background-size:128px 128px, auto;
+  border-color:rgb(63 77 134 / .22);
+  box-shadow:inset 0 0 0 5px rgb(255 250 238 / .6), inset 0 0 0 6px rgb(63 77 134 / .14), inset 0 1px 0 #fff, var(--mat-panel-shadow);
+}
+#page-learn .xp-value{ color:#2E3150; }
+
+/* learning units: vellum leaves with a margin rule and a gilt-free corner fleuron */
+#page-learn .task-item{
+  background:var(--vellum); background-size:128px 128px, auto;
+  border-color:rgb(63 77 134 / .18);
+  box-shadow:inset 0 1px 0 #fff, 0 1px 0 rgb(var(--lo-rgb) / .06), 0 10px 20px -16px rgb(var(--lo-rgb) / .45);
+}
+#page-learn .task-item::after{
+  content:''; position:absolute; inset-block:14px; inset-inline-start:10px; width:1px; pointer-events:none;
+  background:linear-gradient(180deg, transparent, rgb(63 77 134 / .25) 18%, rgb(63 77 134 / .25) 82%, transparent);
+}
+#page-learn .section-head h2, #page-learn .section-title{ font-family:var(--font-display); }
+#page-learn .section-head h2::after, #page-learn .section-title::after{
+  content:'❦'; display:inline-block; margin-inline-start:8px; font-size:.8em; color:rgb(63 77 134 / .55); transform:translateY(-1px);
+}
+#page-learn .day-tab{ background:transparent; box-shadow:none; }
+#page-learn .day-tab.active{ background:radial-gradient(circle at 50% 30%, rgb(63 77 134 / .12), transparent 70%); color:#3F4D86; }
+#page-learn .empty-state{ background:var(--vellum); background-size:128px 128px, auto; }

@@ -1,0 +1,92 @@
+  color-scheme: light;
+
+  /* ---- CODIS-ATELIER · Foundation "Archive paper" ----
+     Three materials, one language: PAPER carries content (warm, matte, never pure white) · INK draws structure and text
+     (iron-gall brown-black, never pure black) · GLASS floats over both (dock, top bar, toasts, sheets' edges) with a real
+     specular rim and a frosted body. Colour is scarce: Verdigris = interaction & progress · Brass = achievement only ·
+     status hues are semantic. Every neutral overlay derives from three channels: --ink-rgb (lines, tints) ·
+     --lite-rgb (paper light, highlights) · --lo-rgb (umber shadow). --hi-rgb is kept as the paper-light channel. */
+  --bg:#E8DFCC;                   /* the desk: aged paper, mid-light so cards can sit lighter on it */
+  --bg-2:#EEE6D5;
+  --bg-3:#F4EEE1;                 /* opaque raised paper (sheets, menus) */
+  --paper:#F6F0E4;                /* card paper */
+  --paper-2:#F1E9DA;              /* card paper, lower half */
+  --paper-deep:#E2D6BF;           /* recessed paper (wells, trays) */
+  --parchment:#F1E6CF;            /* the teacher's vellum */
+  --ink-rgb:52 42 32;             /* iron-gall ink */
+  --lite-rgb:251 247 238;         /* paper light */
+  --hi-rgb:251 247 238;           /* legacy light channel → paper light */
+  --lo-rgb:74 54 34;              /* umber shade */
+  --tex-grain:url("data:image/png;base64,__GRAIN__");
+
+  /* ---- Glass · panel tier (fills, hairlines on paper) ---- */
+  --glass:rgb(var(--ink-rgb) / .045);
+  --glass-strong:rgb(var(--ink-rgb) / .085);
+  --glass-border:rgb(var(--ink-rgb) / .13);
+  --glass-border-strong:rgb(var(--ink-rgb) / .22);
+  --glass-highlight:inset 0 1px 0 rgb(var(--lite-rgb) / .85);
+
+  /* ---- Materials · four tiers, each with a job ----
+     chrome  real glass over paper (dock, top bar, toast) — frosted body, specular rim, caustic underline; the ONLY live blur
+     panel   paper cards — matte stock, faint grain, a pressed-in top light and a contact shadow, no blur
+     sheet   paper sheets on a glass tray — opaque body so text never fights what is underneath
+     scrim   a warm umber dim, solid (never blurred) */
+  --mat-chrome-fill:rgb(247 242 231 / .74);
+  --mat-chrome-sheen:linear-gradient(180deg, rgb(255 253 247 / .78), rgb(255 252 244 / .22) 46%, rgb(255 250 240 / .04) 70%, rgb(var(--ink-rgb) / .025));
+  --mat-chrome-edge:rgb(255 253 248 / .9);
+  --mat-chrome-blur:blur(18px) saturate(150%);
+  --mat-chrome-shadow:0 0 0 1px rgb(var(--ink-rgb) / .10), 0 16px 34px -18px rgb(var(--lo-rgb) / .45), 0 3px 8px -2px rgb(var(--lo-rgb) / .14), inset 0 1px 0 rgb(255 255 255 / .95), inset 0 -1px 0 rgb(var(--ink-rgb) / .07), inset 0 0 18px rgb(255 252 244 / .35);
+  --mat-panel-fill:var(--tex-grain), linear-gradient(180deg, var(--paper), var(--paper-2));
+  --mat-panel-edge:rgb(var(--ink-rgb) / .14);
+  --mat-panel-shadow:inset 0 1px 0 rgb(var(--lite-rgb) / .9), 0 1px 0 rgb(var(--lo-rgb) / .06), 0 1px 2px rgb(var(--lo-rgb) / .10), 0 10px 22px -16px rgb(var(--lo-rgb) / .40);
+  --mat-sheet-fill:var(--tex-grain), linear-gradient(180deg, #F8F3E8, #F1E9DA 42%);
+  --mat-sheet-edge:rgb(255 253 248 / .95);
+  --mat-scrim:linear-gradient(180deg, rgb(46 34 22 / .30), rgb(46 34 22 / .46));
+  --mat-well:rgb(var(--ink-rgb) / .055);
+
+  /* ---- Brand · Signal "Verdigris" (interaction, focus, progress) ---- */
+  --aqua-rgb:28 92 87;
+  --aqua:#1C5C57;
+  --aqua-deep:#123F3B;
+  --aqua-a08:rgb(var(--aqua-rgb) / .08);
+  --aqua-a14:rgb(var(--aqua-rgb) / .13);
+  --aqua-a24:rgb(var(--aqua-rgb) / .24);
+  --aqua-a40:rgb(var(--aqua-rgb) / .38);
+  --on-aqua:#F8F3E8;
+
+  /* ---- Brand · Brass (rewards, milestones — scarce by design) ---- */
+  --gold-rgb:166 120 40;
+  --gold:#6E4C0B;
+  --gold-soft:#70500C;
+  --gold-a12:rgb(var(--gold-rgb) / .12);
+  --gold-a30:rgb(var(--gold-rgb) / .28);
+
+  /* ---- Status (semantic only) · base colour for fills, -ink for text/glyphs on paper ---- */
+  --success-rgb:61 128 86;
+  --warning-rgb:178 117 34;
+  --danger-rgb:176 72 62;
+  --success:#2F7048;
+  --warning:#9A5F12;
+  --danger:#A63D33;
+  --success-ink:#25573A;
+  --warning-ink:#76490B;
+  --danger-ink:#8A2F27;
+  --success-a12:rgb(var(--success-rgb) / .12);
+  --warning-a12:rgb(var(--warning-rgb) / .12);
+  --warning-a40:rgb(var(--warning-rgb) / .40);
+  --danger-a12:rgb(var(--danger-rgb) / .11);
+  --danger-a24:rgb(var(--danger-rgb) / .22);
+  --danger-a40:rgb(var(--danger-rgb) / .38);
+
+  /* ---- Text (measured: every text token ≥4.5:1 on paper, the desk and the deepest tints — tools/contrast_report.py) ---- */
+  --text:#2E2720;
+  --text-2:#4A4036;
+  --text-3:#5A4E41;
+
+  /* ---- Type · display face for room names & sheet titles (system Naskh where present, never downloaded) ---- */
+  --font-display:var(--font);                    /* Arabic titles: system face (no font is downloaded) */
+  --font-print:Georgia, "Times New Roman", serif; /* Latin labels + figures: letterpress serif (built into iOS / Windows / macOS) */
+  --ink-line:rgb(var(--ink-rgb) / .16);          /* printed rule */
+  --ink-line-soft:rgb(var(--ink-rgb) / .09);     /* notebook rule */
+  --stamp:rgb(var(--ink-rgb) / .55);             /* rubber-stamp ink */
+  --press-paper:translateY(1px);                 /* paper is pressed, not scaled */

@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),path=require('path');
 function check(f){
   const t=fs.readFileSync(f,'utf8'); const re=/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi; let m,n=0,bad=0;
-  while((m=re.exec(t))){ n++; try{ new vm.Script(m[1],{filename:f+'#script'+n}); }catch(e){ bad++; console.log('SYNTAX ERROR in script',n,e.message); } }
+  while((m=re.exec(t))){ if(/type\s*=\s*["']?text\/plain/i.test(m[0].slice(0,m[0].indexOf('>')))) continue; n++; try{ new vm.Script(m[1],{filename:f+'#script'+n}); }catch(e){ bad++; console.log('SYNTAX ERROR in script',n,e.message); } }
   console.log(path.basename(f),'inline scripts:',n,'errors:',bad); return bad;
 }
 // usage: node tests/syntax.js [file.html ...]  (default: src/CODIS_9-7-2.html + app/CODIS_FINAL.html)

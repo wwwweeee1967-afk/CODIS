@@ -1,0 +1,23 @@
+/* SETTINGS · "the index drawer": groups are index cards standing in a drawer — a ruled header band, a punched hole, a
+   printed tab label; rows are typed entries separated by dotted leader rules; icon tiles are inked seals. */
+#page-settings{
+  --st-hair:rgb(var(--ink-rgb) / .1);
+  --st-hair-strong:rgb(var(--ink-rgb) / .17);
+  --st-surface:linear-gradient(180deg, #FAF6EC, #F2EADB);
+  --st-surface-raised:linear-gradient(180deg, #FCF9F2, #F4EDE0);
+  --st-well:rgb(var(--ink-rgb) / .05);
+  --st-shadow:inset 0 1px 0 #fff, 0 1px 0 rgb(var(--lo-rgb) / .06), 0 10px 20px -16px rgb(var(--lo-rgb) / .4);
+}
+#page-settings .page-title{ font-family:var(--font-display); }
+#page-settings .ios-list{
+  position:relative; background:var(--tex-grain), linear-gradient(180deg, #FAF6EC, #F2EADB); background-size:128px 128px, auto;
+  border-color:rgb(var(--ink-rgb) / .14);
+  box-shadow:inset 0 1px 0 #fff, 0 2px 0 -1px rgb(var(--ink-rgb) / .06), 0 4px 0 -2px rgb(var(--ink-rgb) / .05), 0 12px 22px -18px rgb(var(--lo-rgb) / .45);
+}
+#page-settings .ios-row + .ios-row::before{ background:none; border-top:1px dotted rgb(var(--ink-rgb) / .22); height:0; }
+#page-settings .ios-row:active{ background:rgb(var(--ink-rgb) / .05); }
+#page-settings .ios-row-icon{ border-radius:30%; }
+#page-settings .ios-switch::before, #page-settings .ios-switch:not(:checked)::before{ background:linear-gradient(180deg, #FFFDF8, #EFE7D7); box-shadow:0 1px 3px rgb(var(--lo-rgb) / .35), inset 0 -1px 0 rgb(var(--ink-rgb) / .08); }
+@media (hover:hover){ #page-settings .ios-switch:not(:checked):not(:disabled):hover{ background:rgb(var(--ink-rgb) / .16); } }
+#page-settings .ios-chevron{ opacity:.8; color:var(--text-2); }
+#page-settings .settings-back-btn .ios-chevron{ opacity:1; color:currentColor; }

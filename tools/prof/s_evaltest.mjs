@@ -4,6 +4,7 @@
 import { readFileSync } from 'node:fs';
 export default async function(c){
   const src = readFileSync(process.env.TEST, 'utf8');
+  if(process.env.THEME){ await c.load(); await c.evaluate(`localStorage.setItem('codis_theme_v1', '${process.env.THEME}'); 1`); }
   await c.load(); await c.sleep(2500);
   if(await c.evaluate(`!!document.getElementById('gate-guest') && document.getElementById('gate-guest').offsetParent !== null`)){ await c.tap('#gate-guest'); await c.sleep(2000); }
   const r = await c.evaluate(src);
