@@ -13,7 +13,7 @@ export default async function(c){
     const btn = (root, txt)=>[...document.querySelectorAll(root + ' button')].find(b=>b.getClientRects().length && b.innerText.includes(txt));
     if(!data.weeks[currentWeekId()]){
       document.querySelector('.navbtn[data-page="planning"]').click(); await sleep(500);
-      const b = btn('#page-planning', 'إضافة خطة'); if(b){ b.click(); await sleep(400); }
+      const b = btn('#page-planning', 'ابدأ بناء الخطة'); if(b){ b.click(); await sleep(400); }
       const ti = document.getElementById('plan-tasks-input'); ti.value = '1- 14 صفحة مراجعة\\n2- !تقرير المبيعات\\n3- اتصال بالعائلة\\n4- ساعة رياضة\\n5- ترتيب الغرفة\\n6- قراءة 20 صفحة\\n7- غسل السيارة\\n8- دفع الفواتير'; ti.dispatchEvent(new Event('input', { bubbles:true }));
       const li = document.getElementById('plan-learn-input'); li.value = '1- درس الرياضيات\\n2- فصل الفيزياء\\n3- تمارين الإنجليزي\\n4- مراجعة الكيمياء'; li.dispatchEvent(new Event('input', { bubbles:true }));
       switchWriteTab('tasks'); distributePlan(); await sleep(700);

@@ -1,0 +1,166 @@
+/* CODIS-V33 · refinement layer. Loaded AFTER codis-shared-css, so it wins over both looks' stylesheets.
+   Layout/structure rules read tokens only (they work in paper and dark). Look-specific rules are scoped by html[data-theme]. */
+
+/* ================= 0. bridge tokens ================= */
+:root{ --ea-paper:var(--bg-3); --ea-ink:var(--text-2); --ea-line:rgb(var(--hi-rgb) / .32); --ea-shade:rgb(0 0 0 / .28); --ea-learn:var(--learn-ink, #8D9AE0); }
+html[data-theme="paper"]{ --ea-paper:var(--paper); --ea-ink:var(--text-2); --ea-line:rgb(var(--ink-rgb) / .34); --ea-shade:rgb(var(--lo-rgb) / .16); --ea-learn:var(--learn-ink, #3F4D86); }
+
+/* ================= 1. PHASE 2 — reward editor (root cause: grid tracks sized by the inputs' intrinsic width) =================
+   .eco-form / .eco-field were `display:grid` with an implicit `auto` column: an <input> (size≈20 ⇒ ~320px) made the track min-content wide,
+   so the name field and both selects overflowed the card. minmax(0,1fr) lets the track shrink to the container. */
+.eco-form, .eco-field{ grid-template-columns:minmax(0, 1fr); min-width:0; }
+.eco-num, .eco-txt, .eco-sel{ min-width:0; max-width:100%; }
+.rpu-add-slot, #reward-add-box, #punish-add-box, .eco-item-edit{ min-width:0; max-width:100%; }
+
+.rwe{ gap:10px; }
+.rwe-top{ display:grid; grid-template-columns:minmax(0, 1fr) minmax(108px, 36%); gap:10px; align-items:start; }
+.rwe-f{ display:grid; gap:5px; min-width:0; }
+.rwe .eco-lab, .rwe-lab{ display:flex; align-items:center; gap:5px; min-width:0; font-size:12px; line-height:1.4; color:var(--text-2); }
+.rwe-lab svg, .rwe .eco-lab svg{ width:13px; height:13px; flex:none; opacity:.72; }
+.rwe-lab em{ font-style:normal; font-size:11px; color:var(--text-3); }
+.rwe .eco-txt, .rwe .eco-sel{ min-height:48px; }
+.rwe .stk-row{ position:relative; margin:0; gap:0; }
+.rwe .stk-pick{ width:100%; min-height:48px; padding:5px 8px; gap:8px; border-radius:var(--r-md); }
+.rwe .stk-th{ width:36px; height:36px; border-radius:10px; }
+.rwe .stk-th svg{ width:19px; height:19px; }
+.rwe .stk-tx{ flex:1; }
+.rwe .stk-tx b{ font-size:12.5px; line-height:1.3; font-weight:700; }
+.rwe .stk-tx i{ display:none; }
+.rwe .stk-x{ position:absolute; top:-9px; inset-inline-end:-7px; z-index:2; width:26px; height:26px; box-shadow:0 1px 3px rgb(0 0 0 / .22); }
+.rwe .stk-x::after{ content:''; position:absolute; inset:-9px; }
+.rwe .stk-x svg{ width:13px; height:13px; }
+.rwe-pair{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(104px, 100%), 1fr)); gap:10px; }
+.rwe .eco-note{ margin:0; padding:7px 10px; font-size:12px; line-height:1.55; color:var(--text-2); border-radius:var(--r-sm); background:var(--mat-well, rgb(var(--hi-rgb) / .05)); }
+.rwe-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; }
+.rwe-foot .eco-switch-row{ gap:9px; }
+.rwe-more{ display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 12px; border-radius:var(--r-full); border:1px solid var(--glass-border); background:var(--glass); color:var(--text-2); font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; }
+.rwe-more svg{ width:14px; height:14px; transition:transform var(--dur-fast) var(--ease); }
+.rwe-more[aria-expanded="true"]{ color:var(--aqua); border-color:var(--aqua-a24); }
+.rwe-more[aria-expanded="true"] svg{ transform:rotate(180deg); }
+.rwe-wt[hidden]{ display:none; }
+.rpu-add-slot .eco-full, #reward-add-box .eco-full{ margin-top:2px; min-height:48px; }
+@media (max-width:359px){ .rwe-top{ grid-template-columns:minmax(0, 1fr) 100px; } .rwe .stk-tx b{ font-size:12px; } }
+
+/* ================= 2. PHASE 3 + 6 — room identities & new status marks ================= */
+/* the old mark was a circle with a ring (a coin-like badge) in every room: retired. The plate below serves only lock/holiday glyphs. */
+html .empty-state .es-mark:not(.es-art), html #page-learn .empty-state .es-mark:not(.es-art), html #page-planning .empty-state .es-mark:not(.es-art), html #page-tasks .empty-state .es-mark:not(.es-art){
+  width:52px; height:52px; border-radius:16px; margin-bottom:var(--sp-sm);
+  background:var(--tile-bg, var(--glass)); box-shadow:inset 0 0 0 1px var(--tile-edge, var(--glass-border)), 0 1px 2px rgb(var(--lo-rgb) / .14), inset 0 1px 0 rgb(var(--hi-rgb) / .35);
+  --ctx-ico-n:24;
+}
+html .empty-state .es-mark.es-art, html #page-learn .empty-state .es-mark.es-art, html #page-planning .empty-state .es-mark.es-art, html #page-tasks .empty-state .es-mark.es-art{
+  width:min(176px, 62%); height:auto; margin:0 0 var(--sp-xs); border-radius:0; background:none; box-shadow:none; color:var(--ea-ink); --ctx-ico-n:0;
+}
+.es-art svg{ display:block; width:100%; height:auto; overflow:visible; }
+.ea-plan, .ea-ops, .ea-opsr, .ea-opsd{ --ea-acc:var(--aqua); }
+.ea-ops, .ea-opsr, .ea-opsd{ --ea-acc:var(--gold); }
+.ea-opsd{ --ea-acc:var(--success); }
+.ea-lrn, .ea-lrnr, .ea-lrnd, .ea-path{ --ea-acc:var(--ea-learn); }
+.ea .ink{ fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.ea .soft{ fill:none; stroke:var(--ea-line); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.ea .dash{ stroke-dasharray:2.5 5; }
+.ea .pap{ fill:var(--ea-paper); stroke:currentColor; stroke-width:2; stroke-linejoin:round; }
+.ea .sh{ fill:var(--ea-shade); stroke:none; }
+.ea .acc{ fill:none; stroke:var(--ea-acc); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+.ea .accf{ fill:var(--ea-acc); stroke:none; }
+.ea .accw{ fill:color-mix(in srgb, var(--ea-acc) 16%, transparent); stroke:var(--ea-acc); stroke-width:1.6; stroke-linejoin:round; }
+.ea .thin{ stroke-width:1.5; }
+/* motion: one gentle, meaningful reveal per state; transform/opacity/dashoffset only */
+@keyframes eaDraw{ from{ stroke-dashoffset:100; } to{ stroke-dashoffset:0; } }
+@keyframes eaPop{ from{ opacity:0; transform:translateY(6px) scale(.9); } to{ opacity:1; transform:none; } }
+@keyframes eaRise{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+@keyframes eaStamp{ 0%{ opacity:0; transform:rotate(-2deg) scale(1.55); } 55%{ opacity:1; transform:rotate(-8deg) scale(.93); } 100%{ opacity:1; transform:rotate(-8deg) scale(1); } }
+@keyframes eaDrop{ 0%{ opacity:0; transform:translateY(-8px); } 60%{ opacity:1; } 100%{ opacity:1; transform:none; } }
+@keyframes eaFlag{ from{ opacity:0; transform:scaleX(.2); } to{ opacity:1; transform:none; } }
+.ea .route{ stroke-dasharray:100; animation:eaDraw 900ms .25s var(--ease) both; }
+.ea .pop{ transform-box:fill-box; transform-origin:50% 100%; animation:eaPop 420ms var(--ease-spring) both; }
+.ea .pop.d1{ animation-delay:.2s; } .ea .pop.d2{ animation-delay:.45s; } .ea .pop.d3{ animation-delay:.7s; }
+.ea .rise{ animation:eaRise 420ms var(--ease) both; } .ea .rise.d1{ animation-delay:.12s; } .ea .rise.d2{ animation-delay:.26s; } .ea .rise.d3{ animation-delay:.4s; }
+.ea .stamp{ transform-box:fill-box; transform-origin:50% 50%; transform:rotate(-8deg); animation:eaStamp 560ms .15s cubic-bezier(.2, .9, .3, 1) both; }
+.ea .stamp-chk{ stroke-dasharray:100; animation:eaDraw 420ms .5s var(--ease) both; }
+.ea .drop{ animation:eaDrop 640ms .1s var(--ease) both; }
+.ea .flag{ transform-box:fill-box; transform-origin:0 50%; animation:eaFlag 460ms .8s var(--ease) both; }
+@media (prefers-reduced-motion:reduce){ .ea *{ animation:none !important; } }
+/* each room speaks its own copy colour: planning verdigris, ledger brass, manuscript indigo */
+#planning-empty .es-title{ color:var(--text); }
+#tasks-empty .es-title{ color:var(--text); }
+#learn-empty .es-title{ color:var(--text); }
+#learn-empty .es-copy, #tasks-empty .es-copy, #planning-empty .es-copy{ max-width:272px; }
+
+/* ================= 3. PHASE 4 — depth & lighter glass ================= */
+html[data-theme="paper"]{
+  --mat-panel-shadow:inset 0 1px 0 rgb(255 253 247 / .96), 0 0 0 1px rgb(var(--ink-rgb) / .075), 0 1px 1px rgb(var(--lo-rgb) / .12), 0 4px 9px -3px rgb(var(--lo-rgb) / .17), 0 16px 28px -18px rgb(var(--lo-rgb) / .48);
+  --mat-panel-edge:rgb(var(--ink-rgb) / .17);
+  --mat-well:rgb(var(--ink-rgb) / .06);
+  --mat-well-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .20), inset 0 0 0 1px rgb(var(--ink-rgb) / .07), inset 0 -1px 0 rgb(255 255 255 / .7);
+  --mat-raise:0 1px 0 rgb(var(--lo-rgb) / .16), 0 2px 4px -1px rgb(var(--lo-rgb) / .16), inset 0 1px 0 rgb(255 255 255 / .9);
+}
+/* tier 0 · the desk: a soft vignette so every card reads lighter than what it sits on */
+html[data-theme="paper"] body{ background:radial-gradient(130% 80% at 50% 0%, #ECE4D2 0%, var(--bg) 58%, #DDD2BA 100%) fixed; }
+/* tier 1 · cards, tiers 2 · the things on cards (rows, tiles) are recessed or raised by one step — never the same plane */
+html[data-theme="paper"] .eco-item, html[data-theme="paper"] .dq-rows, html[data-theme="paper"] .eco-form .stk-pick{ box-shadow:var(--mat-well-shadow); }
+html[data-theme="paper"] .eco-num, html[data-theme="paper"] .eco-txt, html[data-theme="paper"] .eco-sel{ background:rgb(255 252 245 / .66); box-shadow:var(--mat-well-shadow); border-color:rgb(var(--ink-rgb) / .16); }
+html[data-theme="paper"] .eco-num:focus, html[data-theme="paper"] .eco-txt:focus, html[data-theme="paper"] .eco-sel:focus{ background:rgb(255 253 248 / .92); }
+html[data-theme="paper"] .stk-pick{ background:rgb(255 252 245 / .5); border-color:rgb(var(--ink-rgb) / .3); }
+html[data-theme="paper"] .btn-secondary, html[data-theme="paper"] .chip-act, html[data-theme="paper"] .rwe-more{ box-shadow:var(--mat-raise); }
+html[data-theme="paper"] .btn-secondary:active, html[data-theme="paper"] .chip-act:active, html[data-theme="paper"] .rwe-more:active{ box-shadow:inset 0 1px 2px rgb(var(--lo-rgb) / .22); }
+/* tier 3 · sheets: lifted off the page with a deeper contact shadow and a lit rim */
+html[data-theme="paper"] .modal{ box-shadow:0 -1px 0 rgb(var(--ink-rgb) / .12), 0 -26px 56px -12px rgb(var(--lo-rgb) / .5), 0 -4px 10px rgb(var(--lo-rgb) / .12), inset 0 1px 0 #fff, inset 0 0 0 1px rgb(255 255 255 / .4); }
+html[data-theme="paper"] .empty-state{ box-shadow:var(--mat-panel-shadow); }
+html[data-theme="paper"] .thm-opt{ box-shadow:var(--mat-panel-shadow); }
+
+/* ---- Phase 5 · the dock fused under the reward card, paper look: tinted by THIS card's own colour (--oc), never a fixed paper shade ----
+   The overlay is a dark stage (card art keeps its look); the dock is a UI plate, so it gets paper tokens back locally. */
+html[data-theme="paper"] .outcome-card.is-fused .rwc-dock{
+  color-scheme:light; color:var(--text);
+  --text:#2E2720; --text-2:#4A4036; --text-3:#5A4E41;
+  --ink-rgb:52 42 32; --lite-rgb:251 247 238; --hi-rgb:251 247 238; --lo-rgb:74 54 34;
+  --oc-glow:color-mix(in srgb, var(--oc) 38%, rgb(74 54 34 / .5));
+  background:var(--tex-grain), linear-gradient(180deg, color-mix(in srgb, var(--oc) 13%, #F8F2E5), color-mix(in srgb, var(--oc) 24%, #EFE5D1));
+  background-size:128px 128px, auto;
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .7), 0 16px 30px -16px var(--oc-glow);
+}
+html[data-theme="paper"] #outcome-overlay .outcome-card.is-fused .rwc-dock .outcome-title{ color:var(--text); text-shadow:none; }
+html[data-theme="paper"] #outcome-overlay .outcome-card.is-fused .rwc-dock .outcome-copy{ color:var(--text-2); }
+html[data-theme="paper"] #outcome-overlay.is-reward .outcome-card.is-card .rwc-dock .outcome-eyebrow, html[data-theme="paper"] #outcome-overlay .outcome-card.is-fused .rwc-dock .outcome-eyebrow{ color:color-mix(in srgb, var(--oc) 28%, #2E2720); }
+html[data-theme="paper"] .outcome-card.is-fused .rwc-dock .outcome-actions .btn-secondary{ background:color-mix(in srgb, var(--oc) 14%, #FBF7EE); border-color:color-mix(in srgb, var(--oc) 55%, transparent); color:var(--text); }
+html[data-theme="paper"] .outcome-card.is-fused .rwc-dock .outcome-actions .btn-primary{ box-shadow:0 8px 18px -8px color-mix(in srgb, var(--oc) 60%, rgb(74 54 34 / .6)), inset 0 1px 0 rgb(255 255 255 / .45); }
+
+/* ================= 4. PHASE 7 — app-like touch: no selection handles / callouts on content ================= */
+html{ -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; }
+body{ -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+input, textarea, select, [contenteditable]:not([contenteditable="false"]), [contenteditable]:not([contenteditable="false"]) *, .sel-ok, .sel-ok *{ -webkit-user-select:text; user-select:text; -webkit-touch-callout:default; }
+img, svg, canvas{ -webkit-touch-callout:none; -webkit-user-drag:none; }
+
+/* ================= 5. PHASE 12 — dismantle / pouch quantity sheet, compact ================= */
+#dq-modal .dq-modal::before{ margin-bottom:10px; }
+#dq-modal .dq-title{ font-size:18px; margin:0; line-height:1.4; }
+#dq-modal .dq-sub{ margin:0 0 8px; font-size:13px; line-height:1.5; }
+.dq-top{ display:grid; grid-template-columns:auto minmax(0, 1fr); align-items:center; gap:10px 14px; margin:0 0 10px; }
+.dq-top .dq-stage.is-qty{ --dq-cw:min(88px, 24vw); height:126px; width:calc(var(--dq-cw) + 74px); max-width:44vw; margin:0; }
+.dq-top .dq-stage.is-qty .pch-art{ width:min(98px, 26vw); }
+.dq-top .dq-count{ margin:0; justify-items:start; text-align:start; min-width:0; }
+.dq-top .dq-count-n{ font-size:38px; line-height:1.1; }
+.dq-top .dq-count-lab, .dq-top .dq-count-of{ font-size:12px; }
+.dq-steps{ gap:6px; }
+.dq-step{ min-height:44px; font-size:15px; }
+.dq-rows{ grid-template-columns:repeat(2, minmax(0, 1fr)); margin:10px 0 0; }
+.dq-rows > div{ flex-direction:column; align-items:flex-start; justify-content:center; gap:1px; padding:8px 12px; min-width:0; }
+.dq-rows > div + div{ border-top:0; border-inline-start:1px solid var(--glass-border); }
+.dq-rows dt{ font-size:11.5px; line-height:1.4; }
+.dq-rows dd{ text-align:start; font-size:14px; }
+.dq-rows .is-key{ grid-column:1 / -1; flex-direction:row; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-inline-start:0; border-top:1px solid var(--aqua-a24); background:var(--aqua-a14); }
+.dq-rows .is-key dt{ font-size:13px; font-weight:700; color:var(--text); }
+.dq-rows .is-key dd{ font-size:20px; font-weight:900; }
+.dq-rows .is-key dd .eco-coin{ font-size:20px; }
+.dq-warn{ margin:8px 0 0; padding:6px 10px; font-size:12px; line-height:1.55; }
+.dq-modal .modal-actions{ flex-direction:row; flex-wrap:nowrap; gap:8px; margin-top:10px; }
+.dq-modal .modal-actions .btn{ width:auto; flex:1 1 0; min-height:48px; min-width:0; }
+.dq-modal .modal-actions .btn-primary{ flex:1.5 1 0; }
+.dq-modal .modal-actions.dq-actions .btn{ flex:1 1 100%; }
+@media (max-height:620px){ .dq-top .dq-stage.is-qty{ height:104px; } .dq-top .dq-count-n{ font-size:32px; } .dq-rows > div{ padding-block:6px; } }
+@media (max-width:339px){ .dq-top{ gap:8px 10px; } .dq-top .dq-count-n{ font-size:32px; } }
+
+/* ================= 6. PHASE 10 — task drag: lifted card feedback ================= */
+.is-sorting > .task-item.is-drag{ transform-origin:50% 50%; }
+.task-item.is-arm{ transition:transform 120ms var(--ease); }

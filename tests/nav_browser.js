@@ -54,23 +54,23 @@
 
   /* swipe gesture (synthetic) */
   const mk = (type, x, y, id = 1)=>{ const t = new Touch({ identifier:id, target:document.body, clientX:x, clientY:y }); return new TouchEvent(type, { touches:type === 'touchend' ? [] : [t], changedTouches:[t], bubbles:true, cancelable:true }); };
-  const bodyR = document.body.getBoundingClientRect(), L = bodyR.left + 6;
+  const bodyR = document.body.getBoundingClientRect(), L = bodyR.right - 6;
   await nav('settings'); openSettingsCategory('sound'); await sleep(700); const sec = settingsSec();
-  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L + 30, 302)); document.dispatchEvent(mk('touchmove', L + 90, 304)); await sleep(30);
-  T('swipe: page follows the finger', /translate3d\(9\d|translate3d\(8\d|translate3d\(\d+px/.test(sec.style.transform) && !/translate3d\(0px/.test(sec.style.transform), sec.style.transform);
-  document.dispatchEvent(mk('touchmove', L + 20, 304)); document.dispatchEvent(mk('touchend', L + 20, 304)); await sleep(500);
+  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L - 30, 302)); document.dispatchEvent(mk('touchmove', L - 90, 304)); await sleep(30);
+  T('swipe: page follows the finger', /translate3d\(-9\d|translate3d\(-8\d|translate3d\(-\d+px/.test(sec.style.transform) && !/translate3d\(0px/.test(sec.style.transform), sec.style.transform);
+  document.dispatchEvent(mk('touchmove', L - 20, 304)); document.dispatchEvent(mk('touchend', L - 20, 304)); await sleep(500);
   T('swipe below threshold: springs back, page stays', inSub() && sec.style.transform === '', sec.style.transform);
-  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L + 40, 360)); document.dispatchEvent(mk('touchmove', L + 60, 520)); document.dispatchEvent(mk('touchend', L + 60, 520)); await sleep(400);
+  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L - 40, 360)); document.dispatchEvent(mk('touchmove', L - 60, 520)); document.dispatchEvent(mk('touchend', L - 60, 520)); await sleep(400);
   T('vertical drag from the edge is not a back', inSub());
-  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L + 60, 302)); document.dispatchEvent(mk('touchmove', L + 200, 304)); document.dispatchEvent(mk('touchend', L + 200, 304)); await sleep(700);
+  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L - 60, 302)); document.dispatchEvent(mk('touchmove', L - 200, 304)); document.dispatchEvent(mk('touchend', L - 200, 304)); await sleep(700);
   T('completed swipe goes back exactly one level', !inSub() && room() === 'settings' && !gateOpen());
   T('transform cleaned after swipe', sec.style.transform === '' && sec.style.transition === '');
-  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L + 90, 302)); document.dispatchEvent(mk('touchmove', L + 200, 304)); document.dispatchEvent(mk('touchend', L + 200, 304)); await sleep(600);
+  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L - 90, 302)); document.dispatchEvent(mk('touchmove', L - 200, 304)); document.dispatchEvent(mk('touchend', L - 200, 304)); await sleep(600);
   T('swipe at settings home (root) does nothing', room() === 'settings' && !gateOpen());
   /* second finger cancels */
   openSettingsCategory('sound'); await sleep(600);
-  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L + 80, 302));
-  const t2 = [new Touch({ identifier:1, target:document.body, clientX:L + 80, clientY:302 }), new Touch({ identifier:2, target:document.body, clientX:200, clientY:400 })];
+  document.dispatchEvent(mk('touchstart', L, 300)); document.dispatchEvent(mk('touchmove', L - 80, 302));
+  const t2 = [new Touch({ identifier:1, target:document.body, clientX:L - 80, clientY:302 }), new Touch({ identifier:2, target:document.body, clientX:200, clientY:400 })];
   document.dispatchEvent(new TouchEvent('touchmove', { touches:t2, changedTouches:t2, bubbles:true, cancelable:true })); await sleep(500);
   T('second finger cancels the gesture and restores', inSub() && settingsSec().style.transform === '');
   history.back(); await sleep(600);

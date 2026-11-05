@@ -6,7 +6,7 @@
   const btn = (root, txt)=>[...document.querySelectorAll(root + ' button')].find(b=>b.getClientRects().length && b.innerText.includes(txt));
   /* 1) a tasks-only plan through the real editor */
   document.querySelector('.navbtn[data-page="planning"]').click(); await sleep(600);
-  btn('#page-planning', 'إضافة خطة').click(); await sleep(500);
+  btn('#page-planning', 'ابدأ بناء الخطة').click(); await sleep(500);
   const ti = document.getElementById('plan-tasks-input'); ti.value = '1- 14 صفحة مراجعة\n2- !تقرير المبيعات\n3- اتصال بالعائلة'; ti.dispatchEvent(new Event('input', { bubbles:true }));
   document.getElementById('plan-learn-input').value = ''; switchWriteTab('tasks'); distributePlan(); await sleep(700);
   const tw0 = JSON.parse(JSON.stringify(data.weeks[wk]));
