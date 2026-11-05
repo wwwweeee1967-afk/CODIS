@@ -1,21 +1,17 @@
 /* CODIS-THEME · rules shared by BOTH looks (paper + dark). This stylesheet is never colour-remapped: it reads tokens only. */
 
-/* ---- Fonts (embedded, offline). ALAMERAH = the whole app · Momken = headings.
-   Both are single-weight display faces, so the face claims 100–900 (no synthetic bold smearing). ALAMERAH has a small x-height:
-   size-adjust lifts it to the optical size of the system face it replaces, and word-spacing opens its tight word gaps.
-   Neither contains Latin letters: those fall back to the system stack (kept after them in --font). ---- */
-@font-face{ font-family:"CodisAlamerah"; src:url(data:font/woff2;base64,__ALAMERAH__) format("woff2"); font-weight:100 900; font-style:normal; font-display:block; size-adjust:120%; }
-@font-face{ font-family:"CodisMomken"; src:url(data:font/woff2;base64,__MOMKEN__) format("woff2"); font-weight:100 900; font-style:normal; font-display:block; }
+/* ---- Font (embedded, offline): Momken is the app's one and only typeface.
+   It is a single-weight display face, so it claims 100–900 (no synthetic bold smearing); size-adjust lifts its small optical size.
+   It has no Latin letters and lacks some punctuation  : ; ! ? ( ) + / × — those fall back to the system stack kept after it in --font.
+   It draws every digit in Eastern-Arabic shapes by design. The source font has no OpenType shaping (empty GSUB): tools/fix_momken.py adds it. ---- */
+@font-face{ font-family:"CodisMomken"; src:url(data:font/woff2;base64,__MOMKEN__) format("woff2"); font-weight:100 900; font-style:normal; font-display:block; size-adjust:110%; }
 :root{
-  --font:"CodisAlamerah", -apple-system, BlinkMacSystemFont, "SF Arabic", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "Noto Sans Arabic", "Dubai", Tahoma, system-ui, sans-serif;
-  --font-title:"CodisMomken", "CodisAlamerah", -apple-system, BlinkMacSystemFont, "SF Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
-  --font-display:var(--font-title);
+  --font:"CodisMomken", -apple-system, BlinkMacSystemFont, "SF Arabic", "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", "Noto Sans Arabic", "Dubai", Tahoma, system-ui, sans-serif;
+  --font-title:var(--font);
+  --font-display:var(--font);
+  --font-print:"CodisMomken", Georgia, "Times New Roman", serif;
 }
 html{ font-synthesis:none; }
-*{ word-spacing:.14em; }
-h1, h2, h3, h4, .page-title, .section-title, .settings-section-title, .settings-card-title, .es-title, .write-title, .store-sec-title, .st-part-title,
-.eco-sec-title, .vault-title, .own-sheet-title, .lock-title, .lock-method-title, .gate-title, .rpu-h, .ios-group-title, .rp-title, .outcome-title,
-.dq-title, .cd-title, .av-title, .arch-section-title, .acct-danger-title, #codis-confirm-title, .pk-modal .pkx-id h3{ font-family:var(--font-title); }
 
 /* ---- Appearance page ---- */
 #settings-page-appearance .settings-section-head::before{ content:"CONTROL / APPEARANCE"; content:"CONTROL / APPEARANCE" / ""; }

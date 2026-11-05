@@ -12,7 +12,7 @@ VISUAL LAYER ONLY. No ID / class / data-attribute / handler / ARIA / JS logic is
   5. Head: theme-color / color-scheme / status bar / favicon + touch icon follow the paper identity.
   6. CODIS-THEME: both looks ship. The live <style id="codis-theme-css"> carries paper; the ORIGINAL stylesheet rides inert in
      <script type="text/plain" id="codis-css-dark"> and is swapped in by CodisTheme (tools/identity/theme_boot.js) from a new
-     Settings > المظهر page. Fonts (ALAMERAH body, Momken headings) + the appearance-page styles live in one shared <style id="codis-shared-css">.
+     Settings > المظهر page. Font (Momken, the only typeface) + the appearance-page styles live in one shared <style id="codis-shared-css">.
 Backup of the pre-identity build: backups/before_atelier/."""
 import re, sys, os, base64
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -95,7 +95,7 @@ for marker, f in inserts:
 css = css.rstrip() + '\n' + stage_rule
 
 def b64(path): return base64.b64encode(open(os.path.join(HERE, '..', 'assets', 'fonts', path), 'rb').read()).decode()
-shared = read('shared.css').replace('__ALAMERAH__', b64('ALAMERAH-Regular.woff2')).replace('__MOMKEN__', b64('Momken-Regular.woff2'))
+shared = read('shared.css').replace('__MOMKEN__', b64('Momken-Regular.woff2'))
 assert '</script' not in orig_css.lower() and '<!--' not in orig_css, 'dark css cannot ride inside a script tag'
 html = (html[:css_a - len('<style>')]
         + '<style id="codis-theme-css">' + css + '</style>\n'

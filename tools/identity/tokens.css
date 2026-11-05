@@ -84,8 +84,6 @@
   --text-3:#5A4E41;
 
   /* ---- Type · display face for room names & sheet titles (system Naskh where present, never downloaded) ---- */
-  --font-display:var(--font);                    /* Arabic titles: system face (no font is downloaded) */
-  --font-print:Georgia, "Times New Roman", serif; /* Latin labels + figures: letterpress serif (built into iOS / Windows / macOS) */
   --ink-line:rgb(var(--ink-rgb) / .16);          /* printed rule */
   --ink-line-soft:rgb(var(--ink-rgb) / .09);     /* notebook rule */
   --stamp:rgb(var(--ink-rgb) / .55);             /* rubber-stamp ink */

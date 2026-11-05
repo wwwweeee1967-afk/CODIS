@@ -1,15 +1,13 @@
-Fonts embedded in CODIS (3.19.0)
+Font embedded in CODIS (3.19.1)
 
-ALAMERAH Regular (خط الأمير) — body font for the whole app.
-  Designed by Husham Jawad, Iraq - Baghdad. Contact: hshaam77@gmail.com  https://www.behance.net/hushamjawad
-  Licence (from the font's own name table): free personal/commercial use, embedding in apps and web, copying, distribution
-  and modification allowed, provided the designer's name is kept. The name table is kept intact inside the embedded WOFF2.
-
-Momken Regular — headings.
+Momken Regular — the app's only typeface (all text; headings and body).
   Copyright (c) 2021 Kareem Mrghani and Abdo Mohamed. Licence field: "Free for use".
   Technical adaptation (tools/fix_momken.py): the original has no OpenType shaping tables (empty GSUB) and keeps its joined letter forms only at the
-  legacy Arabic Presentation-Forms code points, so WebKit/CoreText (iPhone) rendered headings as disconnected letters. We added the standard
+  legacy Arabic Presentation-Forms code points, so WebKit/CoreText (iPhone) rendered it as disconnected letters. We added the standard
   isol/fina/init/medi + lam-alef (rlig) substitutions that point at glyphs already in the font. Glyph outlines, metrics, GPOS and the name table
   (designer credit) are unchanged. The untouched original is kept in assets/fonts/source/.
 
-Neither font contains Latin letters: Latin text falls back to the system font by design (see --font in the stylesheet).
+Momken has no Latin letters and lacks some punctuation (: ; ! ? ( ) + / x): those fall back to the system font by design (see --font in the stylesheet).
+It draws every digit in Eastern-Arabic shapes.
+
+(3.19.0 also shipped ALAMERAH by Husham Jawad as the body font; it was removed in 3.19.1 at the owner's request.)
