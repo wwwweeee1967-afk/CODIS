@@ -59,32 +59,32 @@
 
   /* ---- PHASE 5: weekly habit frequency ---- */
   const mkH = (k, o)=>{ const h = Object.assign({ id:'h' + Math.random().toString(36).slice(2, 8), text:'عادة', createdAt:addDaysKey(today, -10), log:{}, importance:'normal' }, o); normalizeHabit(h, k); (k === 'quit' ? data.habits.quit : data.habits.build).push(h); return h; };
-  const w = mkH('build', { type:'W', requiredPerWeek:3, text:'رياضة' });
+  const w = mkH('build', { type:'W', requiredPerWeek:3, text:'رياضة' }); w.days = [0, 1, 2, 3, 4, 5, 6];   /* V34: التسجيل في أيام الجدول فقط */
   logWeeklyHabit(w.id, 1); logWeeklyHabit(w.id, 1); logWeeklyHabit(w.id, 1);
   T('3 clicks on the same day count once', weekCount(w, wk) === 1 && w.weeklyLogs[wk].length === 1);
   w.weeklyLogs[wk] = [today, today, today]; T('legacy same-day duplicates count as one day', weekCount(w, wk) === 1);
   w.weeklyLogs[wk] = [addDaysKey(today, -2), addDaysKey(today, -1)]; logWeeklyHabit(w.id, 1); T('three distinct days count as three', weekCount(w, wk) === 3);
-  logWeeklyHabit(w.id, -1); T('undo removes the last log', weekCount(w, wk) === 2);
+  logWeeklyHabit(w.id, -1); T('V34: no undo — the log stays', weekCount(w, wk) === 3);
   w.weeklyLogs[wk] = [today]; asAdmin(()=>logWeeklyHabit(w.id, 1)); T('developer can log twice in a day', w.weeklyLogs[wk].length === 2);
 
   /* ---- PHASE 7: event habits ---- */
-  const hc = econCfg().contexts.habits; T('resist reward enabled by default', hc.resistReward === true); T('lapse penalty configured', hc.lapseCoins === 10, hc.lapseCoins);
+  const hc = econCfg().contexts.habits; T('resist reward enabled by default', hc.resistReward === true); T('V34: lapseCoins no longer used', true);
   const resists = ()=>ledger(e=>e.periodic === 'resist');
   const e1 = mkH('quit', { type:'H', text:'تدخين' }); resistEventHabit(e1.id);
-  T('resist grants one small reward', resists().length === 1 && resists()[0].rarity === econCfg().rarities[0].id, resists()[0] && resists()[0].coinValue);
+  T('resist grants one fixed reward (18.75 for a normal habit)', resists().length === 1 && resists()[0].coinValue === 18.75, resists()[0] && resists()[0].coinValue);
   resistEventHabit(e1.id); T('duplicate resist click grants nothing', resists().length === 1);
-  [1, 2, 3, 4, 5].forEach(i=>resistEventHabit(mkH('quit', { type:'H', text:'ع' + i }).id)); T('daily resist-reward cap holds across many habits', resists().length === hc.resistDailyCap, resists().length);
-  data.habits.quit = data.habits.quit.filter(h=>h.id !== e1.id); resistEventHabit(mkH('quit', { type:'H', text:'تدخين' }).id); T('delete + recreate does not farm more', resists().length === hc.resistDailyCap);
-  T('every resist reward is the smallest rarity', resists().every(x=>x.rarity === econCfg().rarities[0].id));
+  [1, 2, 3, 4, 5].forEach(i=>resistEventHabit(mkH('quit', { type:'H', text:'ع' + i }).id)); T('V34: no global daily cap — each habit gets its own fixed reward', resists().length === 6, resists().length);
+  data.habits.quit = data.habits.quit.filter(h=>h.id !== e1.id); resistEventHabit(mkH('quit', { type:'H', text:'تدخين' }).id); T('V34: a recreated habit earns its own fixed reward (ids are per habit)', resists().length === 7);
+  T('every resist reward is the fixed value, never random', resists().every(x=>x.coinValue === 18.75 && !x.odds));
   const first = resists()[0], bal0 = CodisWallet.balance(), d1 = CodisEconomy.decideReward(first.id, 'coins'); T('reward converts to coins in the wallet', d1.ok && CodisWallet.balance() - bal0 === first.coinValue);
   T('same reward cannot be claimed twice', CodisEconomy.decideReward(first.id, 'coins').reason === 'already');
   CodisWallet.transact([], ()=>{ data.wallet.balance = 100; return { ok:true }; }); const e2 = mkH('quit', { type:'H', text:'سكر' }), b0 = CodisWallet.balance();
-  await recordEventHabit(e2.id); T('lapse deducts exactly the configured amount', CodisWallet.balance() - b0 === -hc.lapseCoins, CodisWallet.balance() - b0);
-  T('lapse is written to history and ledger once', e2.occurrences.length === 1 && e2.occurrences[0].coins === hc.lapseCoins && data.wallet.transactions.filter(t=>t.type === 'HABIT_LAPSE' && t.referenceId === 'lapse|' + e2.id + '|' + today).length === 1);
-  await recordEventHabit(e2.id); T('second lapse the same day does nothing', CodisWallet.balance() - b0 === -hc.lapseCoins && e2.occurrences.length === 1);
-  CodisWallet.transact([], ()=>{ data.wallet.balance = 4; return { ok:true }; }); const e3 = mkH('quit', { type:'H', text:'جوال' }); await recordEventHabit(e3.id); T('penalty never takes the balance below zero', CodisWallet.balance() === 0 && e3.occurrences[0].coins === 4);
+  await recordEventHabit(e2.id); T('V34: lapse deducts nothing automatically', CodisWallet.balance() - b0 === 0, CodisWallet.balance() - b0);
+  T('V34: lapse creates one pending fixed penalty (112.5)', e2.occurrences.length === 1 && ledger(e=>e.habitId === e2.id && e.kind === 'punish').length === 1 && ledger(e=>e.habitId === e2.id && e.kind === 'punish')[0].bypassCost === 112.5);
+  await recordEventHabit(e2.id); T('second lapse the same day does nothing', CodisWallet.balance() - b0 === 0 && e2.occurrences.length === 1);
+  CodisWallet.transact([], ()=>{ data.wallet.balance = 4; return { ok:true }; }); const e3 = mkH('quit', { type:'H', text:'جوال' }); await recordEventHabit(e3.id); T('V34: a low balance is untouched by a lapse', CodisWallet.balance() === 4);
   const e5 = mkH('quit', { type:'H', text:'x' }); await recordEventHabit(e5.id); const before = resists().length; resistEventHabit(e5.id); T('no resist reward after a lapse the same day', resists().length === before);
-  saveData(); T('lapse transactions are persisted', JSON.parse(localStorage.getItem(STORE_KEY)).wallet.transactions.some(t=>t.type === 'HABIT_LAPSE'));
+  saveData(); T('V34: no HABIT_LAPSE transactions are written any more', !JSON.parse(localStorage.getItem(STORE_KEY)).wallet.transactions.some(t=>t.type === 'HABIT_LAPSE' && t.createdAt > '2026-11-06'));
 
   /* ---- exemption guard ---- */
   T('a normal user has no developer powers', CodisLimits.on() === false && CodisAccount.isAdmin() === false);

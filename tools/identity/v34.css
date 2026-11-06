@@ -1,0 +1,12 @@
+/* CODIS-V34 · غرفة التأديب المستقلة: أيام العادة الأسبوعية + بطاقات ثابتة بلا صورة */
+.hb-days{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.hb-day{ min-height:40px; padding:0 12px; font-size:13px; }
+.hb-days-wrap{ display:grid; gap:4px; width:100%; }
+.hb-state:empty{ display:none; }
+.eco-fixed-tag{ display:inline-flex; align-items:center; min-height:32px; padding:0 10px; border-radius:var(--r-full); font-size:12px; color:var(--text-2); border:1px dashed var(--glass-border-strong); }
+.stat-btn:disabled, .stat-btn[aria-disabled="true"]:not(.active){ opacity:.55; cursor:not-allowed; }
+/* بطاقة مكافأة ثابتة بلا صورة (مهمة/حرجة): ورق مؤطّر بلون الأهمية — موحّد مع بقية البطاقات حتى تُضاف الصور */
+.scx-ph{ position:absolute; inset:0; border-radius:inherit; background:linear-gradient(160deg, #F3E8CF, #E4D3AD); box-shadow:inset 0 0 0 6px rgb(255 252 244 / .55), inset 0 0 0 7px rgb(110 76 11 / .5); }
+.scx-ph-important{ background:linear-gradient(160deg, #F6E6B8, #E2C36F); }
+.scx-ph-critical{ background:linear-gradient(160deg, #F2D2C8, #D98F7B); }
+.scx-plain .scx-plate{ color:#2E2720; }

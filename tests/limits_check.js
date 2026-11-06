@@ -35,7 +35,7 @@ const need = [
   [/CodisLimits\.bypass\('holiday\.expireduse'\)/g, 3, 'expired holiday card use'], [/CodisLimits\.bypass\('wallet\.nonnegative'\)/g, 2, 'wallet floor (coins + silver)'], [/CodisLimits\.bypass\('box\.empty'\)/g, 1, 'empty box gate'],
   [/CodisLimits\.bypass\('box\.rtpGate'\)/g, 1, 'box RTP gate'], [/CodisLimits\.bypass\('sell\.unsellable'\)/g, 1, 'unsellable'], [/CodisLimits\.num\('box\.price\.'/g, 1, 'box price override'], [/overridePm\(t,/g, 1, 'box probability override'],
   [/CodisLimits\.bypass\('task\.futureDay'\)/g, 1, 'future-day task lock'], [/CodisLimits\.bypass\('habit\.sameDay'\)/g, 2, 'weekly habit same-day rule'], [/CodisLimits\.bypass\('claim\.crossPlan'\)/g, 2, 'cross-plan duplicate claims'],
-  [/CodisLimits\.bypass\('claim\.lateCap'\)/g, 1, 'catch-up reward cap'], [/CodisLimits\.bypass\('claim\.burst'\)/g, 1, 'weekly reward needs several days'], [/CodisLimits\.bypass\('habit\.resistCap'\)/g, 1, 'resist reward daily cap'],
+  [/CodisLimits\.bypass\('claim\.lateCap'\)/g, 1, 'catch-up reward cap'], [/CodisLimits\.bypass\('claim\.burst'\)/g, 1, 'weekly reward needs several days'], [/CodisLimits\.bypass\('habit\.schedule'\)/g, 1, 'weekly habit only on its scheduled days'],
   [/CodisLimits\.bypass\('reward\.protectedOdds'\)/g, 1, 'protected rarity odds'], [/CodisLimits\.num\('box\.refTop'/g, 1, 'box reference top-class probability'],
 ];
 need.forEach(([re, min, name])=>{ const n = (html.match(re) || []).length; if(n < min) fail('missing exemption site: ' + name + ' (found ' + n + ', need ' + min + ')'); });
