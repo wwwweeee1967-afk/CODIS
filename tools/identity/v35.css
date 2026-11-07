@@ -1,0 +1,120 @@
+/* CODIS-V35 · غرفة التأديب بنفس واجهة بقية الغرف: التصنيف بدل الندرة */
+.cat-box, .cat-place[hidden], .cat-place [hidden]{ display:none; }
+.cat-place{ display:grid; gap:8px; }
+.cat-chip{ display:inline-flex; align-items:center; min-height:24px; padding:0 9px; border-radius:var(--r-full); font-size:12px; color:var(--text-1); border:1px solid var(--glass-border-strong); white-space:nowrap; }
+/* كل قسم مربوط بغرفته: لا قائمة لنقل العنصر بين الغرف */
+.eco-field:has(> select[id$="-room"]){ display:none; }
+/* محرّر غرفة التأديب: لا تلميح ندرة ولا وزن ظهور (لا سحب عشوائي)، والحدثية بلا حقل شدة */
+.eco-form:has(> .cat-place:not([hidden])) > .eco-note[id$="-hint"], .rwe:has(> .cat-place:not([hidden])) .rwe-more, .rwe:has(> .cat-place:not([hidden])) .rwe-wt{ display:none !important; }
+.eco-form:has(> .cat-place:not([hidden]) option[value="event"]:checked) .eco-field:has(> select[id$="-sev"]){ display:none; }
+
+/* ===== CODIS-V35 · صفحة المكافآت/العقوبات: بلاطات مربعة مرتبة بدل الصفوف الطويلة ===== */
+#settings-page-rewards .rpu-lead{ display:none; }
+#settings-page-rewards .rpu-jump{ margin-bottom:var(--sp-md); }
+#settings-page-rewards .rpu-block{ gap:var(--sp-lg); }
+#settings-page-rewards .rpu-sec{ gap:var(--sp-sm); padding:var(--sp-md); }
+#settings-page-rewards .rpu-note{ font-size:var(--fs-caption); line-height:1.6; }
+#settings-page-rewards .rpu-list{ display:grid; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); gap:10px; }
+#settings-page-rewards .rpu-list > .eco-empty{ grid-column:1 / -1; }
+#settings-page-rewards .rpu-list .rpt{ position:relative; display:block; min-width:0; padding:0; margin:0; border:1px solid var(--glass-border); border-radius:14px; background:var(--mat-well); box-shadow:0 1px 0 rgb(var(--hi-rgb) / .04); }
+#settings-page-rewards .rpu-list .rpt[hidden]{ display:none; }
+.rpt-face{ width:100%; min-height:112px; display:grid; grid-template-rows:auto 1fr auto; justify-items:center; align-items:center; gap:6px; padding:10px 8px 9px; border:0; border-radius:inherit; background:none; color:var(--text); font:inherit; text-align:center; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:transform var(--dur-fast) var(--ease); }
+.rpt-face:active{ transform:scale(var(--press)); }
+.rpt-face:focus-visible{ outline:2px solid var(--aqua); outline-offset:2px; }
+.rpt-top{ width:100%; min-height:22px; display:flex; align-items:center; justify-content:center; gap:4px; }
+.rpt-top:empty{ display:none; }
+.rpt-tag{ max-width:100%; padding:1px 8px !important; font-size:11px !important; line-height:1.6 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rpt-tag.rar-badge > span, .rpt-tag .rar-gems{ display:none; }
+.rpt-stk:empty{ display:none; }
+.rpt-stk{ display:inline-flex; }
+.rpt-stk .stk-mini{ width:22px; height:22px; margin:0 -3px; }
+#settings-page-rewards .rpt-name{ font-size:13px; font-weight:600; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; overflow-wrap:anywhere; }
+.rpt-val{ display:inline-flex; align-items:center; gap:3px; font-size:12px; color:var(--text-2); font-variant-numeric:tabular-nums; }
+.rpt-val .ico, .rpt-val svg{ width:13px; height:13px; }
+.rpt-val b{ color:var(--text); font-weight:700; }
+.rpt-val small{ font-size:11px; color:var(--text-3); }
+.rpt-off{ position:absolute; top:6px; inset-inline-start:6px; font-size:10px; line-height:18px; }
+#settings-page-rewards .rpt.is-off .rpt-face > :not(.rpt-off){ opacity:.45; }
+/* البلاطة المفتوحة: بعرض القائمة، رأس أفقي ثم القيم والأزرار والمحرّر */
+#settings-page-rewards .rpu-list .rpt.is-editing{ grid-column:1 / -1; border-color:var(--aqua-a40); }
+.rpt.is-editing .rpt-face{ min-height:0; grid-template-columns:auto 1fr auto; grid-template-rows:auto; justify-items:start; text-align:start; padding:12px; gap:10px; }
+.rpt.is-editing .rpt-top{ width:auto; }
+.rpt.is-editing .rpt-name{ -webkit-line-clamp:3; font-size:14px; }
+.rpt-open{ display:grid; gap:10px; padding:0 12px 12px; }
+.rpt-open .eco-item-meta{ margin:0; }
+.rpt-open .eco-item-acts{ gap:6px; margin:0; }
+.rpt-open .eco-item-edit{ padding-top:10px; }
+@media (prefers-reduced-motion:reduce){ .rpt-face{ transition:none; } }
+.rpt-none{ border-style:dashed !important; color:var(--text-3) !important; }
+/* التصنيف: «نوع المحطة» و«الأهمية» جنب بعض؛ الحقل الوحيد يأخذ العرض كله. وبالبلاطة المفتوحة لا تتكرر القيم (التلميح يعرضها) */
+.cat-place{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:8px 10px; }
+.cat-place > .eco-field, .cat-place > .eco-note{ grid-column:1 / -1; }
+.cat-place:has(> [id$="-sp-wrap"][hidden]) > [id$="-imp-wrap"], .cat-place:has(> [id$="-imp-wrap"][hidden]) > [id$="-sp-wrap"], .cat-place:not(:has(> [id$="-sp-wrap"])) > [id$="-imp-wrap"]{ grid-column:1 / -1; }
+.cat-place > div > .eco-field{ margin:0; }
+.rpt-open:has(.cat-place:not([hidden])) > .eco-item-meta{ display:none; }
+.rpt-top .dur-badge{ font-size:10.5px; padding:1px 6px; line-height:1.6; }
+.rpt-top .dur-badge svg{ width:11px; height:11px; }
+
+/* ===== صفحات مستقلة: يومية · أسبوعية · شهرية · الكل (الأزرار تبدّل الصفحة، لا تمرير) ===== */
+#settings-page-rewards .rpu-jump-btn.is-on{ border-color:var(--aqua-a40); background:var(--aqua-a08); color:var(--aqua); }
+#settings-page-rewards .rpu-jump-btn.is-on b{ background:var(--aqua-a14, var(--aqua-a08)); color:var(--aqua); }
+#settings-page-rewards[data-view="daily"] .rpu-sec:not([data-period="daily"]),
+#settings-page-rewards[data-view="weekly"] .rpu-sec:not([data-period="weekly"]),
+#settings-page-rewards[data-view="monthly"] .rpu-sec:not([data-period="monthly"]),
+#settings-page-rewards[data-view="all"] .rpu-block{ display:none; }
+.rpu-all-btn{ width:100%; min-height:48px; display:flex; align-items:center; gap:10px; margin-bottom:var(--sp-lg); padding:0 14px; border-radius:var(--r-md); border:1px solid var(--glass-border); background:var(--glass); color:var(--text); font:inherit; font-size:var(--fs-sub); font-weight:700; text-align:start; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:transform var(--dur-fast) var(--ease); }
+.rpu-all-btn:active{ transform:scale(var(--press)); }
+.rpu-all-btn:focus-visible{ outline:2px solid var(--aqua); outline-offset:2px; }
+.rpu-all-btn span{ flex:1; }
+.rpu-all-btn b{ min-width:22px; padding:0 7px; border-radius:var(--r-full); background:rgb(var(--hi-rgb) / .07); color:var(--text-2); font-size:var(--fs-caption); font-weight:700; line-height:22px; text-align:center; font-variant-numeric:tabular-nums; }
+.rpu-all-ico{ flex:none; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; color:var(--text-2); }
+.rpu-all-chev{ flex:none; width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; color:var(--text-3); }
+.rpu-all-btn.is-on{ border-color:var(--aqua-a40); background:var(--aqua-a08); color:var(--aqua); }
+.rpu-all-btn.is-on .rpu-all-ico, .rpu-all-btn.is-on .rpu-all-chev{ color:var(--aqua); }
+.rpu-all[hidden]{ display:none; }
+.rpu-all{ display:grid; gap:var(--sp-md); }
+.rpu-find{ display:flex; align-items:center; gap:8px; min-height:46px; padding:0 6px 0 14px; padding-inline:14px 6px; border-radius:var(--r-full); border:1px solid var(--glass-border); background:var(--glass); color:var(--text-3); }
+.rpu-find > svg{ flex:none; width:18px; height:18px; }
+.rpu-find input{ flex:1; min-width:0; height:44px; border:0; background:none; color:var(--text); font:inherit; font-size:15px; outline:none; -webkit-appearance:none; appearance:none; }
+.rpu-find input::-webkit-search-cancel-button{ display:none; }
+.rpu-find:focus-within{ border-color:var(--aqua-a40); }
+.rpu-find-x{ flex:none; width:36px; height:36px; display:none; place-items:center; border:0; border-radius:50%; background:rgb(var(--hi-rgb) / .07); color:var(--text-2); cursor:pointer; }
+.rpu-find-x svg{ width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; }
+.rpu-find.has-q .rpu-find-x{ display:grid; }
+/* «الكل»: المجموعات تفصلها مسافة وخط خفيف فقط — بلا عناوين */
+.rpu-all-list{ display:grid; }
+.rpu-all-list .rpu-all-grp[hidden]{ display:none; }
+.rpu-all-list .rpu-all-grp ~ .rpu-all-grp:not([hidden]){ margin-top:14px; padding-top:14px; border-top:1px solid rgb(var(--hi-rgb) / .07); }
+.rpu-all-list .rpu-all-grp:not([hidden]) ~ .rpu-all-grp:not([hidden]){ margin-top:14px; }
+.rpu-all-list .rpu-all-grp[hidden] + .rpu-all-grp{ }
+.rpu-all-list > .eco-empty{ padding:var(--sp-lg); text-align:center; font-size:var(--fs-sub); color:var(--text-3); border:1px dashed var(--glass-border-strong); border-radius:var(--r-md); }
+#settings-page-rewards[data-view="all"] .rpu-costs{ display:none; }
+
+/* ===== نموذج الإضافة/التعديل: أصغر ومرتّب (نفس الحقول والوظائف) ===== */
+#settings-page-rewards .rpu-add-slot{ padding:12px; border-radius:var(--r-md); border:1px solid var(--glass-border); background:var(--mat-well); }
+#settings-page-rewards .rpu-add-t{ margin:0 0 8px; font-size:13px; font-weight:700; color:var(--aqua); }
+#settings-page-rewards .eco-form{ gap:10px; }
+#settings-page-rewards .eco-field{ gap:4px; }
+#settings-page-rewards .eco-lab, #settings-page-rewards .rwe-lab{ font-size:11.5px; line-height:1.3; color:var(--text-2); }
+#settings-page-rewards .eco-txt, #settings-page-rewards .eco-sel, #settings-page-rewards .rwe .eco-txt, #settings-page-rewards .rwe .eco-sel{ min-height:44px; height:44px; padding-block:0; font-size:15px; }
+#settings-page-rewards .rwe-top{ grid-template-columns:minmax(0, 1fr) 112px; gap:8px; align-items:end; }
+#settings-page-rewards .rwe .stk-pick{ min-height:44px; height:44px; padding:4px 8px; gap:6px; }
+#settings-page-rewards .rwe .stk-th{ width:32px; height:32px; border-radius:9px; }
+#settings-page-rewards .rwe .stk-tx b{ font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* القائمة مخفية دائماً بهذه الصفحة (كل قسم مربوط بغرفته) ⇒ الندرة/الشدة بعرض كامل، والصف يختفي إن لم يبقَ فيه حقل ظاهر */
+#settings-page-rewards .rwe-pair, #settings-page-rewards .eco-grid2{ grid-template-columns:minmax(0, 1fr); gap:8px; }
+#settings-page-rewards .rwe-pair:not(:has(> :not([style*="none"]):not(:has(> select[id$="-room"])))){ display:none; }
+#settings-page-rewards .eco-form .eco-note, #settings-page-rewards .rwe .eco-note{ margin:0; padding:0; background:none; border-radius:0; font-size:12px; line-height:1.5; color:var(--text-3); font-variant-numeric:tabular-nums; }
+#settings-page-rewards .rwe-foot, #settings-page-rewards .eco-form > .eco-switch-row{ min-height:40px; padding-top:8px; border-top:1px solid rgb(var(--hi-rgb) / .07); }
+#settings-page-rewards .eco-switch-row{ font-size:13.5px; }
+#settings-page-rewards .rwe-more{ min-height:36px; padding:0 10px; font-size:12px; }
+#settings-page-rewards .rpu-add-slot .eco-full, #settings-page-rewards .eco-item-edit .eco-full{ min-height:44px; margin-top:10px; }
+#settings-page-rewards .cat-place{ gap:8px; }
+/* نموذج العقوبة بغرفة التأديب: [التصنيف | الشدة أو الأهمية] بصف واحد ثم التلميح ثم التفعيل */
+#settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])){ grid-template-columns:repeat(2, minmax(0, 1fr)); column-gap:8px; }
+#settings-page-rewards .eco-form:not(.rwe) > .cat-place:not([hidden]){ display:contents; }
+#settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])) > .eco-field{ grid-column:1 / -1; order:0; }
+#settings-page-rewards .eco-form:not(.rwe) > .cat-place > .eco-field{ grid-column:auto; order:1; }
+#settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])) > .eco-grid2, #settings-page-rewards .eco-form:not(.rwe) > .cat-place > [id$="-imp-wrap"]{ grid-column:auto; order:2; }
+#settings-page-rewards .eco-form:not(.rwe) > .cat-place > .eco-note, #settings-page-rewards .eco-form:not(.rwe) > .eco-note{ grid-column:1 / -1; order:3; }
+#settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])) > .eco-switch-row{ grid-column:1 / -1; order:4; }

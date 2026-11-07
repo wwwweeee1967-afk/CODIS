@@ -179,65 +179,67 @@ NEGATIVE = ("NO text of any kind: no letters, no numbers, no Arabic or English w
 # الخيارات بعد «|»: hold = عنصر يمكن أن «تمسكه» الشخصية (يظهر فقط في البطاقات التي فيها يد بموضع آمن) · nN = أقصى عدد عناصر
 ATMOS = {
  # أكل سريع
- 'shawarma': 'garlic herb pickle crumb | hold', 'burger': 'sesame lettuce ketchup crumb | hold', 'pizza': 'pepperoni basil cheese crumb | hold',
- 'fries': 'fry salt ketchup | hold', 'falafel': 'falafel herb sesame tomato crumb | hold', 'fried_chicken': 'crunch spice crumb | hold',
- 'noodles': 'noodle steam scallion | hold', 'sambusa': 'pastry herb crumb | hold', 'hot_dog': 'mustard ketchup crumb | hold',
- 'taco': 'tomato lime herb crumb | hold', 'sandwich': 'lettuce tomato crumb | hold',
- # أكلات عراقية
- 'dolma': 'vineleaf lemon rice | hold', 'kebab': 'ember smoke onion herb | hold', 'tikka': 'meatcube ember smoke | hold',
- 'masgouf': 'lemon wave ember', 'biryani': 'rice anise herb | hold', 'tashreeb': 'steam chickpea crumb', 'kubba': 'croquette herb crumb | hold',
- 'mandi_pot': 'steam anise herb', 'lunch': 'rice tomato herb ember',
- # حلويات
- 'kunafa': 'pistachio syrup sugar | hold', 'baklava': 'pistachio flake syrup | hold', 'cheesecake': 'cherry chocdrip crumb | hold',
- 'donut': 'sprinkle glaze sugar | hold', 'ice_cream': 'sprinkle drip cherry | hold', 'waffle': 'berry syrup sugar | hold',
- 'pancakes': 'strawberry syrup butter | hold', 'croissant': 'flake crumb sugar | hold', 'choco_cake': 'chocshard cherry crumb | hold',
- 'rice_pudding': 'pistachio petal sugar | hold', 'cupcake': 'sprinkle cream cherry | hold', 'cake_slice': 'strawberry cream crumb | hold',
- 'cookie': 'chocchip crumb | hold', 'macaron': 'pastel sugar crumb | hold', 'chocolate_bar': 'chocshard cocoa | hold',
- # مشروبات باردة
- 'iced_coffee': 'ice bean drop | hold', 'pomegranate': 'pomseed drop leaf | hold', 'orange_juice': 'orange drop leaf | hold',
- 'mojito': 'mint lime ice bubble | hold', 'milkshake': 'cream sprinkle cherry | hold', 'smoothie': 'berry strawberry drop | hold',
- 'coconut': 'palm drop flower | hold', 'soda': 'bubble ice drop | hold',
- # چاي وقهوة
- 'tea_glass': 'steam tealeaf sugarcube | hold', 'teapot': 'steam tealeaf', 'arabic_coffee': 'cardamom bean steam | hold',
- 'espresso': 'bean steam cocoa | hold', 'hot_choc': 'marshmallow steam cocoa | hold', 'cafe_table': 'bean steam leaf',
- 'tea_cardamom': 'cardamom saffron steam | hold', 'coffee_togo': 'bean steam | hold',
+ # CODIS-ATMOS-V2 (الدفعة 1): من المكوّنات الحقيقية — فلافل عراقية بالصمون (عمبة/طحينة/طرشي/كرفس-بقدونس)، شاورما (شرائح لحم/ثومية/طرشي/ثوم)،
+ # بركر (خبز بالسمسم/شريحة جبن ذائبة/طماطم/خس)، بيتزا (ببروني/ريحان/زيتون/موزاريلا ممطوطة)، سمبوسة (مثلث مقرمش/ليمون/نعناع/صلصة خضراء)…
+ 'shawarma': 'meatstrips toum pickleslice garlic | hold', 'burger': 'cheeseslice sesamebun tomatoslice lettuce | hold', 'pizza': 'pepperoni2 basil olive mozz | hold',
+ 'fries': 'frybundle ketchupdollop saltflakes | hold', 'falafel': 'falafelcut samoon turnip parsley tahini | hold', 'fried_chicken': 'drumstick chili crumb | hold',
+ 'noodles': 'eggjammy chopsticks scallion nori | hold', 'sambusa': 'sambusatri lemonwedge mint chutney | hold', 'hot_dog': 'sausage mustardline ketchupdollop onion | hold',
+ 'taco': 'limewedge cilantro tomatodice cheeseshred | hold', 'sandwich': 'toasttri cheeseslice tomatoslice lettuce | hold',
+ # أكلات عراقية — CODIS-ATMOS-V2 (الدفعة 2): من مكوّنات الطبق الحقيقية (مراجع: وصفات عراقية + ويكيبيديا المسگوف)
+ 'dolma': 'vineroll stuffedonion pomdrop lemonwedge | hold', 'kebab': 'skewer onionrings grilledtomato ember | hold', 'tikka': 'tikkaskewer grilledtomato onionrings ember | hold',
+ 'masgouf': 'carpfish khubz ambadollop lemonwedge onionrings', 'biryani': 'ricegrains almond raisin chickenpiece anise | hold', 'tashreeb': 'noomi breadpiece chickpea onionrings', 'kubba': 'kubbacut pickleslice turnip parsley | hold',
+ 'mandi_pot': 'okra woodspoon tomatoslice steam', 'lunch': 'chickenpiece ricegrains cucumber tomatoslice',
+ # حلويات — CODIS-ATMOS-V2 (الدفعة 3): كنافة نابلسية (شعيرية/فستق/قطر بماء الزهر)، بقلاوة (معيّنات/جوز/فستق)، مهلبية (هيل/ورد/فستق)…
+ 'kunafa': 'kataifi pistachiocrush syrupdrizzle orangeblossom mozz | hold', 'baklava': 'baklavapiece pistachiocrush walnut syrupdrizzle | hold', 'cheesecake': 'strawberry2 mint fork | hold',
+ 'donut': 'donutbite sprinkles2 chocchips2 | hold', 'ice_cream': 'scoop wafercone waferstick sprinkles2 | hold', 'waffle': 'wafflegrid blueberry strawberry2 syrupdrizzle | hold',
+ 'pancakes': 'butterpat mapleleaf blueberry syrupdrizzle | hold', 'croissant': 'croissantmini wheat crumb | hold', 'choco_cake': 'cherry2 ganachedrip chocsquare | hold',
+ 'rice_pudding': 'cinnamonstick rosepetal2 pistachiocrush cardamompod | hold', 'cupcake': 'creamswirl cherry2 sprinkles2 | hold', 'cake_slice': 'strawberry2 creamswirl mint | hold',
+ 'cookie': 'cookiecrumb chocchips2 crumb | hold', 'macaron': 'macaronmini raspberry rosepetal2 | hold', 'chocolate_bar': 'chocsquare foil hazelnut | hold',
+ # مشروبات باردة — CODIS-ATMOS-V2 (الدفعة 4): مكوّنات المشروب الظاهرة (ثلج/قصّبة/شرائح فاكهة/نعناع/زهرة الكركديه…)
+ 'iced_coffee': 'icecube coffeebean2 strawbent | hold', 'pomegranate': 'pomhalf pomseeds citrusleaf | hold', 'orange_juice': 'orangeslice citrusleaf drop | hold',
+ 'mojito': 'limewheel mintsprig crushedice strawbent | hold', 'milkshake': 'whipcream cherry2 longspoon strawbent | hold', 'smoothie': 'mangocube strawberry2 blueberry raspberry | hold',
+ 'coconut': 'coconuthalf hibiscus umbrella | hold', 'soda': 'fizz icecube strawbent lemonwedge | hold',
+ # چاي وقهوة — CODIS-ATMOS-V2 (الدفعة 4): الچاي العراقي (استكان/صحن/مكعبات سكر/هيل/فحم)، القهوة العربية (فنجان بلا يد/هيل/زعفران/تمر)
+ 'tea_glass': 'sugarcubes cardamompod teaspoon steam2 | hold', 'teapot': 'istikan coalember tealeaf2 steam2', 'arabic_coffee': 'dates finjan cardamompod saffron2 | hold',
+ 'espresso': 'latteart coffeebean2 teaspoon | hold', 'hot_choc': 'marshmallow2 cinnamonstick chocsquare steam2 | hold', 'cafe_table': 'latteart croissantmini vaseflower coffeebean2',
+ 'tea_cardamom': 'cardamompod saffron2 cinnamonstick istikan | hold', 'coffee_togo': 'coffeebean2 sugarpacket steam2 | hold',
  # طلعات
- 'cinema': 'popcorn ticket film', 'bowling': 'pin spark star', 'park_picnic': 'leaf flower butterfly', 'dinner_out': 'bulb herb spark',
- 'arcade': 'pixel button star', 'mall_bag': 'tag ribbon spark', 'theater': 'ticket star spot',
+ 'cinema': 'popcorn2 ticketstub filmreel | hold', 'bowling': 'bowlpin bowlball starburst2 speedlines', 'park_picnic': 'picnicbasket daisy butterfly2 leaf', 'dinner_out': 'cloche candle forkknife herb',
+ 'arcade': 'joystick token pixelheart abxy', 'mall_bag': 'shopbag pricetag ribbon spark', 'theater': 'masks curtain ticketstub starburst2',
  # راحة
- 'armchair': 'cloud star leaf', 'nap': 'moon z star', 'cat_nap': 'z paw moon', 'bath': 'bubble ripple drop', 'no_phone': 'leaf ripple star',
- 'sleep_in': 'sun z cloud', 'candle_spa': 'bubble petal leaf',
+ 'armchair': 'cushion yarnball readinglamp star', 'nap': 'moon2 zzz pillow star', 'cat_nap': 'pawprint yarnball zzz moon2', 'bath': 'rubberduck towelroll bubble ripple', 'no_phone': 'openbook teaspoon leaf ripple',
+ 'sleep_in': 'alarmclock sunrise zzz cloud', 'candle_spa': 'candle spastones lotus petal',
  # ألعاب
- 'gamepad': 'button pixel dpad | hold', 'board_game': 'pawn dice star', 'domino': 'pip dice spark', 'backgammon': 'checker dice spark',
- 'handheld': 'pixel button star | hold', 'puzzle': 'piece spark | hold', 'headset': 'wave eq pixel', 'football': 'star confetti turf',
- 'basketball': 'star speed confetti', 'billiards': 'ball8 chalk star', 'darts': 'target star spark',
+ 'gamepad': 'abxy joystick pixelheart | hold', 'board_game': 'chessknight chesspawn die2 star', 'domino': 'dominotile die2 spark', 'backgammon': 'tawlachecker die2 dominotile spark',
+ 'handheld': 'gamecart pixelheart abxy | hold', 'puzzle': 'puzzlepiece pixelheart spark | hold', 'headset': 'headphones soundwave mic pixel', 'football': 'soccerball whistle star turf',
+ 'basketball': 'bball hoopnet speedlines star', 'billiards': 'ball8b cue chalkcube star', 'darts': 'dart bullseye star spark',
  # أفلام ومحتوى
- 'tv_show': 'play pixel star', 'movie_night': 'popcorn film ticket', 'podcast': 'wave note', 'music': 'note wave eq', 'anime': 'burst star spark',
+ 'tv_show': 'remote popcorn2 pixel star', 'movie_night': 'clapper popcorn2 filmreel ticketstub', 'podcast': 'mic vinyl soundwave note', 'music': 'notes2 vinyl soundwave eq', 'anime': 'sakura starburst2 chopsticks spark',
  # هوايات
- 'paint': 'paintdrop brush splat', 'camera': 'aperture spark leaf', 'oud': 'note wave star', 'pottery': 'clay leaf drop',
+ 'paint': 'palette brush2 paintsplash', 'camera': 'lens polaroid filmroll leaf', 'oud': 'rosette risha notes2 star', 'pottery': 'claypot woodtool leaf drop',
  # مشتريات
- 'gift_bag': 'ribbon confetti spark | hold', 'shoes': 'tag spark speed', 'wristwatch': 'tick gear spark | hold', 'backpack': 'mappath leaf star',
- 'sports_car': 'speed spark star', 'diamond': 'facet spark | hold',
+ 'gift_bag': 'giftbox ribbon confetti spark | hold', 'shoes': 'sneaker pricetag speedlines spark', 'wristwatch': 'watchface gearwheel tick spark | hold', 'backpack': 'compassrose carabiner mappin leaf',
+ 'sports_car': 'racestripe speedlines spark star', 'diamond': 'gemfacet facet spark | hold',
  # عناية
- 'perfume': 'mist petal spark | hold', 'hair_care': 'mist drop spark', 'skincare': 'bubble drop leaf | hold',
+ 'perfume': 'perfumebottle petal mist spark | hold', 'hair_care': 'scissors2 comb barberpole spark', 'skincare': 'creamjar lotus bubble drop | hold',
  # أصدقاء وعائلة
- 'friends_cups': 'chat heart spark', 'phone_call': 'chat wave heart', 'family_table': 'heart herb steam', 'rose': 'petal leaf heart | hold',
+ 'friends_cups': 'heartbubble chat sugarcubes spark', 'phone_call': 'phonecord chat wave heart', 'family_table': 'woodspoon heart steam herb', 'rose': 'redrose petal leaf heart | hold',
  # تعلّم
- 'new_book': 'page bookmark star | hold', 'notebook': 'pencil page star', 'graduation': 'star confetti page',
+ 'new_book': 'openbook inkbottle bookmark star | hold', 'notebook': 'fountainpen inkbottle pencil star', 'graduation': 'capmortar openbook star confetti',
  # سفر
- 'suitcase': 'mappath star leaf', 'camping': 'pine ember star', 'landmark': 'mappath star leaf', 'compass': 'mappath star | hold',
+ 'suitcase': 'suitcase2 mappin compassrose leaf', 'camping': 'tentcamp ember pine star', 'landmark': 'domemosque mappin mappath star', 'compass': 'compassrose mappin mappath | hold',
  # رقمي
- 'subscription': 'play pixel spark', 'ebook': 'page pixel star',
+ 'subscription': 'appcard play pixel spark', 'ebook': 'tabletbook openbook pixel star',
  # مفاجآت
- 'mystery_box': 'confetti ribbon spark', 'wrapped_gift': 'ribbon confetti spark | hold', 'treasure': 'coin gem spark | hold',
+ 'mystery_box': 'keyhole giftbox confetti spark', 'wrapped_gift': 'giftbox ribbon confetti spark | hold', 'treasure': 'treasurechest goldcoin gem spark | hold',
  # احتفال
- 'trophy': 'star confetti spark | hold', 'fireworks': 'burst star spark', 'party_cake': 'confetti ribbon spark', 'medal': 'star ribbon spark | hold',
- 'crown': 'gem spark star | hold',
+ 'trophy': 'trophycup starburst2 confetti spark | hold', 'fireworks': 'firework starburst2 spark', 'party_cake': 'partyhat candle confetti ribbon', 'medal': 'medalribbon starburst2 ribbon spark | hold',
+ 'crown': 'crownjewel gemfacet spark star | hold',
  # CODIS-STICKERS-13
- 'social_media': 'heart chat play spark', 'cigarettes': 'smoke ember spark', 'jummar_palm': 'palm leaf herb | hold', 'lettuce_head': 'lettuce leaf drop | hold',
- 'iraqi_samoon': 'sesame crumb flake | hold', 'pickles': 'drop pickle herb | hold', 'mushrooms': 'leaf herb garlic | hold', 'shish_shawarma': 'herb spice crumb ember | hold',
- 'chicken_tikka_rice': 'rice herb tomato ember | hold', 'italian_saj': 'basil tomato cheese crumb | hold', 'fishing_trip': 'wave drop ripple', 'cafe_front': 'bean steam spark',
- 'lamb_mandi': 'rice anise steam herb | hold',
+ 'social_media': 'appicon heartbubble chat play', 'cigarettes': 'cigpack smokewisp ember spark', 'jummar_palm': 'palmheart palm drop | hold', 'lettuce_head': 'lettuceleaf cucumber tomatoslice drop | hold',
+ 'iraqi_samoon': 'samoon wheat sesame crumb | hold', 'pickles': 'pickleslice carrotstick greenpepper turnip | hold', 'mushrooms': 'mushslice mushroom parsley garlic | hold', 'shish_shawarma': 'spit meatstrips toum ember | hold',
+ 'chicken_tikka_rice': 'chickenpiece ricegrains saucebowl parsley | hold', 'italian_saj': 'tomatoslice basil mozz khubz | hold', 'fishing_trip': 'bigfish fishhook bobber waterwave', 'cafe_front': 'awning streetlamp latteart coffeebean2',
+ 'lamb_mandi': 'lambshank ricegrains almond raisin friedonion | hold',
 }
 # لوحات يدوية للستيكرات المرسومة بالكود (بلا صورة نقطية) — من ألوان رسمها الأصلي في tools/sticker_art/art_*.py
 PAL = {
