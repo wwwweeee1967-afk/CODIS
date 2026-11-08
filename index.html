@@ -26,7 +26,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.22.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.23.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -11054,6 +11054,79 @@ img, svg, canvas{ -webkit-touch-callout:none; -webkit-user-drag:none; }
 #settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])) > .eco-grid2, #settings-page-rewards .eco-form:not(.rwe) > .cat-place > [id$="-imp-wrap"]{ grid-column:auto; order:2; }
 #settings-page-rewards .eco-form:not(.rwe) > .cat-place > .eco-note, #settings-page-rewards .eco-form:not(.rwe) > .eco-note{ grid-column:1 / -1; order:3; }
 #settings-page-rewards .eco-form:not(.rwe):has(> .cat-place:not([hidden])) > .eco-switch-row{ grid-column:1 / -1; order:4; }
+</style>
+<style id="codis-v36-css">
+/* CODIS-USE-CINE v2 (3.23.0) · مشهد استخدام المكافأة — بطاقة ثلاثية الأبعاد فاخرة. ألوان ثابتة كي يبقى المشهد نفسه بالنمطين (ورقي/داكن) */
+.ucx{ --w:220px; --ink:#2b2117; --ink2:#6a5238; --cream:#fbf3e2; --mx:50%; --my:30%;
+  --foil:linear-gradient(135deg,#3a2c1f,#5a4630 50%,#3a2c1f); --orn:#6a5238;
+  position:fixed; inset:0; z-index:660; display:flex; align-items:center; justify-content:center; overflow:hidden; font-family:inherit; color:var(--cream);
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+.ucx *{ box-sizing:border-box; }
+.ucx.is-out{ pointer-events:none; }
+.ucx.f-copper{ --foil:linear-gradient(120deg,#6e3f1c,#d8925a 22%,#8a4f26 40%,#f3bb86 58%,#7a4520 78%,#c98250); --orn:#a8683a; }
+.ucx.f-gold{ --foil:linear-gradient(120deg,#7c5b1a,#f6dd8f 20%,#b8892c 38%,#fff3c4 55%,#a87d26 74%,#f0cf73); --orn:#b48a2e; }
+.ucx.f-holo{ --foil:linear-gradient(120deg,#d9c3ff,#a8e6ff 18%,#c9ffd8 34%,#fff1b0 50%,#ffc9d6 66%,#c8b6ff 82%,#a8e6ff); --orn:#8a7bc4; }
+.ucx.f-prism{ --foil:linear-gradient(120deg,#ff5f9e,#ffb347 14%,#ffe66d 28%,#5ff5b1 42%,#4fc3ff 56%,#8b6bff 70%,#ff5f9e 84%,#ffb347); --orn:#b8892c; }
+.ucx-bg{ position:absolute; inset:0; background:radial-gradient(90% 70% at 50% 36%, rgba(58,38,18,.84), rgba(10,6,3,.95)); -webkit-backdrop-filter:blur(10px) saturate(1.1); backdrop-filter:blur(10px) saturate(1.1); }
+.ucx.is-reduced .ucx-bg{ -webkit-backdrop-filter:none; backdrop-filter:none; background:rgba(14,10,6,.9); }
+.ucx-cv{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.ucx-cv-f{ z-index:3; }
+.ucx-stage{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; padding:0 18px; }
+.ucx-fly{ perspective:1100px; }
+.ucx-float, .ucx-tilt{ transform-style:preserve-3d; -webkit-transform-style:preserve-3d; }
+.ucx-tilt{ transition:transform .32s cubic-bezier(.2,.8,.3,1); }
+.ucx-float.is-idle{ animation:ucxFloat 5.5s ease-in-out infinite; }
+@keyframes ucxFloat{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-6px) rotate(.5deg); } }
+.ucx-card{ position:relative; aspect-ratio:5/7; transform-style:preserve-3d; -webkit-transform-style:preserve-3d; border-radius:18px; }
+.ucx-back, .ucx-paper{ position:absolute; inset:0; border-radius:18px; backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden; }
+.ucx-back{ transform:rotateY(180deg); background:radial-gradient(120% 80% at 50% 20%, #3a2a1b, #1a120b 70%); box-shadow:0 30px 60px -18px rgba(0,0,0,.75), inset 0 0 0 1.5px rgba(224,180,90,.55), inset 0 0 0 7px #1a120b, inset 0 0 0 8px rgba(224,180,90,.35);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:#e5bd6a; }
+.ucx-guil{ position:absolute; inset:0; opacity:.55; background:repeating-radial-gradient(circle at 50% 46%, rgba(229,189,106,.22) 0 1px, transparent 1px 7px), repeating-conic-gradient(from 0deg at 50% 46%, rgba(229,189,106,.12) 0 2deg, transparent 2deg 10deg); }
+.ucx-ros{ position:relative; width:46%; aspect-ratio:1; filter:drop-shadow(0 2px 6px rgba(0,0,0,.5)); } .ucx-ros svg{ width:100%; height:100%; display:block; }
+.ucx-mark{ position:relative; font-size:11px; letter-spacing:.5em; font-weight:700; padding-left:.5em; }
+.ucx-paper{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:calc(var(--w) * .2) calc(var(--w) * .11) calc(var(--w) * .44); color:var(--ink);
+  background:var(--tex-grain, none), radial-gradient(120% 70% at 30% 0%, rgba(255,255,255,.7), transparent 55%), radial-gradient(140% 100% at 50% 120%, rgba(150,110,60,.22), transparent 60%), linear-gradient(165deg,#fdf7ea,#f3e6c9 60%,#ead8b2);
+  box-shadow:0 30px 60px -18px rgba(0,0,0,.75), 0 10px 22px -10px rgba(0,0,0,.45); }
+.ucx-foil{ position:absolute; inset:0; border-radius:18px; padding:5px; background:var(--foil); background-size:220% 220%; background-position:0% 50%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask:linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events:none; }
+.ucx-rule{ position:absolute; inset:11px; border:1px solid rgba(43,33,23,.38); border-radius:11px; pointer-events:none; }
+.ucx-rule::after{ content:""; position:absolute; inset:3px; border:.5px solid rgba(43,33,23,.22); border-radius:9px; }
+.ucx-cn{ position:absolute; width:20px; height:20px; color:var(--orn); pointer-events:none; } .ucx-cn svg{ width:100%; height:100%; display:block; }
+.ucx-cn.c1{ top:15px; right:15px; transform:scaleX(-1); } .ucx-cn.c2{ top:15px; left:15px; } .ucx-cn.c3{ bottom:15px; right:15px; transform:scale(-1,-1); } .ucx-cn.c4{ bottom:15px; left:15px; transform:scaleY(-1); }
+.ucx-brand{ position:absolute; top:calc(var(--w) * .1); left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:7px; font-size:9px; letter-spacing:.42em; font-weight:700; color:var(--ink2); direction:ltr; padding-left:.42em; white-space:nowrap; }
+.ucx-brand i{ width:16px; height:1px; background:currentColor; opacity:.6; }
+.ucx-medal{ position:relative; width:calc(var(--w) * .27); aspect-ratio:1; margin:0 0 calc(var(--w) * .05); color:var(--orn); }
+.ucx-medal svg{ width:100%; height:100%; display:block; }
+.ucx-name{ position:relative; font-weight:800; line-height:1.3; color:var(--ink); overflow-wrap:anywhere; max-width:100%; text-wrap:balance;
+  text-shadow:0 1px 0 rgba(255,255,255,.9), 0 -1px 0 rgba(43,33,23,.12); display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+.ucx-name.n1{ font-size:calc(var(--w) * .11); } .ucx-name.n2{ font-size:calc(var(--w) * .088); } .ucx-name.n3{ font-size:calc(var(--w) * .072); } .ucx-name.n4{ font-size:calc(var(--w) * .062); }
+.ucx-kicker{ position:relative; margin-top:8px; padding:3px 10px; font-size:10.5px; letter-spacing:.06em; color:var(--ink2); border-top:1px solid rgba(43,33,23,.28); border-bottom:1px solid rgba(43,33,23,.28); }
+.ucx-seal{ position:absolute; bottom:calc(var(--w) * .085); left:50%; width:calc(var(--w) * .3); aspect-ratio:1; margin-left:calc(var(--w) * -.15); pointer-events:none; }
+.ucx-seal-in{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; border-radius:50%; color:#a82a20; transform:rotate(-12deg);
+  border:2.5px solid currentColor; box-shadow:inset 0 0 0 3px rgba(253,247,234,.9), inset 0 0 0 4.5px currentColor; mix-blend-mode:multiply; opacity:.9; }
+.ucx-seal-in svg{ width:42%; height:42%; } .ucx-seal-in b{ font-size:calc(var(--w) * .046); font-weight:800; line-height:1; }
+.ucx-chk path{ stroke-dasharray:1; stroke-dashoffset:0; }
+.ucx-holo{ position:absolute; inset:0; pointer-events:none; opacity:0; mix-blend-mode:color-dodge;
+  background:linear-gradient(115deg, transparent 25%, rgba(255,90,170,.32) 38%, rgba(255,214,90,.32) 46%, rgba(80,240,200,.32) 54%, rgba(90,140,255,.32) 62%, transparent 75%); background-size:260% 260%; background-position:var(--mx) var(--my); }
+.ucx.f-holo .ucx-holo{ opacity:.55; } .ucx.f-prism .ucx-holo{ opacity:.8; }
+.ucx-spec{ position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.55), rgba(255,255,255,0) 46%); mix-blend-mode:soft-light; }
+.ucx-shine{ position:absolute; top:-20%; bottom:-20%; left:0; width:38%; pointer-events:none; transform:translateX(-130%) skewX(-16deg); background:linear-gradient(90deg, transparent, rgba(255,250,232,.75), transparent); mix-blend-mode:overlay; }
+.ucx-tags{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px; min-height:24px; max-width:min(360px, 90vw); }
+.ucx-tag{ display:inline-flex; align-items:center; height:24px; padding:0 11px; border-radius:999px; font-size:12px; font-weight:700; color:#f6e2b4; background:rgba(255,230,170,.09); border:1px solid rgba(246,214,150,.32); }
+.ucx-msg{ margin:0; max-width:min(350px, 88vw); font-size:21px; line-height:1.6; font-weight:800; text-align:center; color:var(--cream); text-shadow:0 2px 14px rgba(0,0,0,.55); text-wrap:balance; overflow-wrap:anywhere; }
+.ucx-w{ display:inline-block; }
+.ucx-chip{ display:inline-flex; align-items:center; gap:7px; padding:6px 13px; border-radius:999px; font-size:13px; color:#f6e2b4; background:rgba(255,230,170,.1); border:1px solid rgba(246,214,150,.35); }
+.ucx-chip svg{ width:16px; height:16px; } .ucx-chip b{ font-weight:800; } .ucx-chip span{ opacity:.8; }
+.ucx-acts{ display:flex; justify-content:center; margin-top:4px; }
+.ucx-ok{ min-width:150px; height:46px; padding:0 26px; border:0; border-radius:999px; font:inherit; font-size:16px; font-weight:800; color:#2b1d0e; cursor:pointer;
+  background:linear-gradient(180deg,#fbe6a8,#e2b45a); box-shadow:0 10px 24px -8px rgba(226,180,90,.6), inset 0 1px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(120,80,20,.25); }
+.ucx-ok:active{ transform:translateY(1px) scale(.98); } .ucx-ok:focus-visible{ outline:2px solid #fff3cf; outline-offset:3px; }
+.ucx-x{ position:absolute; z-index:4; top:max(14px, env(safe-area-inset-top)); inset-inline-end:14px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:50%;
+  border:1px solid rgba(255,240,210,.28); background:rgba(255,255,255,.08); color:#f8efdb; cursor:pointer; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+.ucx-x svg{ width:19px; height:19px; } .ucx-x:focus-visible{ outline:2px solid #f6d68a; outline-offset:2px; }
+.ucx-flash{ position:absolute; inset:0; z-index:3; pointer-events:none; background:radial-gradient(circle at 50% 42%, rgba(255,246,214,.9), rgba(255,220,150,.25) 40%, transparent 70%); }
+@media (max-height:640px){ .ucx-stage{ gap:9px; } .ucx-msg{ font-size:18px; } }
+@media (prefers-reduced-motion:reduce){ .ucx-float.is-idle{ animation:none; } .ucx-tilt{ transition:none; } }
 </style>
 <script>
 /* CODIS-V33: long-press on content must not open the browser's selection / image menu (inputs and editable text keep theirs) */
@@ -23488,6 +23561,525 @@ const CodisPush = (function(){
   return { show:show, enable:enable, status:status, resync:all_pending, schedule:schedule, unschedule:unschedule, nudge:nudge, unsupportedText:unsupportedText, ready:ready, registration:registration, standalone:standalone };
 })();
 
+/* ===== CODIS-USE-VOICE v2 (3.23.0) — محرّك فهم اسم المكافأة وصياغة عبارة الاستخدام =====
+   • محلي بالكامل: لا شبكة ولا خدمة خارجية ولا يُخزَّن شيء في بيانات الحساب (ذاكرة «لا تكرار» صغيرة بالجهاز فقط: localStorage codis_voice_recent).
+   • الفهم: تطبيع عربي/عراقي/خليجي/شامي/مصري (همزات، ة/ه، گ/چ/پ، تكرار الحروف، سوابق الأفعال «اشوف/نشوف/بشوف/هاكل»، «ال» وحروف الجر واللواحق)
+     ← قاموس مفاهيم (كل مفهوم: مجال + اسم معروض + مرادفات بلهجات) بمطابقة عبارات أطول أولاً ثم كلمة ثم تصحيح خطأ إملائي واحد
+     ← نوايا (مشاهدة/لعب/أكل/شرب/طلعة/شراء/سماع/قراءة) تُطبَّق على المفهوم التالي (مشاهدة + مباراة = متابعة مباراة، شراء + لعبة = تسوّق، لعب + كرة = رياضة)
+     ← أُطر مرتبة بموضعها بالاسم (حتى 3) + المرافقون («مع الأهل/الربع») + الفرق المذكورة فعلاً (الغامض منها يحتاج سياق مباراة).
+   • الصياغة: جزء لكل إطار يذكر الشيء نفسه («بالعافية على البيتزا»، «مشاهدة ممتعة للفلم») ثم ربط طبيعي بالواو، والمرافق بالنهاية؛ بلا اختراع (لا فرق/نتائج غير مكتوبة).
+     الغامض ← عبارة عامة أنيقة تذكر اسم المكافأة نفسه. صياغة محايدة جنسياً قدر الإمكان.
+   • التوسعة بلا إعادة بناء: CodisRewardVoice.extend({ domain, label, terms:[...], say:[...] }) أو extend({ domain, name, x:[...], n:[...] }). */
+const CodisRewardVoice = (function(){
+  'use strict';
+  /* ---------- 1) التطبيع ---------- */
+  const DIG = '٠١٢٣٤٥٦٧٨٩', DIG2 = '۰۱۲۳۴۵۶۷۸۹';
+  function norm(s){
+    s = String(s === undefined || s === null ? '' : s).toLowerCase();
+    s = s.replace(/[ً-ٰٟۖ-ۭـ‌‍‎‏]/g, '');
+    s = s.replace(/[٠-٩]/g, d=>String(DIG.indexOf(d))).replace(/[۰-۹]/g, d=>String(DIG2.indexOf(d)));
+    s = s.replace(/[أإآٱ]/g, 'ا').replace(/[ىی]/g, 'ي').replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').replace(/ء/g, '');
+    s = s.replace(/[گک]/g, 'ك').replace(/چ/g, 'ج').replace(/پ/g, 'ب').replace(/ڤ/g, 'ف').replace(/ژ/g, 'ز');
+    s = s.replace(/[^a-z0-9ء-ي]+/g, ' ');
+    s = s.replace(/([ء-يa-z])\1{2,}/g, '$1');   /* «حلووو» ← «حلو» */
+    return s.replace(/\s+/g, ' ').trim();
+  }
+  function stripAlWord(w){ return w.replace(/^(و|ف|ب|ل|ك)?ال(?=..)/, '').replace(/^لل(?=..)/, ''); }
+  function variants(t){
+    const v = [t]; let x = t;
+    const m = /^(و|ف|ب|ل|ك)?ال(.{2,})$/.exec(t);
+    if(m){ v.push('ال' + m[2]); v.push(m[2]); x = m[2]; }
+    else if(/^لل.{2,}/.test(t)){ x = t.slice(2); v.push(x); }
+    else if(/^[وفبلك].{3,}/.test(t)){ x = t.slice(1); v.push(x); }
+    if(/^(رح|راح)./.test(x)) v.push(x.replace(/^(رح|راح)/, ''));
+    [t, x].forEach(y=>{ if(y.length >= 4 && /^[انيتبهح]/.test(y)) v.push(y.slice(1)); });   /* اشوف/نشوف/بشوف/هاكل ← شوف/اكل */
+    if(x.length > 4){
+      const y = x.replace(/(ها|هم|نا|كم|ك|ه|ي)$/, ''); if(y !== x && y.length >= 3){ v.push(y); v.push(y + 'ه'); }
+      if(/(ات|ين|ون)$/.test(x)){ const z = x.slice(0, -2); v.push(z); v.push(z + 'ه'); }
+    }
+    return v.filter((e, i)=>e && v.indexOf(e) === i);
+  }
+  const STOP = new Set(norm('مع ويا وي ويه وياهم ويانا وياي ويه و في فد على عل من الى لل ساعه ساعتين ساعات دقيقه دقايق دقائق نص نصف ربع كامل كامله شوي شويه بس كلش جدا مره حق مال مالت ماله بالبيت بيت عندي عدنا ثاني هم اني انا احنا اريد ابي ابغى بدي عايز حابب حاب the a an with and of for to time وقت').split(' '));
+
+  /* ---------- 2) المجالات وقوالبها ---------- */
+  const DOM = {
+    eat:{ name:'أكل', x:['بالعافية على {x}', 'صحتين وعافية على {x}', '{x} بالهنا والشفا', 'ألف عافية على {x}'], n:['بالعافية', 'صحتين وعافية', 'بالهنا والشفا', 'شهيّة طيبة وألف عافية'] },
+    sweet:{ name:'حلو', x:['بالعافية على {x}', '{x} على القلب حلاوة', 'صحتين على {x}، الله يحلّيها'], n:['الله يحلّيها عليك', 'حلاوة على القلب وبالعافية'] },
+    drink:{ name:'مشروب', x:['{x} على المزاج', 'بالعافية على {x}', 'صحتين على {x}'], n:['مشروب على المزاج', 'صحتين وعلى المزاج'] },
+    watch:{ name:'مشاهدة', x:['مشاهدة ممتعة {lx}', 'فرجة حلوة {lx}', 'وقت ممتع ويا {x}'], n:['مشاهدة ممتعة', 'فرجة حلوة وسهرة رايقة', 'مشاهدة ممتعة ووقت رايق'] },
+    match:{ name:'مباراة', n:['مشاهدة ممتعة للمباراة', 'ماتش ممتع وأعصاب هادية', 'مباراة حلوة، والله يوفّق الفريق اللي تشجّعه', 'فرجة حلوة للماتش، ونتمنى الفوز للفريق اللي تشجّعه'],
+      t1:['مشاهدة ممتعة، والله يوفّق {t}', 'ماتش ممتع، ونتمنى الفوز {lt}', 'الله يوفّق {t}، ومشاهدة ممتعة'], t2:['مباراة نارية بين {t1} و{t2}، ومشاهدة ممتعة', '{t1} ضد {t2}… ماتش ممتع وأعصاب هادية'] },
+    sport:{ name:'رياضة', x:['الله يعطيك العافية على {x}'], n:['الله يعطيك العافية', 'تمرين موفق وهمّة عالية', 'نشاط وهمّة وصحة'] },
+    games:{ name:'لعب', x:['لعب ممتع {bx}', 'جولة {x} موفقة', 'حظ سعيد {bx}، والفوز إلك'], n:['لعب ممتع والفوز إلك', 'جولات موفقة وتحدي حلو', 'لعب ممتع ووقت حلو'] },
+    sleep:{ name:'نوم', n:['نومة هنية', 'نوم العافية وأحلام حلوة', 'نومة مريحة وصحوة نشيطة'] },
+    rest:{ name:'راحة', n:['راحة مستحقة', 'راحة بال وهدوء', 'استرخاء وراحة بال'] },
+    dayoff:{ name:'عطلة', n:['عطلة سعيدة', 'يوم إلك بلا شغل ولا هم', 'إجازة مستحقة وأيام حلوة'] },
+    outing:{ name:'طلعة', x:['وقت حلو {bx}'], n:['طلعة موفقة', 'كزدرة حلوة', 'طلعة حلوة وترجع بالسلامة'] },
+    travel:{ name:'سفر', n:['سفرة سعيدة وترجع بالسلامة', 'رحلة سعيدة وذكريات حلوة', 'سفر موفق وأيام حلوة'] },
+    gather:{ name:'لمّة', n:['لمّة حلوة', 'سهرة هنية والضحك ما يخلص', 'قعدة حلوة الله يديمها'] },
+    companion:{ name:'ويا', x:['وقت حلو ويا {x}', 'الله يديم اللمّة ويا {x}', 'أحلى شي إنها ويا {x}'], solo:['وقت حلو ويا {x}', 'لمّة حلوة ويا {x}، الله يديمها'] },
+    shopping:{ name:'تسوّق', x:['مبروك {x}', 'مبروك عليك {x}، بالهنا', '{x} مبروك وبالهنا'], n:['تسوّق موفق ومشتريات حلوة', 'تسوّق موفق وبالهنا'] },
+    learn:{ name:'تعلّم', n:['قراءة ممتعة', 'وقت مفيد ومعلومة جديدة', 'تعلّم موفق'] },
+    music:{ name:'موسيقى', x:['عزف حلو على {x}'], n:['أغاني على المزاج', 'طرب ومزاج رايق', 'موسيقى تريّح الروح'] },
+    cook:{ name:'طبخ', n:['طبخة موفقة ونكهة مضبوطة', 'طبخة حلوة وبالعافية مقدماً'] },
+    art:{ name:'رسم', n:['إبداع موفق وألوان حلوة', 'لوحة حلوة وإبداع'] },
+    photo:{ name:'تصوير', n:['لقطات حلوة وإبداع', 'تصوير موفق ولقطات تستاهل'] },
+    write:{ name:'كتابة', n:['كتابة ملهمة', 'أفكار حلوة وقلم سيّال'] },
+    craft:{ name:'شغل يدوي', n:['شغلة حلوة بإيدك', 'إبداع يدوي موفق'] },
+    garden:{ name:'زراعة', n:['زراعة مثمرة', 'زرع أخضر وبال رايق'] },
+    cars:{ name:'سيارة', x:['مشوار حلو {bx}'], n:['مشوار حلو بالسيارة', 'سواقة ممتعة وطريق سالك'] },
+    pets:{ name:'أليف', n:['وقت حلو ويا حيوانك الأليف', 'لعب ودلع للأليف'] },
+    care:{ name:'عناية', n:['عناية مستحقة', 'دلع بمحله وراحة'] },
+    celebrate:{ name:'مناسبة', n:['فرحة حلوة ووقت ممتع', 'مناسبة سعيدة وفرحة تتم'] },
+    sm:{ name:'سوشل', x:['وقت ممتع على {x}', 'سكرول ممتع على {x}'], n:['تصفّح ممتع', 'سكرول على المزاج'] },
+    chat:{ name:'سوالف', n:['سوالف حلوة', 'مكالمة حلوة وسوالف تطوّل'] },
+    smoke:{ name:'استراحة', n:['استراحة قصيرة ومزاج رايق'] },
+    money:{ name:'مصروف', n:['مصروف مبارك وينصرف بمحله', 'رزق مبارك'] },
+    free:{ name:'وقت حر', n:['وقت إلك بلا التزامات', 'وقتك إلك وعلى كيفك'] }
+  };
+  const GENERIC = { named:['«{name}» صارت إلك، بالهنا', 'بالهنا عليك «{name}»', '«{name}»… مكافأة مستحقة وبالهنا'], plain:['بالهنا والسرور', 'مكافأة مستحقة، وبالهنا', 'تعبك ما راح، وهاي ثمرته'] };
+  const TIMED = ['بدأ وقتك', 'الوقت بدأ', 'انطلق العدّاد'];
+  const SAY = {
+    'eat/الفطور':['فطور هني وبداية يوم حلوة', 'فطور بالعافية'], 'eat/الغدا':['غدا هني وعافية', 'غدا بالعافية'], 'eat/العشا':['عشا هني وعافية', 'عشا بالعافية'],
+    'eat/المطعم':['قعدة مطعم حلوة وبالعافية'], 'eat/الطلبية':['بالعافية، والطلبية توصل حارّة'], 'eat/المسكوف':['مسكوف على أصوله، بالعافية'], 'eat/الباجة':['باجة على أصولها، بالعافية'],
+    'drink/الشاي':['استكان شاي على المزاج', 'شاي يعدّل المزاج'], 'drink/القهوة':['قهوة على المزاج', 'فنجان قهوة يصحصح الراس'], 'drink/الكافيه':['قعدة كافيه رايقة', 'كافيه ومزاج حلو'], 'drink/العصير':['عصير بارد وبالعافية'],
+    'watch/الفلم':['فلم ممتع وسهرة حلوة', 'مشاهدة ممتعة للفلم'], 'watch/المسلسل':['حلقات ممتعة', 'عسى الحلقة تشدّك'], 'watch/الأنمي':['حلقات أنمي ممتعة'], 'watch/السينما':['سينما ممتعة وشاشة كبيرة'], 'watch/الوثائقي':['وثائقي ممتع ومعلومة جديدة'],
+    'match/الكلاسيكو':['كلاسيكو ممتع وأعصاب هادية'], 'match/الديربي':['ديربي ناري ومشاهدة ممتعة'],
+    'sport/الطوبة':['طوبة حلوة والأهداف إلك', 'لعب موفق بالملعب'], 'sport/الجيم':['تمرين قوي ونتايج أقوى', 'الله يعطيك العافية على التمرين'], 'sport/المشي':['خطوات خفيفة ونفَس طويل', 'مشية حلوة وصحة'],
+    'sport/السباحة':['سباحة ممتعة ومي باردة'], 'sport/الدراجة':['مشوار دراجة ممتع'],
+    'sleep/القيلولة':['قيلولة ترد الروح', 'غفوة خفيفة وصحوة نشيطة'],
+    'outing/البحر':['وقت حلو عالبحر'], 'outing/الشط':['قعدة حلوة عالشط'], 'outing/المول':['كزدرة حلوة بالمول'], 'outing/الحديقة':['وقت حلو بالحديقة'], 'outing/الصيد':['صيد وفير ورزق حلو'],
+    'outing/الكشتة':['كشتة حلوة وسهرة تحت النجوم'], 'outing/الملاهي':['وقت مرح بالملاهي'], 'outing/الشمال':['طلعة حلوة للشمال وجو يرد الروح'],
+    'shopping/الهدية':['هدية تفرّح القلب'],
+    'learn/الكتاب':['قراءة ممتعة وصفحات تستاهل'], 'learn/الكورس':['تعلّم موفق ومعلومة جديدة'], 'learn/البودكاست':['حلقة ممتعة ومفيدة'], 'learn/اللغة':['كلمة جديدة كل يوم، وتعلّم موفق'],
+    'care/الحلاقة':['حلاقة نظيفة وطلّة جديدة'], 'care/المساج':['مساج يرد الروح', 'راحة للجسم والروح'], 'care/العناية':['عناية مستحقة ودلع بمحله'],
+    'celebrate/عيد الميلاد':['حفلة عيد ميلاد حلوة وفرحة كبيرة'], 'celebrate/العيد':['عيد مبارك وأيام سعيدة'], 'celebrate/التخرج':['فرحة التخرج تتم، وعقبال الأعلى'], 'celebrate/الزواج':['فرحة تتم على خير'],
+    'celebrate/الحفلة':['حفلة حلوة ووقت ممتع'], 'celebrate/النجاح':['نجاح يستاهل الاحتفال'], 'smoke/الأركيلة':['قعدة أركيلة رايقة']
+  };
+  /* ---------- 3) القاموس: «الاسم المعروض=مرادف,مرادف;…» — «-» = بلا اسم معروض · «~» قبل المرادف = غامض (فريق يحتاج سياق مباراة) ---------- */
+  const LEX = {
+    eat:'البرجر=برجر,بركر,برغر,همبرغر,همبركر,هامبرغر,برجرات,burger;البيتزا=بيتزا,بيتزه,بيزا,pizza;الشاورما=شاورما,شاورمه,شورمه,shawarma;الكباب=كباب,كبابات,معلاك,kebab;التكة=تكه,تكا;المشاوي=مشاوي,مشويات,grill,bbq,باربكيو;' +
+      'الدجاج=دجاج,جاج,فراخ,دجاجه;البروستد=بروستد,بروستيد,كرسبي,زنجر,ناكتس,نكتس,nuggets;المسكوف=مسكوف,سمك مسكوف;السمك=سمك,سمج,اسماك,fish;البرياني=برياني;الكبسة=كبسه,مجبوس;المندي=مندي,حنيذ;القوزي=قوزي,غوزي;' +
+      'الدولمة=دولمه,ضولمه,دولما,محشي,يبرق;الكبة=كبه,كبب,كبه حلب;الباجة=باجه,باتشه,كوارع;التشريب=تشريب,ثريد;القيمة=قيمه;الفلافل=فلافل,طعميه,فلافيل;السندويش=سندويج,سندويش,ساندويج,ساندويتش,صمونه,لفه,sandwich;' +
+      'الباستا=باستا,معكرونه,مكرونه,سباكيتي,سباغيتي,بشاميل,pasta;السوشي=سوشي,sushi;النودلز=نودلز,اندومي,noodles;الستيك=ستيك,steak;البطاطا=بطاطا,بطاطس,فرايز,جبس,شبس,fries,chips;الفشار=فشار,بوب كورن,popcorn,شاميه;' +
+      'المكسرات=مكسرات,كرزات;الكص=كص,دونر;الفطائر=فطيره,فطاير,معجنات,سمبوسه,منقوشه,مناقيش;الكنتاكي=كنتاكي,kfc;الماكدونالدز=ماكدونالدز,مكدونالدز,mcdonalds;الشوربة=شوربه,حساء;السلطة=سلطه,سلطات,فتوش,تبوله;' +
+      'الفواكه=فواكه,فاكهه,بطيخ,رقي,موز,مانجو,عنب;الكيمر=كيمر,قيمر,قشطه;-=اكله,اكلات,وجبه,وجبات,طعام,meal,food,اكله دسمه;الفطور=فطور,ريوك,صبوحي,برانش,فطار,breakfast;الغدا=غدا,غداء,lunch;العشا=عشا,عشاء,عشوه,dinner;' +
+      'المطعم=مطعم,مطاعم,restaurant;الطلبية=ديليفري,دليفري,توصيل,طلبات,طلبيه,delivery',
+    sweet:'الكيك=كيك,كيكه,كعكه,cake;الشوكولاتة=شوكولاته,شوكلت,شوكولا,جكليت,جوكليت,chocolate,نوتيلا;الآيس كريم=ايس كريم,ايسكريم,موطه,دوندرمه,بوظه,جيلاتي,مثلجات,icecream;الكنافة=كنافه;البقلاوة=بقلاوه,باقلاوه;' +
+      'الدونات=دونات,donut;الكليجة=كليجه,معمول;الزلابية=زلابيه,لقيمات,عوامه,داطلي;الكوكيز=كوكيز,بسكوت,بسكت,كوكي,cookies;الوافل=وافل,waffle;الكريب=كريب,crepe;البان كيك=بان كيك,بانكيك,pancake;' +
+      'التشيز كيك=تشيز كيك,تشيزكيك,cheesecake;المحلبي=كاسترد,محلبي,مهلبيه,رز بحليب,بودينغ;-=حلويات,حلوى,حلو,سويت,ديزرت,dessert,حلاوه,من السما',
+    drink:'الشاي=جاي,شاي,چاي,استكان,tea,كرك;القهوة=قهوه,كهوه,coffee,كوفي,نسكافيه,نسكافي,لاتيه,لاتي,كابتشينو,كابوتشينو,اسبريسو,موكا,امريكانو,ترك,سبانش لاتيه;العصير=عصير,عصاير,عصائر,juice,ليمون,شربت;' +
+      'الموهيتو=موهيتو,mojito;الميلك شيك=ميلك شيك,ميلكشيك,سموذي,smoothie,فرابيه,فرابتشينو;-=مشروب,مشروبات,بيبسي,ببسي,كولا,كوكا,سفن,ميرندا,غازيه,ستنج,ردبول,ريدبول,مشروب طاقه;' +
+      'الكافيه=كافيه,كافي,كوفي شوب,مقهى,مقهي,جايخانه,قهوه شعبيه,ستاربكس,starbucks,cafe',
+    watch:'الفلم=فلم,فيلم,افلام,فلمين,movie,film;المسلسل=مسلسل,مسلسلات,حلقه,حلقات,سيزون,series,دراما,كيدراما;الأنمي=انمي,انيمي,anime,مانجا,مانغا,ون بيس,ناروتو;الكارتون=كارتون,كرتون,رسوم متحركه,cartoon,ديزني;' +
+      'السينما=سينما,سنما,cinema,imax,ايماكس;الوثائقي=وثائقي,وثائقيات,documentary;نتفلكس=نتفلكس,نتفليكس,netflix;شاهد=شاهد vip;البرنامج=برنامج,برامج,show;البث=ستريم,بث مباشر,لايف,twitch,تويتش',
+    match:'-=مباراه,مبارات,مباريات,ماتش,ماتشات,match,دوري,الدوري,دوري ابطال,ابطال اوروبا,تشامبيونز,كاس العالم,كاس اسيا,كاس الخليج,مونديال,نهائي,نص نهائي,اليورو,خليجي;الكلاسيكو=كلاسيكو,clasico;الديربي=ديربي,derby',
+    team:'ريال مدريد=ريال مدريد,~الريال,~ريال,real madrid,~مدريد;برشلونة=برشلونه,برشا,بارسا,barcelona,barca;ليفربول=ليفربول,liverpool;مانشستر سيتي=مان سيتي,مانشستر سيتي,~السيتي;مانشستر يونايتد=مان يونايتد,مانشستر يونايتد,~اليونايتد;' +
+      'أرسنال=ارسنال,arsenal;تشيلسي=تشيلسي,chelsea;بايرن ميونخ=بايرن,بايرن ميونخ,bayern;يوفنتوس=يوفنتوس,اليوفي,juventus;ميلان=~ميلان,milan;إنتر=~انتر,inter milan;باريس سان جيرمان=باريس سان جيرمان,psg;' +
+      'المنتخب العراقي=المنتخب العراقي,منتخب العراق,اسود الرافدين,منتخبنا,~العراق;الزوراء=الزوراء;القوة الجوية=القوه الجويه,~الجويه;الشرطة=~الشرطه;الطلبة=~الطلبه;الهلال=~الهلال;النصر=~النصر;الاتحاد=~الاتحاد;الأهلي=~الاهلي;الزمالك=الزمالك',
+    sport:'الطوبة=طوبه,كره قدم,~كره,فوتبول,football,خماسي,خماسيات,فوتسال,سباعي;الجيم=جيم,نادي رياضي,حديد,كمال اجسام,gym,تمرين,تمارين,workout,كارديو,لياقه,كروسفت,crossfit;' +
+      'المشي=مشي,تمشي,هروله,ركض,جري,running,walk,جوكينغ;السباحة=سباحه,مسبح,swimming,pool;البادل=بادل,padel,تنس,tennis,تنس طاوله,بنج بونج;السلة=كره سله,باسكت,basketball;الطائرة=كره طايره,فولي,volleyball;' +
+      'الدراجة=دراجه,بايسكل,بسكليت,سيكل,bike,cycling;اليوغا=يوغا,yoga,تامل,بيلاتس,pilates;الملاكمة=ملاكمه,بوكس,boxing,كيك بوكسنغ,كاراتيه,تايكوندو,جوجيتسو,مصارعه;-=رياضه,sport,sports',
+    games:'-=العاب,لعبه,كيم,كيمز,كيمنك,كيمنج,game,games,gaming,جيمنج,قيمز;البلايستيشن=بلايستيشن,بلاستيشن,بليستيشن,بلي ستيشن,بلاي ستيشن,سوني,ps,ps4,ps5,playstation;الإكس بوكس=اكس بوكس,اكسبوكس,xbox;' +
+      'السويتش=نينتندو,سويتش,nintendo,switch;ببجي=ببجي,pubg;فري فاير=فري فاير,freefire,free fire;فورتنايت=فورتنايت,فورت نايت,fortnite;فيفا=فيفا,fifa,fc24,fc25,اي فوتبول,بيس,pes,efootball;' +
+      'كول أوف ديوتي=كول اوف ديوتي,cod,وارزون,warzone;ماينكرافت=ماينكرافت,ماين كرافت,minecraft;روبلوكس=روبلوكس,roblox;جي تي أي=جاتا,جي تي اي,gta;فالورانت=فالورانت,valorant;ليج أوف ليجندز=ليج اوف ليجندز,league of legends;' +
+      'كلاش=كلاش,كلاش اوف كلانس,clash;ألعاب الكمبيوتر=بي سي,pc,steam,ستيم;الدومينو=دومينو,دومنه;الطاولي=طاولي,طاوله زهر,زهر,باكمون,نرد;الشطرنج=شطرنج,chess;الورق=ورق لعب,لعب ورق,كونكان,بلوت,تريكس,اونو,uno;' +
+      'المحيبس=محيبس,محيبسي;البولينغ=بولنغ,بولينج,bowling;البلياردو=بليارد,بلياردو,سنوكر,snooker',
+    sleep:'-=نوم,نومه,نايم,رقاد,ارقد,اتمدد,sleep;القيلولة=قيلوله,غفوه,نومه الظهر,nap',
+    rest:'-=راحه,استراحه,استرخاء,استرخا,ريلاكس,relax,تشل,chill,هدوء,كسل,تكاسل',
+    dayoff:'-=عطله,اجازه,يوم اوف,اوف,off,day off,ويكند,weekend,بدون دوام,يوم راحه,يوم كسل',
+    outing:'-=طلعه,طلعات,كزدره,مشوار,مشاوير,فسحه,خروجه,خرجه,روحه,نزهه,تمشايه,outing;البحر=بحر,شاطي,شاطئ,بيج,beach;الشط=شط,دجله,الفرات,نهر,كورنيش;المول=مول,مولات,mall;الحديقة=حديقه,منتزه,متنزه,بارك,park;' +
+      'الصيد=صيد,صيد سمك,رحله صيد,سناره;الكشتة=كشته,كمب,كامب,camp,camping,تخييم,بريه,طلعه بر;الملاهي=ملاهي,مدينه العاب,مدينه الالعاب,العاب مائيه,اكوا بارك;الشمال=الشمال,كردستان,اربيل,دهوك,السليمانيه,شقلاوه,جبل,جبال,شلال',
+    travel:'-=سفر,سفره,رحله,رحلات,ترافل,travel,trip,سياحه',
+    gather:'-=لمه,قعده,جلسه,سهره,عزيمه,عزومه,دعوه,زياره,ديوانيه,تجمع,اجتماع,gathering',
+    companion:'الأصدقاء=اصدقاء,اصدقائي,الشباب,شباب,الربع,ربعي,الجماعه,جماعه,اصحاب,صحاب,صحابي,خلان,الكروب,كروب,رفاق,صديق,صديقي,صديقتي,صديقه,البنات,صاحبي,صاحبتي,friends;' +
+      'الأهل=اهل,اهلي,عائله,عايله,عيله,بيت اهلي,امي,ابوي,بابا,ماما,اخوي,اختي,اخواني,خواتي,جدتي,جدي,عمي,خالي,family;اللي تحب=حبيبي,حبيبتي,زوجي,زوجتي,مرتي,خطيبي,خطيبتي,partner;الأطفال=اطفال,الجهال,جهال,ولادي,اولادي,الصغار,kids',
+    shopping:'-=تسوق,شوبنك,شوبنج,شوبينغ,shopping,تبضع,مشتريات;الملابس=ملابس,هدوم,تيشيرت,تيشرت,قميص,بنطرون,بنطلون,جينز,دشداشه,عبايه,فستان,جاكيت,ستره,clothes;الحذاء=حذاء,قندره,كندره,جوتي,سنيكرز,shoes,بوت;' +
+      'الشنطة=شنطه,جنطه,حقيبه,bag;العطر=عطر,عطور,برفان,بارفان,perfume,بخور;الموبايل=موبايل,تلفون,جوال,ايفون,iphone,سامسونك,سامسونج,phone;اللابتوب=لابتوب,لاب توب,laptop,ماك بوك,ايباد,تابلت,ipad;' +
+      'السماعة=سماعه,سماعات,ايربودز,airpods,هيدفون,headphones;الساعة=ساعه يد,ساعه ذكيه,ابل واتش,apple watch,smartwatch;الهدية=هديه,هدايا,gift;الإكسسوارات=اكسسوار,اكسسوارات,خاتم,سوار,قلاده,نظاره,نظارات;' +
+      'الطلبية=امازون,شي ان,علي اكسبريس,تيمو,اونلاين,online',
+    learn:'-=قراءه,reading;الكتاب=كتاب,كتب,روايه,قصه,مجله,book,novel;الكورس=كورس,دوره,course,كورسات,محاضره,درس,ورشه;اللغة=لغه,لغات,~انكليزي,~انجليزي,~english,~فرنسي,~الماني,~كوري,~اسباني;البرمجة=برمجه,coding,programming;البودكاست=بودكاست,podcast',
+    music:'-=موسيقى,موسيقي,اغاني,اغنيه,غنا,طرب,مقام,سماع,music,playlist,بلاي لست,سبوتيفاي,spotify,انغامي,anghami;العود=عزف عود,عود عزف,عزف;الجيتار=جيتار,كيتار,guitar;البيانو=بيانو,اورك,piano;الحفلة=كونسيرت,concert,حفله غنائيه',
+    cook:'-=طبخ,اطبخ,طبخه,مطبخ,وصفه,cooking,اسوي اكل',
+    art:'-=رسم,ارسم,تلوين,لوحه,خط عربي,تصميم,فن,art,drawing,painting',
+    photo:'-=تصوير,كاميرا,photography',
+    write:'-=كتابه,تدوين,يوميات,شعر,خواطر,writing',
+    craft:'-=اشغال يدويه,خياطه,حياكه,كروشيه,تطريز,نجاره,ديكور,diy',
+    garden:'-=زراعه,ازرع,نباتات,زرع',
+    cars:'السيارة=سياره,سيارات,درفت,تفحيط,car,موتور,دراجه ناريه,غسل سياره',
+    pets:'-=قطه,بزونه,بزون,كلب,طيور,حيوانات اليفه,اسماك زينه,pets',
+    care:'الحلاقة=حلاقه,حلاق,زيان,barber;المساج=مساج,تدليك,سبا,spa,massage,حمام مغربي,ساونا,سونا,جاكوزي;العناية=عنايه,سكن كير,skincare,ماسك,بشره,مكياج,مناكير,مانيكير,باديكير,اظافر,صالون,كوافير',
+    celebrate:'عيد الميلاد=عيد ميلاد,birthday,بيرثدي;العيد=عيد,عيديه,eid;التخرج=تخرج,حفل تخرج,graduation;الزواج=زواج,عرس,زفاف,خطوبه,ملجه,wedding;الحفلة=حفله,بارتي,party,احتفال;النجاح=نجاح,تفوق,انجاز,ترقيه',
+    sm:'تيك توك=تيك توك,تكتوك,تيكتوك,tiktok;إنستغرام=انستا,انستغرام,انستقرام,انستكرام,instagram,insta,ريلز,reels;سناب=سناب,سناب شات,snapchat;يوتيوب=يوتيوب,يوتوب,youtube;إكس=تويتر,twitter;فيسبوك=فيسبوك,فيس,facebook;' +
+      'واتساب=واتساب,واتس,whatsapp;تلغرام=تلغرام,تيليكرام,telegram;ديسكورد=ديسكورد,discord;السوشل ميديا=سوشل,سوشيال,سوشل ميديا,سوشيال ميديا,social media,مواقع التواصل,تصفح,سكرول,scroll,النت,انترنت',
+    chat:'-=مكالمه,كول,فيديو كول,call,دردشه,سوالف,شات,chat',
+    smoke:'الأركيلة=اركيله,نركيله,نرجيله,نارجيله,شيشه,معسل,hookah,shisha;السيجارة=سيجاره,سكاير,جكاره,جكايره,سجاير,دخان,تتن,cigarette;الفيب=فيب,vape',
+    money:'-=مصروف,فلوس,خرجيه,مبلغ,كاش,دينار,دولار,money,راتب,بونص',
+    free:'-=وقت حر,وقت فراغ,فراغ,وقت خاص,وقت لنفسي,me time,ساعه حره,بلا التزامات,وقت شخصي'
+  };
+  const INTENT = {
+    watch:'مشاهده,شاهد,اشاهد,نشاهد,شوف,تفرج,اتفرج,فرجه,نتفرج,متابعه,اتابع,watch,watching',
+    play:'لعب,العب,نلعب,play,playing',
+    eat:'اكل,اكلي,ناكل,اتغدى,اتعشى,افطر,eat',
+    drink:'شرب,اشرب,نشرب,drink',
+    go:'اطلع,نطلع,اروح,نروح,اسافر',
+    buy:'شراء,اشتري,نشتري,اشتريلي,اطلب,شري,buy,order',
+    listen:'اسمع,نسمع,listen',
+    read:'اقرا,نقرا,read'
+  };
+  const EXTRA = [];   /* إضافات extend */
+
+  /* ---------- 4) الفهرس ---------- */
+  let IDX = null;
+  function build(){
+    const map = new Map(), singles = []; let maxN = 1;
+    const put = (key, e)=>{ if(!key) return; if(!map.has(key)) map.set(key, e); maxN = Math.max(maxN, key.split(' ').length); if(key.indexOf(' ') < 0 && key.length >= 4 && e.kind === 'c' && !e.c.amb) singles.push([key, e]); };
+    const addTerm = (raw, e)=>{ const amb = raw.charAt(0) === '~', n = norm(raw.replace(/^~/, '')); if(!n) return; const ee = amb ? Object.assign({}, e, { c:Object.assign({}, e.c, { amb:true }) }) : e;
+      put(n, ee); put(n.split(' ').map(stripAlWord).join(' '), ee); };
+    const feed = (d, spec)=>String(spec).split(';').forEach(part=>{ const k = part.indexOf('='); if(k < 0) return; const lab = part.slice(0, k).trim(), terms = part.slice(k + 1).split(',');
+      const e = { kind:'c', c:{ d:d, label:lab === '-' ? null : lab } }; terms.forEach(t=>addTerm(t.trim(), e)); if(lab !== '-' && d !== 'companion' && d !== 'team') addTerm(lab, e); });
+    Object.keys(INTENT).forEach(k=>INTENT[k].split(',').forEach(t=>{ const n = norm(t); if(n && !map.has(n)) map.set(n, { kind:'i', intent:k }); }));
+    ['companion'].concat(Object.keys(LEX).filter(d=>d !== 'companion')).forEach(d=>feed(d, LEX[d]));
+    EXTRA.forEach(x=>{ (x.terms || []).forEach(t=>addTerm(String(t), { kind:'c', c:{ d:x.domain, label:x.label || null } })); });
+    IDX = { map:map, singles:singles, maxN:Math.min(5, maxN) };
+  }
+  function extend(o){
+    if(!o) return false;
+    if(o.domain && (o.x || o.n || o.name) && !o.terms){ const d = DOM[o.domain] || (DOM[o.domain] = { name:o.name || o.domain, n:[] }); if(o.name) d.name = o.name; if(o.x) d.x = (d.x || []).concat(o.x); if(o.n) d.n = (d.n || []).concat(o.n); return true; }
+    if(!o.domain || !Array.isArray(o.terms)) return false;
+    if(!DOM[o.domain]) DOM[o.domain] = { name:o.name || o.domain, n:o.n || ['بالهنا'] };
+    EXTRA.push({ domain:o.domain, label:o.label || null, terms:o.terms });
+    if(o.say && o.label) SAY[o.domain + '/' + o.label] = (SAY[o.domain + '/' + o.label] || []).concat(o.say);
+    IDX = null; return true;
+  }
+  function dist1(a, b){   /* هل المسافة ≤ 1 (حذف/إضافة/استبدال/تبديل متجاورين) */
+    if(a === b) return true; const la = a.length, lb = b.length; if(Math.abs(la - lb) > 1) return false;
+    let i = 0; while(i < la && i < lb && a[i] === b[i]) i++;
+    if(la === lb){ if(a.slice(i + 1) === b.slice(i + 1)) return true; return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2); }
+    return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
+  }
+  function look(k){ return k ? IDX.map.get(k) || null : null; }
+
+  /* ---------- 5) التحليل ---------- */
+  function analyze(name){
+    if(!IDX) build();
+    let src = String(name === undefined || name === null ? '' : name);
+    try{ if(typeof CodisDuration !== 'undefined' && CodisDuration.strip){ const st = CodisDuration.strip(src); if(st && norm(st)) src = st; } }catch(e){}
+    const text = norm(src), out = { norm:text, frames:[], companions:[], teams:[], ctx:null, conf:'none', tags:[] };
+    if(!text) return out;
+    const toks = text.split(' '), ms = [];
+    for(let i = 0; i < toks.length;){
+      let hit = null;
+      for(let n = Math.min(IDX.maxN, toks.length - i); n >= 2 && !hit; n--){ const k = toks.slice(i, i + n).join(' '); const r = look(k) || look(k.split(' ').map(stripAlWord).join(' ')); if(r) hit = { r:r, n:n }; }
+      if(!hit && !STOP.has(toks[i])){ const vs = variants(toks[i]); for(let j = 0; j < vs.length && !hit; j++){ const r = look(vs[j]); if(r) hit = { r:r, n:1 }; } }
+      if(!hit && !STOP.has(toks[i]) && toks[i].length >= 5){ const w = stripAlWord(toks[i]); for(let j = 0; j < IDX.singles.length; j++){ const s = IDX.singles[j]; if(s[0].length >= 4 && s[0][0] === w[0] && dist1(w, s[0]) && !s[1].c.amb){ hit = { r:s[1], n:1, fuzzy:true }; break; } } }
+      if(hit){ ms.push({ i:i, n:hit.n, e:hit.r }); i += hit.n; } else i++;
+    }
+    const frames = [], comps = [], teams = []; let pend = null;
+    const iFrame = k=>({ d:{ watch:'watch', play:'games', eat:'eat', drink:'drink', go:'outing', buy:'shopping', listen:'music', read:'learn' }[k], labels:[], i:0 });
+    function apply(f, k){
+      if(k === 'watch'){ if(f.d === 'sport' || f.d === 'match'){ f.d = 'match'; f.labels = f.labels.filter(l=>l === 'الكلاسيكو' || l === 'الديربي'); } else if(f.d === 'games' && f.labels.length) f.d = 'watch'; }
+      else if(k === 'play'){ if(f.d === 'match'){ f.d = 'sport'; f.labels = ['الطوبة']; } }
+      else if(k === 'buy'){ if(f.d === 'games' || f.d === 'cars' || f.d === 'music' && f.labels.length){ f.d = 'shopping'; if(!f.labels.length) f.labels = ['اللعبة']; } }
+      f.intent = k;
+    }
+    ms.forEach(m=>{
+      if(m.e.kind === 'i'){ if(pend){ const pf = iFrame(pend.k); pf.i = pend.i; frames.push(pf); } pend = { k:m.e.intent, i:m.i }; return; }
+      const c = m.e.c;
+      if(c.d === 'companion'){ if(comps.indexOf(c.label) < 0) comps.push(c.label); return; }
+      if(c.d === 'team'){ teams.push(c); return; }
+      const f = { d:c.d, labels:c.label ? [c.label] : [], i:m.i, amb:!!c.amb };
+      if(pend){ if(m.i - pend.i <= 3){ apply(f, pend.k); f.amb = false; } else { const pf = iFrame(pend.k); pf.i = pend.i; frames.push(pf); } pend = null; }
+      frames.push(f);
+    });
+    if(pend){ const pf = iFrame(pend.k); pf.i = pend.i; frames.push(pf); }
+    const hasMatch = ()=>frames.some(f=>f.d === 'match');
+    const okTeams = teams.filter(t=>!t.amb || hasMatch() || frames.some(f=>f.d === 'sport' && !f.labels.length)), tl = [];
+    okTeams.forEach(t=>{ if(tl.indexOf(t.label) < 0) tl.push(t.label); });
+    if(tl.length){ if(!hasMatch()){ const sp = frames.findIndex(f=>f.d === 'sport'); if(sp > -1 && !frames[sp].labels.length) frames[sp].d = 'match'; else frames.push({ d:'match', labels:[], i:okTeams[0] ? 0 : 0 }); } }
+    { const sure = frames.filter(f=>!f.amb).map(f=>f.d); for(let k = frames.length - 1; k >= 0; k--) if(frames[k].amb && sure.indexOf(frames[k].d) < 0) frames.splice(k, 1); }
+    /* دمج نفس المجال بترتيب أول ظهور */
+    const merged = [];
+    frames.forEach(f=>{ const g = merged.find(x=>x.d === f.d); if(g){ f.labels.forEach(l=>{ if(g.labels.indexOf(l) < 0) g.labels.push(l); }); } else merged.push({ d:f.d, labels:f.labels.slice(), i:f.i }); });
+    let fr = merged.filter(f=>DOM[f.d]);
+    if(fr.length > 1) fr = fr.filter(f=>f.d !== 'free');
+    if(fr.some(f=>f.d === 'games') && fr.some(f=>f.d === 'match') && !tl.length && !frames.some(f=>f.intent === 'watch')) fr = fr.filter(f=>f.d !== 'match');   /* «مباراة بلايستيشن» = لعبة */
+    if(fr.some(f=>f.d === 'sleep')) fr = fr.filter(f=>f.d !== 'rest');
+    if(fr.some(f=>f.d === 'outing') && fr.some(f=>f.d === 'travel')){ const o = fr.find(f=>f.d === 'outing'); if(o.labels.length) fr = fr.filter(f=>f.d !== 'travel'); else fr = fr.filter(f=>f.d !== 'outing'); }
+    if(fr.some(f=>f.d === 'dayoff')) fr = fr.filter(f=>f.d !== 'rest');
+    if(fr.some(f=>f.d === 'gather') && comps.length && fr.length > 1) fr = fr.filter(f=>f.d !== 'gather');
+    fr = fr.slice(0, 3);
+    out.frames = fr; out.companions = comps; out.teams = tl;
+    out.ctx = fr.length ? fr[0].d : (comps.length ? 'companion' : null);
+    out.conf = fr.length || comps.length ? (fr.length + (comps.length ? 1 : 0) > 1 ? 'multi' : 'clear') : 'none';
+    out.tags = fr.map(f=>DOM[f.d].name).concat(comps.length ? ['ويا ' + joinAr(comps)] : []);
+    return out;
+  }
+
+  /* ---------- 6) الصياغة ---------- */
+  function joinAr(a){ return a.length <= 1 ? (a[0] || '') : a.slice(0, -1).join('، ') + ' و' + a[a.length - 1]; }
+  function pre(p, x){ return /^ال/.test(x) ? (p === 'ل' ? 'لل' + x.slice(2) : p + x) : p + 'ـ' + x; }
+  function fill(t, v){ return t.replace(/\{(\w+)\}/g, (m, k)=>(v[k] !== undefined ? v[k] : m)); }
+  function fnv(s){ let h = 2166136261; for(let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function mulberry(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const RK = 'codis_voice_recent';
+  function recentGet(){ try{ const a = JSON.parse(localStorage.getItem(RK) || '[]'); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
+  function recentPut(ids){ try{ const a = recentGet().concat(ids).slice(-40); localStorage.setItem(RK, JSON.stringify(a)); }catch(e){} }
+  function compose(name, seed, o){
+    o = o || {};
+    try{
+      const a = analyze(name), rng = mulberry(fnv(String(seed === undefined ? '' : seed) + '|' + a.norm)), recent = o.memo ? recentGet() : [], used = [];
+      const pick = (arr, id)=>{ const ix = arr.map((_, i)=>i), fresh = ix.filter(i=>recent.indexOf(id + ':' + i) < 0), pool = fresh.length ? fresh : ix, k = pool[Math.floor(rng() * pool.length) % pool.length]; used.push(id + ':' + k); return arr[k]; };
+      const vals = x=>({ x:x, lx:pre('ل', x), bx:pre('ب', x) });
+      function frag(f){
+        if(f.d === 'match'){
+          const sp = f.labels.find(l=>SAY['match/' + l]);
+          if(a.teams.length >= 2) return fill(pick(DOM.match.t2, 'm2'), { t1:a.teams[0], t2:a.teams[1] });
+          if(a.teams.length === 1) return fill(pick(DOM.match.t1, 'm1'), { t:a.teams[0], lt:pre('ل', a.teams[0]) });
+          if(sp) return pick(SAY['match/' + sp], 's:match/' + sp);
+          return pick(DOM.match.n, 'n:match');
+        }
+        const D = DOM[f.d], L = f.labels;
+        const said = L.filter(l=>SAY[f.d + '/' + l]), things = L.filter(l=>!SAY[f.d + '/' + l]);
+        if(said.length && (!things.length || !D.x) && (L.length > 1 || !D.x || rng() < .65)) return pick(SAY[f.d + '/' + said[0]], 's:' + f.d + '/' + said[0]);
+        if(L.length && D.x) return fill(pick(D.x, 'x:' + f.d), vals(joinAr(things.length ? things : L)));
+        return pick(D.n, 'n:' + f.d);
+      }
+      let parts = a.frames.map(frag);
+      while(parts.length > 1 && parts.join('، و').length > 78) parts.pop();   /* عبارة مقروءة: أهم الأشياء أولاً */
+      if(a.companions.length){ const cx = joinAr(a.companions); parts.push(fill(pick(parts.length ? DOM.companion.x : DOM.companion.solo, parts.length ? 'cx' : 'cs'), { x:cx })); }
+      let text;
+      if(!parts.length){
+        const nm = String(name || '').trim();
+        text = nm && nm.length <= 26 && !o.timed ? fill(pick(GENERIC.named, 'gn'), { name:nm }) : pick(GENERIC.plain, 'gp');
+      } else {
+        text = parts[0]; for(let i = 1; i < parts.length; i++) text += '، و' + parts[i];
+      }
+      if(o.timed) text = pick(TIMED, 'tm') + '، ' + text;
+      else if(parts.length === 1 && text.length < 34 && !/صبح|صباح|ليل|ظهر|عصر|مسا|فطور|ريوك|غدا|عشا|نوم|قيلول|سهر/.test(a.norm) && rng() < .3){ const h = (o.hour !== undefined ? o.hour : new Date().getHours()); text += h >= 5 && h < 12 ? '، ويومك حلو' : (h >= 18 || h < 3) ? '، وليلتك حلوة' : ''; }
+      if(o.memo) recentPut(used);
+      return { text:text, ctx:a.ctx, conf:a.conf, tags:a.tags, frames:a.frames, companions:a.companions, teams:a.teams, norm:a.norm };
+    }catch(e){ return { text:o && o.timed ? 'بدأ وقتك، بالهنا' : 'بالهنا والسرور', ctx:null, conf:'error', tags:[], frames:[], companions:[], teams:[], norm:'' }; }
+  }
+  return { norm:norm, analyze:analyze, compose:compose, extend:extend, domains:()=>Object.keys(DOM), _dom:DOM };
+})();
+
+/* ===== CODIS-USE-CINE v2 (3.23.0) — مشهد استخدام المكافأة المملوكة =====
+   • عرض فقط: يُستدعى بعد نجاح CodisEconomy.markUsed أو بدء المؤقت وحفظه (من «بحوزتك» ومن زر «استخدام» بمشهد الشراء). لا يمنح ولا يخصم ولا يغيّر بيانات؛
+     فشله لا يمسّ العملية (play ترجع false ← التنبيه القديم).
+   • الشكل: بطاقة ثلاثية الأبعاد (ظهر حبري بنقش غيوشيه ذهبي ← وجه ورقي فاخر) تطير وتنقلب، إطار رقائقي تتدرج خامته بالمستوى (حبر · نحاس · ذهب · هولوغرافي · طيفي)،
+     ميلان تفاعلي مع الإصبع/المؤشر وانعكاس ضوء ولمعة هولوغرافية تتبعه، ختم يُضغط (انضغاط البطاقة + موجة + اهتزاز خفيف + غبار ذهبي)، ووسوم «فهم» المكافأة ثم العبارة كلمة كلمة.
+   • الجسيمات والأشعة على لوحتي canvas (خلف/أمام البطاقة) بحلقة rAF واحدة تتوقف وحدها عند الفراغ. تقليل الحركة ⇒ بلا قلب ولا جسيمات، ظهور هادئ.
+   • القوة من السعر: paid المحفوظ (>0) وإلا coinValue المحفوظ وقت الحصول وإلا مستوى 1 — بحدود CodisRevealLevels نفسها. الرسالة من الاسم فقط (CodisRewardVoice).
+   • لا إغلاق سريع: يبقى حتى «تمام»/النقر خارج البطاقة/Esc/رجوع، وإغلاق تلقائي فقط بعد وقت قراءة طويل. كل شيء يُنظَّف عند الإغلاق. */
+const CodisUseCine = (function(){
+  'use strict';
+  /* flip 0 ظهور مباشر · 1 قلبة · 2 قلبة ودورة كاملة | foil خامة الإطار | shine مرات لمعة الإطار | dust غبار ذهبي · sparks شرر طويل · conf شرائط احتفال
+     rings موجات · rays أشعة (1/2) · glow توهج · aurora شفق · flash وميض | fly مدة الطيران | buzz اهتزاز الجهاز */
+  const R = [null,
+    { flip:0, foil:'ink',    shine:0, dust:8,  sparks:0,  conf:0,  rings:1, rays:0, glow:.16, aurora:0, flash:0, fly:640,  buzz:6 },
+    { flip:1, foil:'ink',    shine:1, dust:16, sparks:0,  conf:0,  rings:1, rays:0, glow:.2,  aurora:0, flash:0, fly:780,  buzz:8 },
+    { flip:1, foil:'copper', shine:1, dust:24, sparks:6,  conf:0,  rings:1, rays:0, glow:.26, aurora:0, flash:0, fly:820,  buzz:8 },
+    { flip:1, foil:'copper', shine:2, dust:32, sparks:10, conf:0,  rings:2, rays:0, glow:.3,  aurora:0, flash:0, fly:860,  buzz:10 },
+    { flip:1, foil:'gold',   shine:1, dust:40, sparks:12, conf:30, rings:2, rays:0, glow:.36, aurora:0, flash:0, fly:900,  buzz:12 },
+    { flip:1, foil:'gold',   shine:2, dust:50, sparks:16, conf:40, rings:2, rays:1, glow:.42, aurora:0, flash:0, fly:940,  buzz:14 },
+    { flip:2, foil:'holo',   shine:2, dust:60, sparks:20, conf:55, rings:3, rays:1, glow:.48, aurora:0, flash:0, fly:1080, buzz:16 },
+    { flip:2, foil:'holo',   shine:3, dust:72, sparks:26, conf:70, rings:3, rays:2, glow:.54, aurora:0, flash:0, fly:1140, buzz:18 },
+    { flip:2, foil:'prism',  shine:3, dust:90, sparks:34, conf:95, rings:3, rays:2, glow:.6,  aurora:1, flash:1, fly:1240, buzz:22 }
+  ];
+  const GOLD = ['255,226,150', '255,200,90', '255,244,214', '240,170,70'];
+  const CONF = ['#f5cf6b', '#e8873a', '#c8423a', '#2f8f83', '#f6eedb', '#6f7fd8', '#d65d95'];
+  let s = null;
+  const ease = { out:'cubic-bezier(.16,1,.3,1)', spring:'cubic-bezier(.34,1.45,.64,1)', io:'cubic-bezier(.65,0,.35,1)' };
+  const rnd = (a, b)=>a + Math.random() * (b - a);
+  const later = (fn, ms)=>{ if(!s) return; const st = s; st.tm.push(setTimeout(()=>{ if(s === st && !st.closing) fn(); }, Math.max(0, ms))); };
+  function snap(it){ return it ? { uid:String(it.uid), name:String(it.name || ''), paid:it.paid, coinValue:it.coinValue, rewardId:it.rewardId || null } : null; }
+  function priceOf(sn){ const p = Number(sn && sn.paid), c = Number(sn && sn.coinValue); if(sn && typeof sn.paid === 'number' && isFinite(p) && p > 0) return p; if(isFinite(c) && c > 0) return c; return NaN; }
+  function levelOf(sn){ const v = priceOf(sn); return isFinite(v) ? CodisRevealLevels.levelOfValue(v) : 1; }
+  const ROSETTE = '<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="50" cy="50" r="44"/><circle cx="50" cy="50" r="38" stroke-dasharray="2 3"/><circle cx="50" cy="50" r="18"/>' +
+    '<path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19L71 29M29 71L19 81"/></g><path d="M50 34l4.2 11.3 11.8.6-9.3 7.4 3.2 11.5L50 58.2l-9.9 6.6 3.2-11.5-9.3-7.4 11.8-.6z" fill="currentColor"/></svg>';
+  const CORNER = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 22V9a7 7 0 0 1 7-7h13M2 15a13 13 0 0 1 13-13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>';
+  const CHECK = '<svg class="ucx-chk" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></svg>';
+  const CLOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 9v4.4l2.8 1.7M9.5 2.8h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+
+  /* ---------- طبقة الجسيمات (canvas) ---------- */
+  function fxInit(st, rc, lite){
+    const mk = cls=>{ const c = st.root.querySelector(cls); const ctx = c && c.getContext ? c.getContext('2d') : null; return ctx ? { cv:c, ctx:ctx } : null; };
+    const F = { back:mk('.ucx-cv-b'), front:mk('.ucx-cv-f'), ps:[], rings:[], raf:0, w:0, h:0, dpr:Math.min(lite ? 1 : 2, window.devicePixelRatio || 1), rays:null, glow:null, aurora:null, t0:performance.now() };
+    if(!F.back || !F.front) return null;
+    function size(){ const r = st.root.getBoundingClientRect(); F.w = r.width; F.h = r.height; [F.back, F.front].forEach(L=>{ L.cv.width = Math.max(1, Math.round(F.w * F.dpr)); L.cv.height = Math.max(1, Math.round(F.h * F.dpr)); }); }
+    size(); F.size = size;
+    return F;
+  }
+  function fxKick(){ const F = s && s.fx; if(F && !F.raf) F.raf = requestAnimationFrame(fxTick); }
+  function fxTick(now){
+    const st = s, F = st && st.fx; if(!F) return; F.raf = 0;
+    const B = F.back.ctx, T = F.front.ctx, d = F.dpr, W = F.w, H = F.h;
+    B.setTransform(d, 0, 0, d, 0, 0); T.setTransform(d, 0, 0, d, 0, 0); B.clearRect(0, 0, W, H); T.clearRect(0, 0, W, H);
+    let alive = false;
+    const cr = st.card.getBoundingClientRect(), rb = st.root.getBoundingClientRect(), cx = cr.left + cr.width / 2 - rb.left, cy = cr.top + cr.height / 2 - rb.top;
+    /* توهج + أشعة + شفق خلف البطاقة */
+    if(F.glow){ const g = F.glow, t = (now - g.t0) / g.dur; if(t < 1){ alive = true; const a = g.a * (t < .2 ? t / .2 : 1 - (t - .2) / .8 * .55);
+      const rg = B.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * .55); rg.addColorStop(0, 'rgba(' + g.rgb + ',' + a + ')'); rg.addColorStop(.45, 'rgba(' + g.rgb + ',' + a * .35 + ')'); rg.addColorStop(1, 'rgba(' + g.rgb + ',0)'); B.fillStyle = rg; B.fillRect(0, 0, W, H); } else F.glow = null; }
+    if(F.aurora){ const g = F.aurora, t = (now - g.t0) / g.dur; if(t < 1){ alive = true; const a = .32 * Math.sin(Math.PI * t);
+      [['120,90,255', -.3], ['40,220,200', .35], ['255,120,180', 0]].forEach((c, i)=>{ const x = cx + Math.cos(now / 900 + i * 2.1) * W * .32, y = cy + c[1] * H + Math.sin(now / 1100 + i) * H * .08, r = Math.max(W, H) * .42;
+        const rg = B.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, 'rgba(' + c[0] + ',' + a + ')'); rg.addColorStop(1, 'rgba(' + c[0] + ',0)'); B.fillStyle = rg; B.fillRect(0, 0, W, H); }); } else F.aurora = null; }
+    if(F.rays){ const g = F.rays, t = (now - g.t0) / g.dur; if(t < 1){ alive = true; const a = (t < .15 ? t / .15 : 1 - (t - .15) / .85) * g.a, rot = (now - g.t0) / 9000 * Math.PI * 2, R0 = Math.max(W, H) * .75, n = g.n;
+      B.save(); B.translate(cx, cy); B.globalCompositeOperation = 'lighter';
+      for(let k = 0; k < n; k++){ const an = rot + k * Math.PI * 2 / n, w = (k % 2 ? .05 : .09);
+        const lg = B.createRadialGradient(0, 0, 0, 0, 0, R0); lg.addColorStop(0, 'rgba(255,230,160,' + a + ')'); lg.addColorStop(1, 'rgba(255,230,160,0)'); B.fillStyle = lg;
+        B.beginPath(); B.moveTo(0, 0); B.arc(0, 0, R0, an - w, an + w); B.closePath(); B.fill(); }
+      B.restore(); } else F.rays = null; }
+    /* موجات */
+    F.rings = F.rings.filter(r=>{ const t = (now - r.t0) / r.dur; if(t < 0){ alive = true; return true; } if(t >= 1) return false; alive = true;
+      const e = 1 - Math.pow(1 - t, 3); T.beginPath(); T.arc(r.x, r.y, r.r0 + (r.r1 - r.r0) * e, 0, Math.PI * 2); T.strokeStyle = 'rgba(' + r.rgb + ',' + (1 - t) * .8 + ')'; T.lineWidth = r.w * (1 - t) + .5; T.stroke(); return true; });
+    /* جسيمات */
+    T.globalCompositeOperation = 'source-over';
+    F.ps = F.ps.filter(p=>{
+      if(p.delay > 0){ p.delay--; alive = true; return true; }
+      p.life++; if(p.life > p.max) return false; alive = true;
+      p.vx *= p.drag; p.vy = p.vy * p.drag + p.g; p.x += p.vx + (p.sway ? Math.sin((p.life + p.ph) / 14) * p.sway : 0); p.y += p.vy; p.rot += p.vr;
+      const k = p.life / p.max, a = p.kind === 'conf' ? Math.min(1, (1 - k) * 3) : (1 - k) * (p.kind === 'dust' ? (.55 + .45 * Math.sin(p.life / 3 + p.ph)) : 1);
+      if(p.kind === 'conf'){ T.save(); T.translate(p.x, p.y); T.rotate(p.rot); T.scale(1, Math.cos(p.life / 6 + p.ph)); T.globalAlpha = a; T.fillStyle = p.c; T.fillRect(-p.s / 2, -p.s * .9, p.s, p.s * 1.8); T.restore(); }
+      else if(p.kind === 'spark'){ T.globalAlpha = a; T.strokeStyle = 'rgb(' + p.c + ')'; T.lineWidth = p.s; T.lineCap = 'round'; T.beginPath(); T.moveTo(p.x, p.y); T.lineTo(p.x - p.vx * 3.2, p.y - p.vy * 3.2); T.stroke(); }
+      else { T.globalAlpha = a; T.fillStyle = 'rgb(' + p.c + ')'; T.beginPath(); T.arc(p.x, p.y, p.s, 0, Math.PI * 2); T.fill(); if(p.s > 1.8){ T.globalAlpha = a * .25; T.beginPath(); T.arc(p.x, p.y, p.s * 3, 0, Math.PI * 2); T.fill(); } }
+      return true; });
+    T.globalAlpha = 1;
+    if(alive) F.raf = requestAnimationFrame(fxTick);
+  }
+  function burst(rc, lite){
+    const st = s, F = st && st.fx; if(!F) return;
+    const rb = st.root.getBoundingClientRect(), sr = st.root.querySelector('.ucx-seal').getBoundingClientRect(), cr = st.card.getBoundingClientRect();
+    const x = sr.left + sr.width / 2 - rb.left, y = sr.top + sr.height / 2 - rb.top, n = k=>lite ? Math.ceil(k * .5) : k, now = performance.now();
+    for(let i = 0; i < rc.rings; i++) F.rings.push({ x:x, y:y, r0:sr.width * .4, r1:sr.width * (1.6 + i * .9), w:3 - i * .6, t0:now + i * 110, dur:700 + i * 160, rgb:i ? '255,226,150' : '255,246,224' });
+    if(rc.rings > 1) F.rings.push({ x:cr.left + cr.width / 2 - rb.left, y:cr.top + cr.height / 2 - rb.top, r0:cr.width * .5, r1:cr.width * 1.5, w:2, t0:now + 60, dur:900, rgb:'255,214,130' });
+    for(let i = 0; i < n(rc.dust); i++){ const a = rnd(0, Math.PI * 2), v = rnd(1.2, 5.4); F.ps.push({ kind:'dust', x:x, y:y, vx:Math.cos(a) * v, vy:Math.sin(a) * v - 1.2, g:.035, drag:.955, life:0, max:rnd(55, 110) | 0, s:rnd(.8, 2.6), c:GOLD[i % GOLD.length], ph:rnd(0, 9), rot:0, vr:0, delay:0 }); }
+    for(let i = 0; i < n(rc.sparks); i++){ const a = rnd(0, Math.PI * 2), v = rnd(5, 9.5); F.ps.push({ kind:'spark', x:x, y:y, vx:Math.cos(a) * v, vy:Math.sin(a) * v, g:.05, drag:.93, life:0, max:rnd(24, 40) | 0, s:rnd(1.1, 2), c:'255,236,190', ph:0, rot:0, vr:0, delay:0 }); }
+    for(let i = 0; i < n(rc.conf); i++){ F.ps.push({ kind:'conf', x:rnd(0, F.w), y:rnd(-60, -10), vx:rnd(-.6, .6), vy:rnd(1.6, 3.4), g:.012, drag:.995, sway:rnd(.4, 1.3), life:0, max:rnd(170, 260) | 0, s:rnd(5, 8), c:CONF[i % CONF.length], ph:rnd(0, 30), rot:rnd(0, 6), vr:rnd(-.12, .12), delay:rnd(0, 26) | 0 }); }
+    if(rc.rays) F.rays = { t0:now, dur:3200, a:rc.rays > 1 ? .2 : .14, n:rc.rays > 1 ? 18 : 12 };
+    if(rc.aurora && !lite) F.aurora = { t0:now, dur:4200 };
+    fxKick();
+  }
+
+  /* ---------- الميلان التفاعلي ---------- */
+  function tiltOn(st){
+    const tilt = st.root.querySelector('.ucx-tilt'), card = st.card; let raf = 0, px = 0, py = 0;
+    const apply = ()=>{ raf = 0; if(!st.ready || st.closing) return; const r = card.getBoundingClientRect(); if(!r.width) return;
+      const nx = Math.max(-1, Math.min(1, (px - (r.left + r.width / 2)) / (r.width * .75))), ny = Math.max(-1, Math.min(1, (py - (r.top + r.height / 2)) / (r.height * .75)));
+      tilt.style.transform = 'rotateX(' + (-ny * 13).toFixed(2) + 'deg) rotateY(' + (nx * 15).toFixed(2) + 'deg)';
+      card.style.setProperty('--mx', (50 + nx * 42).toFixed(1) + '%'); card.style.setProperty('--my', (50 + ny * 42).toFixed(1) + '%'); };
+    st.onMove = e=>{ px = e.clientX; py = e.clientY; if(!raf) raf = requestAnimationFrame(apply); };
+    st.onLeave = ()=>{ tilt.style.transform = ''; card.style.setProperty('--mx', '50%'); card.style.setProperty('--my', '30%'); };
+    st.root.addEventListener('pointermove', st.onMove); st.root.addEventListener('pointerleave', st.onLeave); st.root.addEventListener('pointerup', e=>{ if(e.pointerType !== 'mouse') st.onLeave(); });
+  }
+
+  function play(sn, o){
+    try{
+      o = o || {};
+      if(!sn || !sn.uid || !sn.name) return false;
+      if(s) cleanup();
+      const timed = !!o.timed, lv = levelOf(sn), rc = R[lv];
+      const reduced = CodisMotion.isReduced(), lite = reduced || (navigator.hardwareConcurrency || 8) <= 4;
+      const v = CodisRewardVoice.compose(sn.name, sn.uid, { timed:timed, memo:true });
+      const bx = document.body.getBoundingClientRect(), vw = Math.min(innerWidth, bx.width || innerWidth);
+      const W = Math.round(Math.max(168, Math.min(236, vw * .6, (innerHeight - 340) / 1.4)));
+      const nl = sn.name.length, nCls = nl <= 12 ? 'n1' : nl <= 22 ? 'n2' : nl <= 40 ? 'n3' : 'n4';
+      const root = document.createElement('div');
+      root.className = 'ucx lv-' + lv + ' f-' + rc.foil + (reduced ? ' is-reduced' : '') + (timed ? ' is-timed' : '');
+      root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', (timed ? 'بدأت المكافأة: ' : 'استُخدمت المكافأة: ') + sn.name); root.setAttribute('aria-describedby', 'ucx-msg');
+      root.style.setProperty('--w', W + 'px');
+      const words = v.text.split(' ').map((w, i)=>'<span class="ucx-w" style="--i:' + i + '">' + escapeHtml(w) + '</span>').join(' ');
+      const tags = (v.tags || []).slice(0, 4).map(t=>'<span class="ucx-tag">' + escapeHtml(t) + '</span>').join('');
+      const dur = timed && o.dur ? CodisDuration.label(o.dur.min) : '';
+      let corners = ''; for(let i = 1; i <= 4; i++) corners += '<i class="ucx-cn c' + i + '" aria-hidden="true">' + CORNER + '</i>';
+      root.innerHTML = '<div class="ucx-bg"></div><canvas class="ucx-cv ucx-cv-b" aria-hidden="true"></canvas>' +
+        '<div class="ucx-stage"><div class="ucx-fly"><div class="ucx-float"><div class="ucx-tilt"><div class="ucx-card" style="width:' + W + 'px">' +
+          '<div class="ucx-back" aria-hidden="true"><i class="ucx-guil"></i><span class="ucx-ros">' + ROSETTE + '</span><b class="ucx-mark">CODIS</b></div>' +
+          '<div class="ucx-paper"><i class="ucx-foil" aria-hidden="true"></i><i class="ucx-rule" aria-hidden="true"></i>' + corners +
+            '<div class="ucx-brand" aria-hidden="true"><i></i>CODIS<i></i></div>' +
+            '<span class="ucx-medal" aria-hidden="true">' + ROSETTE + '</span>' +
+            '<div class="ucx-name ' + nCls + '" dir="auto">' + escapeHtml(sn.name) + '</div>' +
+            '<div class="ucx-kicker">' + (timed ? 'بدأ وقت المكافأة' : 'مكافأة مستخدَمة') + '</div>' +
+            '<div class="ucx-seal" aria-hidden="true"><span class="ucx-seal-in">' + (timed ? CLOCK : CHECK) + '<b>' + (timed ? 'بدأت' : 'استُخدمت') + '</b></span></div>' +
+            '<i class="ucx-holo" aria-hidden="true"></i><i class="ucx-spec" aria-hidden="true"></i><i class="ucx-shine" aria-hidden="true"></i>' +
+          '</div></div></div></div></div>' +
+          '<div class="ucx-tags" aria-hidden="true">' + tags + '</div>' +
+          '<p class="ucx-msg" id="ucx-msg" dir="auto">' + words + '</p>' +
+          (timed ? '<div class="ucx-chip">' + CLOCK + '<b>' + escapeHtml(dur) + '</b><span>العدّاد شغّال</span></div>' : '') +
+          '<div class="ucx-acts"><button type="button" class="ucx-ok">تمام</button></div>' +
+        '</div><canvas class="ucx-cv ucx-cv-f" aria-hidden="true"></canvas>' +
+        '<button type="button" class="ucx-x" aria-label="إغلاق"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg></button>';
+      document.body.appendChild(root);
+      s = { root:root, card:root.querySelector('.ucx-card'), fly:root.querySelector('.ucx-fly'), tm:[], closing:false, ready:false, t0:Date.now(), prev:document.activeElement, lv:lv, text:v.text, ctx:v.ctx, tags:v.tags, uid:sn.uid, timed:timed, fx:null };
+      const st = s;
+      st.fx = reduced ? null : fxInit(st, rc, lite);
+      st.onKey = e=>{ if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); dismiss(); } else if(e.key === 'Tab'){ e.preventDefault(); const b = st.root.querySelector(st.ready ? '.ucx-ok' : '.ucx-x'); try{ b.focus(); }catch(x){} } };
+      st.onResize = ()=>{ if(st.fx) st.fx.size(); };
+      root.addEventListener('keydown', st.onKey); window.addEventListener('resize', st.onResize);
+      root.querySelector('.ucx-x').addEventListener('click', e=>{ e.stopPropagation(); dismiss(); });
+      root.querySelector('.ucx-ok').addEventListener('click', e=>{ e.stopPropagation(); dismiss(); });
+      root.addEventListener('click', e=>{ if(st.ready && !e.target.closest('.ucx-card, .ucx-acts, .ucx-msg')) dismiss(); });
+      if(!reduced) tiltOn(st);
+      try{ root.querySelector('.ucx-x').focus({ preventScroll:true }); }catch(e){}
+      try{ CodisCrumb.mark('use:cine', 'lv' + lv); }catch(e){}
+
+      /* ---- التسلسل ---- */
+      const A = codisAnim, FLY = reduced ? 0 : rc.fly;
+      A(root.querySelector('.ucx-bg'), [{ opacity:0 }, { opacity:1 }], { dur:380, ease:'linear', fill:'both' });
+      if(st.fx){ st.fx.glow = { t0:performance.now(), dur:FLY + 5200, a:rc.glow, rgb:rc.foil === 'holo' || rc.foil === 'prism' ? '200,190,255' : '255,206,120' }; fxKick(); }
+      A(st.fly, [{ transform:'translateY(58vh) scale(.62)', opacity:0 }, { transform:'translateY(-14px) scale(1.04)', opacity:1, offset:.72 }, { transform:'translateY(0) scale(1)', opacity:1 }], { dur:FLY || 300, ease:ease.out, fill:'both' });
+      if(rc.flip && !reduced){
+        const from = rc.flip > 1 ? 540 : 180;
+        A(st.card, [{ transform:'rotateY(' + from + 'deg) rotateZ(-6deg)' }, { transform:'rotateY(-14deg) rotateZ(1.5deg)', offset:.78 }, { transform:'rotateY(5deg) rotateZ(0deg)', offset:.9 }, { transform:'rotateY(0deg) rotateZ(0deg)' }], { dur:FLY + 160, delay:80, ease:ease.out, fill:'both' });
+      }
+      const land = reduced ? 120 : FLY + 220;
+      /* لمعة الإطار والوجه */
+      const sh = root.querySelector('.ucx-shine');
+      for(let i = 0; i < rc.shine && !reduced; i++) A(sh, [{ transform:'translateX(-130%) skewX(-16deg)', opacity:1 }, { transform:'translateX(230%) skewX(-16deg)', opacity:1 }], { dur:900, delay:land + 200 + i * 760, ease:'cubic-bezier(.5,0,.3,1)', fill:'none' });
+      if(rc.shine > 1 && !reduced) A(root.querySelector('.ucx-foil'), [{ backgroundPosition:'0% 50%' }, { backgroundPosition:'100% 50%' }, { backgroundPosition:'0% 50%' }], { dur:2600, delay:land, ease:ease.io, fill:'none' });
+      /* الختم */
+      const seal = root.querySelector('.ucx-seal-in'), tStamp = land + 80;
+      A(seal, [{ transform:'scale(2.3) rotate(-30deg)', opacity:0 }, { transform:'scale(.9) rotate(-10deg)', opacity:1, offset:.6 }, { transform:'scale(1.05) rotate(-13deg)', opacity:1, offset:.8 }, { transform:'scale(1) rotate(-12deg)', opacity:1 }], { dur:reduced ? 140 : 420, delay:tStamp, ease:ease.out, fill:'both' });
+      const chk = root.querySelector('.ucx-chk path'); if(chk && !reduced) A(chk, [{ strokeDashoffset:1 }, { strokeDashoffset:0 }], { dur:360, delay:tStamp + 260, ease:ease.out, fill:'both' });
+      if(!reduced){
+        later(()=>{
+          A(st.fly, [{ transform:'scale(1)' }, { transform:'scale(.962,.948) translateY(3px)' }, { transform:'scale(1.012)' }, { transform:'scale(1)' }], { dur:300, ease:'ease-out', fill:'none' });
+          if(rc.flash){ const f = document.createElement('i'); f.className = 'ucx-flash'; root.appendChild(f); A(f, [{ opacity:0 }, { opacity:.75, offset:.2 }, { opacity:0 }], { dur:700, ease:'ease-out', fill:'both' }); }
+          burst(rc, lite);
+          try{ if(navigator.vibrate) navigator.vibrate(rc.buzz); }catch(e){}
+        }, tStamp + 250);
+      }
+      /* الوسوم ثم العبارة كلمة كلمة (مقروءة) */
+      const tTags = reduced ? 0 : tStamp + 420;
+      root.querySelectorAll('.ucx-tag').forEach((t, i)=>A(t, [{ transform:'translateY(8px) scale(.85)', opacity:0 }, { transform:'translateY(0) scale(1)', opacity:1 }], { dur:420, delay:tTags + i * 110, ease:ease.spring, fill:'both' }));
+      const ws = root.querySelectorAll('.ucx-w'), tMsg = reduced ? 0 : tTags + 260, step = 95;
+      ws.forEach((w, i)=>A(w, [{ transform:'translateY(12px)', opacity:0, filter:'blur(6px)' }, { transform:'translateY(0)', opacity:1, filter:'blur(0px)' }], { dur:560, delay:tMsg + i * step, ease:ease.out, fill:'both' }));
+      const chip = root.querySelector('.ucx-chip'); if(chip) A(chip, [{ transform:'translateY(8px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:420, delay:tMsg + ws.length * step + 120, ease:ease.out, fill:'both' });
+      const tEnd = tMsg + ws.length * step + 560;
+      const acts = root.querySelector('.ucx-acts');
+      A(acts, [{ transform:'translateY(10px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:380, delay:reduced ? 0 : tEnd, ease:ease.out, fill:'both' });
+      later(()=>{ st.ready = true; root.classList.add('is-ready'); try{ root.querySelector('.ucx-ok').focus({ preventScroll:true }); }catch(e){} if(!reduced) root.querySelector('.ucx-float').classList.add('is-idle'); }, reduced ? 200 : tEnd + 200);
+      later(dismiss, Math.max(tEnd + 9000, 12000 + v.text.length * 60));   /* إغلاق تلقائي فقط بعد وقت قراءة طويل */
+      return true;
+    }catch(e){ console.error('CodisUseCine:', e); try{ cleanup(); }catch(x){} return false; }
+  }
+  function cleanup(){
+    const st = s; if(!st) return; s = null;
+    st.closing = true; st.tm.forEach(clearTimeout);
+    if(st.fx){ if(st.fx.raf) cancelAnimationFrame(st.fx.raf); st.fx.ps = []; try{ [st.fx.back, st.fx.front].forEach(L=>{ L.cv.width = 1; L.cv.height = 1; }); }catch(e){} st.fx = null; }
+    try{ window.removeEventListener('resize', st.onResize); st.root.removeEventListener('keydown', st.onKey); if(st.onMove){ st.root.removeEventListener('pointermove', st.onMove); st.root.removeEventListener('pointerleave', st.onLeave); } st.root.remove(); }catch(e){}
+    try{ if(st.prev && st.prev.focus && document.contains(st.prev)) st.prev.focus({ preventScroll:true }); }catch(e){}
+    try{ CodisCrumb.idle(); }catch(e){}
+  }
+  function dismiss(){
+    if(!s || s.closing) return; const st = s; st.closing = true; st.tm.forEach(clearTimeout); st.root.classList.add('is-out');
+    let fin = false; const end = ()=>{ if(fin) return; fin = true; if(s === st){ st.closing = false; cleanup(); } };
+    const a = codisAnim(st.root, [{ opacity:1 }, { opacity:0 }], { dur:260, ease:'linear', fill:'forwards', done:end });
+    if(!a) end(); else setTimeout(end, 380);
+  }
+  return { play:play, snap:snap, levelOf:levelOf, priceOf:priceOf, dismiss:dismiss, isOpen:()=>!!s, el:()=>s && s.root, _state:()=>s, _recipes:R };
+})();
+
 /* — مشهد الشراء: يُشغَّل بعد نجاح CodisEconomy.purchase فقط، بسعرها المدفوع (r.price) ونسختها (r.owned.uid). لا يمنح ولا يخصم شيئاً.
      المستوى من CodisRevealLevels.levelOfValue(السعر) — نفس حدود كشف الصناديق التسعة — والحركة عبر CodisMotion.run (يحترم تقليل الحركة) — */
 const CodisBuyCine = (function(){
@@ -23640,14 +24232,14 @@ const CodisBuyCine = (function(){
   function keep(){ if(!s || s.acting) return; s.acting = true; close(()=>{ try{ econRenderAll(); }catch(e){} showToast('انحفظت ببحوزتك', 'var(--success)', 'gift'); }); }
   function useNow(){
     if(!s || s.acting) return; s.acting = true;
-    const uid = s.uid, it = CodisInventory.get(uid); let ok = false, msg = 'هذي المكافأة ما عدت بحوزتك';
+    const uid = s.uid, it = CodisInventory.get(uid); let ok = false, msg = 'هذي المكافأة ما عدت بحوزتك', _sn = null, _d = null;   /* CODIS-USE-CINE */
     if(it && it.status === 'owned'){
-      const d = CodisDuration.parse(it.name);
+      const d = CodisDuration.parse(it.name); _sn = CodisUseCine.snap(it); _d = d;
       if(d){ const rt = codisRewardTimerStart(uid); ok = rt.ok; msg = ok ? 'بدأ المؤقت: ' + CodisDuration.label(d.min) : 'تعذّر بدء المؤقت'; if(ok) CodisPush.nudge(); }
       else { const r2 = CodisEconomy.markUsed(uid); ok = !!(r2 && r2.ok); msg = ok ? 'انسجّلت كمستخدَمة' : (r2 && r2.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : 'تعذّر التنفيذ'); }
     }
     if(ok){ try{ codisSfx('confirm', { ctx:'use' }); }catch(e){} }
-    close(()=>{ try{ econRenderAll(); }catch(e){} showToast(msg, ok ? 'var(--success)' : 'var(--warning)', ok ? 'check' : undefined); });
+    close(()=>{ try{ econRenderAll(); }catch(e){} let _pl = false; if(ok && _sn){ try{ _pl = CodisUseCine.play(_sn, { timed:!!_d, dur:_d }); }catch(e){} } if(!_pl) showToast(msg, ok ? 'var(--success)' : 'var(--warning)', ok ? 'check' : undefined); });   /* CODIS-USE-CINE */
   }
   return { play:play, keep:keep, isOpen:()=>!!s, el:()=>s && s.root, _state:()=>s };
 })();
@@ -25079,21 +25671,21 @@ async function econUse(uid){
   try{
     const it = CodisInventory.get(uid);
     if(!it || it.status !== 'owned'){ codisSfx('invalid', { ctx:'unavailable' }); return; }
-    const _dur = CodisDuration.parse(it.name);
+    const _dur = CodisDuration.parse(it.name), _sn = CodisUseCine.snap(it);   /* CODIS-USE-CINE: لقطة العرض قبل أي تغيير بالحالة */
     if(_dur){   /* CODIS-TIMERS: مكافأة ذات مدة ← مؤقت حقيقي مرتبط بالنسخة نفسها */
       const _run = CodisTimers.active('reward', uid);
       if(_run){ showToast('مؤقتها شغّال — باقي ' + CodisTimers.fmt(_run.endsAt - Date.now()), 'var(--warning)'); return; }
       const okT = await codisConfirm({ title:'تبدأ «' + it.name + '»؟', message:'يبدأ مؤقت ' + CodisDuration.label(_dur.min) + ' من الآن.', detail:'لما يخلص الوقت تنعلَّم المكافأة كمستخدَمة ويوصلك إشعار. ما تنباع وهي شغّالة.', icon:'check', confirmText:'ابدأ الآن', danger:false });
       if(!okT) return;
       const rt = codisRewardTimerStart(uid);
-      if(rt.ok){ codisSfx('confirm', { ctx:'use' }); showToast('بدأ المؤقت: ' + CodisDuration.label(_dur.min), 'var(--success)', 'check'); CodisPush.nudge(); }
+      if(rt.ok){ codisSfx('confirm', { ctx:'use' }); CodisPush.nudge(); let _pl = false; try{ _pl = CodisUseCine.play(_sn, { timed:true, dur:_dur }); }catch(e){} if(!_pl) showToast('بدأ المؤقت: ' + CodisDuration.label(_dur.min), 'var(--success)', 'check'); }   /* CODIS-USE-CINE */
       else { codisSfx('invalid', { ctx:'unavailable' }); showToast(rt.reason === 'save' ? 'تعذّر الحفظ — ما بدأ المؤقت' : 'تعذّر بدء المؤقت', 'var(--warning)'); }
       return;
     }
     const ok = await codisConfirm(CodisCopy.useReward(it.name));
     if(!ok) return;
     const r = CodisEconomy.markUsed(uid);
-    if(r.ok){ codisSfx('confirm', { ctx:'use' }); showToast('انسجّلت كمستخدَمة', 'var(--success)', 'check'); }
+    if(r.ok){ codisSfx('confirm', { ctx:'use' }); let _pl = false; try{ _pl = CodisUseCine.play(_sn, { timed:false }); }catch(e){} if(!_pl) showToast('انسجّلت كمستخدَمة', 'var(--success)', 'check'); }   /* CODIS-USE-CINE */
     else { codisSfx('invalid', { ctx:'unavailable' }); showToast(r.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : 'تعذّر التنفيذ', 'var(--warning)'); }
   } finally { econSellBusy = false; econRenderAll(); }
 }
@@ -27198,6 +27790,7 @@ Object.keys(MODAL_CLOSERS).forEach(id=>{
 function codisBackLayer(){
   const open = id=>{ const el = document.getElementById(id); return !!el && el.style.display !== 'none' && el.style.display !== ''; };
   const L = (id, act)=>({ act:act, el:document.getElementById(id) });
+  if(CodisUseCine.isOpen()) return { act:CodisUseCine.dismiss, el:CodisUseCine.el() };   /* CODIS-USE-CINE */
   if(CodisBuyCine.isOpen()) return { act:CodisBuyCine.keep, el:CodisBuyCine.el() };
   if(CodisCardPeek.isOpen()) return { act:CodisCardPeek.close, el:CodisCardPeek.el() };
   if(econBulkZoomEl) return { act:econBulkZoomClose, el:econBulkZoomEl };
