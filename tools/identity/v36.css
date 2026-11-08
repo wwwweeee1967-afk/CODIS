@@ -69,3 +69,4 @@
 .ucx-flash{ position:absolute; inset:0; z-index:3; pointer-events:none; background:radial-gradient(circle at 50% 42%, rgba(255,246,214,.9), rgba(255,220,150,.25) 40%, transparent 70%); }
 @media (max-height:640px){ .ucx-stage{ gap:9px; } .ucx-msg{ font-size:18px; } }
 @media (prefers-reduced-motion:reduce){ .ucx-float.is-idle{ animation:none; } .ucx-tilt{ transition:none; } }
+.ucx.is-anim .ucx-fly, .ucx.is-anim .ucx-card, .ucx.is-anim .ucx-seal-in{ will-change:transform; }

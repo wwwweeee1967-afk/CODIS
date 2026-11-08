@@ -5,6 +5,7 @@
   • tools/identity/v36_voice.js — CodisRewardVoice (فهم الاسم وصياغة العبارة، محلي) · v36.js — CodisUseCine (المشهد) · v36.css
   • econUse: بعد نجاح markUsed / بدء المؤقت فقط يُستدعى CodisUseCine.play؛ فشله ← التنبيه القديم. لا يمسّ CodisBuyCine ولا الشراء/البيع.
   • CodisBuyCine.useNow (زر «استخدام» بمشهد الشراء): بعد النجاح يُغلق مشهد الشراء ثم يُشغَّل مشهد الاستخدام (حركة الشراء نفسها لم تُمس).
+  • tools/identity/v36_audio.js — أصوات المشهد use.* (ورق/حبر/خشب/صندوق موسيقى) داخل جدول SOUNDS لمحرك الصوت.
   • codisBackLayer: الرجوع يغلق المشهد أولاً.
 """
 import sys, os
@@ -44,6 +45,10 @@ once("""    close(()=>{ try{ econRenderAll(); }catch(e){} showToast(msg, ok ? 'v
      """    close(()=>{ try{ econRenderAll(); }catch(e){} let _pl = false; if(ok && _sn){ try{ _pl = CodisUseCine.play(_sn, { timed:!!_d, dur:_d }); }catch(e){} } if(!_pl) showToast(msg, ok ? 'var(--success)' : 'var(--warning)', ok ? 'check' : undefined); });   /* CODIS-USE-CINE */
   }
   return { play:play, keep:keep,""")
+
+# sound bank for the scene: new use.* identities inside the engine's SOUNDS table (synthesized; reward channel; user volume/mute respected)
+snd = rd('v36_audio.js').rstrip() + chr(10)
+once("    'press':          { ch:'ui'", snd + "    'press':          { ch:'ui'")
 
 css = rd('v36.css'); assert '</style' not in css
 i = s.index('<style id="codis-v35-css">'); j = s.index('</style>', i) + len('</style>')

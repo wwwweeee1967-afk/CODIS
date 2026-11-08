@@ -45,13 +45,16 @@ const CodisUseCine = (function(){
     size(); F.size = size;
     return F;
   }
+  function fxCenter(st){ const F = st.fx; if(!F) return; const rb = st.root.getBoundingClientRect(), sb = st.root.querySelector('.ucx-stage').getBoundingClientRect(), f = st.fly;
+    F.c = { x:sb.left - rb.left + f.offsetLeft + f.offsetWidth / 2, y:sb.top - rb.top + f.offsetTop + f.offsetHeight / 2 }; }
   function fxKick(){ const F = s && s.fx; if(F && !F.raf) F.raf = requestAnimationFrame(fxTick); }
   function fxTick(now){
     const st = s, F = st && st.fx; if(!F) return; F.raf = 0;
     const B = F.back.ctx, T = F.front.ctx, d = F.dpr, W = F.w, H = F.h;
     B.setTransform(d, 0, 0, d, 0, 0); T.setTransform(d, 0, 0, d, 0, 0); B.clearRect(0, 0, W, H); T.clearRect(0, 0, W, H);
     let alive = false;
-    const cr = st.card.getBoundingClientRect(), rb = st.root.getBoundingClientRect(), cx = cr.left + cr.width / 2 - rb.left, cy = cr.top + cr.height / 2 - rb.top;
+    if(!F.c) fxCenter(st);
+    const cx = F.c.x, cy = F.c.y;   /* مركز البطاقة مخزّن (موضعها التخطيطي بلا تحويلات) — لا قراءة تخطيط بكل إطار */
     /* توهج + أشعة + شفق خلف البطاقة */
     if(F.glow){ const g = F.glow, t = (now - g.t0) / g.dur; if(t < 1){ alive = true; const a = g.a * (t < .2 ? t / .2 : 1 - (t - .2) / .8 * .55);
       const rg = B.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * .55); rg.addColorStop(0, 'rgba(' + g.rgb + ',' + a + ')'); rg.addColorStop(.45, 'rgba(' + g.rgb + ',' + a * .35 + ')'); rg.addColorStop(1, 'rgba(' + g.rgb + ',0)'); B.fillStyle = rg; B.fillRect(0, 0, W, H); } else F.glow = null; }
@@ -119,7 +122,7 @@ const CodisUseCine = (function(){
       const W = Math.round(Math.max(168, Math.min(236, vw * .6, (innerHeight - 340) / 1.4)));
       const nl = sn.name.length, nCls = nl <= 12 ? 'n1' : nl <= 22 ? 'n2' : nl <= 40 ? 'n3' : 'n4';
       const root = document.createElement('div');
-      root.className = 'ucx lv-' + lv + ' f-' + rc.foil + (reduced ? ' is-reduced' : '') + (timed ? ' is-timed' : '');
+      root.className = 'ucx lv-' + lv + ' f-' + rc.foil + (reduced ? ' is-reduced' : ' is-anim') + (timed ? ' is-timed' : '');
       root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', (timed ? 'بدأت المكافأة: ' : 'استُخدمت المكافأة: ') + sn.name); root.setAttribute('aria-describedby', 'ucx-msg');
       root.style.setProperty('--w', W + 'px');
       const words = v.text.split(' ').map((w, i)=>'<span class="ucx-w" style="--i:' + i + '">' + escapeHtml(w) + '</span>').join(' ');
@@ -148,7 +151,7 @@ const CodisUseCine = (function(){
       const st = s;
       st.fx = reduced ? null : fxInit(st, rc, lite);
       st.onKey = e=>{ if(e.key === 'Escape'){ e.preventDefault(); e.stopPropagation(); dismiss(); } else if(e.key === 'Tab'){ e.preventDefault(); const b = st.root.querySelector(st.ready ? '.ucx-ok' : '.ucx-x'); try{ b.focus(); }catch(x){} } };
-      st.onResize = ()=>{ if(st.fx) st.fx.size(); };
+      st.onResize = ()=>{ if(st.fx){ st.fx.size(); fxCenter(st); } };
       root.addEventListener('keydown', st.onKey); window.addEventListener('resize', st.onResize);
       root.querySelector('.ucx-x').addEventListener('click', e=>{ e.stopPropagation(); dismiss(); });
       root.querySelector('.ucx-ok').addEventListener('click', e=>{ e.stopPropagation(); dismiss(); });
@@ -162,36 +165,44 @@ const CodisUseCine = (function(){
       A(root.querySelector('.ucx-bg'), [{ opacity:0 }, { opacity:1 }], { dur:380, ease:'linear', fill:'both' });
       if(st.fx){ st.fx.glow = { t0:performance.now(), dur:FLY + 5200, a:rc.glow, rgb:rc.foil === 'holo' || rc.foil === 'prism' ? '200,190,255' : '255,206,120' }; fxKick(); }
       A(st.fly, [{ transform:'translateY(58vh) scale(.62)', opacity:0 }, { transform:'translateY(-14px) scale(1.04)', opacity:1, offset:.72 }, { transform:'translateY(0) scale(1)', opacity:1 }], { dur:FLY || 300, ease:ease.out, fill:'both' });
+      /* الصوت: كل حركة لها صوتها بنفس لحظتها (هويات use.* بمحرك الصوت؛ قناة المكافآت وإعدادات المستخدم) */
+      if(!reduced){ codisSfx('use.whoosh', { lv:lv, seq:true }); }
       if(rc.flip && !reduced){
         const from = rc.flip > 1 ? 540 : 180;
-        A(st.card, [{ transform:'rotateY(' + from + 'deg) rotateZ(-6deg)' }, { transform:'rotateY(-14deg) rotateZ(1.5deg)', offset:.78 }, { transform:'rotateY(5deg) rotateZ(0deg)', offset:.9 }, { transform:'rotateY(0deg) rotateZ(0deg)' }], { dur:FLY + 160, delay:80, ease:ease.out, fill:'both' });
-      }
-      const land = reduced ? 120 : FLY + 220;
-      /* لمعة الإطار والوجه */
+        A(st.card, [{ transform:'rotateY(' + from + 'deg) rotateZ(-6deg)' }, { transform:'rotateY(-14deg) rotateZ(1.5deg)', offset:.74 }, { transform:'rotateY(4deg) rotateZ(0deg)', offset:.88 }, { transform:'rotateY(0deg) rotateZ(0deg)' }], { dur:FLY, ease:ease.out, fill:'both' });
+        later(()=>{ codisSfx('use.flip', { n:rc.flip, seq:true }); }, Math.round(FLY * .22));
+      } else if(!reduced){ later(()=>{ codisSfx('use.land', { seq:true }); }, Math.round(FLY * .62)); }
+      /* الختم: يبدأ نزوله والبطاقة تستقر (لا انتظار بعد الهبوط) — نزول متسارع ثقيل ثم ارتداد ناعم؛ لحظة الارتطام = منتصف الحركة */
+      const seal = root.querySelector('.ucx-seal-in'), tStamp = reduced ? 80 : Math.max(0, FLY - 70), impact = tStamp + (reduced ? 0 : 150);
+      A(seal, [{ transform:'scale(2.4) rotate(-30deg)', opacity:0, easing:'cubic-bezier(.55,0,.85,.35)' }, { transform:'scale(.9) rotate(-10deg)', opacity:1, offset:.5, easing:'cubic-bezier(.2,.9,.3,1)' }, { transform:'scale(1.04) rotate(-13deg)', opacity:1, offset:.75 }, { transform:'scale(1) rotate(-12deg)', opacity:1 }], { dur:reduced ? 140 : 300, delay:tStamp, ease:'linear', fill:'both' });
+      if(!reduced) later(()=>{ codisSfx('use.drop', { seq:true }); }, tStamp);
+      const chk = root.querySelector('.ucx-chk path'); if(chk && !reduced) A(chk, [{ strokeDashoffset:1 }, { strokeDashoffset:0 }], { dur:280, delay:impact + 50, ease:ease.out, fill:'both' });
+      later(()=>{
+        codisSfx('use.stamp', { lv:lv, foil:rc.foil, seq:true });
+        if(reduced) return;
+        A(st.fly, [{ transform:'scale(1)' }, { transform:'scale(.962,.948) translateY(3px)' }, { transform:'scale(1.012)' }, { transform:'scale(1)' }], { dur:300, ease:'ease-out', fill:'none' });
+        if(rc.flash){ const f = document.createElement('i'); f.className = 'ucx-flash'; root.appendChild(f); A(f, [{ opacity:0 }, { opacity:.75, offset:.2 }, { opacity:0 }], { dur:700, ease:'ease-out', fill:'both' }); }
+        burst(rc, lite);
+        try{ if(navigator.vibrate) navigator.vibrate(rc.buzz); }catch(e){}
+        codisSfx('use.sparkle', { lv:lv, delay:.05, seq:true });
+      }, impact);
+      if(!reduced){ if(timed){ later(()=>{ codisSfx('use.tick', { seq:true }); }, impact + 120); } else { later(()=>{ codisSfx('use.check', { seq:true }); }, impact + 50); } }
+      /* لمعة الإطار والوجه بعد الارتطام */
       const sh = root.querySelector('.ucx-shine');
-      for(let i = 0; i < rc.shine && !reduced; i++) A(sh, [{ transform:'translateX(-130%) skewX(-16deg)', opacity:1 }, { transform:'translateX(230%) skewX(-16deg)', opacity:1 }], { dur:900, delay:land + 200 + i * 760, ease:'cubic-bezier(.5,0,.3,1)', fill:'none' });
-      if(rc.shine > 1 && !reduced) A(root.querySelector('.ucx-foil'), [{ backgroundPosition:'0% 50%' }, { backgroundPosition:'100% 50%' }, { backgroundPosition:'0% 50%' }], { dur:2600, delay:land, ease:ease.io, fill:'none' });
-      /* الختم */
-      const seal = root.querySelector('.ucx-seal-in'), tStamp = land + 80;
-      A(seal, [{ transform:'scale(2.3) rotate(-30deg)', opacity:0 }, { transform:'scale(.9) rotate(-10deg)', opacity:1, offset:.6 }, { transform:'scale(1.05) rotate(-13deg)', opacity:1, offset:.8 }, { transform:'scale(1) rotate(-12deg)', opacity:1 }], { dur:reduced ? 140 : 420, delay:tStamp, ease:ease.out, fill:'both' });
-      const chk = root.querySelector('.ucx-chk path'); if(chk && !reduced) A(chk, [{ strokeDashoffset:1 }, { strokeDashoffset:0 }], { dur:360, delay:tStamp + 260, ease:ease.out, fill:'both' });
-      if(!reduced){
-        later(()=>{
-          A(st.fly, [{ transform:'scale(1)' }, { transform:'scale(.962,.948) translateY(3px)' }, { transform:'scale(1.012)' }, { transform:'scale(1)' }], { dur:300, ease:'ease-out', fill:'none' });
-          if(rc.flash){ const f = document.createElement('i'); f.className = 'ucx-flash'; root.appendChild(f); A(f, [{ opacity:0 }, { opacity:.75, offset:.2 }, { opacity:0 }], { dur:700, ease:'ease-out', fill:'both' }); }
-          burst(rc, lite);
-          try{ if(navigator.vibrate) navigator.vibrate(rc.buzz); }catch(e){}
-        }, tStamp + 250);
-      }
+      for(let i = 0; i < rc.shine && !reduced; i++) A(sh, [{ transform:'translateX(-130%) skewX(-16deg)', opacity:1 }, { transform:'translateX(230%) skewX(-16deg)', opacity:1 }], { dur:900, delay:impact + 140 + i * 760, ease:'cubic-bezier(.5,0,.3,1)', fill:'none' });
+      if(rc.shine > 1 && !reduced) A(root.querySelector('.ucx-foil'), [{ backgroundPosition:'0% 50%' }, { backgroundPosition:'100% 50%' }, { backgroundPosition:'0% 50%' }], { dur:2600, delay:impact, ease:ease.io, fill:'none' });
       /* الوسوم ثم العبارة كلمة كلمة (مقروءة) */
-      const tTags = reduced ? 0 : tStamp + 420;
-      root.querySelectorAll('.ucx-tag').forEach((t, i)=>A(t, [{ transform:'translateY(8px) scale(.85)', opacity:0 }, { transform:'translateY(0) scale(1)', opacity:1 }], { dur:420, delay:tTags + i * 110, ease:ease.spring, fill:'both' }));
-      const ws = root.querySelectorAll('.ucx-w'), tMsg = reduced ? 0 : tTags + 260, step = 95;
-      ws.forEach((w, i)=>A(w, [{ transform:'translateY(12px)', opacity:0, filter:'blur(6px)' }, { transform:'translateY(0)', opacity:1, filter:'blur(0px)' }], { dur:560, delay:tMsg + i * step, ease:ease.out, fill:'both' }));
+      const tTags = reduced ? 0 : impact + 170;
+      root.querySelectorAll('.ucx-tag').forEach((t, i)=>{ A(t, [{ transform:'translateY(8px) scale(.85)', opacity:0 }, { transform:'translateY(0) scale(1)', opacity:1 }], { dur:420, delay:tTags + i * 110, ease:ease.spring, fill:'both' });
+        if(!reduced) later(()=>{ codisSfx('use.tag', { i:i, seq:true }); }, tTags + i * 110 + 40); });
+      const ws = root.querySelectorAll('.ucx-w'), tMsg = reduced ? 0 : tTags + 200, step = 95;
+      ws.forEach((w, i)=>{ A(w, [{ transform:'translateY(12px)', opacity:0, filter:'blur(6px)' }, { transform:'translateY(0)', opacity:1, filter:'blur(0px)' }], { dur:560, delay:tMsg + i * step, ease:ease.out, fill:'both' });
+        if(!reduced) later(()=>{ codisSfx('use.word', { i:i, seq:true }); }, tMsg + i * step + 60); });
       const chip = root.querySelector('.ucx-chip'); if(chip) A(chip, [{ transform:'translateY(8px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:420, delay:tMsg + ws.length * step + 120, ease:ease.out, fill:'both' });
       const tEnd = tMsg + ws.length * step + 560;
       const acts = root.querySelector('.ucx-acts');
       A(acts, [{ transform:'translateY(10px)', opacity:0 }, { transform:'translateY(0)', opacity:1 }], { dur:380, delay:reduced ? 0 : tEnd, ease:ease.out, fill:'both' });
+      later(()=>{ root.classList.remove('is-anim'); }, impact + 700);
       later(()=>{ st.ready = true; root.classList.add('is-ready'); try{ root.querySelector('.ucx-ok').focus({ preventScroll:true }); }catch(e){} if(!reduced) root.querySelector('.ucx-float').classList.add('is-idle'); }, reduced ? 200 : tEnd + 200);
       later(dismiss, Math.max(tEnd + 9000, 12000 + v.text.length * 60));   /* إغلاق تلقائي فقط بعد وقت قراءة طويل */
       return true;
@@ -207,6 +218,7 @@ const CodisUseCine = (function(){
   }
   function dismiss(){
     if(!s || s.closing) return; const st = s; st.closing = true; st.tm.forEach(clearTimeout); st.root.classList.add('is-out');
+    codisSfx('use.close', { seq:true });
     let fin = false; const end = ()=>{ if(fin) return; fin = true; if(s === st){ st.closing = false; cleanup(); } };
     const a = codisAnim(st.root, [{ opacity:1 }, { opacity:0 }], { dur:260, ease:'linear', fill:'forwards', done:end });
     if(!a) end(); else setTimeout(end, 380);
