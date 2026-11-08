@@ -1,71 +1,77 @@
-/* CODIS-PAPER-BACK (3.24.0) · ظهر البطاقة بالمظهر الورقي — وثيقة محفورة عتيقة. كل القواعد تحت html[data-theme="paper"] .cbk.is-paper؛ الداكن لا يُمس */
-html[data-theme="paper"] .cbk.is-paper{ --pp1:#F5EEDD; --pp2:#E8DCC0; --ink:#4E3A27; --ik:78,58,39; --acc:#8A6A47; --ac:138,106,71;
-  color:var(--ink); background:var(--tex-grain, none), radial-gradient(125% 95% at 50% 26%, rgba(255,255,255,.45) 0%, transparent 46%), radial-gradient(140% 110% at 50% 45%, transparent 58%, rgba(var(--ik),.2) 100%), linear-gradient(172deg, var(--pp1), var(--pp2));
-  box-shadow:inset 0 0 0 1px rgba(var(--ik),.28), inset 0 1px 0 rgba(255,255,255,.7), inset 0 -10px 18px -12px rgba(var(--ik),.22); }
-html[data-theme="paper"] .cbk.is-paper[data-tone="b"]{ --pp1:#EEF2F1; --pp2:#D9E2E2; --ink:#1F3B53; --ik:31,59,83; --acc:#3E6B87; --ac:62,107,135; }
-html[data-theme="paper"] .cbk.is-paper[data-tone="a"]{ --pp1:#F4EAEE; --pp2:#E3D1DA; --ink:#452440; --ik:69,36,64; --acc:#7B4B74; --ac:123,75,116; }
-html[data-theme="paper"] .cbk.is-paper[data-tone="s"]{ --pp1:#F8EED3; --pp2:#E8D3A2; --ink:#4A3315; --ik:74,51,21; --acc:#9A7330; --ac:154,115,48; }
-html[data-theme="paper"] .cbk.is-paper[data-tone="ss"]{ --pp1:#F7EBDD; --pp2:#E7CDB6; --ink:#5E1A18; --ik:94,26,24; --acc:#93402F; --ac:147,64,47; }
-html[data-theme="paper"] .cbk.is-paper .cbk-orn{ color:var(--ink); }
-/* الرسم */
-html[data-theme="paper"] .cbk-orn-p .p-bg{ fill:none; stroke:var(--acc); stroke-width:.2; opacity:.16; }
-html[data-theme="paper"] .cbk-orn-p .p-laid{ opacity:.09; stroke-width:.14; } html[data-theme="paper"] .cbk-orn-p .p-chain{ opacity:.16; stroke-width:.22; }
-html[data-theme="paper"] .cbk-orn-p .p-ray{ opacity:.13; stroke-width:.24; } html[data-theme="paper"] .cbk-orn-p .p-ring{ opacity:.2; stroke-width:.24; }
-html[data-theme="paper"] .cbk-orn-p .p-ink{ fill:none; stroke:var(--ink); stroke-linecap:round; stroke-linejoin:round; }
-html[data-theme="paper"] .cbk-orn-p .p-acc{ fill:none; stroke:var(--acc); stroke-linecap:round; stroke-linejoin:round; }
-html[data-theme="paper"] .cbk-orn-p .p-foil-s{ fill:none; stroke:url(#cbkFoilG); stroke-linecap:round; stroke-linejoin:round; }
-html[data-theme="paper"] .cbk-orn-p .p-foil{ fill:url(#cbkFoilG); }
-html[data-theme="paper"] .cbk-orn-p .p-inkf{ fill:var(--ink); } html[data-theme="paper"] .cbk-orn-p .p-accf{ fill:var(--acc); opacity:.75; }
-html[data-theme="paper"] .cbk-orn-p .p-fr{ stroke-width:.6; } html[data-theme="paper"] .cbk-orn-p .p-fr2{ stroke-width:.26; opacity:.7; }
-html[data-theme="paper"] .cbk-orn-p .p-dot{ fill:var(--ink); opacity:.55; }
-html[data-theme="paper"] .cbk-orn-p .p-dia{ fill:var(--acc); opacity:.8; }
-html[data-theme="paper"] .cbk-orn-p .p-band{ stroke-width:.24; opacity:.85; } html[data-theme="paper"] .cbk-orn-p .p-rope{ stroke-width:.42; }
-html[data-theme="paper"] .cbk-orn-p .p-cn{ stroke-width:.42; } html[data-theme="paper"] .cbk-orn-p .p-cn2{ stroke-width:.6; }
-html[data-theme="paper"] .cbk-orn-p .p-rule{ stroke-width:.3; opacity:.8; }
-html[data-theme="paper"] .cbk-orn-p .p-tear{ stroke-width:.32; stroke-dasharray:.9 1.1; }
-html[data-theme="paper"] .cbk-orn-p .p-notch{ fill:#E7DECA; stroke:rgba(var(--ik),.35); stroke-width:.3; }
-html[data-theme="paper"] .cbk-orn-p .p-gu{ stroke-width:.24; opacity:.95; }
-html[data-theme="paper"] .cbk-orn-p .p-ring{ stroke-width:.5; } html[data-theme="paper"] .cbk-orn-p .p-dash{ stroke-width:.3; stroke-dasharray:.35 .85; opacity:.7; }
-html[data-theme="paper"] .cbk-orn-p .p-tick{ stroke-width:.3; opacity:.8; }
-html[data-theme="paper"] .cbk-orn-p .p-disc{ fill:var(--pp1); stroke:var(--ink); stroke-width:.5; }
-html[data-theme="paper"] .cbk-orn-p .p-thin{ stroke-width:.2; opacity:.6; }
-html[data-theme="paper"] .cbk-orn-p .p-glyph .o-em{ fill:none; stroke:var(--ink); stroke-width:1.1; stroke-linecap:round; stroke-linejoin:round; }
-html[data-theme="paper"] .cbk-orn-p .p-glyph .o-thin{ stroke-width:.55; opacity:.75; }
-html[data-theme="paper"] .cbk-orn-p .p-glyph .o-emf{ fill:var(--acc); opacity:.35; }
-html[data-theme="paper"] .cbk-orn-p .p-glyph .o-dia{ fill:var(--ink); }
-html[data-theme="paper"] .cbk-orn-p .p-glyph text{ fill:var(--ink); font:900 10px "Avenir Next", "Segoe UI", Arial, system-ui, sans-serif; }
-html[data-theme="paper"] .cbk-orn-p text{ font-family:inherit; }
-html[data-theme="paper"] .cbk-orn-p .p-hd{ fill:var(--ink); font-size:3.7px; font-weight:800; letter-spacing:.02em; }
-html[data-theme="paper"] .cbk-orn-p .p-sn{ fill:var(--acc); font:700 2.5px "Courier New", ui-monospace, monospace; letter-spacing:.06em; }
-html[data-theme="paper"] .cbk-orn-p .p-code{ fill:var(--ink); font:900 2.6px "Avenir Next", "Segoe UI", Arial, sans-serif; }
-html[data-theme="paper"] .cbk-orn-p .p-lz{ stroke-width:.4; fill:rgba(255,255,255,.35); }
-html[data-theme="paper"] .cbk-orn-p .p-micro{ fill:var(--acc); font:700 1.55px "Courier New", ui-monospace, monospace; letter-spacing:.18em; opacity:.85; }
-/* ختم البريد: حبر مطبوع (multiply) */
-html[data-theme="paper"] .cbk-orn-p .p-pm{ mix-blend-mode:multiply; opacity:.62; }
-html[data-theme="paper"] .cbk-orn-p .p-pmr{ fill:none; stroke:var(--acc); stroke-width:.42; }
-html[data-theme="paper"] .cbk-orn-p .p-pmt{ fill:var(--acc); font:900 2.3px "Avenir Next", "Segoe UI", Arial, sans-serif; letter-spacing:.04em; }
-/* ختم الشمع */
-html[data-theme="paper"] .cbk-orn-p .p-wax{ fill:url(#cbkWaxG); stroke:rgba(60,10,8,.45); stroke-width:.25; }
-html[data-theme="paper"] .cbk-orn-p .p-waxr{ fill:none; stroke:rgba(40,6,4,.32); stroke-width:.35; }
-html[data-theme="paper"] .cbk-orn-p .p-waxs{ fill:rgba(255,214,190,.42); }
-/* لوح المعلومات: بلا صندوق — العنوان بخرطوشة محفورة والدفتر مطبوع على الورق نفسه، فوق تدرّج ورقي يحفظ القراءة */
-html[data-theme="paper"] .cbk.is-paper{ --pl:255,250,238; }
-html[data-theme="paper"] .cbk.is-paper[data-tone="b"]{ --pl:246,249,248; } html[data-theme="paper"] .cbk.is-paper[data-tone="a"]{ --pl:250,243,246; }
-html[data-theme="paper"] .cbk.is-paper .cbk-in{ background:linear-gradient(180deg, rgba(var(--pl),0), rgba(var(--pl),.78) 2.4cqw, rgba(var(--pl),.86)); border:0; border-radius:0; box-shadow:none; margin:0 9% 9.5%; padding:2cqw 2.4cqw 1.6cqw; max-height:min(52cqh, calc(69cqh - 7cqw)); -webkit-backdrop-filter:none; backdrop-filter:none; }
-html[data-theme="paper"] .cbk.is-paper .cbk-t{ position:relative; align-self:center; max-width:100%; padding:1.4cqw 5.2cqw 1.6cqw; color:var(--ink); text-shadow:0 1px 0 rgba(255,255,255,.85);
-  background:rgba(var(--pl),.95); border:1px solid rgba(var(--ik),.55); border-radius:1.6cqw; box-shadow:inset 0 0 0 .9cqw rgba(var(--pl),.95), inset 0 0 0 calc(.9cqw + .5px) rgba(var(--ik),.35), 0 .8cqw 1.8cqw -1.2cqw rgba(var(--ik),.5); }
-html[data-theme="paper"] .cbk.is-paper[data-tone="s"] .cbk-t, html[data-theme="paper"] .cbk.is-paper[data-tone="ss"] .cbk-t{ border-color:rgba(176,132,46,.85); }
-html[data-theme="paper"] .cbk.is-paper .cbk-t::before, html[data-theme="paper"] .cbk.is-paper .cbk-t::after{ content:""; position:absolute; top:50%; width:1.7cqw; height:1.7cqw; margin-top:-.85cqw; background:var(--acc); transform:rotate(45deg); }
-html[data-theme="paper"] .cbk.is-paper .cbk-t::before{ right:1.6cqw; } html[data-theme="paper"] .cbk.is-paper .cbk-t::after{ left:1.6cqw; }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows{ border-top:0; position:relative; }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows::before{ content:""; position:absolute; top:0; left:12%; right:12%; height:2px; border-top:.5px solid rgba(var(--ik),.45); border-bottom:.5px solid rgba(var(--ik),.45); }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows > div{ align-items:baseline; }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows > div::after{ content:""; order:1; flex:1 1 2cqw; min-width:2cqw; align-self:flex-end; margin:0 .6cqw .9cqw; border-bottom:1px dotted rgba(var(--ik),.42); }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows dt{ order:0; color:rgba(var(--ik),.72); }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows dd{ order:2; flex:0 1 auto; color:var(--ink); font-weight:800; }
-html[data-theme="paper"] .cbk.is-paper .cbk-in .cbk-rows > div{ flex-wrap:nowrap; }
-html[data-theme="paper"] .cbk.is-paper .cbk-in .cbk-rows dd{ flex:0 1 auto; text-align:end; }
-html[data-theme="paper"] .cbk.is-paper .cbk-rows dd .eco-coin{ color:var(--ink); }
-html[data-theme="paper"] .cbk.is-paper .cbk-note{ color:rgba(var(--ik),.78); border-top:1px dashed rgba(var(--ik),.3); }
-html[data-theme="paper"] .cbk.is-paper .cbk-in::-webkit-scrollbar-thumb{ background:rgba(var(--ik),.4); }
-@media (hover:hover) and (pointer:fine){ html[data-theme="paper"] .cflip:hover .cbk.is-paper{ box-shadow:inset 0 0 0 1px rgba(var(--ik),.55), inset 0 1px 0 rgba(255,255,255,.7), inset 0 -10px 18px -12px rgba(var(--ik),.22); } }
+/* CODIS-PAPER-BACK (3.24.1) · ظهر البطاقة بالمظهر الورقي — مستوحى من ظهور بطاقات اللعب الفيكتورية (Owen Jones / De La Rue: تناظر، حبر واحد، خلفية منقّطة)
+   وظهور بطاقات السجائر العتيقة (سلسلة · رقم · رسم · عنوان · تفاصيل · «صادرة عن»، كلها مركّزة على محور واحد). كل القواعد تحت :root .cbk.is-paper؛ الداكن لا يُمس */
+:root .cbk.is-paper{ --pp1:#F6EFDE; --pp2:#E9DDC2; --edge:#D8C7A3; --ink:#4B3825; --ik:75,56,37; --pl:252,247,234;
+  color:var(--ink);
+  background:var(--tex-grain, none), radial-gradient(120% 90% at 50% 30%, rgba(255,255,255,.42), transparent 55%), radial-gradient(150% 115% at 50% 50%, transparent 60%, rgba(var(--ik),.22) 100%), linear-gradient(176deg, var(--pp1), var(--pp2));
+  box-shadow:inset 0 0 0 1px var(--edge), inset 0 0 0 2px rgba(255,255,255,.55), inset 0 -12px 20px -14px rgba(var(--ik),.3); }
+:root .cbk.is-paper[data-tone="b"]{ --pp1:#F1F2EC; --pp2:#E0E3DA; --edge:#C9CFC4; --ink:#1E3A55; --ik:30,58,85; --pl:248,249,244; }
+:root .cbk.is-paper[data-tone="a"]{ --pp1:#F5ECEA; --pp2:#E7D8D6; --edge:#D7C3C2; --ink:#4A2443; --ik:74,36,67; --pl:251,245,243; }
+:root .cbk.is-paper[data-tone="s"]{ --pp1:#F8EFD6; --pp2:#EBD8AB; --edge:#D6BC82; --ink:#4A3214; --ik:74,50,20; --pl:252,246,228; }
+:root .cbk.is-paper[data-tone="ss"]{ --pp1:#F7EDE0; --pp2:#EAD3BE; --edge:#D7B597; --ink:#5C1917; --ik:92,25,23; --pl:252,244,236; }
+:root .cbk.is-paper .cbk-orn{ color:var(--ink); }
+/* الكتلة النصية تتوسط المسافة بين الميدالية (حتى 43%) وسطر «صادرة عن» (من 88%) — النسب من العرض: الارتفاع = 1.25 × العرض */
+:root .cbk.is-paper{ justify-content:center; padding:51% 0 15%; }
+
+/* ---- الرسم المحفور: حبر واحد بدرجات شفافية ---- */
+:root .cbk-orn-p .p-ink{ fill:none; stroke:var(--ink); stroke-linecap:round; stroke-linejoin:round; }
+:root .cbk-orn-p .p-inkf{ fill:var(--ink); }
+:root .cbk-orn-p .p-foil-s{ fill:none; stroke:url(#cbkFoilG); stroke-linecap:round; stroke-linejoin:round; }
+:root .cbk-orn-p .p-foil{ fill:url(#cbkFoilG); }
+:root .cbk-orn-p .p-fox{ mix-blend-mode:multiply; opacity:.34; }
+:root .cbk-orn-p .p-bg{ fill:none; stroke:var(--ink); stroke-width:.16; opacity:.1; }
+:root .cbk.is-paper[data-tone="c"] .cbk-orn-p .p-bg{ opacity:.07; stroke-width:.12; }
+:root .cbk-orn-p .p-fr{ stroke-width:.55; } :root .cbk-orn-p .p-fr2{ stroke-width:.26; opacity:.75; }
+:root .cbk-orn-p .p-dot{ fill:var(--ink); opacity:.5; }
+:root .cbk-orn-p .p-dia{ fill:var(--ink); opacity:.55; }
+:root .cbk-orn-p .p-band{ stroke-width:.2; opacity:.7; } :root .cbk-orn-p .p-rope{ stroke-width:.36; }
+:root .cbk-orn-p .p-cn{ stroke-width:.34; opacity:.85; } :root .cbk-orn-p .p-cn2{ stroke-width:.5; }
+:root .cbk-orn-p .p-rule{ stroke-width:.26; opacity:.6; }
+:root .cbk-orn-p .p-tear{ stroke-width:.26; stroke-dasharray:.8 1; opacity:.55; }
+:root .cbk-orn-p .p-gu{ stroke-width:.2; opacity:.62; }
+:root .cbk-orn-p .p-ring{ stroke-width:.46; } :root .cbk-orn-p .p-dash{ stroke-width:.24; stroke-dasharray:.3 .8; opacity:.55; }
+:root .cbk-orn-p .p-tick{ stroke-width:.26; opacity:.7; } :root .cbk-orn-p .p-soft{ opacity:.55; }
+:root .cbk-orn-p .p-disc{ fill:rgb(var(--pl)); stroke:var(--ink); stroke-width:.42; }
+:root .cbk-orn-p .p-thin{ stroke-width:.18; opacity:.5; }
+:root .cbk-orn-p .p-stk{ filter:none; }
+:root .cbk-orn-p .p-glyph .o-em{ fill:none; stroke:var(--ink); stroke-width:1; stroke-linecap:round; stroke-linejoin:round; }
+:root .cbk-orn-p .p-glyph .o-thin{ stroke-width:.5; opacity:.7; }
+:root .cbk-orn-p .p-glyph .o-emf{ fill:var(--ink); opacity:.16; }
+:root .cbk-orn-p .p-glyph .o-dia{ fill:var(--ink); }
+:root .cbk-orn-p .p-glyph text{ fill:var(--ink); font:900 10px "Avenir Next", "Segoe UI", Arial, system-ui, sans-serif; }
+/* ---- الطباعة: ثلاث طبقات فقط (عنوان · قيم · تسميات) ---- */
+:root .cbk-orn-p text{ font-family:inherit; fill:var(--ink); }
+:root .cbk-orn-p .p-hd{ font-size:3.5px; font-weight:800; letter-spacing:.03em; }
+:root .cbk-orn-p .p-no{ font-size:2.6px; font-weight:700; opacity:.66; letter-spacing:.04em; }
+:root .cbk-orn-p .p-imp{ font-size:2.4px; font-weight:700; opacity:.62; letter-spacing:.05em; }
+
+/* ---- لوح المعلومات: كتلة نص مركّزة على المحور (لا صندوق، لا جدول) ---- */
+:root .cbk.is-paper .cbk-in{ align-items:center; text-align:center; background:none; border:0; border-radius:0; box-shadow:none; -webkit-backdrop-filter:none; backdrop-filter:none;
+  margin:0 11%; padding:0 1cqw; gap:1.8cqw; max-height:100cqh; }   /* cqh هنا = صندوق المحتوى بعد الحشوة (المسافة بين الميدالية والتذييل) */
+:root .cbk.is-paper .cbk-in::before{ content:none; }
+:root .cbk.is-paper .cbk-t, :root .cbk.is-paper .cbk-in .cbk-t{ position:relative; display:block; align-self:stretch; margin:0; padding:0 0 2.3cqw; background:none; border:0; box-shadow:none;
+  color:var(--ink); font-size:clamp(9.5px, 8.8cqw, 16px); font-weight:800; line-height:1.26; letter-spacing:0; text-align:center; text-shadow:0 1px 0 rgba(255,255,255,.75); }
+:root .cbk.is-paper .cbk-t::before{ content:""; position:absolute; bottom:0; left:22%; right:22%; height:0; border-top:1px solid rgba(var(--ik),.42); top:auto; width:auto; margin:0; background:none; transform:none; }
+:root .cbk.is-paper .cbk-t::after{ content:""; position:absolute; bottom:-.75cqw; left:50%; top:auto; width:1.5cqw; height:1.5cqw; margin:0 0 0 -.75cqw; background:var(--ink); transform:rotate(45deg); box-shadow:0 0 0 .9cqw rgba(var(--pl),.95); }
+:root .cbk.is-paper .cbk-rows, :root .cbk.is-paper .cbk-in .cbk-rows{ display:flex; flex-direction:column; align-items:center; gap:.5cqw; margin:0; padding:.8cqw 0 0; border:0; width:100%; }
+:root .cbk.is-paper .cbk-rows::before{ content:none; }
+:root .cbk.is-paper .cbk-rows > div, :root .cbk.is-paper .cbk-in .cbk-rows > div{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.2cqw 1.6cqw; max-width:100%; min-width:0; }
+:root .cbk.is-paper .cbk-rows > div::after{ content:""; order:1; flex:none; width:1cqw; height:1cqw; transform:rotate(45deg); background:rgba(var(--ik),.45); border:0; margin:0; align-self:center; }
+:root .cbk.is-paper .cbk-rows dt, :root .cbk.is-paper .cbk-in .cbk-rows dt{ order:0; flex:none; color:rgba(var(--ik),.66); font-size:clamp(7.5px, 6.2cqw, 10.5px); font-weight:600; letter-spacing:.03em; line-height:1.4; }
+:root .cbk.is-paper .cbk-rows dd, :root .cbk.is-paper .cbk-in .cbk-rows dd{ order:2; flex:0 1 auto; min-width:0; color:var(--ink); font-size:clamp(8px, 6.8cqw, 11.5px); font-weight:800; line-height:1.4; text-align:center; white-space:normal; overflow:visible; text-overflow:clip; overflow-wrap:anywhere; }
+:root .cbk.is-paper .cbk-rows dd .eco-coin{ color:var(--ink); }
+:root .cbk.is-paper .cbk-note, :root .cbk.is-paper .cbk-in .cbk-note{ margin:0; padding:1.4cqw 0 0; border:0; color:rgba(var(--ik),.78); font-size:clamp(7.5px, 6cqw, 10.5px); line-height:1.5; text-align:center; }
+:root .cbk.is-paper .cbk-in{ scrollbar-width:none; } :root .cbk.is-paper .cbk-in::-webkit-scrollbar{ display:none; }
+@media (hover:hover) and (pointer:fine){ :root .cflip:hover .cbk.is-paper{ box-shadow:inset 0 0 0 1px rgba(var(--ik),.45), inset 0 0 0 2px rgba(255,255,255,.55), inset 0 -12px 20px -14px rgba(var(--ik),.3); } }
+
+/* ---- الطبعة الليلية (المظهر الداكن): نفس التركيبة بحبر معدني على كرتون داكن — كما تُطبع مجموعات البطاقات العتيقة بأكثر من لون ظهر ---- */
+html[data-theme="dark"] .cbk.is-paper[data-tone]{ --pp1:#25211B; --pp2:#16130F; --edge:#3B342A; --ink:#DCCDB0; --ik:220,205,176; --pl:36,32,26;
+  background:var(--tex-grain, none), radial-gradient(120% 90% at 50% 30%, rgba(255,240,210,.07), transparent 55%), radial-gradient(150% 115% at 50% 50%, transparent 55%, rgba(0,0,0,.5) 100%), linear-gradient(176deg, var(--pp1), var(--pp2));
+  box-shadow:inset 0 0 0 1px var(--edge), inset 0 0 0 2px rgba(255,255,255,.035), inset 0 -12px 22px -14px rgba(0,0,0,.6); }
+html[data-theme="dark"] .cbk.is-paper[data-tone="b"]{ --pp1:#18233A; --pp2:#0E1626; --edge:#2B3A55; --ink:#C3D6EA; --ik:195,214,234; --pl:25,36,58; }
+html[data-theme="dark"] .cbk.is-paper[data-tone="a"]{ --pp1:#27192D; --pp2:#170E1C; --edge:#43304B; --ink:#E3CAE5; --ik:227,202,229; --pl:39,25,45; }
+html[data-theme="dark"] .cbk.is-paper[data-tone="s"]{ --pp1:#2B2112; --pp2:#19130A; --edge:#4E3D1D; --ink:#EED7A0; --ik:238,215,160; --pl:43,33,18; }
+html[data-theme="dark"] .cbk.is-paper[data-tone="ss"]{ --pp1:#2D1515; --pp2:#1A0B0B; --edge:#552725; --ink:#F2CDBC; --ik:242,205,188; --pl:45,21,21; }
+html[data-theme="dark"] .cbk-orn-p .p-fox{ display:none; }
+html[data-theme="dark"] .cbk.is-paper .cbk-t, html[data-theme="dark"] .cbk.is-paper .cbk-in .cbk-t{ text-shadow:0 1px 0 rgba(0,0,0,.65); }
+html[data-theme="dark"] .cbk-orn-p .p-bg{ opacity:.12; }
+@media (hover:hover) and (pointer:fine){ html[data-theme="dark"] .cflip:hover .cbk.is-paper{ box-shadow:inset 0 0 0 1px rgba(var(--ik),.4), inset 0 0 0 2px rgba(255,255,255,.035), inset 0 -12px 22px -14px rgba(0,0,0,.6); } }
