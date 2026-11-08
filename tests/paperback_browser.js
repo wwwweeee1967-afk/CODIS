@@ -1,0 +1,31 @@
+/* CODIS-PAPER-BACK test (patch_v37.py) — evaluate in the page. Paper look gets its own engraved back; dark look is untouched. */
+(async function(){ try{
+  const out = [], T = (n, ok, i)=>out.push({ name:n, ok:!!ok, info:i === undefined ? '' : i }), sleep = ms=>new Promise(r=>setTimeout(r, ms));
+  const rows = [['الفئة', 'نادرة'], ['السعر', econCoin(250), '', true]], prev = CodisTheme.get();
+  CodisTheme.set('paper', true); await sleep(100);
+  const a = codisCardBackHtml('برجر بالجبن', rows, { tone:'c', kind:'reward', sticker:'burger' }), b = codisCardBackHtml('ساعة بلايستيشن', rows, { tone:'c', kind:'reward' });
+  T('paper: own ornament + is-paper', /cbk-orn-p/.test(a) && /class="cbk rwc-c is-paper"/.test(a));
+  T('paper: sticker sits in the medallion', /<image href="[^"]*burger/.test(a));
+  T('paper: no sticker → kind glyph instead', !/<image /.test(b) && /p-glyph/.test(b));
+  const ser = h=>(h.match(/№ (\d{4})/) || [])[1];
+  T('paper: every card has its own serial/guilloche', ser(a) && ser(b) && ser(a) !== ser(b) && a.match(/p-gu" d="([^"]{40})/)[1] !== b.match(/p-gu" d="([^"]{40})/)[1]);
+  T('paper: deterministic for the same card', codisCardBackHtml('برجر بالجبن', rows, { tone:'c', kind:'reward', sticker:'burger' }) === a);
+  const tones = ['c', 'b', 'a', 's', 'ss'], kinds = ['reward', 'weekly', 'monthly', 'pass', 'holiday', 'pouch', 'cosmetic', 'box'];
+  let bad = []; tones.forEach(t=>kinds.forEach(k=>{ const h = codisCardBackHtml('اختبار', rows, { tone:t, kind:k }); if(!/cbk-orn-p/.test(h)) bad.push(t + '/' + k); })); T('paper: all 5 rarities × 8 kinds render', !bad.length, bad);
+  T('paper: S/SS get the wax seal, others a postmark', /p-wax/.test(codisCardBackHtml('x', rows, { tone:'s' })) && /p-pm/.test(codisCardBackHtml('x', rows, { tone:'b' })) && !/p-pm"/.test(codisCardBackHtml('x', rows, { tone:'ss' })));
+  const evil = codisCardBackHtml('<img src=x onerror=window.__pbx=1>', rows, { tone:'a', sticker:'"><script>' });
+  const box = document.createElement('div'); box.style.cssText = 'position:fixed;left:0;top:0;width:150px;height:188px;z-index:99999'; box.innerHTML = evil; document.body.appendChild(box); await sleep(80);
+  T('hostile title/sticker are escaped', !box.querySelector('img') && !window.__pbx && !box.querySelector('script'));
+  box.innerHTML = '<div style="position:relative;width:150px;height:188px">' + a + '</div>'; await sleep(200);
+  const svg = box.querySelector('.cbk-orn-p'), cin = box.querySelector('.cbk-in');
+  T('paper: ink colour on paper (not the dark panel)', getComputedStyle(cin).backgroundColor !== 'rgba(7, 9, 14, 0.78)' && !!svg);
+  CodisTheme.set('dark', true); await sleep(150);
+  T('switch to dark: built back becomes the original dark back', !box.querySelector('.cbk-orn-p') && !box.querySelector('.cbk').classList.contains('is-paper') && getComputedStyle(box.querySelector('.cbk-in')).backgroundColor === 'rgba(7, 9, 14, 0.78)');
+  const d1 = codisCardBackHtml('برجر بالجبن', rows, { tone:'c', kind:'reward' }), d2 = codisBackOrnament('c', 'reward', 'برجر بالجبن');
+  T('dark: ornament identical to the original function', d1.indexOf(d2) > -1 && !/is-paper|cbk-orn-p/.test(d1));
+  CodisTheme.set('paper', true); await sleep(150);
+  T('switch back to paper: re-rendered live', !!box.querySelector('.cbk-orn-p') && box.querySelector('.cbk').classList.contains('is-paper'));
+  box.remove(); CodisTheme.set(prev, true);
+  const failed = out.filter(x=>!x.ok);
+  return { passed:out.length - failed.length, failed:failed.length, failures:failed, results:out };
+}catch(e){ return { passed:0, failed:1, failures:[{ name:'EXCEPTION', info:String(e && e.stack || e) }] }; } })();
