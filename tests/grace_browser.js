@@ -25,7 +25,7 @@
   const mk = planEndKey(prev, data.weeks[prev]).slice(0, 7), keepM = data.economyState.nextMonth; data.economyState.nextMonth = mk;
   const realKeys = codisGraceMonthKeys; const monthsUnheld = (cur.slice(0, 7) > mk);
   if(monthsUnheld){ CodisEconomy.processMonths(); T('processMonths does not settle a month while its week is pending', data.economyState.nextMonth === mk && !L()['monthly|' + mk]); }
-  else { codisGraceMonthKeys = ()=>new Set([mk]); data.economyState.nextMonth = addDaysKey(mk + '-01', -2).slice(0, 7); const nm = data.economyState.nextMonth; CodisEconomy.processMonths(); T('processMonths hold gate stops at a held month (simulated: same month as today)', data.economyState.nextMonth === nm); codisGraceMonthKeys = realKeys; }
+  else { /* v38: hold the month processing starts from (the previous month); before, it held mk but started one month earlier, so that earlier month settled correctly and the assertion was wrong whenever today is in mk */ data.economyState.nextMonth = addDaysKey(mk + '-01', -2).slice(0, 7); const nm = data.economyState.nextMonth; codisGraceMonthKeys = ()=>new Set([nm]); CodisEconomy.processMonths(); T('processMonths hold gate stops at a held month (simulated: same month as today)', data.economyState.nextMonth === nm && !L()['monthly|' + nm]); codisGraceMonthKeys = realKeys; }
   data.economyState.nextMonth = keepM;
 
   /* ---- 2) record from the settlement sheet ---- */

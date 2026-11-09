@@ -22,11 +22,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- CODIS-AUDIT-V38: defence-in-depth CSP. inline is required (single-file app + dev add-on); everything external is blocked except Supabase (data) and https images (Google avatar). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.24.1">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.25.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -11208,6 +11211,25 @@ html[data-theme="dark"] .cbk.is-paper .cbk-t, html[data-theme="dark"] .cbk.is-pa
 html[data-theme="dark"] .cbk-orn-p .p-bg{ opacity:.12; }
 @media (hover:hover) and (pointer:fine){ html[data-theme="dark"] .cflip:hover .cbk.is-paper{ box-shadow:inset 0 0 0 1px rgba(var(--ik),.4), inset 0 0 0 2px rgba(255,255,255,.035), inset 0 -12px 22px -14px rgba(0,0,0,.6); } }
 </style>
+<style id="codis-v38-css">
+/* CODIS-AUDIT-V38 (3.25.0) · إصلاحات التدقيق (عرض فقط) */
+/* WCAG 1.4.4: التكبير صار مسموحاً (كان user-scalable=no). على iOS فقط يكبّر Safari الصفحة تلقائياً عند التركيز على حقل خطّه < 16px؛
+   الحقول هناك 15px ⇒ 16px على محرّك iOS فقط (‎-webkit-touch-callout‎ موجود في WebKit/iOS وحده). سطح المكتب وأندرويد بلا أي تغيير بصري */
+@supports (-webkit-touch-callout: none){
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]):not([type="color"]), textarea, select{ font-size:max(16px, 1em); }
+}
+/* الشاشات الضيقة جداً (< 360px): أسماء الغرف بالشريط السفلي تنكسر بنفس الطريقة (كلمة لكل سطر) فتتساوى الأزرار الخمسة —
+   كانت «غرفة الأستاذ» سطراً واحداً وبقية الغرف سطرين */
+@media (max-width: 359.98px){
+  .navbtn .navlabel{ width:min-content; margin-inline:auto; text-align:center; overflow-wrap:normal; word-break:normal; }   /* كسر بين الكلمات فقط (الأصل يرث anywhere فيكسر داخل الكلمة) */
+}
+/* CodisTabGuard: نافذة «CODIS مفتوح بنافذة ثانية» — رموز الهوية نفسها (ورق/زجاج + زر رئيسي) فتعمل بالمظهرين */
+.codis-stale{ position:fixed; inset:0; z-index:9500; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(20,14,8,.55); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+.codis-stale-card{ max-width:340px; width:100%; display:flex; flex-direction:column; gap:12px; padding:22px 20px; border-radius:var(--r-lg, 18px); text-align:center;
+  background:var(--mat-panel-fill, var(--surface, #F6F0E4)); color:var(--text, #2B2117); box-shadow:var(--mat-chrome-shadow, 0 20px 40px -16px rgba(0,0,0,.5)); }
+.codis-stale-card b{ font-size:17px; font-weight:800; } .codis-stale-card p{ margin:0; font-size:14px; line-height:1.6; color:var(--text-2, #5a4630); }
+.codis-stale-card .btn{ min-height:44px; }
+</style>
 <script>
 /* CODIS-V33: long-press on content must not open the browser's selection / image menu (inputs and editable text keep theirs) */
 document.addEventListener('contextmenu', function(e){
@@ -16539,6 +16561,32 @@ const CodisAudio = (function(){
 })();
 /* نقطة الدخول الوحيدة لبقية الكود — آمنة دائماً: أي خلل بالصوت يعني صمتاً فقط */
 function codisSfx(name, opts){ try{ return CodisAudio.play(name, opts); }catch(e){ return false; } }
+/* ===== CODIS-AUDIT-V38 · CodisTabGuard — حماية البيانات عند فتح CODIS بأكثر من نافذة/تبويب =====
+   المشكلة (مُثبتة بتبويبين حقيقيين): كل نافذة تحمل نسخة بالذاكرة وتكتب كل البيانات فوق localStorage المشترك، فحفظ النافذة القديمة
+   كان يمسح تغييرات الأحدث (+100 كوين وسجلّها اختفيا). الحل: «آخر من كتب هو المرجع» — حين تكتب نافذة أخرى، هذه النافذة تتوقف فوراً عن الحفظ
+   (أي عملية تفشل بأمان وتتراجع داخل CodisWallet.transact بدل أن تكتب فوق الأحدث) وعن المزامنة (CODIS_SYNC_HOLD)، ثم تُحدَّث:
+   مخفية ⇒ تحديث مباشر · ظاهرة ⇒ نافذة واضحة بزر «تحديث الآن». حدث storage لا يصل للنافذة الكاتبة نفسها، فالاستخدام بنافذة واحدة لا يتأثر. */
+const CodisTabGuard = (function(){
+  let stale = false;
+  function lock(){
+    if(stale) return; stale = true;
+    try{ codisSaveSuspended = 'fail'; }catch(e){}
+    try{ window.CODIS_SYNC_HOLD = true; }catch(e){}
+    if(document.hidden){ try{ location.reload(); }catch(e){} return; }
+    try{
+      const el = document.createElement('div');
+      el.className = 'codis-stale'; el.setAttribute('role', 'alertdialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'codis-stale-t'); el.setAttribute('aria-describedby', 'codis-stale-d');
+      el.innerHTML = '<div class="codis-stale-card"><b id="codis-stale-t">CODIS مفتوح بنافذة ثانية</b><p id="codis-stale-d">تعدّلت بياناتك من نافذة أخرى. حدّث هذي النافذة حتى تكمل على آخر نسخة — ما راح يضيع شي.</p>' +
+        '<button type="button" class="btn btn-primary">تحديث الآن</button></div>';
+      el.querySelector('button').addEventListener('click', ()=>location.reload());
+      el.addEventListener('keydown', e=>{ if(e.key === 'Tab'){ e.preventDefault(); el.querySelector('button').focus(); } });
+      document.body.appendChild(el);
+      try{ el.querySelector('button').focus({ preventScroll:true }); }catch(e){}
+    }catch(e){ try{ location.reload(); }catch(x){} }
+  }
+  try{ window.addEventListener('storage', e=>{ if(e.key === STORE_KEY && e.newValue !== null && e.storageArea === window.localStorage) lock(); }); }catch(e){}
+  return { isStale:()=>stale, _lock:lock };
+})();
 /* يفتح نافذة "تغيير XP ناتج عن فعل المستخدم" أثناء fn — بعدها تُغلق تلقائياً (لا حالة معلّقة) */
 function codisWithXPSound(channel, mute, fn){
   try{ CodisAudio.armXP(channel, !!mute); }catch(e){}
@@ -23090,7 +23138,6 @@ const CodisAtmos = (function(){
   /* ---- القوالب: مواضع آمنة بالنسبة المئوية لعرض/ارتفاع البطاقة (x%, y%, حجم% من العرض)، مأخوذة بعد فحص الرسم الفعلي لكل بطاقة.
      no: مستطيلات محمية [x1,y1,x2,y2] (الوجه/الرأس، الجسم المهم، شارة الندرة، الزخارف الرئيسية) — اللوحات والستيكر تُضاف آلياً.
      hold: موضع «باليد» [x%, y%, حجم%, ميل] فقط حيث توجد يد مرئية بمكان آمن بعيد عن الوجه. max: أقصى عدد عناصر للبطاقة. */
-  const D = 'd', W = 'w', MO = 'm';
   const T = {
     'd:C':  { slots:[[12, 45, 9], [88, 34, 8.5], [87, 53, 7], [16, 61, 6], [84, 64, 6], [37, 5, 4.5], [64, 5, 4.5], [10, 88, 5], [90, 88, 5]], no:[[25, 6, 80, 56], [30, 56, 74, 69], [38, 79, 62, 99]] },
     'd:B':  { slots:[[86, 24, 8], [14, 35, 7], [88, 64, 6], [12, 66, 6], [37, 5, 4.5], [64, 5, 4.5], [10, 90, 5], [90, 90, 5]], no:[[25, 8, 80, 57], [30, 56, 74, 69], [38, 78, 62, 99], [4, 40, 22, 62], [78, 40, 96, 62]] },
@@ -28303,7 +28350,6 @@ const CodisMerge = (function(){
   const js = v=>JSON.stringify(v);
   const same = (a, b)=>js(a) === js(b);
   const cl = v=>v === undefined ? undefined : JSON.parse(js(v));
-  const prim = v=>v === null || typeof v !== 'object';
   function canon(v){ if(Array.isArray(v)) return '[' + v.map(canon).join(',') + ']'; if(isO(v)) return '{' + Object.keys(v).sort().map(k=>JSON.stringify(k) + ':' + canon(v[k])).join(',') + '}'; return JSON.stringify(v); }
   function ident(x){ if(!isO(x)) return null; for(let i = 0; i < IDK.length; i++){ const v = x[IDK[i]]; if(typeof v === 'string' && v) return IDK[i] + ':' + v; } return null; }
   function pickScalar(b, l, r, c){
@@ -28486,7 +28532,6 @@ const CodisAccount = (function(){
     if(r.status === 401 && o && o.auth !== false){ await refresh(); r = await raw(path, o); }
     return r;
   }
-  async function errMsg(r){ try{ const j = await r.json(); return j.message || j.msg || j.error_description || j.error || ('HTTP ' + r.status); }catch(e){ return 'HTTP ' + r.status; } }
   async function httpErr(r){
     let j = null; try{ j = await r.json(); }catch(e){}
     const er = new Error((j && (j.message || j.msg || j.error_description || j.error)) || ('HTTP ' + r.status));

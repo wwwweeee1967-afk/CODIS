@@ -70,6 +70,11 @@
   { const saved = JSON.parse(JSON.stringify(data.codisTimers)); T('timer state survives save/reload (absolute endsAt + fin flag persisted)', saved.items.every(t=>typeof t.endsAt === 'number') && saved.items.some(t=>t.fin === true)); }
 
   /* ================= C) sync loop against an in-page fake backend ================= */
+  /* v38 guard: part C must talk ONLY to the in-page fake backend. Without the override the page would send these fake tokens to the REAL Supabase
+     from its meta tag (harmless 401s, but production traffic + 15 false failures). Run with:
+     PRELOAD='window.CODIS_BACKEND_OVERRIDE={url:"http://127.0.0.1:8766",anonKey:"sb_publishable_test_only"}' TEST=tests/offline_browser.js node tools/prof/cdp.mjs … */
+  const ov = window.CODIS_BACKEND_OVERRIDE;
+  if(!(ov && String(ov.url || '').replace(/\/+$/, '') === 'http://127.0.0.1:8766')){ T('runner: fake backend override present (see PRELOAD note) — part C skipped, NOTHING sent to a real server', false); const failed0 = out.filter(x=>!x.ok); return { passed:out.length - failed0.length, failed:failed0.length, failures:failed0, results:out }; }
   const hasCfg = CodisAccount.configured;
   T('backend configured in this test page (override)', hasCfg);
   if(hasCfg){

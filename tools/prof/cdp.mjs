@@ -43,6 +43,9 @@ if(!process.env.DESKTOPUA) await send('Emulation.setUserAgentOverride', { userAg
 await send('Emulation.setCPUThrottlingRate', { rate:CPU });
 // long-task + frame recorder installed before any page script
 if(process.env.NOZOOM) await send('Page.addScriptToEvaluateOnNewDocument', { source:'window.__codisNoZoom = 1;' });
+/* PRELOAD=<js>: runs before the app's own scripts (e.g. offline_browser.js needs the in-page fake backend:
+   PRELOAD='window.CODIS_BACKEND_OVERRIDE={url:"http://127.0.0.1:8766",anonKey:"test-anon"}' — keeps test traffic off the real Supabase) */
+if(process.env.PRELOAD) await send('Page.addScriptToEvaluateOnNewDocument', { source:process.env.PRELOAD });
 if(process.env.SAFARI) await send('Page.addScriptToEvaluateOnNewDocument', { source:`(()=>{ try{ window.requestIdleCallback = undefined; window.cancelIdleCallback = undefined; }catch(e){} ${process.env.SAFARI === 'nocv' ? "try{ delete HTMLElement.prototype.oncontentvisibilityautostatechange; }catch(e){}" : ''} })();` });
 await send('Page.addScriptToEvaluateOnNewDocument', { source:`(()=>{ window.__lt=[]; try{ new PerformanceObserver(l=>{ for(const e of l.getEntries()) window.__lt.push({ s:Math.round(e.startTime), d:Math.round(e.duration) }); }).observe({ type:'longtask', buffered:true }); }catch(e){}
   window.__fr=[]; if(${process.env.NORAF ? 1 : 0}) return; let last=0; const tick=t=>{ if(last) window.__fr.push(t-last); last=t; if(window.__fr.length>20000) window.__fr.splice(0,10000); requestAnimationFrame(tick); }; requestAnimationFrame(tick); })();` });
