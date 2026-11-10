@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.26.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.26.1">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -28563,7 +28563,7 @@ const CodisAccount = (function(){
     if(o.auth !== false && S.session) h.Authorization = 'Bearer ' + S.session.access_token;
     if(o.body !== undefined) h['Content-Type'] = 'application/json';
     const ctrl = new AbortController(), to = setTimeout(() => ctrl.abort(), o.timeout || 20000);
-    try{ return await fetch(cfg.url + path, { method:o.method || 'GET', headers:h, body:o.body !== undefined ? JSON.stringify(o.body) : undefined, signal:ctrl.signal }); }
+    try{ return await fetch(cfg.url + path, { method:o.method || 'GET', headers:h, body:o.body !== undefined ? JSON.stringify(o.body) : undefined, signal:ctrl.signal, cache:o.cache }); }
     catch(e){ const er = new Error('network'); er.net = true; throw er; }
     finally{ clearTimeout(to); }
   }
@@ -28868,7 +28868,7 @@ const CodisAccount = (function(){
     try{
       const r = await api('/rest/v1/admins?select=user_id'); if(!r.ok) return;
       const rows = await r.json(); if(!Array.isArray(rows) || !rows.some(x => x && x.user_id === S.user.id)) return;   // دفاع إضافي: صفّي أنا حصراً
-      const f = await api('/storage/v1/object/authenticated/dev-addon/dev-addon.js'); if(!f.ok) return;   // الحماية الفعلية: RLS على المخزن
+      const f = await api('/storage/v1/object/authenticated/dev-addon/dev-addon.js', { cache:'no-cache' }); if(!f.ok) return;   /* no-cache: يتحقق من الخادم كل مرة فلا يبقى إصدار قديم من الإضافة بكاش المتصفح بعد الرفع */   // الحماية الفعلية: RLS على المخزن
       const code = await f.text(); if(!code || code.length < 100) return;
       adminOK = true;   /* CODIS-POWER: الخادم سمح بالتنزيل ← موثَّق. يُضبط قبل تشغيل الإضافة لأن لوحاتها تتحقق منه أثناء تحميلها */
       const sc = document.createElement('script'); sc.textContent = code + '\n//# sourceURL=codis-dev-addon.js'; document.head.appendChild(sc);
