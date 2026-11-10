@@ -154,6 +154,10 @@
 
     /* ---------- 8) الأمان: غير الموثَّق لا يبني شيئاً ---------- */
     T('CodisLimits يفشل مغلقاً لغير الموثَّق', (()=>{ const f = CodisAccount.isAdmin; CodisAccount.isAdmin = ()=>false; const r = CodisLimits.on() === false && CodisLimits.bypass('x.y') === false && CodisClock.begin() === false; CodisAccount.isAdmin = f; return r; })());
+    /* ---------- 9) المعاينة تحت CSP: exists()/valueOf() كانتا (0,eval) فتُحجبان (CSP بلا unsafe-eval) ⇒ كل المعاينات «غير مدعومة». يُفحص من مهمة صفحة حقيقية (setTimeout) لأن تقييم CDP يتجاوز CSP. ---------- */
+    const fromTask = await new Promise(res=>setTimeout(()=>{ try{ const L = CodisPreview.list(), ok = L.filter(d=>CodisPreview.staticCheck(d).st === 'ok').length; res({ ex:CodisPreview.exists('codisCardKey'), ok:ok, n:L.length, v:typeof CodisPreview.valueOf('codisCardKey') }); }catch(e){ res({ err:String(e) }); } }, 30));
+    T('المعاينة: exists/valueOf تعملان من مهمة صفحة (بلا eval)', fromTask.ex === true && fromTask.v === 'function', JSON.stringify(fromTask));
+    T('المعاينة: أغلب التعريفات سليمة (≥ 60 من ' + fromTask.n + ')', fromTask.ok >= 60, JSON.stringify(fromTask));
   }catch(e){ T('EXCEPTION', false, (e && e.stack) || e); }
   try{ CodisClock.end(); }catch(e){}
   return { results, passed:results.filter(r=>r.ok).length, failed:results.filter(r=>!r.ok).length };
