@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.25.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.26.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -12631,6 +12631,57 @@ function seedData(){
   };
 }
 
+/* ===== CODIS-CLOCK (3.26.0) — ساعة التطبيق المنطقية =====
+   الفصل المقصود:
+   • وقت العمل المنطقي (CodisClock.now/date/iso/day): تعتمد عليه الأيام والخطط والعادات والمكافآت والشهر وانتهاء البطاقات والمؤقتات.
+   • وقت النظام الحقيقي (Date.now() مباشرة): جلسة الحساب، المزامنة، الاتصال، مؤقتات الواجهة، الحركة، الإشعارات الفعلية — لا تمرّ بهذه الساعة أبداً.
+   في الاستعمال العادي الإزاحة = 0 فتطابق الساعة وقت الجهاز تماماً (لا أثر على أي مستخدم).
+   الإزاحة لا تُضبط إلا بعد begin() وهي ترفض أي حساب غير موثَّق كمطوّر (CodisAccount.isAdmin، قرار الخادم) — فشل مغلق.
+   لا تُحفظ في أي تخزين: إعادة تحميل الصفحة تعيد الإزاحة إلى 0 دائماً (لا يبقى حساب بوضع اختبار مجهول).
+   لا تغيّر Date ولا Date.now ولا ساعة الجهاز. */
+const CodisClock = (function(){
+  'use strict';
+  const realNow = ()=>Date.now();
+  let off = 0, simOn = false;
+  const verified = ()=>{ try{ return CodisAccount.isAdmin() === true; }catch(e){ return false; } };
+  const pad = n=>String(n).padStart(2, '0');
+  const keyOf = d=>d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const now = ()=>realNow() + off;
+  const MIN_Y = 2000, MAX_Y = 2200;
+  function apply(target){
+    const y = target.getFullYear(); if(!isFinite(target.getTime()) || y < MIN_Y || y > MAX_Y) return false;
+    off += target.getTime() - now(); return true;
+  }
+  return Object.freeze({
+    now, real:realNow,
+    date:()=>new Date(now()),
+    iso:()=>new Date(now()).toISOString(),
+    day:()=>new Date(now()).getDay(),
+    key:()=>keyOf(new Date(now())),
+    keyOf,
+    offset:()=>off,
+    active:()=>simOn,
+    /* يبدأ وضع المحاكاة (للمطوّر الموثَّق فقط). يرجع false إن لم يُسمح */
+    begin(){ if(!verified()) return false; simOn = true; off = 0; return true; },
+    /* ينهي المحاكاة ويعيد الساعة الحقيقية */
+    end(){ simOn = false; off = 0; return true; },
+    /* تمرير n يوماً تقويمياً (نفس الساعة المحلية — لا يتأثر بتغيّر التوقيت الصيفي) */
+    shiftDays(n){
+      if(!simOn || !verified()) return false;
+      n = Math.trunc(Number(n)); if(!isFinite(n) || n === 0 || Math.abs(n) > 3700) return false;
+      const t = new Date(now()); t.setDate(t.getDate() + n); return apply(t);
+    },
+    /* القفز إلى يوم محدد 'YYYY-MM-DD' (بنفس الساعة المحلية الحالية) */
+    setDay(key){
+      if(!simOn || !verified()) return false;
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(key || '')); if(!m) return false;
+      const c = new Date(now()), y = +m[1], mo = +m[2] - 1, d = +m[3];
+      const t = new Date(y, mo, d, c.getHours(), c.getMinutes(), c.getSeconds(), c.getMilliseconds());
+      if(t.getFullYear() !== y || t.getMonth() !== mo || t.getDate() !== d) return false;   // 31 فبراير وأمثالها
+      return apply(t);
+    }
+  });
+})();
 function loadData(){
   const raw = CodisStorage.read(STORE_KEY);
   let parsed = null;
@@ -12822,10 +12873,10 @@ function codisTasksNeeded(tasks, targetPct){
 function taskValue(t){ return codisTaskWeight(t) * codisTaskFraction(t); }
 /* ضبط حالة المهمة + نسبتها معاً بصورة متسقة. فتح «نصها» يبدأ من القيمة الافتراضية (50). يُرجع الحالة الجديدة */
 function codisApplyTaskStatus(t, status, opts){
-  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); delete t.doneOn; t.answeredAt = new Date().toISOString(); return t.status; }
+  if(opts && typeof opts.progress === 'number' && isFinite(opts.progress)){ t.status = 'half'; t.progress = Math.max(0, Math.min(100, Math.round(opts.progress))); delete t.doneOn; t.answeredAt = CodisClock.iso(); return t.status; }
   const prev = t.status;
   t.status = (t.status === status) ? null : status;
-  if(t.status) t.answeredAt = new Date().toISOString(); else delete t.answeredAt;   /* CODIS-V4: وقت الحسم يظهر في سجل «المنجزة» */
+  if(t.status) t.answeredAt = CodisClock.iso(); else delete t.answeredAt;   /* CODIS-V4: وقت الحسم يظهر في سجل «المنجزة» */
   if(t.status === 'done'){ t.progress = 100; t.doneOn = todayKey(); }   /* CODIS-RULES: تاريخ الإنجاز لقاعدة «ليس الأسبوع كله بيوم» */
   else if(t.status === 'half') t.progress = (prev === 'half' && isFinite(Number(t.progress))) ? Math.max(0, Math.min(100, Math.round(Number(t.progress)))) : codisAchCfg().partialDefault;
   else t.progress = 0;
@@ -12947,7 +12998,7 @@ function inferPlanStartDay(week){
   const days = week && week.days ? week.days : {};
   const withTasks = [];
   for(let i=0;i<7;i++){ if((days[i]||[]).length>0) withTasks.push(i); }
-  return withTasks.length ? Math.min(...withTasks) : new Date().getDay();
+  return withTasks.length ? Math.min(...withTasks) : CodisClock.day();
 }
 
 const HOLIDAY_CARD_VALID_MS = 24 * 60 * 60 * 1000;
@@ -12997,7 +13048,7 @@ const HOLIDAY_CARD_TYPES = (function(){
 function holidayExtras(w){ return (w && Array.isArray(w.extraHolidays)) ? w.extraHolidays : []; }
 function isHolidayIdx(w, d){ return !!w && (d === w.holidayDay || holidayExtras(w).indexOf(d) !== -1); }
 function holidayNormalizeInventory(inv, iso, now, TB){
-  const seen = {}, HK = HOLIDAY_CARD_TYPES.kinds(), nowMs = Date.now(), dayOk = v=>Number.isInteger(v) && v >= 0 && v <= 6;
+  const seen = {}, HK = HOLIDAY_CARD_TYPES.kinds(), nowMs = CodisClock.now(), dayOk = v=>Number.isInteger(v) && v >= 0 && v <= 6;
   let cards = (Array.isArray(inv.holidayCards) ? inv.holidayCards : []).filter(x=>x && typeof x === 'object' && typeof x.uid === 'string' && x.uid && HK.indexOf(x.kind) !== -1).filter(x=>{ if(seen[x.uid]) return false; seen[x.uid] = true; return true; }).map(x=>{
     const acq = iso(x.acquiredAt) || now, vm = HOLIDAY_CARD_TYPES.validMs(x.kind);
     const c = { uid:x.uid, kind:x.kind, source:x.source === 'store' ? 'store' : 'box', sourceRef:String(x.sourceRef || ''), tier:TB.indexOf(x.tier) !== -1 ? x.tier : '', acquiredAt:acq,
@@ -13190,7 +13241,7 @@ function econNum(v, def, min, max, int){
   n = Math.max(min, Math.min(max, n));
   return int ? Math.round(n) : n;
 }
-function econNowIso(){ return new Date().toISOString(); }
+function econNowIso(){ return CodisClock.iso(); }
 function econHash(str){ let h = 0x811c9dc5; for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8,'0'); }
 /* معرّف ثابت مشتق من المحتوى (الغرفة + النص) — نفس البيانات ← نفس المعرّف دائماً، والتكرار يأخذ لاحقة */
 function econStableId(prefix, room, name, taken){
@@ -13406,7 +13457,7 @@ function econNormalizeInventory(d){
   d.inventory = { items:items, boxes:boxes, passes:passes, pouches:econNormPouches(inv, iso, now, TB), holidayCards:holiday.cards, holidayBuyWeeks:holiday.buyWeeks, cosmetics:econNormCosmetics(inv, iso, now) };
 }
 
-function econThisMonthKey(){ return localDateStr(new Date()).slice(0,7); }
+function econThisMonthKey(){ return localDateStr(CodisClock.date()).slice(0,7); }
 function econPrevMonthKey(m){ const p = m.split('-').map(Number); return p[1] === 1 ? (p[0] - 1) + '-12' : p[0] + '-' + String(p[1] - 1).padStart(2,'0'); }
 function econNextMonthKey(m){ const p = m.split('-').map(Number); return p[1] === 12 ? (p[0] + 1) + '-01' : p[0] + '-' + String(p[1] + 1).padStart(2,'0'); }
 
@@ -14337,9 +14388,9 @@ const CodisHolidayCards = (function(){
   const price = k=>{ const d = def(k); return d ? econAutoStore(d.basePrice) : 0; };   /* السعر الأساسي × هامش المتجر — نفس مسار تسعير عناصر المتجر (بلا خصم) */
   function get(uid){ return all().find(c=>c.uid === uid) || null; }
   const expiresMs = c=>{ const t = Date.parse(c && c.expiresAt); return isFinite(t) ? t : Infinity; };
-  const timeExpired = (c, nowMs)=>!!c && T.validMs(c.kind) > 0 && expiresMs(c) <= (nowMs === undefined ? Date.now() : nowMs);
+  const timeExpired = (c, nowMs)=>!!c && T.validMs(c.kind) > 0 && expiresMs(c) <= (nowMs === undefined ? CodisClock.now() : nowMs);
   const isUsable = c=>!!c && c.status === 'owned' && !timeExpired(c);
-  const remainingMs = c=>Math.max(0, expiresMs(c) - Date.now());
+  const remainingMs = c=>Math.max(0, expiresMs(c) - CodisClock.now());
   /* تثبيت الانتهاء: كل بطاقة ذات صلاحية مملوكة تجاوزت expiresAt المحفوظ تصير expired للأبد (لا يُعاد فتحها بتغيّر الساعة أو إعادة التشغيل) */
   function sweep(nowMs){ let n = 0; all().forEach(c=>{ if(c.status === 'owned' && timeExpired(c, nowMs)){ c.status = 'expired'; c.expiredAt = c.expiresAt; n++; } }); return n; }
   function sweepAndSave(){ if(sweep() > 0){ saveData(); return true; } return false; }
@@ -17413,7 +17464,7 @@ function getWeekId(d){
   const sunday = new Date(date.getFullYear(), date.getMonth(), date.getDate() - day);
   return localDateStr(sunday);
 }
-function currentWeekId(){ return getWeekId(new Date()); }
+function currentWeekId(){ return getWeekId(CodisClock.date()); }
 /* ===== CODIS-CYCLE =====
    مفتاح الخطة = الأحد التقويمي ليوم توزيعها (للتوافق). دورتها = 7 أيام تبدأ من يوم التوزيع (مفتاح + planStartDay) وتنتهي بعد 6 أيام.
    الخطط الموسومة cyc:2 تستعمل هذا النموذج؛ أرشيف قديم بلا العلامة يبقى بتواريخه القديمة (أسبوع تقويمي). */
@@ -18053,7 +18104,7 @@ function codisDailyHabitsProgress(key){
   return { total:hs.length, done:done };
 }
 function codisRemainingToday(){
-  const d = new Date().getDay();
+  const d = CodisClock.day();
   const cnt = w=>{ const l = (w && w.days && w.days[d]) || []; return { total:l.length, left:l.filter(t=>t.status !== 'done').length }; };
   const t = cnt(currentWeek()), l = cnt(learnCurrentWeek()), h = codisDailyHabitsProgress(todayKey());
   return { tasks:t.left, learn:l.left, habits:h.total - h.done, hasTasks:t.total > 0, hasLearn:l.total > 0, hasHabits:h.total > 0 };
@@ -18063,7 +18114,7 @@ function codisRoomCompletePayload(room, dayIdx){
   const wk = room === 'learn' ? learnCurrentWeek() : currentWeek();
   const list = (wk && wk.days && wk.days[dayIdx]) || [];
   if(!list.length || list.some(t=>t.status !== 'done')) return null;
-  return { room:room, dayIdx:dayIdx, weekId:currentPlanKey(), total:list.length, isToday:dayIdx === new Date().getDay(), remaining:codisRemainingToday() };
+  return { room:room, dayIdx:dayIdx, weekId:currentPlanKey(), total:list.length, isToday:dayIdx === CodisClock.day(), remaining:codisRemainingToday() };
 }
 
 const CodisNotifications = (function(){
@@ -18122,7 +18173,7 @@ const CodisNotifications = (function(){
         actionPage: opts.actionPage || null,
         groupKey: opts.groupKey || null,
         uniqueKey: opts.uniqueKey || null,
-        createdAt: new Date().toISOString(),
+        createdAt: CodisClock.iso(),
         read: false
       };
       items().unshift(notif);
@@ -18364,7 +18415,7 @@ let notifFilterMode = 'all'; // 'all' | 'unread'
 function notifTimeAgo(iso){
   const t = new Date(iso).getTime();
   if(!isFinite(t)) return '';
-  const diffMin = Math.max(0, Math.floor((Date.now() - t) / 60000));
+  const diffMin = Math.max(0, Math.floor((CodisClock.now() - t) / 60000));
   if(diffMin < 1) return 'الآن';
   if(diffMin < 60) return 'قبل ' + diffMin + ' د';
   const h = Math.floor(diffMin / 60);
@@ -18659,7 +18710,7 @@ function archivePlanForWeek(wk, reason, cause){ // reason: 'completed' | 'stoppe
   const progress = computePlanProgressForWeek(wk);
   // الاسم يترحّل مع بيانات الأسبوع نفسها (تم تخزينه وقت التوزيع) — يبقى صحيح حتى لو تحذف/تتغير الخطة المحفوظة أو خطة أخرى تنحمّل بعدها
   const planName = (tw && tw.planName) || (lw && lw.planName) || 'بدون اسم';
-  const nowIso = new Date().toISOString();
+  const nowIso = CodisClock.iso();
   const startedAt = (tw && tw.startedAt) || (lw && lw.startedAt) || null;
 
   if(!Array.isArray(data.archive)) data.archive = [];
@@ -18863,7 +18914,7 @@ function reopenArchivedPlan(id){
   const p = (data.archive || []).find(x=>x.id === id); const why = reopenArchiveReason(p);
   if(why){ codisSfx('invalid', { ctx:'unavailable' }); showToast('ما ينفع إعادة الفتح: ' + why, 'var(--warning)'); return false; }
   const L = data.outcomeLedger, wid = ['weekly', p.weekId, p.startedAt || ''].join('|'), mid = 'monthly|' + p.weekId.slice(0, 7), mid2 = 'monthly|' + codisPlanMonth(p), stamp = Date.now();
-  [wid, mid, mid2].filter((k, i, a)=>a.indexOf(k) === i).forEach(k=>{ const e = L[k]; if(e){ L[k + '|reopened|' + stamp] = Object.assign({}, e, { status:'void', voidedBy:'reopen', voidedAt:new Date().toISOString() }); delete L[k]; } });
+  [wid, mid, mid2].filter((k, i, a)=>a.indexOf(k) === i).forEach(k=>{ const e = L[k]; if(e){ L[k + '|reopened|' + stamp] = Object.assign({}, e, { status:'void', voidedBy:'reopen', voidedAt:CodisClock.iso() }); delete L[k]; } });
   const until = addDaysKey(todayKey(), GRACE_DAYS);
   if(p.tasksWeek){ data.weeks[p.weekId] = JSON.parse(JSON.stringify(p.tasksWeek)); data.weeks[p.weekId].graceUntil = until; }
   if(p.learnWeek){ data.learnWeeks[p.weekId] = JSON.parse(JSON.stringify(p.learnWeek)); data.learnWeeks[p.weekId].graceUntil = until; }
@@ -19332,7 +19383,7 @@ function planLinesFromWeek(w){
 }
 /* أيام الخطة المتبقية بترتيب دورتها: اليوم يدخل فقط إن ما انحسمت نتيجته لتلك الغرفة */
 function planRemainingDays(host, room){
-  const start = getPlanStartDay(host), hol = host.holidayDay === undefined ? -1 : host.holidayDay, today = new Date().getDay(), wk = currentPlanKey();
+  const start = getPlanStartDay(host), hol = host.holidayDay === undefined ? -1 : host.holidayDay, today = CodisClock.day(), wk = currentPlanKey();
   const cyc = []; for(let i = 0; i < 7; i++) cyc.push((start + i) % 7);
   const pos = cyc.indexOf(today), L = data.outcomeLedger || {};
   const decided = Object.keys(L).some(k=>{ const e = L[k]; return e && e.scope === 'daily' && e.room === room && e.weekId === wk && e.day === today && e.status !== 'void'; });
@@ -19445,14 +19496,14 @@ function distributePlan(){
   if(currentPlanActive() && !archiveCurrentPlan('stopped')) return;   // لا توزيع جديد فوق خطة لم تُؤرشف
 
   const wk = currentWeekId();
-  const todayIdx = new Date().getDay();            // أول يوم للخطة = يوم التوزيع نفسه
+  const todayIdx = CodisClock.day();            // أول يوم للخطة = يوم التوزيع نفسه
   // يوم عطلة يُختار مرة وحدة وينحفظ مع الخطة (deterministic بعد الحفظ)،
   // وما يصير أبداً نفس أول يوم بالخطة حتى ما تبدأ الخطة بيوم فاضي
   const holidayDay = (todayIdx + 1 + Math.floor(Math.random()*6)) % 7;
   const { available } = buildDayCycle(todayIdx, holidayDay);
 
   const planNameAtDistribution = (data.loadedPlanId && data.plans[data.loadedPlanId]) ? data.plans[data.loadedPlanId].name : 'بدون اسم';
-  const startedAt = new Date().toISOString();
+  const startedAt = CodisClock.iso();
 
   if(taskItems.length){
     const { days, items_meta } = distributeItemsToDays(taskItems, available);
@@ -19532,7 +19583,7 @@ function replanWeek(kind){
     showToast('ماكو شي لإعادة توزيعه', 'var(--warning)');
     return;
   }
-  const todayIdx = new Date().getDay();
+  const todayIdx = CodisClock.day();
   const holidayDay = week.holidayDay===undefined ? -1 : week.holidayDay;
 
   // الأيام المتبقية بترتيب دورة الخطة نفسها (نفس الترتيب اللي يعتمده فتح الأيام)،
@@ -20111,7 +20162,7 @@ const CodisTaskFlow = (function(){
       const f2 = find(k, id); if(!f2 || !f2.t.status) return false;   /* تغيّرت الحالة أثناء نافذة التأكيد */
       const t = f2.t, from = t.status;
       t.status = null; t.progress = 0; delete t.doneOn; delete t.answeredAt;
-      t.restoredAt = new Date().toISOString(); t.restores = (Number(t.restores) || 0) + 1; t.restoredFrom = from;
+      t.restoredAt = CodisClock.iso(); t.restores = (Number(t.restores) || 0) + 1; t.restoredFrom = from;
       pend.forEach(e=>{ try{ CodisEconomy.voidIfPending(e.id); }catch(x){ console.error(x); } });
       saveData();
       try{ render(k); }catch(e){ console.error(e); }
@@ -20155,7 +20206,7 @@ function codisPaintDayMeta(kind, dayIdx, tasks){
   const cnt = document.getElementById(kind+'-count');
   if(!ctx || !cnt) return;
   if(dayIdx === undefined || dayIdx === null){ ctx.innerHTML = ''; cnt.textContent = ''; return; }
-  const isToday = dayIdx === new Date().getDay();
+  const isToday = dayIdx === CodisClock.day();
   ctx.innerHTML = `<strong>${DAYS_AR[dayIdx]}</strong>` + (isToday ? '<span class="today-chip">اليوم</span>' : '');
   if(!tasks || !tasks.length){ cnt.textContent = ''; return; }
   const done = tasks.filter(t=>t.status==='done').length;
@@ -20163,7 +20214,7 @@ function codisPaintDayMeta(kind, dayIdx, tasks){
 }
 
 /* ================= TASKS PAGE RENDER ================= */
-let activeDayIdx = new Date().getDay();
+let activeDayIdx = CodisClock.day();
 
 function renderTasksPage(selectDay){
   const week = currentWeek();
@@ -20184,7 +20235,7 @@ function renderTasksPage(selectDay){
   // day tabs
   const tabsWrap = document.getElementById('day-tabs');
   tabsWrap.innerHTML='';
-  const todayIdx = new Date().getDay();
+  const todayIdx = CodisClock.day();
   for(let i=0;i<7;i++){
     const tasks = week.days[i] || [];
     const state = getDayAccessState(week, i);
@@ -20263,7 +20314,7 @@ function renderTasksPage(selectDay){
 const DAY_STATE = { OPEN:'OPEN', LOCKED:'LOCKED', HOLIDAY:'HOLIDAY' };
 
 function getPlanStartDay(week){
-  if(!week) return new Date().getDay();
+  if(!week) return CodisClock.day();
   if(Number.isInteger(week.planStartDay) && week.planStartDay>=0 && week.planStartDay<=6) return week.planStartDay;
   week.planStartDay = inferPlanStartDay(week);
   return week.planStartDay;
@@ -22664,7 +22715,7 @@ function econOpenLayer(secId, render){
 /* CODIS-BUTTER: بصمة كل ما يقرأه رسم المتجر: أي حفظ بيانات، اليوم (وكل 10 دقائق)، حالة الواجهة، الرصيد، صلاحية المطوّر */
 function econStoreSig(){
   let adm = false; try{ adm = CodisAccount.isAdmin(); }catch(e){}
-  return [window.__codisSaveN || 0, new Date().toDateString(), Math.floor(Date.now() / 600000), econClosedOpen, econClosedView, econSelMode, Object.keys(econSelSet || {}).length,
+  return [window.__codisSaveN || 0, CodisClock.date().toDateString(), Math.floor(CodisClock.now() / 600000), econClosedOpen, econClosedView, econSelMode, Object.keys(econSelSet || {}).length,
     econOwnOpen, econBusyId, econStoreBusy, econSellBusy, econSilverBusy, data.wallet.balance, adm, innerWidth].join('|');
 }
 function econStoreReopen(){
@@ -23480,9 +23531,9 @@ const CodisTimers = (function(){
   }
   const active = (kind, ref)=>all().find(t=>t.kind === kind && t.ref === String(ref) && t.state === 'running') || null;
   function latest(kind, ref){ const l = all().filter(t=>t.kind === kind && t.ref === String(ref) && t.state !== 'cancelled'); return l.length ? l[l.length - 1] : null; }
-  const rid = p=>p + Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
+  const rid = p=>p + CodisClock.now().toString(36) + Math.random().toString(36).slice(2, 9);
   function prune(){
-    const now = Date.now(), L = all();
+    const now = CodisClock.now(), L = all();
     for(let i = L.length - 1; i >= 0; i--) if(L[i].state !== 'running' && now - (L[i].doneAt || L[i].endsAt) > KEEP) L.splice(i, 1);
     while(L.length > MAX){ const k = L.findIndex(t=>t.state !== 'running'); if(k < 0) break; L.splice(k, 1); }
   }
@@ -23490,7 +23541,7 @@ const CodisTimers = (function(){
   function start(o){
     const ex = active(o.kind, o.ref); if(ex) return { ok:true, timer:ex, existed:true };
     const min = Math.round(Number(o.minutes)); if(!(min >= 1 && min <= 1440)) return { ok:false, reason:'duration' };
-    const now = Date.now();
+    const now = CodisClock.now();
     const t = { id:rid('tm_'), ev:rid('ev_'), kind:o.kind, ref:String(o.ref), room:o.room || null, label:String(o.label || '').slice(0, 140), minutes:min, startedAt:now, endsAt:now + min * 60000, state:'running', doneAt:null, notified:false, server:false };
     all().push(t); prune();
     if(!saveData()){ all().splice(all().indexOf(t), 1); return { ok:false, reason:'save' }; }
@@ -23499,7 +23550,7 @@ const CodisTimers = (function(){
   }
   function cancel(id){
     const t = all().find(x=>x.id === id); if(!t || t.state !== 'running') return false;
-    t.state = 'cancelled'; t.doneAt = Date.now(); saveData(); CodisPush.unschedule(t); arm(); paint(); return true;
+    t.state = 'cancelled'; t.doneAt = CodisClock.now(); saveData(); CodisPush.unschedule(t); arm(); paint(); return true;
   }
   function announce(t, now){
     const h = H[t.kind], msg = h.message(t);
@@ -23513,7 +23564,7 @@ const CodisTimers = (function(){
     if(document.visibilityState === 'visible'){ showToast(msg.body, 'var(--success)', 'check'); try{ codisSfx('confirm', { ctx:'use' }); }catch(e){} }
   }
   function tick(){
-    const now = Date.now(); let changed = false, kinds = {};
+    const now = CodisClock.now(); let changed = false, kinds = {};
     all().forEach(t=>{
       if(t.state === 'done' && t.fin === false){   /* CODIS-OFFLINE: انتهى لكن تثبيت الحالة (markUsed) لم ينجح بعد — يُعاد بأمان (idempotent) حتى ينجح، والبيع محجوب طوال ذلك */
         const h2 = H[t.kind]; let ok2 = false; try{ ok2 = !h2 || h2.done(t) !== false; }catch(e){ console.error('CodisTimers.retry:', e); }
@@ -23534,7 +23585,7 @@ const CodisTimers = (function(){
   function arm(){
     if(tmo){ clearTimeout(tmo); tmo = 0; }
     const run = all().filter(t=>t.state === 'running');
-    if(run.length){ const next = Math.min.apply(null, run.map(t=>t.endsAt)); tmo = setTimeout(tick, Math.max(50, Math.min(next - Date.now() + 60, 2147483000))); }
+    if(run.length){ const next = Math.min.apply(null, run.map(t=>t.endsAt)); tmo = setTimeout(tick, Math.max(50, Math.min(next - CodisClock.now() + 60, 2147483000))); }
     if(!tmo && all().some(t=>t.state === 'done' && t.fin === false)) tmo = setTimeout(tick, 4000);   /* إعادة محاولة تثبيت الانتهاء */
     const want = run.length > 0 && document.visibilityState === 'visible';
     if(want && !ivl) ivl = setInterval(paint, 1000);
@@ -23546,7 +23597,7 @@ const CodisTimers = (function(){
   }
   /* الرسم المرئي فقط: يقرأ endsAt المطلق من العنصر */
   function paint(){
-    const now = Date.now();
+    const now = CodisClock.now();
     document.querySelectorAll('[data-tmr-end]').forEach(el=>{
       const end = Number(el.getAttribute('data-tmr-end')), tot = Number(el.getAttribute('data-tmr-total')) || 1, left = end - now;
       const b = el.querySelector('[data-tmr-left]') || el; b.textContent = fmt(left);
@@ -23597,7 +23648,7 @@ const CODIS_PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 
 function codisDurBadgeHtml(name){ const d = CodisDuration.parse(name); return d ? '<span class="dur-badge" title="مكافأة بمؤقت">' + CODIS_TMR_SVG + CodisDuration.label(d.min) + '</span>' : ''; }
 function codisOwnUseBtnHtml(it, uid, busy){
   const t = CodisTimers.active('reward', it.uid);
-  if(t) return '<span class="chip-act tmr-chip is-run" role="timer" data-tmr-end="' + t.endsAt + '" data-tmr-total="' + (t.minutes * 60000) + '" aria-label="مؤقت المكافأة شغّال">' + CODIS_TMR_SVG + '<b data-tmr-left dir="ltr">' + CodisTimers.fmt(t.endsAt - Date.now()) + '</b></span>';
+  if(t) return '<span class="chip-act tmr-chip is-run" role="timer" data-tmr-end="' + t.endsAt + '" data-tmr-total="' + (t.minutes * 60000) + '" aria-label="مؤقت المكافأة شغّال">' + CODIS_TMR_SVG + '<b data-tmr-left dir="ltr">' + CodisTimers.fmt(t.endsAt - CodisClock.now()) + '</b></span>';
   const d = CodisDuration.parse(it.name);
   return '<button type="button" class="btn btn-primary own-use own-go' + (d ? ' tmr-go' : '') + '" ' + (busy ? 'disabled aria-disabled="true"' : '') + ' onclick="econUse(\'' + uid + '\')">' + (d ? CODIS_PLAY_SVG + '<span>ابدأ · ' + CodisDuration.label(d.min) + '</span>' : codisIcon('check') + '<span>استخدام</span>') + '</button>';
 }
@@ -23605,7 +23656,7 @@ function codisTaskTimerHtml(task){
   const d = CodisDuration.forTask(task); if(!d || !task || !task.id) return '';
   const id = escapeHtml(String(task.id)), t = CodisTimers.latest('task', String(task.id)), lab = CodisDuration.label(d.min);
   if(t && t.state === 'running') return '<div class="tt-row is-run" data-tt="' + id + '"><div class="tt-clock" role="timer" data-tmr-end="' + t.endsAt + '" data-tmr-total="' + (t.minutes * 60000) + '"><span class="tt-ring" aria-hidden="true"></span>' +
-    '<span class="tt-txt"><b data-tmr-left dir="ltr">' + CodisTimers.fmt(t.endsAt - Date.now()) + '</b><i>باقي من ' + escapeHtml(CodisDuration.label(t.minutes)) + '</i></span></div>' +
+    '<span class="tt-txt"><b data-tmr-left dir="ltr">' + CodisTimers.fmt(t.endsAt - CodisClock.now()) + '</b><i>باقي من ' + escapeHtml(CodisDuration.label(t.minutes)) + '</i></span></div>' +
     '<button type="button" class="tt-stop" data-tt-stop="' + id + '">إيقاف</button></div>';
   if(t && t.state === 'done') return '<div class="tt-row is-done" data-tt="' + id + '"><span class="tt-done">' + ICONS.check + 'انتهى الوقت · ' + escapeHtml(CodisDuration.label(t.minutes)) + '</span>' +
     '<button type="button" class="tt-again" data-tt-start="' + id + '">من جديد</button></div>';
@@ -23662,6 +23713,7 @@ const CodisPush = (function(){
     return regP;
   }
   async function show(title, body, tag){
+    if(CodisClock.active()) return false;   /* CODIS-CLOCK: لا إشعارات فعلية أثناء محاكاة الزمن */
     if(!granted() || !(data.notifications && data.notifications.settings && data.notifications.settings.browserEnabled)) return false;
     const opts = { body:body || '', tag:tag || 'codis', renotify:false, icon:'icon.svg', badge:'icon.svg', lang:'ar', dir:'rtl', data:{ url:'./' } };
     try{ const r = await registration(); if(r && r.showNotification){ await r.showNotification(title || 'CODIS', opts); return true; } }catch(e){}
@@ -25924,7 +25976,7 @@ async function econUse(uid){
     const _dur = CodisDuration.parse(it.name), _sn = CodisUseCine.snap(it);   /* CODIS-USE-CINE: لقطة العرض قبل أي تغيير بالحالة */
     if(_dur){   /* CODIS-TIMERS: مكافأة ذات مدة ← مؤقت حقيقي مرتبط بالنسخة نفسها */
       const _run = CodisTimers.active('reward', uid);
-      if(_run){ showToast('مؤقتها شغّال — باقي ' + CodisTimers.fmt(_run.endsAt - Date.now()), 'var(--warning)'); return; }
+      if(_run){ showToast('مؤقتها شغّال — باقي ' + CodisTimers.fmt(_run.endsAt - CodisClock.now()), 'var(--warning)'); return; }
       const okT = await codisConfirm({ title:'تبدأ «' + it.name + '»؟', message:'يبدأ مؤقت ' + CodisDuration.label(_dur.min) + ' من الآن.', detail:'لما يخلص الوقت تنعلَّم المكافأة كمستخدَمة ويوصلك إشعار. ما تنباع وهي شغّالة.', icon:'check', confirmText:'ابدأ الآن', danger:false });
       if(!okT) return;
       const rt = codisRewardTimerStart(uid);
@@ -26138,7 +26190,7 @@ function hcdTick(){
   try{
     const H = CodisHolidayCards;
     if(H.sweepAndSave()){ if(typeof econStoreIsOpen === 'function' && econStoreIsOpen()) econRenderStore(); }
-    else Array.prototype.forEach.call(document.querySelectorAll('.hcd-sub[data-exp]'), el=>{ const ms = Date.parse(el.getAttribute('data-exp')) - Date.now(), c = { expiresAt:el.getAttribute('data-exp') }; el.textContent = ms > 0 ? hcdRemainText(c) : 'انتهت صلاحيتها'; });
+    else Array.prototype.forEach.call(document.querySelectorAll('.hcd-sub[data-exp]'), el=>{ const ms = Date.parse(el.getAttribute('data-exp')) - CodisClock.now(), c = { expiresAt:el.getAttribute('data-exp') }; el.textContent = ms > 0 ? hcdRemainText(c) : 'انتهت صلاحيتها'; });
   }catch(e){ console.error('holiday tick failed:', e); }
 }
 window.setInterval(hcdTick, 30000);
@@ -27141,7 +27193,7 @@ function econRenderLog(){
 
 
 /* ================= HABITS ================= */
-function dateKeyOffset(offset){ const d=new Date(); d.setDate(d.getDate()+offset); return localDateStr(d); }
+function dateKeyOffset(offset){ const d=CodisClock.date(); d.setDate(d.getDate()+offset); return localDateStr(d); }
 function yesterdayKey(){ return dateKeyOffset(-1); }
 function todayKey(){ return dateKeyOffset(0); }
 
@@ -27314,7 +27366,7 @@ function codisCheckDayChange(){
 let habitCheckTimer = null;
 function scheduleHabitDayCheck(){
   window.clearTimeout(habitCheckTimer);
-  const n = new Date(), next = new Date(n.getFullYear(), n.getMonth(), n.getDate()+1, 0, 0, 5);
+  const n = CodisClock.date(), next = new Date(n.getFullYear(), n.getMonth(), n.getDate()+1, 0, 0, 5);
   habitCheckTimer = window.setTimeout(()=>{ if(!codisCheckDayChange()){ runHabitChecks(); if(document.getElementById('page-habits').style.display === 'block') renderHabitsPage(); } scheduleHabitDayCheck(); }, Math.max(1000, next - n));
 }
 function initHabitChecks(){
@@ -27428,7 +27480,7 @@ function buildHabitArchiveEntry(h, kind){
     importance: habitImportance(h),
     status: 'archived',
     createdAt: h.createdAt,
-    archivedAt: new Date().toISOString(),
+    archivedAt: CodisClock.iso(),
     rewardsCount: rec.rewards.length,
     penaltiesCount: rec.penalties.length,
     stats: stats,
@@ -27694,7 +27746,7 @@ function renderHabitsPage(){
 }
 
 /* ================= LEARN (mirrors Tasks: weekly plan → daily items, day-locking, 3-state, XP) ================= */
-let activeLearnDayIdx = new Date().getDay();
+let activeLearnDayIdx = CodisClock.day();
 function learnCurrentWeek(){ return data.learnWeeks[currentPlanKey()]; }
 function learnDayStats(dayIdx){
   const week = learnCurrentWeek();
@@ -27819,7 +27871,7 @@ function renderLearnPage(selectDay){
 
   const tabsWrap = document.getElementById('learn-day-tabs');
   tabsWrap.innerHTML='';
-  const todayIdx = new Date().getDay();
+  const todayIdx = CodisClock.day();
   for(let i=0;i<7;i++){
     const tasks = week.days[i] || [];
     const state = getDayAccessState(week, i);
@@ -28244,7 +28296,7 @@ function codisInboxNote(o){
     if(items.some(n=>n.uniqueKey === o.key)) return false;
     items.unshift({ id:'n' + Date.now() + '_' + Math.random().toString(36).slice(2, 7), type:'ADMIN', category:'system', priority:'HIGH',
       title:String(o.title || '').slice(0, 120), message:String(o.message || '').slice(0, 2000), icon:o.icon || 'info', tone:o.tone || 'neutral',
-      actionPage:null, groupKey:null, uniqueKey:o.key, createdAt:new Date().toISOString(), read:false });
+      actionPage:null, groupKey:null, uniqueKey:o.key, createdAt:CodisClock.iso(), read:false });
     if(items.length > 200) data.notifications.items = items.slice(0, 200);
     saveData();
     try{ CodisNotifications.renderBadge(); }catch(e){}
@@ -28326,6 +28378,7 @@ const CodisLocalDB = (function(){
   const clearAll = ()=>run('readwrite', st=>st.clear());
   /* مرآة نسخة العمل: تُدمَج الكتابات المتتالية (الأحدث فقط) وتُكتب بعد الحفظ المحلي الناجح */
   function mirror(raw){
+    if(window.CODIS_SYNC_HOLD) return;   /* CODIS-CLOCK: لا تُكتب بيانات معزولة (معاينة/محاكاة) بالمرآة الدائمة */
     pend = raw; if(flushing) return; flushing = true;
     Promise.resolve().then(async ()=>{
       try{ while(pend !== null){ const r = pend; pend = null; let owner = 'guest'; try{ const m = JSON.parse(localStorage.getItem('codis_sync_meta') || 'null'); if(m && m.owner) owner = m.owner; }catch(e){} await put('work', { json:r, owner:owner, at:Date.now() }); } }
