@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.26.1">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.27.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -12639,6 +12639,11 @@ function seedData(){
    الإزاحة لا تُضبط إلا بعد begin() وهي ترفض أي حساب غير موثَّق كمطوّر (CodisAccount.isAdmin، قرار الخادم) — فشل مغلق.
    لا تُحفظ في أي تخزين: إعادة تحميل الصفحة تعيد الإزاحة إلى 0 دائماً (لا يبقى حساب بوضع اختبار مجهول).
    لا تغيّر Date ولا Date.now ولا ساعة الجهاز. */
+/* ================= CODIS-SEAL (3.27.0): تحصين كائنات الصلاحية ضد التعديل من الكونسول =================
+   محصَّن = أي مضيف غير محلي (أو CODIS_SEAL_FORCE===true). التفاصيل والحدود: tools/patch_v40.py وdocs/DEV_HUB.md. */
+const CODIS_SEALED = (function(){ try{ const h = String(location.hostname || ''); const local = h === 'localhost' || h === '127.0.0.1' || h === '[::1]' || /\.localhost$/.test(h); return !local || window.CODIS_SEAL_FORCE === true; }catch(e){ return true; } })();
+const codisSeal = o=>{ if(!CODIS_SEALED) return o; try{ return Object.freeze(o); }catch(e){ return o; } };
+const codisFetch = (function(){ if(!CODIS_SEALED) return null; try{ return window.fetch.bind(window); }catch(e){ return null; } })();
 const CodisClock = (function(){
   'use strict';
   const realNow = ()=>Date.now();
@@ -13712,7 +13717,7 @@ const CodisLimits = (function(){
     return (c && typeof c[id] === 'number' && isFinite(c[id])) ? c[id] : normal;
   }
   function reg(id, label, normal){ REG[id] = Object.assign(REG[id] || { id:id, uses:0 }, { label:label }); if(normal !== undefined) CONST[id] = { id:id, label:label, normal:normal }; }
-  return { on, verified, bypass, afford, num, reg, registry:()=>Object.keys(REG).map(k=>REG[k]), constants:()=>Object.keys(CONST).map(k=>CONST[k]) };
+  return codisSeal({ on, verified, bypass, afford, num, reg, registry:()=>Object.keys(REG).map(k=>REG[k]), constants:()=>Object.keys(CONST).map(k=>CONST[k]) });
 })();
 [['wallet.nonnegative', 'الرصيد لا ينزل تحت الصفر'], ['buy.insufficient', 'فحص كفاية الرصيد عند الشراء'], ['holiday.weekly', 'حدّ شراء بطاقات العطلة الأسبوعي'],
  ['holiday.expireduse', 'منع استخدام بطاقة عطلة منتهية'], ['sell.unsellable', 'منع بيع مكافأة بقيمة تساوي أو تفوق شراءها'], ['box.empty', 'البكج «غير متاح» عندما لا فئات مؤهلة'],
@@ -28563,7 +28568,7 @@ const CodisAccount = (function(){
     if(o.auth !== false && S.session) h.Authorization = 'Bearer ' + S.session.access_token;
     if(o.body !== undefined) h['Content-Type'] = 'application/json';
     const ctrl = new AbortController(), to = setTimeout(() => ctrl.abort(), o.timeout || 20000);
-    try{ return await fetch(cfg.url + path, { method:o.method || 'GET', headers:h, body:o.body !== undefined ? JSON.stringify(o.body) : undefined, signal:ctrl.signal, cache:o.cache }); }
+    try{ return await (codisFetch || fetch)(cfg.url + path, { method:o.method || 'GET', headers:h, body:o.body !== undefined ? JSON.stringify(o.body) : undefined, signal:ctrl.signal, cache:o.cache }); }
     catch(e){ const er = new Error('network'); er.net = true; throw er; }
     finally{ clearTimeout(to); }
   }
@@ -28984,7 +28989,7 @@ const CodisAccount = (function(){
     try{ if(typeof window.codisAfterLogin === 'function') window.codisAfterLogin(S.status); }catch(e){ console.warn('[CODIS profile]', e && e.message); }
   }
   function syncNow(){ if(!S.user || S.reconciling || window.CODIS_SYNC_HOLD) return; const m = meta(); return m.owner === S.user.id && m.dirty ? push() : reconcile(); }
-  return { init, signIn, signOut, deleteAccount, syncNow, noteChange, pullInbox, adminCall, pushCall, state:S, configured, configError: CHK.ok ? null : { code:CHK.code, msg:CHK.msg }, LABELS, fmt, meta, isAdmin:() => adminOK === true, _test:{ merge:CodisMerge.merge, loadBase, saveBase, mergeAndAdopt, hasProgress, checkBackend, authErrMsg, classify, b64u, jwt } };
+  return codisSeal({ init, signIn, signOut, deleteAccount, syncNow, noteChange, pullInbox, adminCall, pushCall, state:(CODIS_SEALED ? new Proxy(S, { set:()=>true, defineProperty:()=>true, deleteProperty:()=>true }) : S), configured, configError: CHK.ok ? null : { code:CHK.code, msg:CHK.msg }, LABELS, fmt, meta, isAdmin:() => adminOK === true, _test:codisSeal({ merge:CodisMerge.merge, loadBase, saveBase, mergeAndAdopt, hasProgress, checkBackend, authErrMsg, classify, b64u, jwt }) });
 })();
 
 /* ---------- صفحات الإعدادات: الحساب + حذف الحساب (تُرسم طازجة عند كل فتح) ---------- */
