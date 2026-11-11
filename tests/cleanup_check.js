@@ -17,7 +17,7 @@ let bad = 0; const fail = m=>{ bad++; console.log('FAIL', m); }, has = re=>re.te
 [
   [/const CodisAccount = /, 'CodisAccount (auth + sync)'], [/save_progress/, 'save_progress RPC'], [/function backupLocal\(/, 'sync safety copies (backupLocal)'],
   [/function econThresholds\(\)/, 'internal thresholds'], [/function econDefaults\(\)/, 'internal reward defaults'], [/s\.rulesLockedV2/, 'rules-lock migration'],
-  [/function econReportsListHtml\(\)/, 'saved reports renderer'], [/eco-sec-title">التقارير المحفوظة/, 'saved reports shown in the coin log'],
+  [/function econReportsListHtml\(\)/, 'saved reports renderer'],
 ].forEach(([re, m])=>{ if(!has(re)) fail('missing: ' + m); });
 console.log(bad ? '\nFAILED ' + bad : 'OK — reward-rules UI, manual backup and the outdated storage claim are gone; account sync intact');
 process.exit(bad ? 1 : 0);

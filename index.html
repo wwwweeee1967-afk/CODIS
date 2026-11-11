@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.27.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.28.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -995,7 +995,7 @@ input[type=time]{ color-scheme:dark; }
   width:24px; height:24px; color:var(--text); opacity:.92; pointer-events:none;
 }
 /* desktop-only layout removed — CODIS is laid out for a phone (was @media (min-width:560px)) */
-.notif-bell, .store-btn, .coin-chip{
+.notif-bell, .store-btn, .fin-btn, .coin-chip{
   position:fixed; z-index:120; top:var(--tb-top); height:var(--tb-size);
   display:grid; place-items:center; padding:0; border-radius:var(--r-full);
   background:var(--mat-chrome-sheen), var(--mat-chrome-fill); border:1px solid var(--mat-chrome-edge); box-shadow:var(--mat-chrome-shadow);
@@ -1003,8 +1003,8 @@ input[type=time]{ color-scheme:dark; }
   cursor:pointer; -webkit-tap-highlight-color:transparent;
   transition:transform var(--dur-fast) var(--ease-spring), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
 }
-.notif-bell:active, .store-btn:active, .coin-chip:active{ transform:scale(.92); transition-duration:var(--dur-micro); transition-timing-function:var(--ease); }
-@media (hover:hover){ .notif-bell:hover, .store-btn:hover, .coin-chip:hover{ border-color:var(--glass-border-strong); } }
+.notif-bell:active, .store-btn:active, .fin-btn:active, .coin-chip:active{ transform:scale(.92); transition-duration:var(--dur-micro); transition-timing-function:var(--ease); }
+@media (hover:hover){ .notif-bell:hover, .store-btn:hover, .fin-btn:hover, .coin-chip:hover{ border-color:var(--glass-border-strong); } }
 .notif-bell{ inset-inline-end:var(--tb-x); width:var(--tb-size); color:var(--text-2); }
 .notif-bell .ico{ --ctx-ico-n:var(--ico-md); }
 .notif-bell.has-unread{ color:var(--aqua); }
@@ -1183,8 +1183,8 @@ body::after{
 /* ---- Top bar: the fade is paper, the three controls are glass beads ---- */
 .topbar-fade{ background:linear-gradient(180deg, var(--bg) 0%, rgb(232 223 204 / .86) 48%, rgb(232 223 204 / 0) 100%); }
 .topbar-mark{ color:var(--text); opacity:1; }
-.notif-bell, .store-btn, .coin-chip{ color:var(--text-2); }
-.notif-bell::after, .store-btn::after, .coin-chip::after{   /* glass rim: a crescent of light on the upper edge */
+.notif-bell, .store-btn, .fin-btn, .coin-chip{ color:var(--text-2); }
+.notif-bell::after, .store-btn::after, .fin-btn::after, .coin-chip::after{   /* glass rim: a crescent of light on the upper edge */
   content:''; position:absolute; inset:1px 14% auto; height:42%; border-radius:999px 999px 40% 40% / 100% 100% 60% 60%;
   background:linear-gradient(180deg, rgb(255 255 255 / .75), rgb(255 255 255 / 0)); pointer-events:none; opacity:.7;
 }
@@ -1336,7 +1336,7 @@ input[type=time]{ color-scheme:light; }
   .spark-piece, .outcome-spark{ display:none; }
   .outcome-timer::after{ animation:none !important; transform:scaleX(1); }
   .toast, .toast.show{ transform:translateX(-50%); transition:opacity .2s linear; }
-  .notif-bell:active, .store-btn:active, .coin-chip:active, .btn-primary:hover, .btn-achievement:hover{ transform:none; }
+  .notif-bell:active, .store-btn:active, .fin-btn:active, .coin-chip:active, .btn-primary:hover, .btn-achievement:hover{ transform:none; }
   .toast .toast-ico, .toast .toast-text{ animation:none !important; }
   .toast-bar{ display:none; }   /* الحالة تبقى بالأيقونة والشكل؛ فقط الحركة تُزال */
 }
@@ -6544,7 +6544,7 @@ input[type=time]{ color-scheme:dark; }
   width:24px; height:24px; color:var(--text); opacity:.92; pointer-events:none;
 }
 /* desktop-only layout removed — CODIS is laid out for a phone (was @media (min-width:560px)) */
-.notif-bell, .store-btn, .coin-chip{
+.notif-bell, .store-btn, .fin-btn, .coin-chip{
   position:fixed; z-index:120; top:var(--tb-top); height:var(--tb-size);
   display:grid; place-items:center; padding:0; border-radius:var(--r-full);
   background:var(--mat-chrome-sheen), var(--mat-chrome-fill); border:1px solid var(--mat-chrome-edge); box-shadow:var(--mat-chrome-shadow);
@@ -6552,8 +6552,8 @@ input[type=time]{ color-scheme:dark; }
   cursor:pointer; -webkit-tap-highlight-color:transparent;
   transition:transform var(--dur-fast) var(--ease-spring), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
 }
-.notif-bell:active, .store-btn:active, .coin-chip:active{ transform:scale(.92); transition-duration:var(--dur-micro); transition-timing-function:var(--ease); }
-@media (hover:hover){ .notif-bell:hover, .store-btn:hover, .coin-chip:hover{ border-color:var(--glass-border-strong); } }
+.notif-bell:active, .store-btn:active, .fin-btn:active, .coin-chip:active{ transform:scale(.92); transition-duration:var(--dur-micro); transition-timing-function:var(--ease); }
+@media (hover:hover){ .notif-bell:hover, .store-btn:hover, .fin-btn:hover, .coin-chip:hover{ border-color:var(--glass-border-strong); } }
 .notif-bell{ inset-inline-end:var(--tb-x); width:var(--tb-size); color:var(--text-2); }
 .notif-bell .ico{ --ctx-ico-n:var(--ico-md); }
 .notif-bell.has-unread{ color:var(--aqua); }
@@ -6725,7 +6725,7 @@ input[type=time]{ color-scheme:dark; }
   .spark-piece, .outcome-spark{ display:none; }
   .outcome-timer::after{ animation:none !important; transform:scaleX(1); }
   .toast, .toast.show{ transform:translateX(-50%); transition:opacity .2s linear; }
-  .notif-bell:active, .store-btn:active, .coin-chip:active, .btn-primary:hover, .btn-achievement:hover{ transform:none; }
+  .notif-bell:active, .store-btn:active, .fin-btn:active, .coin-chip:active, .btn-primary:hover, .btn-achievement:hover{ transform:none; }
   .toast .toast-ico, .toast .toast-text{ animation:none !important; }
   .toast-bar{ display:none; }   /* الحالة تبقى بالأيقونة والشكل؛ فقط الحركة تُزال */
 }
@@ -11230,6 +11230,201 @@ html[data-theme="dark"] .cbk-orn-p .p-bg{ opacity:.12; }
 .codis-stale-card b{ font-size:17px; font-weight:800; } .codis-stale-card p{ margin:0; font-size:14px; line-height:1.6; color:var(--text-2, #5a4630); }
 .codis-stale-card .btn{ min-height:44px; }
 </style>
+<style id="codis-v41-css">
+/* ===== CODIS-FINANCE (3.28.0) ===== */
+/* ---------- الشريط العلوي: أيقونة الإدارة المالية + رصيدان فوق بعض بلا مستطيل ----------
+   الترتيب (من حافة inline-end): الجرس · المتجر · المالية · [كوينز فوق فضة]. الفتحة n = --tb-x + n × (الحجم + الفجوة). */
+.fin-btn{ inset-inline-end:calc(var(--tb-x) + 2 * (var(--tb-size) + var(--tb-gap))); width:var(--tb-size); color:var(--gold-soft); }
+.fin-btn:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+.fin-btn .ico{ --ctx-ico-n:var(--ico-md); }
+.fin-btn.needs-setup::before{ content:""; position:absolute; top:7px; inset-inline-end:7px; width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 2px var(--bg); pointer-events:none; }
+html .coin-chip{
+  inset-inline-end:calc(var(--tb-x) + 3 * (var(--tb-size) + var(--tb-gap)));
+  width:auto; min-width:var(--tb-size); max-width:calc(100vw - var(--tb-x) * 2 - 3 * (var(--tb-size) + var(--tb-gap)) - 56px);
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:2px; padding:0 2px;
+  background:none; border-color:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; border-radius:12px;
+  font-size:13.5px; line-height:1.1; white-space:nowrap;
+}
+html .coin-chip::after{ display:none; }
+html .coin-chip.is-bump{ border-color:transparent; }
+html .coin-chip .cc-row{ display:flex; align-items:center; gap:5px; min-width:0; }
+html .coin-chip .ico{ --ctx-ico-n:15px; width:15px; height:15px; flex:none; }
+html .coin-chip .coin-chip-num{ font-size:13.5px; font-weight:700; text-shadow:0 0 6px var(--bg), 0 0 2px var(--bg); }
+html .coin-chip .coin-chip-silver{ margin:0; padding:0; border:0; gap:5px; font-size:12.5px; font-weight:700; opacity:.92; text-shadow:0 0 6px var(--bg), 0 0 2px var(--bg); }
+html .coin-chip .coin-chip-silver b{ font-weight:700; font-variant-numeric:tabular-nums; }
+html .coin-chip .coin-chip-silver svg{ width:15px; height:15px; flex:none; }
+html[data-view="settings"] .fin-btn, html[data-view="store"] .fin-btn{ opacity:0; visibility:hidden; pointer-events:none; }
+@media (max-width:360px){
+  html .coin-chip .coin-chip-num{ font-size:12.5px; } html .coin-chip .coin-chip-silver{ font-size:11.5px; }
+}
+
+/* ---------- إضافة مكافأة تلقائية: زر القسم ---------- */
+.rpu-auto-btn{ margin-bottom:10px; }
+.rpu-auto-btn .rpu-all-ico{ stroke:var(--gold); color:var(--gold); }
+.rpu-auto-btn[hidden]{ display:none; }
+
+/* ---------- هوية الإدارة المالية: دفتر حسابات مصرفي قديم بلمسة حديثة ---------- */
+#settings-page-eco-fin, .fin-ov{
+  --fin-paper:#f2e9d6; --fin-paper2:#e8dcc0; --fin-sheet:#f6efde; --fin-ink:#2b2518; --fin-ink2:#5b4f37; --fin-brass:#9a7326; --fin-green:#27634a; --fin-red:#963a2b;
+  --fin-line:rgb(70 52 20 / .24); --fin-chip:rgb(120 90 30 / .10);
+  --fin-card-a:#254437; --fin-card-b:#12261c; --fin-card-ink:#f6ecca; --fin-card-brass:#dcbb6b; --fin-shadow:0 14px 30px rgb(52 38 12 / .22), 0 2px 0 rgb(255 255 255 / .5) inset;
+  --fin-grain:radial-gradient(rgb(90 66 24 / .07) 1px, transparent 1.4px) 0 0 / 7px 7px;
+}
+html[data-theme="dark"] #settings-page-eco-fin, html[data-theme="dark"] .fin-ov{
+  --fin-paper:#1c170e; --fin-paper2:#251e12; --fin-sheet:#211b10; --fin-ink:#eddfbf; --fin-ink2:#b6a784; --fin-brass:#d9b058; --fin-green:#74c49a; --fin-red:#e48a74;
+  --fin-line:rgb(235 215 165 / .16); --fin-chip:rgb(235 205 120 / .09);
+  --fin-card-a:#2d2414; --fin-card-b:#120e07; --fin-card-ink:#f3e5bd; --fin-card-brass:#e4c070; --fin-shadow:0 16px 34px rgb(0 0 0 / .55), 0 1px 0 rgb(255 235 180 / .10) inset;
+  --fin-grain:radial-gradient(rgb(255 225 150 / .05) 1px, transparent 1.4px) 0 0 / 7px 7px;
+}
+#settings-page-eco-fin{ color:var(--fin-ink); }
+#settings-page-eco-fin .settings-section-title{ color:var(--fin-ink); }
+#fin-body{ display:grid; gap:14px; max-width:560px; margin:0 auto; width:100%; }
+
+/* بطاقة الرصيد: بطاقة مصرفية بزخرفة غيوشيه خفيفة */
+.fin-card{
+  position:relative; overflow:hidden; border-radius:22px; padding:18px 20px 16px; min-height:176px; color:var(--fin-card-ink); isolation:isolate;
+  background:
+    repeating-radial-gradient(circle at 88% 12%, rgb(255 236 180 / .09) 0 1px, transparent 1px 9px),
+    repeating-radial-gradient(circle at 10% 110%, rgb(255 236 180 / .06) 0 1px, transparent 1px 11px),
+    linear-gradient(150deg, var(--fin-card-a), var(--fin-card-b));
+  border:1px solid color-mix(in srgb, var(--fin-card-brass) 55%, transparent); box-shadow:var(--fin-shadow);
+  display:grid; align-content:space-between; gap:6px;
+}
+.fin-card::before{ content:""; position:absolute; inset:7px; border-radius:16px; border:1px solid color-mix(in srgb, var(--fin-card-brass) 38%, transparent); pointer-events:none; z-index:-1; }
+.fin-card-top{ display:flex; justify-content:space-between; align-items:center; }
+.fin-card-brand{ font-size:12.5px; letter-spacing:.06em; color:var(--fin-card-brass); font-weight:700; }
+.fin-card-chip{ width:36px; height:27px; border-radius:6px; background:linear-gradient(135deg, var(--fin-card-brass), color-mix(in srgb, var(--fin-card-brass) 55%, #000)); box-shadow:inset 0 0 0 1px rgb(0 0 0 / .25), inset 0 -8px 0 -4px rgb(0 0 0 / .12); position:relative; }
+.fin-card-chip::after{ content:""; position:absolute; inset:6px 8px; border:1px solid rgb(0 0 0 / .28); border-radius:3px; }
+.fin-card-lab{ font-size:12.5px; opacity:.8; margin-top:8px; }
+.fin-card-bal{ display:flex; align-items:baseline; gap:8px; justify-content:flex-end; direction:ltr; }
+.fin-card-bal b{ font-size:clamp(30px, 9.5vw, 44px); font-weight:800; letter-spacing:-.01em; font-variant-numeric:tabular-nums; line-height:1.05; overflow-wrap:anywhere; }
+.fin-card-bal span{ font-size:15px; color:var(--fin-card-brass); font-weight:700; }
+.fin-card-foot{ display:flex; justify-content:space-between; gap:10px; font-size:12px; opacity:.82; flex-wrap:wrap; }
+
+.fin-actions{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.fin-btn-main{
+  min-height:52px; display:flex; align-items:center; justify-content:center; gap:8px; border-radius:16px; font:inherit; font-weight:800; font-size:15px; cursor:pointer;
+  border:1px solid var(--fin-line); background:var(--fin-paper2); color:var(--fin-ink); transition:transform .14s var(--ease-spring, ease), border-color .14s;
+  box-shadow:0 1px 0 rgb(255 255 255 / .35) inset, 0 4px 10px rgb(50 36 10 / .10);
+}
+.fin-btn-main.is-in{ background:var(--fin-green); color:#f7f1de; border-color:transparent; }
+.fin-btn-main.is-out{ border-color:color-mix(in srgb, var(--fin-red) 60%, transparent); color:var(--fin-red); }
+html[data-theme="dark"] .fin-btn-main.is-in{ color:#0f1d16; }
+.fin-btn-main:active{ transform:scale(.97); }
+.fin-btn-main .ico{ --ctx-ico-n:20px; }
+
+.fin-seg{ display:grid; grid-template-columns:repeat(4, 1fr); gap:4px; padding:4px; border-radius:14px; background:var(--fin-chip); border:1px solid var(--fin-line); }
+.fin-seg button{ min-height:40px; border:0; border-radius:10px; background:none; color:var(--fin-ink2); font:inherit; font-weight:700; cursor:pointer; }
+.fin-seg button.is-on{ background:var(--fin-paper); color:var(--fin-ink); box-shadow:0 1px 0 rgb(255 255 255 / .4) inset, 0 2px 6px rgb(50 36 10 / .15); }
+.fin-sum{ display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; }
+.fin-sum-i{ padding:11px 10px; border-radius:14px; background:var(--fin-paper2); border:1px solid var(--fin-line); display:grid; gap:4px; min-width:0; background-image:var(--fin-grain); }
+.fin-sum-i small{ font-size:11.5px; color:var(--fin-ink2); }
+.fin-sum-i.is-in b{ color:var(--fin-green); } .fin-sum-i.is-out b{ color:var(--fin-red); }
+.fin-iqd{ display:inline-flex; align-items:baseline; gap:4px; max-width:100%; }
+.fin-iqd b{ font-size:clamp(14px, 4.2vw, 18px); font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.fin-iqd i{ font-style:normal; font-size:10.5px; color:var(--fin-ink2); }
+.fin-note{ display:flex; gap:10px; align-items:center; padding:11px 13px; border-radius:14px; background:var(--fin-chip); border:1px dashed var(--fin-line); color:var(--fin-ink); font-size:13.5px; line-height:1.5; }
+.fin-note .ico{ color:var(--fin-brass); flex:none; }
+.fin-sec{ display:grid; gap:8px; }
+.fin-sec-h{ display:flex; justify-content:space-between; align-items:baseline; }
+.fin-sec-h h3, .fin-sub{ margin:0; font-size:15px; color:var(--fin-ink); }
+.fin-sub{ margin:12px 0 6px; }
+.fin-link{ border:0; background:none; color:var(--fin-brass); font:inherit; font-weight:700; cursor:pointer; padding:6px 2px; text-decoration:underline; text-underline-offset:3px; }
+.fin-empty{ padding:18px; text-align:center; color:var(--fin-ink2); font-size:13.5px; }
+.fin-txs{ list-style:none; margin:0; padding:0; display:grid; border-radius:16px; overflow:hidden; border:1px solid var(--fin-line); background:var(--fin-paper2); }
+.fin-tx{ display:flex; align-items:center; gap:10px; padding:11px 12px; border-top:1px solid var(--fin-line); }
+.fin-tx:first-child{ border-top:0; }
+.fin-tx-ic{ flex:none; width:30px; height:30px; display:grid; place-items:center; border-radius:50%; font-weight:800; font-size:15px; background:var(--fin-chip); }
+.fin-tx.is-up .fin-tx-ic{ color:var(--fin-green); } .fin-tx.is-down .fin-tx-ic{ color:var(--fin-red); }
+.fin-tx-m{ flex:1; min-width:0; display:grid; gap:2px; }
+.fin-tx-m b{ font-size:14px; overflow-wrap:anywhere; } .fin-tx-m small{ font-size:11.5px; color:var(--fin-ink2); overflow-wrap:anywhere; }
+.fin-tx-a{ text-align:end; display:grid; gap:2px; flex:none; }
+.fin-tx-a b{ font-size:14.5px; font-variant-numeric:tabular-nums; } .fin-tx-a small{ font-size:10.5px; color:var(--fin-ink2); }
+.fin-up{ color:var(--fin-green); } .fin-down{ color:var(--fin-red); }
+.fin-rows{ display:grid; border-radius:16px; overflow:hidden; border:1px solid var(--fin-line); background:var(--fin-paper2); }
+.fin-row{ display:flex; align-items:center; gap:12px; min-height:60px; padding:10px 13px; border:0; border-top:1px solid var(--fin-line); background:none; color:var(--fin-ink); font:inherit; text-align:start; cursor:pointer; }
+.fin-row:first-child{ border-top:0; }
+.fin-row-ic{ width:34px; height:34px; display:grid; place-items:center; border-radius:10px; background:var(--fin-chip); color:var(--fin-brass); flex:none; }
+.fin-row-t{ flex:1; min-width:0; display:grid; gap:2px; } .fin-row-t b{ font-size:14.5px; } .fin-row-t small{ font-size:12px; color:var(--fin-ink2); overflow-wrap:anywhere; }
+.fin-row-ch{ color:var(--fin-ink2); flex:none; }
+
+/* النوافذ السفلية */
+.fin-ov{ position:fixed; inset:0; z-index:690; display:flex; align-items:flex-end; justify-content:center; background:rgb(14 10 4 / 0); transition:background .2s ease; -webkit-tap-highlight-color:transparent; }
+.fin-ov.is-in{ background:rgb(14 10 4 / .55); } .fin-ov.is-out{ background:rgb(14 10 4 / 0); }
+.fin-sheet{
+  width:min(560px, 100%); max-height:min(92dvh, 92vh); display:flex; flex-direction:column; color:var(--fin-ink); background:var(--fin-sheet); background-image:var(--fin-grain);
+  border:1px solid var(--fin-line); border-bottom:0; border-radius:24px 24px 0 0; box-shadow:0 -16px 40px rgb(30 20 4 / .35); transform:translateY(24px); opacity:0; transition:transform .24s var(--ease, ease), opacity .2s ease;
+  padding-bottom:env(safe-area-inset-bottom, 0);
+}
+.fin-ov.is-wide .fin-sheet{ width:min(640px, 100%); }
+.fin-ov.is-in .fin-sheet{ transform:none; opacity:1; } .fin-ov.is-out .fin-sheet{ transform:translateY(24px); opacity:0; }
+.fin-grab{ width:42px; height:4px; border-radius:2px; background:var(--fin-line); margin:8px auto 0; }
+.fin-sh{ display:flex; align-items:center; justify-content:space-between; padding:8px 16px 6px; }
+.fin-sh h2{ margin:0; font-size:18px; color:var(--fin-ink); }
+.fin-x{ width:40px; height:40px; border-radius:50%; border:1px solid var(--fin-line); background:var(--fin-chip); color:var(--fin-ink); display:grid; place-items:center; cursor:pointer; }
+.fin-sb{ padding:6px 16px 18px; overflow:auto; display:grid; grid-auto-rows:max-content; gap:12px; align-content:start; overscroll-behavior:contain; }
+.fin-f{ display:grid; gap:6px; } .fin-f > span{ font-size:13px; color:var(--fin-ink2); font-weight:700; }
+input.fin-in, textarea.fin-in{ background:var(--fin-paper) !important; color:var(--fin-ink) !important; }
+.fin-in{ width:100%; min-height:48px; padding:10px 12px; border-radius:12px; border:1px solid var(--fin-line); background:var(--fin-paper); color:var(--fin-ink); font:inherit; font-size:16px; }
+textarea.fin-in{ min-height:64px; resize:vertical; }
+.fin-in:focus{ outline:2px solid var(--fin-brass); outline-offset:1px; }
+.fin-amt{ position:relative; } .fin-amt .fin-in{ padding-inline-end:56px; font-size:19px; font-weight:800; text-align:end; font-variant-numeric:tabular-nums; }
+.fin-amt i{ position:absolute; inset-block:0; inset-inline-end:12px; display:grid; align-items:center; font-style:normal; font-size:12.5px; color:var(--fin-ink2); pointer-events:none; }
+.fin-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.fin-chip{ min-height:38px; padding:0 12px; border-radius:999px; border:1px solid var(--fin-line); background:var(--fin-paper); color:var(--fin-ink); font:inherit; font-size:13px; cursor:pointer; }
+.fin-chip.is-on{ background:var(--fin-brass); color:#fff8e6; border-color:transparent; font-weight:800; }
+html[data-theme="dark"] .fin-chip.is-on{ color:#1a1408; }
+.fin-addcat{ display:grid; grid-template-columns:1fr auto; gap:6px; margin-top:6px; } .fin-addcat .fin-in{ min-height:42px; font-size:14px; }
+.fin-err{ margin:0; padding:9px 12px; border-radius:10px; background:color-mix(in srgb, var(--fin-red) 14%, transparent); color:var(--fin-red); font-size:13.5px; font-weight:700; }
+.fin-err[hidden]{ display:none; }
+.fin-go{ min-height:52px; font-weight:800; }
+.fin-hint{ margin:0; font-size:13px; line-height:1.6; color:var(--fin-ink2); }
+.fin-bal-line{ font-size:13px; color:var(--fin-ink2); display:flex; gap:8px; align-items:baseline; }
+.fin-lock{ margin:0; display:flex; gap:8px; align-items:center; padding:10px 12px; border-radius:12px; background:var(--fin-chip); font-size:13.5px; line-height:1.55; }
+.fin-lock[hidden]{ display:none; }
+.fin-bad{ display:block; color:var(--fin-red); font-style:normal; font-size:13px; margin-top:4px; }
+
+/* سعر الصرف */
+.fin-rates{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.fin-rate{ display:grid; gap:4px; padding:11px 10px; text-align:start; border-radius:16px; border:1.5px solid var(--fin-line); background:var(--fin-paper); color:var(--fin-ink); font:inherit; cursor:pointer; }
+.fin-rate b{ font-size:13px; color:var(--fin-brass); } .fin-rate span{ font-size:12.5px; color:var(--fin-ink2); } .fin-rate em{ font-style:normal; font-weight:800; color:var(--fin-ink); font-variant-numeric:tabular-nums; }
+.fin-rate.is-on{ border-color:var(--fin-brass); background:color-mix(in srgb, var(--fin-brass) 14%, var(--fin-paper)); box-shadow:0 0 0 1px var(--fin-brass) inset; }
+@media (min-width:480px){ .fin-rates{ grid-template-columns:repeat(3, 1fr); } }
+
+/* الاستبيان */
+.fin-wiz{ display:grid; gap:14px; padding:6px 2px 24px; }
+.fin-prog{ height:6px; border-radius:3px; background:var(--fin-chip); overflow:hidden; } .fin-prog i{ display:block; height:100%; width:var(--p); background:var(--fin-brass); border-radius:3px; transition:width .3s var(--ease, ease); }
+.fin-prog-t{ font-size:12px; color:var(--fin-ink2); }
+.fin-wq{ margin:4px 0 0; font-size:20px; line-height:1.4; color:var(--fin-ink); }
+.fin-opts{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.fin-opt{ display:grid; gap:6px; justify-items:center; text-align:center; padding:18px 10px; border-radius:18px; border:1.5px solid var(--fin-line); background:var(--fin-paper2); color:var(--fin-ink); font:inherit; cursor:pointer; background-image:var(--fin-grain); }
+.fin-opt .ico{ color:var(--fin-brass); } .fin-opt b{ font-size:16px; } .fin-opt small{ font-size:12px; color:var(--fin-ink2); line-height:1.5; }
+.fin-opt.is-on{ border-color:var(--fin-brass); box-shadow:0 0 0 1px var(--fin-brass) inset; background:color-mix(in srgb, var(--fin-brass) 13%, var(--fin-paper2)); }
+.fin-wbtns{ display:flex; justify-content:space-between; gap:10px; } .fin-wbtns .btn{ min-height:50px; min-width:120px; }
+.fin-review{ margin:0; display:grid; border-radius:16px; border:1px solid var(--fin-line); background:var(--fin-paper2); overflow:hidden; }
+.fin-review > div{ display:flex; justify-content:space-between; gap:12px; padding:12px 14px; border-top:1px solid var(--fin-line); } .fin-review > div:first-child{ border-top:0; }
+.fin-review dt{ color:var(--fin-ink2); font-size:13.5px; } .fin-review dd{ margin:0; font-weight:800; text-align:end; overflow-wrap:anywhere; }
+
+/* التقارير */
+.fin-tbl{ border-radius:14px; border:1px solid var(--fin-line); overflow:hidden; background:var(--fin-paper2); }
+.fin-tr{ display:grid; grid-template-columns:1.1fr 1fr 1fr 1fr; gap:6px; padding:10px 12px; border-top:1px solid var(--fin-line); font-size:13px; align-items:center; } .fin-tr:first-child{ border-top:0; }
+.fin-th{ color:var(--fin-ink2); font-size:12px; background:var(--fin-chip); } .fin-tr span, .fin-tr b{ overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+.fin-bars{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.fin-bars li{ display:grid; gap:4px; } .fin-bars li > div{ display:flex; justify-content:space-between; font-size:13px; gap:8px; }
+.fin-bars i{ display:block; height:8px; border-radius:4px; background:linear-gradient(90deg, var(--fin-red) var(--w), var(--fin-chip) var(--w)); } .fin-bars small{ font-size:11px; color:var(--fin-ink2); }
+.fin-spark{ width:100%; height:70px; color:var(--fin-brass); background:var(--fin-chip); border-radius:12px; padding:4px; }
+.fin-verify{ display:grid; gap:4px; padding:11px 13px; border-radius:12px; border:1px solid var(--fin-line); font-size:13px; }
+.fin-verify.is-ok b{ color:var(--fin-green); } .fin-verify.is-bad b{ color:var(--fin-red); }
+
+/* الإضافة التلقائية */
+.fin-calc{ padding:11px 13px; border-radius:12px; background:var(--fin-chip); border:1px dashed var(--fin-line); font-size:14px; line-height:1.6; }
+.fin-calc:empty{ display:none; } .fin-calc b{ font-size:17px; }
+.fin-dests{ display:grid; gap:8px; }
+.fin-dest{ display:grid; gap:2px; text-align:start; padding:11px 13px; border-radius:14px; border:1.5px solid var(--fin-line); background:var(--fin-paper); color:var(--fin-ink); font:inherit; cursor:pointer; }
+.fin-dest small{ color:var(--fin-ink2); font-size:12px; }
+.fin-dest.is-on{ border-color:var(--fin-brass); box-shadow:0 0 0 1px var(--fin-brass) inset; background:color-mix(in srgb, var(--fin-brass) 12%, var(--fin-paper)); }
+@media (prefers-reduced-motion:reduce){ .fin-ov, .fin-sheet, .fin-prog i, .fin-btn-main{ transition:none !important; } }
+</style>
 <script>
 /* CODIS-V33: long-press on content must not open the browser's selection / image menu (inputs and editable text keep theirs) */
 document.addEventListener('contextmenu', function(e){
@@ -11393,10 +11588,13 @@ document.addEventListener('selectstart', function(e){
   <svg data-icon="store" data-size="md"></svg>
 </button>
 
-<button type="button" class="coin-chip" id="coin-chip" aria-label="رصيد الكوينز — افتح سجل الكوينز" onclick="econOpenLog()">
-  <svg data-icon="coin" data-size="md"></svg>
-  <span class="coin-chip-num" id="coin-chip-num">0</span>
-  <span class="coin-chip-silver" id="coin-chip-silver" hidden></span>
+<button type="button" class="fin-btn" id="fin-btn" aria-label="الإدارة المالية" title="الإدارة المالية" onclick="finOpen()">
+  <svg data-icon="wallet" data-size="md"></svg>
+</button>
+
+<button type="button" class="coin-chip" id="coin-chip" aria-label="رصيد الكوينز والفضة — افتح سجل الكوينز" onclick="econOpenLog()">
+  <span class="cc-row cc-coin"><svg data-icon="coin" data-size="md"></svg><span class="coin-chip-num" id="coin-chip-num">0</span></span>
+  <span class="coin-chip-silver cc-row" id="coin-chip-silver"></span>
 </button>
 
 <div class="main">
@@ -11765,6 +11963,7 @@ document.addEventListener('selectstart', function(e){
         <button type="button" class="rpu-jump-btn" data-period="weekly" onclick="setSettingsPeriod('weekly')"><span>أسبوعية</span><b data-jn="weekly"></b></button>
         <button type="button" class="rpu-jump-btn" data-period="monthly" onclick="setSettingsPeriod('monthly')"><span>شهرية</span><b data-jn="monthly"></b></button>
       </nav>
+      <button type="button" class="rpu-all-btn rpu-auto-btn" id="rpu-auto-btn" onclick="finAutoOpen()"><svg class="rpu-all-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.7 4.6 4.6 1.7-4.6 1.7L12 16.1l-1.7-4.6-4.6-1.7 4.6-1.7z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg><span>إضافة مكافأة تلقائية</span><svg class="rpu-all-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
       <button type="button" class="rpu-all-btn" id="rpu-all-btn" aria-pressed="false" onclick="setSettingsPeriod('all')"><svg class="rpu-all-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg><span id="rpu-all-t">كل المكافآت</span><b id="rpu-all-n"></b><svg class="rpu-all-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
       <div class="rpu-block is-reward" id="rp-reward-block">
         <section class="rpu-sec" id="rpu-r-daily" data-period="daily" aria-labelledby="rpu-r-daily-h">
@@ -11914,6 +12113,15 @@ document.addEventListener('selectstart', function(e){
         <div class="settings-section-title">سجل الكوينز</div>
       </div>
       <div class="settings-grid" id="eco-log-body"></div>
+    </div>
+
+    <!-- ============ CODIS-FINANCE: الإدارة المالية (طبقة مثل المتجر وسجل الكوينز) ============ -->
+    <div id="settings-page-eco-fin" class="settings-page-section" style="display:none;">
+      <button type="button" class="settings-back-btn" onclick="econCloseStore()"><svg class="ios-chevron" data-icon="back"></svg>رجوع</button>
+      <div class="settings-section-head">
+        <div class="settings-section-title">الإدارة المالية</div>
+      </div>
+      <div class="settings-grid" id="fin-body"></div>
     </div>
 
     <!-- ============ قسم: المظهر (CODIS-THEME) ============ -->
@@ -12465,6 +12673,10 @@ const CODIS_ICONS = Object.freeze({
     body:'<path d="M6.3 19.2a8 8 0 1 1 11.4 0"/><path d="M12 13.6l3.4-3.4"/>' },
   gift: { id:'icon-gift', meaning:'مكافأة', size:'md',
     body:'<rect x="3.5" y="8" width="17" height="4" rx="1.6"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/><path d="M12 8v12"/><path d="M12 8c-2.5 0-4.2-.6-4.2-2.1a1.9 1.9 0 0 1 3.4-1.1C12 5.6 12 8 12 8Zm0 0c2.5 0 4.2-.6 4.2-2.1a1.9 1.9 0 0 0-3.4-1.1C12 5.6 12 8 12 8Z"/>' },
+  wallet: { id:'icon-wallet', meaning:'الإدارة المالية', size:'md',
+    body:'<path d="M5 7.2h12.4a1.6 1.6 0 0 1 1.6 1.6v9a1.6 1.6 0 0 1-1.6 1.6H6.6A1.6 1.6 0 0 1 5 17.8Z"/><path d="M5 7.2v-.8a1.6 1.6 0 0 1 1.6-1.6H15"/><path d="M15.4 12.6H19v3.4h-3.6a1.7 1.7 0 0 1 0-3.4Z"/>' },
+  plus: { id:'icon-plus', meaning:'إضافة', size:'md',
+    body:'<path d="M12 5v14M5 12h14"/>' },
   store: { id:'icon-store', meaning:'المتجر', size:'md',
     body:'<path d="M5.2 8.2h13.6l.9 10.3a1.5 1.5 0 0 1-1.5 1.6H5.8a1.5 1.5 0 0 1-1.5-1.6l.9-10.3Z"/><path d="M8.6 10.6V7.4a3.4 3.4 0 0 1 6.8 0v3.2"/>' },
   /* CODIS coin: a stack of coins — reads as "currency" at 13px without real-money semantics
@@ -12590,7 +12802,7 @@ codisHydrateIcons(document);
    LocalStorage معطّل) ما يوقف التطبيق، وأي بيانات تالفة تنحفظ نسخة منها بدل ما تنمسح. */
 const STORE_KEY = 'life_organizer_data_v1';
 const BACKUP_KEY = 'life_organizer_data_v1_corrupt_backup';
-const SCHEMA_VERSION = 6;   // 6: أُضيف data.settings.achievement + حقول المهمة weight/progress + economy.adaptive (إضافة فقط) · 4: أُضيف data.inventory (ممتلكات المكافآت) · 5: أُضيف data.inventory.boxes (صناديق المكافآت) — إضافة فقط، والبيانات القديمة تُطبَّع دون مساس
+const SCHEMA_VERSION = 7;   // 7: أُضيف data.finance (الإدارة المالية — إضافة فقط) · 6: أُضيف data.settings.achievement + حقول المهمة weight/progress + economy.adaptive (إضافة فقط) · 4: أُضيف data.inventory (ممتلكات المكافآت) · 5: أُضيف data.inventory.boxes (صناديق المكافآت) — إضافة فقط، والبيانات القديمة تُطبَّع دون مساس
 const DAYS_AR = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const TASK_STATUSES = ['none','half','done'];
 
@@ -12610,6 +12822,534 @@ const CodisStorage = Object.freeze({
   }
 });
 const STORAGE_WARN_CHARS = 4000000;   // حصة localStorage عادةً ~5 ملايين حرف
+
+/* ================= CODIS-FINANCE (3.28.0) — محرك الإدارة المالية الشخصية =================
+   نظام مالي مستقل محاسبياً عن data.wallet (الكوينز والفضة): بيانات data.finance ودفتر حركاته بالدينار العراقي (أعداد صحيحة).
+   الرصيد = مجموع الدفتر دائماً (لا يُخزَّن ولا يُعدَّل مباشرة): افتتاحي + إيداعات + رواتب − مصروفات − خصم مكافآت مالية.
+   الوقت: وقت الجهاز الحقيقي بتوقيت Asia/Baghdad (UTC+3 ثابت) — لا يمرّ بـCodisClock، فمحاكاة أيام المطوّر لا تولّد رواتب ولا تستهلك سماحية سعر الصرف.
+   كل ما يُستدعى وقت التحميل (codisFinNormalize) function declaration فقط ولا يقرأ const/let لاحقة ولا يرمي خطأً أبداً (قاعدة 3.17.2). */
+
+/* ---------- ثوابت (دوال لا const: تُستدعى وقت التحميل) ---------- */
+function codisFinRates(){ return [20, 40, 80, 120, 160, 200]; }                 /* دينار لكل كوين — الستة المعتمدة */
+function codisFinMinCoin(){ return 10; }
+function codisFinMaxCoin(){ return 30000; }
+function codisFinTypes(){ return ['OPENING_BALANCE', 'DEPOSIT', 'SALARY', 'EXPENSE', 'REWARD_REDEMPTION']; }
+function codisFinTypeLabel(t){ return ({ OPENING_BALANCE:'رصيد افتتاحي', DEPOSIT:'إيداع', SALARY:'راتب', EXPENSE:'مصروف', REWARD_REDEMPTION:'استخدام مكافأة' })[t] || t; }
+function codisFinDefaultCats(){
+  return [{ id:'food', name:'الطعام والمواد الغذائية' }, { id:'personal', name:'الاحتياجات الشخصية' }, { id:'health', name:'الصحة' }, { id:'transport', name:'المواصلات' },
+    { id:'home', name:'المنزل' }, { id:'shopping', name:'التسوق' }, { id:'fun', name:'الترفيه' }, { id:'other', name:'أخرى' }];
+}
+function codisFinBlank(){
+  return { v:1, setup:{ done:false, doneAt:null }, work:null, source:'', avgIncome:null, cur:'IQD', salary:{ rules:[] }, fx:{ rate:null, setAt:null }, fxLog:[], cats:[], ledger:[] };
+}
+
+/* ---------- الوقت الحقيقي (بغداد) ---------- */
+function codisFinNowMs(){
+  try{ if(!CODIS_SEALED && typeof window !== 'undefined' && typeof window.__CODIS_FIN_NOW__ === 'number' && isFinite(window.__CODIS_FIN_NOW__)) return window.__CODIS_FIN_NOW__; }catch(e){}   /* خطّاف اختبار: محلي فقط */
+  return Date.now();
+}
+function codisFinPad(n){ return (n < 10 ? '0' : '') + n; }
+function codisFinDateKey(ms){ const d = new Date(ms + 10800000); return d.getUTCFullYear() + '-' + codisFinPad(d.getUTCMonth() + 1) + '-' + codisFinPad(d.getUTCDate()); }
+function codisFinToday(){ return codisFinDateKey(codisFinNowMs()); }
+function codisFinIso(){ return new Date(codisFinNowMs()).toISOString(); }
+function codisFinMonthOf(dateKey){ return String(dateKey).slice(0, 7); }
+function codisFinDaysIn(y, m){ return new Date(Date.UTC(y, m, 0)).getUTCDate(); }
+function codisFinDateOk(s){
+  if(typeof s !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+  const p = s.split('-').map(Number); return p[1] >= 1 && p[1] <= 12 && p[2] >= 1 && p[2] <= codisFinDaysIn(p[0], p[1]);
+}
+function codisFinNextMonth(mk){ const p = mk.split('-').map(Number); let y = p[0], m = p[1] + 1; if(m > 12){ m = 1; y++; } return y + '-' + codisFinPad(m); }
+function codisFinMonthStart(mk){ return mk + '-01'; }
+function codisFinMonthName(mk){ const M = ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'], p = String(mk).split('-').map(Number); return (M[(p[1] || 1) - 1] || '') + ' ' + p[0]; }
+/* تاريخ استحقاق شهر: اليوم المطلوب، أو آخر يوم متاح بالشهر إن لم يوجد */
+function codisFinDueOf(mk, day){ const p = mk.split('-').map(Number); return mk + '-' + codisFinPad(Math.min(day, codisFinDaysIn(p[0], p[1]))); }
+function codisFinIsoOk(v){ return typeof v === 'string' && !isNaN(Date.parse(v)); }
+function codisFinInt(v, min, max){ let n = (v === null || v === '' || typeof v === 'boolean' || v === undefined) ? NaN : Number(v); if(!isFinite(n)) return null; n = Math.round(n); return (n < min || n > max) ? null : n; }
+
+/* ---------- التطبيع (آمن وقت التحميل) ---------- */
+function codisFinNormalize(d){
+  try{
+    const src = (d.finance && typeof d.finance === 'object' && !Array.isArray(d.finance)) ? d.finance : {};
+    const f = codisFinBlank(), types = codisFinTypes(), rates = codisFinRates();
+    f.v = 1;
+    const st = (src.setup && typeof src.setup === 'object') ? src.setup : {};
+    f.setup = { done:st.done === true, doneAt:codisFinIsoOk(st.doneAt) ? st.doneAt : null };
+    f.work = (src.work === 'employee' || src.work === 'freelance') ? src.work : null;
+    f.source = typeof src.source === 'string' ? src.source.slice(0, 80) : '';
+    f.avgIncome = codisFinInt(src.avgIncome, 0, 1e12);
+    const rules = [], seenR = {};
+    (src.salary && Array.isArray(src.salary.rules) ? src.salary.rules : []).forEach(r=>{
+      if(!r || typeof r !== 'object' || typeof r.id !== 'string' || !r.id || seenR[r.id]) return;
+      const amount = codisFinInt(r.amount, 0, 1e12), day = codisFinInt(r.day, 1, 31);
+      if(amount === null || day === null || !codisFinDateOk(r.from)) return;
+      seenR[r.id] = true; rules.push({ id:r.id.slice(0, 60), amount:amount, day:day, from:r.from, createdAt:codisFinIsoOk(r.createdAt) ? r.createdAt : '1970-01-01T00:00:00.000Z' });
+    });
+    rules.sort((a, b)=>a.from < b.from ? -1 : a.from > b.from ? 1 : (a.createdAt < b.createdAt ? -1 : a.createdAt > b.createdAt ? 1 : (a.id < b.id ? -1 : 1)));
+    f.salary = { rules:rules };
+    const fx = (src.fx && typeof src.fx === 'object') ? src.fx : {};
+    f.fx = { rate:rates.indexOf(fx.rate) !== -1 ? fx.rate : null, setAt:codisFinIsoOk(fx.setAt) ? fx.setAt : null };
+    const seenL = {}, log = [];
+    (Array.isArray(src.fxLog) ? src.fxLog : []).forEach(x=>{
+      if(!x || typeof x !== 'object' || typeof x.id !== 'string' || !x.id || seenL[x.id] || rates.indexOf(x.to) === -1 || !codisFinIsoOk(x.at)) return;
+      seenL[x.id] = true;
+      log.push({ id:x.id.slice(0, 60), kind:x.kind === 'initial' ? 'initial' : 'change', from:rates.indexOf(x.from) !== -1 ? x.from : null, to:x.to, at:x.at, month:/^\d{4}-\d{2}$/.test(x.month) ? x.month : codisFinMonthOf(codisFinDateKey(Date.parse(x.at))) });
+    });
+    log.sort((a, b)=>a.at < b.at ? -1 : a.at > b.at ? 1 : 0);
+    f.fxLog = log;
+    const seenC = {}, cats = [];
+    (Array.isArray(src.cats) ? src.cats : []).forEach(c=>{
+      if(!c || typeof c !== 'object' || typeof c.id !== 'string' || !/^c_[a-z0-9_]{1,30}$/.test(c.id) || seenC[c.id] || typeof c.name !== 'string' || !c.name.trim() || cats.length >= 30) return;
+      seenC[c.id] = true; cats.push({ id:c.id, name:c.name.trim().slice(0, 40) });
+    });
+    f.cats = cats;
+    const seenId = {}, seenRef = {}, seenSal = {}, led = [];
+    (Array.isArray(src.ledger) ? src.ledger : []).forEach(e=>{
+      if(!e || typeof e !== 'object' || typeof e.id !== 'string' || !e.id || seenId[e.id] || types.indexOf(e.type) === -1) return;
+      let a = codisFinInt(e.amount, -1e12, 1e12); if(a === null) return;
+      const ref = typeof e.ref === 'string' && e.ref ? e.ref.slice(0, 120) : e.id;
+      if(seenRef[ref]) return;
+      if(e.type === 'SALARY'){ if(!codisFinDateOk(e.due)) return; if(seenSal[codisFinMonthOf(e.due)]) return; }
+      /* إشارة المبلغ يحدّدها النوع (الدفتر المحاسبي): دخل موجب · مصروف سالب */
+      if(e.type === 'EXPENSE' || e.type === 'REWARD_REDEMPTION') a = -Math.abs(a); else a = Math.abs(a);
+      if(a === 0 && e.type !== 'OPENING_BALANCE') return;
+      const date = codisFinDateOk(e.date) ? e.date : (codisFinIsoOk(e.at) ? codisFinDateKey(Date.parse(e.at)) : null); if(!date) return;
+      seenId[e.id] = true; seenRef[ref] = true; if(e.type === 'SALARY') seenSal[codisFinMonthOf(e.due)] = true;
+      const o = { id:e.id.slice(0, 120), ref:ref, type:e.type, amount:a, cur:'IQD', desc:typeof e.desc === 'string' ? e.desc.slice(0, 120) : '', cat:typeof e.cat === 'string' ? e.cat.slice(0, 40) : '', src:typeof e.src === 'string' ? e.src.slice(0, 80) : '',
+        date:date, at:codisFinIsoOk(e.at) ? e.at : date + 'T00:00:00.000Z' };
+      if(e.type === 'SALARY') o.due = e.due;
+      if(typeof e.note === 'string' && e.note) o.note = e.note.slice(0, 300);
+      if(e.type === 'REWARD_REDEMPTION' && e.meta && typeof e.meta === 'object') o.meta = { uid:String(e.meta.uid || '').slice(0, 80), coins:Math.max(0, Math.min(1e9, Math.round((Number(e.meta.coins) || 0) * 100) / 100)), rewardId:String(e.meta.rewardId || '').slice(0, 80) };
+      led.push(o);
+    });
+    f.ledger = led;
+    d.finance = f;
+  }catch(err){ if(!d.finance || typeof d.finance !== 'object') d.finance = codisFinBlank(); }
+  return d.finance;
+}
+
+/* ---------- الدفتر والحسابات ---------- */
+function codisFin(){ if(!data.finance || typeof data.finance !== 'object' || !Array.isArray(data.finance.ledger)) codisFinNormalize(data); return data.finance; }
+function codisFinBalance(f){ f = f || codisFin(); let s = 0; for(let i = 0; i < f.ledger.length; i++) s += f.ledger[i].amount; return s; }
+function codisFinCmp(a, b){ if(a.type === 'OPENING_BALANCE' && b.type !== 'OPENING_BALANCE') return -1; if(b.type === 'OPENING_BALANCE' && a.type !== 'OPENING_BALANCE') return 1;   /* الافتتاحي أول قيد دائماً (رصيد البداية) */
+  return a.date < b.date ? -1 : a.date > b.date ? 1 : (a.at < b.at ? -1 : a.at > b.at ? 1 : (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)); }
+function codisFinSorted(f){ return (f || codisFin()).ledger.slice().sort(codisFinCmp); }
+/* الرصيد بعد كل حركة (يُعاد بناؤه من الدفتر مرتّباً — لا يُخزَّن فلا يفسد بالمزامنة) */
+function codisFinRunning(f){ let b = 0; return codisFinSorted(f).map(e=>{ b += e.amount; return { e:e, bal:b }; }); }
+function codisFinVerify(f){
+  f = f || codisFin();
+  const by = { OPENING_BALANCE:0, DEPOSIT:0, SALARY:0, EXPENSE:0, REWARD_REDEMPTION:0 }; let badSign = 0;
+  f.ledger.forEach(e=>{ by[e.type] += e.amount; if(((e.type === 'EXPENSE' || e.type === 'REWARD_REDEMPTION') && e.amount > 0) || ((e.type !== 'EXPENSE' && e.type !== 'REWARD_REDEMPTION') && e.amount < 0)) badSign++; });
+  const expect = by.OPENING_BALANCE + by.DEPOSIT + by.SALARY - Math.abs(by.EXPENSE) - Math.abs(by.REWARD_REDEMPTION);
+  return { ok:badSign === 0 && expect === codisFinBalance(f), opening:by.OPENING_BALANCE, deposits:by.DEPOSIT, salary:by.SALARY, expenses:Math.abs(by.EXPENSE), redemptions:Math.abs(by.REWARD_REDEMPTION), balance:codisFinBalance(f), expected:expect, badSign:badSign };
+}
+/* معاملة مالية: لقطة قبل العملية، وأي فشل (استثناء/رفض/فشل الحفظ) يعيد كل شيء كما كان */
+function codisFinTx(fn, wide){
+  const snap = JSON.stringify(codisFin()), sI = wide ? JSON.stringify(data.settings.rewardItems) : null, sV = wide ? JSON.stringify(data.inventory.items) : null;
+  const restore = ()=>{ try{ data.finance = JSON.parse(snap); if(wide){ data.settings.rewardItems = JSON.parse(sI); data.inventory.items = JSON.parse(sV); } }catch(e){} };
+  let res;
+  try{ res = fn(); }catch(err){ console.error('finance transaction failed:', err); restore(); return { ok:false, reason:'error' }; }
+  if(!res || res.ok === false){ restore(); return res || { ok:false, reason:'failed' }; }
+  if(res.noop) return res;
+  if(!saveData()){ restore(); return { ok:false, reason:'save' }; }
+  return res;
+}
+function codisFinUid(p){ return p + '_' + codisFinNowMs().toString(36) + Math.random().toString(36).slice(2, 8); }
+/* إضافة قيد (داخل معاملة فقط): يمنع تكرار المرجع */
+function codisFinPush(f, e){
+  if(f.ledger.some(x=>x.ref === e.ref || x.id === e.id)) return null;
+  f.ledger.push(e); return e;
+}
+function codisFinNeedSetup(f){ return !f.setup.done; }
+
+/* ---------- الإيداع ---------- */
+function codisFinDepositNow(o){
+  o = o || {}; const f = codisFin();
+  const amount = codisFinInt(o.amount, 1, 1e12); if(amount === null) return { ok:false, reason:'amount' };
+  const date = o.date || codisFinToday(); if(!codisFinDateOk(date)) return { ok:false, reason:'date' };
+  if(date > codisFinToday()) return { ok:false, reason:'future' };
+  const desc = String(o.desc || '').trim().slice(0, 120); if(!desc) return { ok:false, reason:'desc' };
+  const ref = String(o.ref || codisFinUid('dep')).slice(0, 120);
+  return codisFinTx(()=>{
+    const e = codisFinPush(f, { id:ref, ref:ref, type:'DEPOSIT', amount:amount, cur:'IQD', desc:desc, cat:'', src:String(o.src || '').trim().slice(0, 80), date:date, at:codisFinIso(), note:String(o.note || '').trim().slice(0, 300) || undefined });
+    if(!e) return { ok:false, reason:'dup' };
+    if(e.note === undefined) delete e.note;
+    return { ok:true, entry:e, balance:codisFinBalance(f) };
+  });
+}
+/* ---------- المصروف / السحب اليدوي ---------- */
+function codisFinExpenseNow(o){
+  o = o || {}; const f = codisFin();
+  const amount = codisFinInt(o.amount, 1, 1e12); if(amount === null) return { ok:false, reason:'amount' };
+  const date = o.date || codisFinToday(); if(!codisFinDateOk(date)) return { ok:false, reason:'date' };
+  if(date > codisFinToday()) return { ok:false, reason:'future' };
+  const name = String(o.name || '').trim().slice(0, 120); if(!name) return { ok:false, reason:'desc' };
+  const cat = String(o.cat || 'other').slice(0, 40);
+  const ref = String(o.ref || codisFinUid('exp')).slice(0, 120);
+  if(codisFinBalance(f) - amount < 0 && !CodisLimits.bypass('fin.nonnegative')) return { ok:false, reason:'funds', need:amount - codisFinBalance(f), balance:codisFinBalance(f) };
+  return codisFinTx(()=>{
+    const e = codisFinPush(f, { id:ref, ref:ref, type:'EXPENSE', amount:-amount, cur:'IQD', desc:name, cat:cat, src:'', date:date, at:codisFinIso(), note:String(o.note || '').trim().slice(0, 300) || undefined });
+    if(!e) return { ok:false, reason:'dup' };
+    if(e.note === undefined) delete e.note;
+    return { ok:true, entry:e, balance:codisFinBalance(f) };
+  });
+}
+/* ---------- خصم مكافأة مالية (يُستدعى داخل CodisWallet.transact؛ يرجع كائناً بلا حفظ ذاتي) ---------- */
+function codisFinRedeemIn(o){
+  const f = codisFin(); o = o || {};
+  if(codisFinNeedSetup(f)) return { ok:false, reason:'nosetup' };
+  const amount = codisFinInt(o.iqd, 1, 1e12); if(amount === null) return { ok:false, reason:'amount' };
+  const ref = 'rwd|' + String(o.uid || '');
+  if(!o.uid) return { ok:false, reason:'amount' };
+  if(f.ledger.some(x=>x.ref === ref)) return { ok:false, reason:'dup' };
+  if(codisFinBalance(f) - amount < 0 && !CodisLimits.bypass('fin.nonnegative')) return { ok:false, reason:'funds', need:amount - codisFinBalance(f), balance:codisFinBalance(f) };
+  const e = codisFinPush(f, { id:ref, ref:ref, type:'REWARD_REDEMPTION', amount:-amount, cur:'IQD', desc:String(o.name || 'مكافأة').slice(0, 120), cat:'rewards', src:'reward', date:codisFinToday(), at:codisFinIso(),
+    meta:{ uid:String(o.uid), coins:Number(o.coins) || 0, rewardId:String(o.rewardId || '') } });
+  if(!e) return { ok:false, reason:'dup' };
+  return { ok:true, entry:e, balance:codisFinBalance(f) };
+}
+
+/* ---------- الراتب ---------- */
+/* القاعدة السارية على شهر: من الأحدث للأقدم، أول قاعدة يقع استحقاقها (بيومها) في ذلك الشهر عند/بعد تاريخ بدايتها */
+function codisFinSalaryFor(f, mk){
+  const rules = f.salary.rules;
+  for(let i = rules.length - 1; i >= 0; i--){
+    const due = codisFinDueOf(mk, rules[i].day);
+    if(due >= rules[i].from) return rules[i].amount > 0 ? { rule:rules[i], due:due } : null;
+  }
+  return null;
+}
+/* تعويض المستحق الفائت: كل شهر حلّ استحقاقه ولم يُسجَّل يُضاف مرة واحدة (مرجع sal|YYYY-MM)، بتاريخ الاستحقاق الأصلي. لا رواتب قبل بداية الجدولة */
+function codisFinCatchUpIn(f, todayKey){
+  todayKey = todayKey || codisFinToday();
+  if(!f.setup.done || f.work !== 'employee' || !f.salary.rules.length) return [];
+  const added = []; let mk = codisFinMonthOf(f.salary.rules[0].from), guard = 0; const endMk = codisFinMonthOf(todayKey);
+  while(mk <= endMk && guard++ < 1200){
+    const hit = codisFinSalaryFor(f, mk);
+    if(hit && hit.due <= todayKey){
+      const ref = 'sal|' + mk;
+      if(!f.ledger.some(x=>x.ref === ref || (x.type === 'SALARY' && codisFinMonthOf(x.due) === mk))){
+        const e = codisFinPush(f, { id:ref, ref:ref, type:'SALARY', amount:hit.rule.amount, cur:'IQD', desc:'راتب ' + codisFinMonthName(mk), cat:'', src:'salary', date:hit.due, due:hit.due, at:codisFinIso() });
+        if(e) added.push(e);
+      }
+    }
+    mk = codisFinNextMonth(mk);
+  }
+  return added;
+}
+function codisFinCatchUp(){
+  const f = codisFin(); if(!f.setup.done || f.work !== 'employee') return 0;
+  const r = codisFinTx(()=>{ const a = codisFinCatchUpIn(f); return a.length ? { ok:true, added:a.length } : { ok:true, noop:true, added:0 }; });
+  return (r && r.added) || 0;
+}
+/* تغيير الراتب: قاعدة جديدة تسري على الاستحقاقات من تاريخ يحدده المستخدم (≥ اليوم)؛ السجلات السابقة لا تُمس */
+function codisFinSetSalary(o){
+  o = o || {}; const f = codisFin();
+  const amount = codisFinInt(o.amount, 0, 1e12), day = codisFinInt(o.day, 1, 31); if(amount === null) return { ok:false, reason:'amount' }; if(day === null) return { ok:false, reason:'day' };
+  const from = o.from || codisFinMonthStart(codisFinNextMonth(codisFinMonthOf(codisFinToday())));
+  if(!codisFinDateOk(from)) return { ok:false, reason:'date' }; if(from < codisFinToday()) return { ok:false, reason:'past' };
+  return codisFinTx(()=>{
+    f.salary.rules.push({ id:codisFinUid('rule'), amount:amount, day:day, from:from, createdAt:codisFinIso() });
+    f.salary.rules.sort((a, b)=>a.from < b.from ? -1 : a.from > b.from ? 1 : (a.createdAt < b.createdAt ? -1 : 1));
+    return { ok:true, added:codisFinCatchUpIn(f).length };
+  });
+}
+function codisFinNextSalary(f){
+  f = f || codisFin(); if(!f.setup.done || f.work !== 'employee' || !f.salary.rules.length) return null;
+  const today = codisFinToday(); let mk = codisFinMonthOf(today), guard = 0;
+  while(guard++ < 30){ const hit = codisFinSalaryFor(f, mk); if(hit && hit.due >= today && !f.ledger.some(x=>x.ref === 'sal|' + mk)) return { due:hit.due, amount:hit.rule.amount }; mk = codisFinNextMonth(mk); }
+  return null;
+}
+
+/* الملف المالي: طبيعة العمل ومصدر الدخل والمتوسط التقديري (للعلم فقط — لا يدخل الرصيد). التحوّل إلى «موظف» يتطلب راتباً يسري من اليوم فصاعداً (لا أثر رجعي) */
+function codisFinSetProfile(o){
+  o = o || {}; const f = codisFin(); if(!f.setup.done) return { ok:false, reason:'nosetup' };
+  const work = o.work === 'employee' ? 'employee' : 'freelance'; let rule = null;
+  if(work === 'employee' && !f.salary.rules.length){
+    const s2 = o.salary || {}, amount = codisFinInt(s2.amount, 1, 1e12), day = codisFinInt(s2.day, 1, 31);
+    if(amount === null || day === null) return { ok:false, reason:'amount' }; if(!codisFinDateOk(s2.from)) return { ok:false, reason:'date' }; if(s2.from < codisFinToday()) return { ok:false, reason:'past' };
+    rule = { id:codisFinUid('rule'), amount:amount, day:day, from:s2.from, createdAt:codisFinIso() };
+  }
+  return codisFinTx(()=>{
+    f.work = work; f.source = String(o.source || '').trim().slice(0, 80); f.avgIncome = o.avg ? codisFinInt(o.avg, 0, 1e12) : null;
+    if(rule) f.salary.rules.push(rule);
+    return { ok:true, added:codisFinCatchUpIn(f).length };
+  });
+}
+
+/* ---------- سعر الصرف ---------- */
+function codisFinRate(){ return codisFin().fx.rate || 0; }
+function codisFinCoinOfIqd(iqd, rate){ rate = rate || codisFinRate() || 40; return Math.round(Number(iqd) * 100 / rate) / 100; }
+function codisFinCoinOfMinutes(min){ return Math.round(Number(min) * 100 / 2) / 100; }   /* 1 كوين = دقيقتان ثابتة — لا علاقة لها بسعر الصرف */
+function codisFinFxStatus(){
+  const f = codisFin(), cur = codisFinMonthOf(codisFinToday());
+  const changes = f.fxLog.filter(x=>x.kind === 'change'), last = changes.length ? changes[changes.length - 1] : null;
+  const used = !!last && last.month === cur;
+  return { rate:f.fx.rate, canChange:!used, usedThisMonth:used, last:last, nextAllowed:used ? codisFinMonthStart(codisFinNextMonth(cur)) : codisFinToday(), month:cur, log:f.fxLog.slice() };
+}
+/* تغيير السعر: مرة واحدة بالشهر التقويمي (بتوقيت بغداد). بعدها يعاد تسعير المكافآت المالية بقيمتها بالدينار الثابتة */
+function codisFinChangeRate(newRate){
+  const f = codisFin(), rates = codisFinRates();
+  if(rates.indexOf(newRate) === -1) return { ok:false, reason:'rate' };
+  if(!f.setup.done) return { ok:false, reason:'nosetup' };
+  if(newRate === f.fx.rate) return { ok:false, reason:'same' };
+  const st = codisFinFxStatus();
+  if(st.usedThisMonth && !CodisLimits.bypass('fin.fxMonthly')) return { ok:false, reason:'monthly', nextAllowed:st.nextAllowed };
+  const prev = f.fx.rate;
+  return codisFinTx(()=>{
+    const at = codisFinIso();
+    f.fx = { rate:newRate, setAt:at };
+    f.fxLog.push({ id:codisFinUid('fx'), kind:'change', from:prev, to:newRate, at:at, month:codisFinMonthOf(codisFinToday()) });
+    const rp = codisFinReprice();
+    return { ok:true, from:prev, to:newRate, repriced:rp };
+  }, true);
+}
+
+/* ================= مصفوفة نطاقات البطاقات الـ23 =================
+   المرجع = سعر البطاقة الفعلي من النموذج (أو من codisFixedDefs). النطاق [min, max] بالكوينز، الحدّان شاملان.
+   القاعدة: الحد الأعلى = أقرب سعر مرجعي أعلى بين الـ23 (يتداخل عمداً مع بطاقة ثانية حيث حدّد المالك ذلك)، والجدول التالي هو ما حدّده المالك حرفياً:
+     أستاذ 10–12.5 · محطة 7 أيام 12.5–18.75 · حدثية عادية 18.75–37.5 · حدثية مهمة 37.5–50 · يومية C 25–37.5 · شهرية عادية 75–100 · شهرية مهمة 100–125 · حدثية حرجة 125–150 · شهرية حرجة 200–375
+     واستثناء الأعلى: الشهرية S 11,250–18,750 والشهرية SS من 30,000 نزولاً إلى 18,750 (الحد المشترك 18,750).
+   الاتحاد يغطي [10, 30000] بلا فجوة (يفحصه codisFinMatrixCheck). */
+function codisFinCards(){
+  if(codisFinCards.c) return codisFinCards.c;
+  const RN = { C:'شائعة', B:'غير شائعة', A:'نادرة', S:'نادرة جداً', SS:'أسطورية' };
+  const pool = (scope, room, rid, ref, min, max)=>({ id:scope + '_' + rid, name:({ daily:'يومية', weekly:'أسبوعية', monthly:'شهرية' })[scope] + ' ' + rid + ' — ' + RN[rid], room:room, rarity:rid, scope:scope, roomKey:room === 'tasks' ? 'tasks' : room, ref:ref, min:min, max:max, fixed:false, fixedId:null, type:'pool' });
+  const fx = (fid, name, ref, min, max, o)=>({ id:fid, name:name, room:'habits', rarity:null, scope:'habit', roomKey:'habits', ref:ref, min:min, max:max, fixed:true, fixedId:fid, type:'fixed', group:o.group, imp:o.imp || null, period:o.period || null });
+  const cf = (scope, rid)=>econCoinFor(rid, scope);
+  const L = [
+    { id:'learn', name:'مكافأة غرفة الأستاذ', room:'learn', rarity:null, scope:'learn', roomKey:'learn', ref:10, min:10, max:12.5, fixed:false, fixedId:null, type:'pool' },
+    fx('fx_station7', 'محطة السبعة أيام', 12.5, 12.5, 18.75, { group:'station', period:'7d' }),
+    fx('fx_rs_normal', 'مكافأة حدثية عادية', 18.75, 18.75, 37.5, { group:'event', imp:'normal' }),
+    pool('daily', 'tasks', 'C', cf('daily', 'C'), cf('daily', 'C'), 37.5),
+    fx('fx_rs_important', 'مكافأة حدثية مهمة', 37.5, 37.5, 50, { group:'event', imp:'important' }),
+    pool('daily', 'tasks', 'B', cf('daily', 'B'), cf('daily', 'B'), 75),
+    fx('fx_ms_normal', 'مكافأة المحطة الشهرية — عادية', 75, 75, 100, { group:'station', period:'30d', imp:'normal' }),
+    fx('fx_ms_important', 'مكافأة المحطة الشهرية — مهمة', 100, 100, 125, { group:'station', period:'30d', imp:'important' }),
+    fx('fx_rs_critical', 'مكافأة حدثية حرجة', 125, 125, 150, { group:'event', imp:'critical' }),
+    pool('daily', 'tasks', 'A', cf('daily', 'A'), cf('daily', 'A'), cf('weekly', 'C')),
+    pool('weekly', 'weekly', 'C', cf('weekly', 'C'), cf('weekly', 'C'), 200),
+    fx('fx_ms_critical', 'مكافأة المحطة الشهرية — حرجة', 200, 200, 375, { group:'station', period:'30d', imp:'critical' }),
+    pool('weekly', 'weekly', 'B', cf('weekly', 'B'), cf('weekly', 'B'), cf('daily', 'S')),
+    pool('daily', 'tasks', 'S', cf('daily', 'S'), cf('daily', 'S'), cf('monthly', 'C')),
+    pool('monthly', 'monthly', 'C', cf('monthly', 'C'), cf('monthly', 'C'), cf('daily', 'SS')),
+    pool('daily', 'tasks', 'SS', cf('daily', 'SS'), cf('daily', 'SS'), cf('weekly', 'A')),
+    pool('weekly', 'weekly', 'A', cf('weekly', 'A'), cf('weekly', 'A'), cf('monthly', 'B')),
+    pool('monthly', 'monthly', 'B', cf('monthly', 'B'), cf('monthly', 'B'), cf('weekly', 'S')),
+    pool('weekly', 'weekly', 'S', cf('weekly', 'S'), cf('weekly', 'S'), cf('monthly', 'A')),
+    pool('monthly', 'monthly', 'A', cf('monthly', 'A'), cf('monthly', 'A'), cf('weekly', 'SS')),
+    pool('weekly', 'weekly', 'SS', cf('weekly', 'SS'), cf('weekly', 'SS'), cf('monthly', 'S')),
+    pool('monthly', 'monthly', 'S', cf('monthly', 'S'), cf('monthly', 'S'), 18750),
+    pool('monthly', 'monthly', 'SS', cf('monthly', 'SS'), 18750, cf('monthly', 'SS'))   /* الاتجاه العكسي: المرجع 30,000 هو الحد الأعلى */
+  ];
+  L.forEach(c=>{ c.reversed = c.ref === c.max && c.min !== c.max; Object.freeze(c); });
+  return (codisFinCards.c = Object.freeze(L));
+}
+function codisFinCardById(id){ return codisFinCards().find(c=>c.id === id) || null; }
+function codisFinInRange(c, coin){ const v = Math.round(Number(coin) * 100) / 100; return v >= c.min - 1e-9 && v <= c.max + 1e-9; }
+function codisFinCardsFor(coin){ return codisFinCards().filter(c=>codisFinInRange(c, coin)); }
+/* فحص المصفوفة: 23 بطاقة · المراجع تطابق النموذج · لا فجوة بين 10 و30,000 */
+function codisFinMatrixCheck(){
+  const cards = codisFinCards(), out = { ok:true, count:cards.length, problems:[] };
+  if(cards.length !== 23) out.problems.push('count ' + cards.length);
+  const D = codisFixedDefs();
+  cards.forEach(c=>{
+    if(c.min > c.max) out.problems.push('min>max ' + c.id);
+    if(c.fixed){ const d = D.rewards.find(x=>x.id === c.fixedId); if(!d || d.coin !== c.ref) out.problems.push('fixed ref ' + c.id); }
+    else if(c.id === 'learn'){ if(c.ref !== ECON_LEARN_COIN) out.problems.push('learn ref'); }
+    else if(econCoinFor(c.rarity, c.scope) !== c.ref) out.problems.push('pool ref ' + c.id);
+    if(c.ref < c.min - 1e-9 || c.ref > c.max + 1e-9) out.problems.push('ref outside ' + c.id);
+  });
+  const edges = cards.slice().sort((a, b)=>a.min - b.min || a.max - b.max); let reach = codisFinMinCoin();
+  if(edges[0].min > reach) out.problems.push('start gap ' + edges[0].min);
+  edges.forEach(c=>{ if(c.min > reach + 1e-9) out.problems.push('gap ' + reach + '→' + c.min); if(c.max > reach) reach = c.max; });
+  if(reach < codisFinMaxCoin()) out.problems.push('end gap at ' + reach);
+  out.ok = out.problems.length === 0; return out;
+}
+
+/* ================= التصنيف الذكي (محلي، بلا خدمة خارجية) =================
+   عاملان معاً: (1) المعنى: قاموس مجالات ← تقارب كل مجال مع كل غرفة · (2) السعر: البطاقات التي يقع السعر الدقيق داخل نطاقها فقط (لا «أقرب سعر»).
+   الدرجة = 0.65 × تقارب المعنى + 0.35 × تقارب السعر داخل النطاق. غير الغامض يُحسم؛ الغامض (لا مجال معروف + أكثر من غرفة ممكنة) يعرض اقتراحات. */
+function codisFinLex(){
+  return codisFinLex.c || (codisFinLex.c = [
+    { dom:'food', label:'طعام', aff:{ tasks:.92, learn:.08, weekly:.55, monthly:.12, habits:.3 }, kw:['شاورم', 'برجر', 'برغر', 'بيتزا', 'ساندويج', 'ساندوتش', 'فلافل', 'سمك', 'دجاج', 'كباب', 'تكه', 'مطعم', 'وجبه', 'اكل', 'غدا', 'عشا', 'فطور', 'لفه', 'صمون', 'مشاوي', 'باجه', 'برياني', 'تمن', 'دولمه', 'بيض', 'ستيك', 'مندي', 'فروج', 'كنتاكي'] },
+    { dom:'sweet', label:'حلويات', aff:{ tasks:.86, learn:.2, weekly:.5, monthly:.1, habits:.45 }, kw:['حلوي', 'حلو', 'ايس', 'ايسكريم', 'كيك', 'شوكولات', 'شوكلات', 'كنافه', 'بقلاو', 'دونات', 'وافل', 'كريب', 'بسكوت', 'معجنات', 'جكليت', 'كاكاو', 'لقيمات', 'زلابيه', 'مهلبيه'] },
+    { dom:'drink', label:'مشروبات', aff:{ tasks:.9, learn:.36, weekly:.4, monthly:.05, habits:.3 }, kw:['قهوه', 'جاي', 'شاي', 'عصير', 'كولا', 'بيبسي', 'مشروب', 'نسكافيه', 'كابتشينو', 'لاتيه', 'سموذي', 'ميلك', 'شيك', 'مايه', 'نرجيله', 'ارجيله'] },
+    { dom:'market', label:'سوق وتسوّق صغير', aff:{ tasks:.82, learn:.05, weekly:.6, monthly:.2, habits:.2 }, kw:['سوق', 'ماركت', 'بقاله', 'تسوق', 'تبضع', 'مول', 'متجر', 'محل', 'خضار', 'فاكهه'] },
+    { dom:'shopping', label:'ملابس ومقتنيات', aff:{ tasks:.12, learn:.02, weekly:.45, monthly:.88, habits:.15 }, kw:['ملابس', 'قميص', 'بنطلون', 'حذاء', 'جزمه', 'ساعه يد', 'عطر', 'شنطه', 'جاكيت', 'نظارات', 'خاتم', 'قلاده', 'ثوب', 'دشداشه', 'بدله', 'كوتي', 'ملبس', 'فستان'] },
+    { dom:'tech', label:'أجهزة', aff:{ tasks:.03, learn:.02, weekly:.2, monthly:.92, habits:.1 }, kw:['موبايل', 'جوال', 'ايفون', 'لابتوب', 'حاسبه', 'حاسوب', 'سماعه', 'سماعات', 'تابلت', 'كاميرا', 'شاشه', 'تلفزيون', 'بلايستيشن', 'كونسول', 'ماوس', 'كيبورد', 'ساعه ذكيه', 'شاحن', 'راوتر', 'طابعه'] },
+    { dom:'watch', label:'مشاهدة وترفيه', aff:{ tasks:.9, learn:.26, weekly:.5, monthly:.1, habits:.3 }, kw:['مشاهد', 'فلم', 'فيلم', 'مسلسل', 'مباراه', 'ماتش', 'يوتيوب', 'نتفلكس', 'نتفليكس', 'انمي', 'كارتون', 'بث', 'تلفزيون', 'سهره', 'مسرحيه', 'برنامج'] },
+    { dom:'game', label:'ألعاب', aff:{ tasks:.86, learn:.12, weekly:.5, monthly:.2, habits:.3 }, kw:['قيمنق', 'لعب', 'العاب', 'لعبه', 'ببجي', 'فورتنايت', 'فيفا', 'دومينو', 'شطرنج', 'طاوله', 'ورق', 'بلوت', 'بلياردو', 'بلاي'] },
+    { dom:'learn', label:'ثقافة وهدوء', aff:{ tasks:.38, learn:.95, weekly:.12, monthly:.05, habits:.1 }, kw:['موسيق', 'استماع', 'اغنيه', 'اغاني', 'بودكاست', 'كتاب', 'قراءه', 'رواي', 'مجله', 'شعر', 'اذاعه', 'تأمل', 'تامل', 'رسم', 'تلوين', 'تعلم', 'دوره', 'كورس'] },
+    { dom:'outing', label:'طلعة', aff:{ tasks:.3, learn:.04, weekly:.9, monthly:.45, habits:.25 }, kw:['طلعه', 'طلعات', 'كافيه', 'كوفي', 'حديقه', 'متنزه', 'سينما', 'بولينج', 'كورنيش', 'نزهه', 'تمشي', 'ملاهي', 'العاب مائيه', 'سباحه', 'مسبح', 'كرنفال', 'مقهى', 'مقهي'] },
+    { dom:'trip', label:'سفر ورحلات', aff:{ tasks:.02, learn:0, weekly:.32, monthly:.95, habits:.2 }, kw:['سفر', 'رحله', 'سياحه', 'فندق', 'مخيم', 'تخييم', 'شمال', 'زياره', 'عمره', 'بحر', 'طيران', 'تذكره', 'اجازه'] },
+    { dom:'rest', label:'راحة', aff:{ tasks:.86, learn:.3, weekly:.45, monthly:.2, habits:.4 }, kw:['نوم', 'قيلوله', 'راحه', 'استرخاء', 'نايم', 'ارتياح', 'سرير', 'يوم راحه', 'اجازه قصيره'] },
+    { dom:'care', label:'عناية وصحة', aff:{ tasks:.55, learn:.1, weekly:.62, monthly:.45, habits:.5 }, kw:['مساج', 'تدليك', 'حلاقه', 'حلاق', 'صالون', 'عنايه', 'جيم', 'نادي', 'رياضه', 'علاج', 'طبيب', 'سبا', 'بشره', 'استحمام', 'حمام', 'ساونا', 'تجميل', 'مانيكير'] },
+    { dom:'social', label:'اجتماعيات وهدايا', aff:{ tasks:.3, learn:.04, weekly:.85, monthly:.5, habits:.25 }, kw:['عزومه', 'ضيافه', 'اصدقاء', 'صحاب', 'هديه', 'هدايا', 'وليمه', 'حفله', 'عرس', 'عيد', 'جمعه', 'ضيوف', 'لمه'] },
+    { dom:'habit', label:'عادات وإنجازات', aff:{ tasks:.22, learn:.1, weekly:.3, monthly:.35, habits:.95 }, kw:['تدخين', 'سيجاره', 'مقاومه', 'عاده', 'محطه', 'انجاز', 'امتناع', 'اقلاع', 'تخلص'] }
+  ]);
+}
+function codisFinNormText(s){
+  return codisNormText(s).replace(/[چ]/g, 'ج').replace(/[گ]/g, 'ك').replace(/[پ]/g, 'ب').replace(/[ڤ]/g, 'ف').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').replace(/[^a-z0-9ء-ي\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function codisFinTokens(name){
+  const out = []; codisFinNormText(name).split(' ').forEach(t=>{
+    if(!t) return; out.push(t);
+    let u = t; if(u.length > 3 && u.indexOf('ال') === 0){ u = u.slice(2); out.push(u); }
+    if(u.length > 3 && /^[ولب]/.test(u)){ out.push(u.slice(1)); if(u.length > 4 && u.indexOf('لل') === 0) out.push(u.slice(2)); }
+  });
+  return out;
+}
+/* المجالات المطابقة للاسم مرتبة بعدد الكلمات المطابقة */
+function codisFinDomains(name){
+  const toks = codisFinTokens(name), full = ' ' + codisFinNormText(name) + ' ', res = [];
+  codisFinLex().forEach(d=>{
+    let n = 0;
+    d.kw.forEach(k=>{
+      const nk = codisFinNormText(k);
+      if(nk.indexOf(' ') !== -1){ if(full.indexOf(' ' + nk) !== -1) n += 2; return; }
+      if(toks.some(t=>t.length >= nk.length - 1 && t.indexOf(nk) === 0)) n++;
+    });
+    if(n > 0) res.push({ dom:d.dom, label:d.label, n:n, aff:d.aff });
+  });
+  return res.sort((a, b)=>b.n - a.n);
+}
+function codisFinPriceFit(c, coin){
+  const w = c.max - c.min; if(w <= 0) return 1;
+  const pos = c.reversed ? (c.max - coin) / w : (coin - c.min) / w;   /* قرب السعر من المرجع داخل النطاق */
+  return 1 - Math.max(0, Math.min(1, pos)) * 0.5;
+}
+function codisFinDefaultAff(){ return { tasks:.5, learn:.4, weekly:.5, monthly:.4, habits:.3 }; }
+/* name + coin(الدقيق) → { ok, reason?, coin, domains, candidates:[{card,score,sem,fit}], best, ambiguous, suggestions } */
+function codisFinClassify(name, coin){
+  coin = Math.round(Number(coin) * 100) / 100;
+  if(!isFinite(coin) || coin < codisFinMinCoin() - 1e-9) return { ok:false, reason:'low', coin:coin };
+  if(coin > codisFinMaxCoin() + 1e-9) return { ok:false, reason:'high', coin:coin };
+  const doms = codisFinDomains(name), known = doms.length > 0;
+  let aff = codisFinDefaultAff();
+  if(known){   /* مزج المجالات المطابقة بأوزان عدد الكلمات */
+    const tot = doms.reduce((s, d)=>s + d.n, 0); aff = { tasks:0, learn:0, weekly:0, monthly:0, habits:0 };
+    doms.forEach(d=>{ Object.keys(aff).forEach(k=>{ aff[k] += d.aff[k] * d.n / tot; }); });
+  }
+  const cands = codisFinCardsFor(coin).map(c=>{
+    const sem = aff[c.roomKey] === undefined ? .3 : aff[c.roomKey], fit = codisFinPriceFit(c, coin);
+    return { card:c, sem:sem, fit:fit, score:Math.round((0.65 * sem + 0.35 * fit) * 1e6) / 1e6 };
+  }).sort((a, b)=>b.score - a.score || (a.card.max - a.card.min) - (b.card.max - b.card.min) || (a.card.id < b.card.id ? -1 : 1));
+  if(!cands.length) return { ok:false, reason:'nocard', coin:coin };
+  const rooms = {}; cands.forEach(c=>{ rooms[c.card.roomKey] = 1; });
+  const multiRoom = Object.keys(rooms).length > 1;
+  const ambiguous = multiRoom && (!known || (cands.length > 1 && cands[0].score - cands[1].score < 0.06 && cands[0].card.roomKey !== cands[1].card.roomKey));
+  return { ok:true, coin:coin, domains:doms.map(d=>({ dom:d.dom, label:d.label })), candidates:cands, best:cands[0], ambiguous:ambiguous, suggestions:cands.slice(0, 3) };
+}
+
+/* ================= المكافآت التلقائية (مالية / وقتية) =================
+   كل عنصر تلقائي في data.settings.rewardItems يحمل fin = { v:1, kind:'financial'|'time', iqd|minutes, card, dom }.
+   القيمة الدقيقة بالكوين مشتقة دائماً (دينار ÷ السعر الحالي، أو دقائق ÷ 2) ولا تُقرَّب لأقرب فئة. القيمة بالدينار/الدقائق هي الأصل. */
+function codisFinItemOk(v){
+  try{
+    if(!v || typeof v !== 'object' || v.v !== 1) return null;
+    const kind = v.kind === 'financial' ? 'financial' : v.kind === 'time' ? 'time' : null; if(!kind) return null;
+    const o = { v:1, kind:kind, card:typeof v.card === 'string' ? v.card.slice(0, 40) : '', dom:typeof v.dom === 'string' ? v.dom.slice(0, 20) : '' };
+    if(kind === 'financial'){ const iqd = codisFinInt(v.iqd, 1, 1e12); if(iqd === null) return null; o.iqd = iqd; }
+    else { const m = codisFinInt(v.minutes, 1, 1440); if(m === null) return null; o.minutes = m; }
+    const c = Number(v.coin); o.coin = isFinite(c) && c >= 0 && c <= 1e6 ? Math.round(c * 100) / 100 : 0;   /* لقطة آخر قيمة (احتياط إن لم يُضبط سعر صرف) */
+    if(v.oor === true) o.oor = true;
+    return o;
+  }catch(e){ return null; }
+}
+/* قيمة العنصر الحالية بالكوين (مصدر وحيد لـeconEffCoin) */
+function codisFinItemCoin(item){
+  const fin = item && item.fin; if(!fin) return 0;
+  if(fin.kind === 'time') return codisFinCoinOfMinutes(fin.minutes);
+  const rate = codisFinRate(); return rate ? codisFinCoinOfIqd(fin.iqd, rate) : (fin.coin || 0);
+}
+/* نوع استخدام عنصر مخزون/كتالوج: 'FINANCIAL' | 'TIME' | 'LEGACY' */
+function codisFinUseKind(it){ return (it && it.fin && it.fin.kind === 'financial') ? 'FINANCIAL' : (it && it.fin && it.fin.kind === 'time') ? 'TIME' : 'LEGACY'; }
+/* مدة العنصر للمؤقت: الصريحة المحفوظة للتلقائي، وإلا استخراج الاسم للقديم (لا يُستخرج أبداً لمكافأة مالية) */
+function codisDurOf(it){
+  if(it && it.fin) return it.fin.kind === 'time' ? { min:it.fin.minutes, why:'مدة محفوظة' } : null;
+  return CodisDuration.parse(it && it.name);
+}
+/* حقول التموضع للبطاقة: كتالوج عادي ← room/rarity · كرت خاص ← variantOf */
+function codisFinPlacement(card){
+  if(card.fixed) return { room:'habits', rarity:econCfg().rarities[0].id, variantOf:card.fixedId, weight:0 };
+  if(card.room === 'learn') return { room:'learn', rarity:econCfg().rarities[0].id, variantOf:null, weight:10 };
+  return { room:card.room, rarity:card.rarity, variantOf:null, weight:10 };
+}
+function codisFinApplyPlacement(item, card){
+  const p = codisFinPlacement(card);
+  item.room = p.room; item.rarity = p.rarity; item.weight = p.weight;
+  if(p.variantOf){ item.variantOf = p.variantOf; item.fixed = false; const d = codisFixedById(p.variantOf); if(d){ item.cardKind = 'special'; item.cardGroup = d.group; item.stationPeriod = d.period || null; item.habitImp = d.imp || null; } }
+  else { delete item.variantOf; delete item.cardKind; delete item.cardGroup; delete item.stationPeriod; delete item.habitImp; }
+  if(item.fin) item.fin.card = card.id;
+}
+/* يُستدعى من econNormalizeItems: يتحقق من حقول العنصر التلقائي ويشتق الباقي (آمن وقت التحميل) */
+function codisFinReconcileItems(s){
+  try{
+    (s.rewardItems || []).forEach(it=>{
+      if(!it || typeof it !== 'object') return;
+      it.fin = codisFinItemOk(it.fin) || undefined; if(it.fin === undefined) delete it.fin;
+      if(!it.fin){ delete it.variantOf; return; }
+      const card = codisFinCardById(it.fin.card);
+      if(card){ if(card.fixed){ it.room = 'habits'; it.weight = 0; it.variantOf = card.fixedId; const d = codisFixedById(card.fixedId); if(d){ it.cardKind = 'special'; it.cardGroup = d.group; it.stationPeriod = d.period || null; it.habitImp = d.imp || null; } } else { delete it.variantOf; } }
+      else delete it.variantOf;
+    });
+  }catch(e){}
+}
+/* إنشاء مكافأة تلقائية. o = { name, kind, iqd|minutes, cardId?, stickerId? } — يحفظ الدقيق ولا يقرّب لأقرب فئة */
+function codisFinCreateReward(o){
+  o = o || {}; const f = codisFin();
+  const name = String(o.name || '').trim().slice(0, 120); if(!name) return { ok:false, reason:'name' };
+  const kind = o.kind === 'financial' ? 'financial' : o.kind === 'time' ? 'time' : null; if(!kind) return { ok:false, reason:'kind' };
+  let iqd = null, minutes = null, coin;
+  if(kind === 'financial'){
+    if(!f.setup.done || !f.fx.rate) return { ok:false, reason:'nosetup' };
+    iqd = codisFinInt(o.iqd, 1, 1e12); if(iqd === null) return { ok:false, reason:'amount' };
+    coin = codisFinCoinOfIqd(iqd, f.fx.rate);
+  } else { minutes = codisFinInt(o.minutes, 1, 1440); if(minutes === null) return { ok:false, reason:'amount' }; coin = codisFinCoinOfMinutes(minutes); }
+  const cls = codisFinClassify(name, coin); if(!cls.ok) return { ok:false, reason:cls.reason, coin:coin, min:codisFinMinCoin(), max:codisFinMaxCoin() };
+  let pick = cls.best;
+  if(o.cardId){ pick = cls.candidates.find(c=>c.card.id === o.cardId); if(!pick) return { ok:false, reason:'range', coin:coin }; }
+  else if(cls.ambiguous && !o.force) return { ok:false, reason:'ambiguous', coin:coin, suggestions:cls.suggestions };
+  const card = pick.card, now = econNowIso(), taken = {}; data.settings.rewardItems.forEach(x=>{ if(x && x.id) taken[x.id] = true; });
+  const p = codisFinPlacement(card), id = econStableId('reward', p.room, name, taken);
+  const dom = cls.domains.length ? cls.domains[0].dom : '';
+  const item = { id:id, name:name, rarity:p.rarity, weight:p.weight, coinValue:null, storePrice:null, stickerId:codisStickerIdOk(o.stickerId), enabled:true, room:p.room, createdAt:now, updatedAt:now,
+    fin:{ v:1, kind:kind, card:card.id, dom:dom, coin:coin } };
+  if(kind === 'financial') item.fin.iqd = iqd; else item.fin.minutes = minutes;
+  return codisFinTx(()=>{
+    data.settings.rewardItems.push(item);
+    codisFinReconcileItems(data.settings);
+    return { ok:true, item:item, card:card, coin:coin };
+  }, true);
+}
+/* إعادة التسعير بعد تغيير سعر الصرف (يُستدعى داخل معاملة): القيمة بالدينار ثابتة؛ القيمة بالكوين تُشتق من السعر الجديد؛ البطاقة تُعاد تقييمها.
+   كتالوج + مخزون غير مستخدم فقط — المستخدمة والسجلات التاريخية لا تُمس. لا يضيع اسم ولا وصف ولا ستيكر ولا إعداد. */
+function codisFinReprice(){
+  const rate = codisFinRate(); const res = { moved:0, items:0, inv:0, oor:0 };
+  if(!rate) return res;
+  const cardOf = (fin)=>codisFinCardById(fin.card);
+  data.settings.rewardItems.forEach(it=>{
+    if(!it || !it.fin || it.fin.kind !== 'financial') return;
+    const coin = codisFinCoinOfIqd(it.fin.iqd, rate); it.fin.coin = coin; res.items++;
+    const cur = cardOf(it.fin);
+    if(cur && codisFinInRange(cur, coin)){ delete it.fin.oor; return; }
+    const cls = codisFinClassify(it.name, Math.max(codisFinMinCoin(), Math.min(codisFinMaxCoin(), coin)));
+    let target = null;
+    if(cls.ok && coin >= codisFinMinCoin() - 1e-9 && coin <= codisFinMaxCoin() + 1e-9){ target = cls.best.card; delete it.fin.oor; }
+    else { /* خارج المجال 10–30,000: تبقى بأقرب بطاقة ممكنة بقيمتها الدقيقة مع علامة */
+      target = coin < codisFinMinCoin() ? codisFinCardById('learn') : codisFinCardById('monthly_SS'); it.fin.oor = true; res.oor++;
+    }
+    if(target && (!cur || target.id !== cur.id)){ codisFinApplyPlacement(it, target); it.updatedAt = econNowIso(); res.moved++; }
+  });
+  codisFinReconcileItems(data.settings);
+  (data.inventory.items || []).forEach(x=>{
+    if(!x || x.status !== 'owned' || !x.fin || x.fin.kind !== 'financial') return;
+    x.fin.coin = codisFinCoinOfIqd(x.fin.iqd, rate); x.coinValue = econCN(x.fin.coin, 0, 0, 1000000); res.inv++;
+    const cat = x.rewardId ? data.settings.rewardItems.find(r=>r && r.id === x.rewardId) : null;
+    if(cat && cat.fin && !codisSlotOf(x)){ const rar = econRarityById(cat.rarity); if(rar){ x.rarity = rar.id; x.rarityName = rar.name; x.rarityTone = rar.tone; x.rarityOrder = rar.order; x.room = cat.room; } }
+  });
+  return res;
+}
 
 /* البيانات الافتراضية لأول تشغيل فقط */
 function seedData(){
@@ -12756,6 +13496,7 @@ function normalizeData(d, isFresh){
   d.adminGrantsApplied = Array.isArray(d.adminGrantsApplied) ? d.adminGrantsApplied.filter(x=>typeof x === 'string').slice(-2000) : [];   /* CODIS-ADMIN */
   { const cs = d.closedSeen, nowI = new Date().toISOString(), okT = x=>typeof x === 'string' && !isNaN(Date.parse(x)); d.closedSeen = { sold:(cs && okT(cs.sold)) ? cs.sold : nowI, used:(cs && okT(cs.used)) ? cs.used : nowI }; }   /* CODIS-PERF: آخر مشاهدة لكل عرض (المباعة/المستخدمة) */
   d.holidayCardLog = holidayNormalizeLog(d.holidayCardLog);   // سجل المهام المكتملة ببطاقة شراء يوم عطلة — إضافة فقط
+  codisFinNormalize(d);   /* CODIS-FINANCE: دفتر مالي مستقل (إضافة فقط) */
   econNormalizeAll(d);   // اقتصاد المكافآت: إعدادات · كائنات · محفظة · حالة · سجل (إضافة فقط)
   migrateData(d);
   sanitizeData(d);
@@ -13260,7 +14001,7 @@ function econUid(prefix){ return prefix + '_' + Date.now().toString(36) + Math.r
 
 /* ======== النموذج المالي الثابت (لا يُعدَّل من الواجهة ولا يُقرأ من المحفوظ) ========
    وحدة واحدة: سعر المكافأة الشائعة اليومية = 25 كوين. كل رقم آخر مشتق منها بنسب ثابتة:
-   • سلّم الندرة (× الوحدة): شائعة 1 · غير شائعة 2.4 · نادرة 6 · نادرة جداً 15 · أسطورية 40.
+   • سلّم الندرة (× الوحدة): شائعة 1 · غير شائعة 2 · نادرة 6 · نادرة جداً 15 · أسطورية 40.
      احتمالات الندرة (odds أدناه): شائعة 70% · غير شائعة 18% · نادرة 9% · نادرة جداً 2.4% · أسطورية 0.6% — الشائعة 70% والـ30% الباقية موزّعة على الأربع الأخرى بنفس نسب أوزانها السابقة (30 : 15 : 4 : 1)، ومجموعها 100%.
    • مقياس الفترة = عدد أيامها: يومية ×1 · أسبوعية ×7 · شهرية ×30. فالمكافأة الأسبوعية الشائعة = 7 يومية شائعة، والشهرية الشائعة = 30 يومية شائعة.
      احتمالات الندرة متطابقة في الفترات الثلاث، فالقيمة المتوقعة نفسها 1 : 7 : 30 بالضبط (الشهر الممتاز فقط: نفس الاحتمالات بعد حذف الشائعة، فقيمته ≈ 2.3×).
@@ -13268,7 +14009,7 @@ function econUid(prefix){ return prefix + '_' + Date.now().toString(36) + Math.r
    • تكلفة تجاوز العقوبة = الوحدة × (خفيفة 2 · متوسطة 4 · قوية 7) × مقياس الفترة × bypassPercent% (135% = الأساس السابق 90% مع زيادة 50%)، بنفس التقريب Math.round. المصدر الوحيد: econBypassFor. */
 function econModel(){ return econModel.m || (econModel.m = Object.freeze({
   unit:25,
-  ladder:Object.freeze({ C:1, B:2.4, A:6, S:15, SS:40 }),
+  ladder:Object.freeze({ C:1, B:2, A:6, S:15, SS:40 }),   /* CODIS-FINANCE: B كانت 2.4 (=60) وصارت 2 (=50): اليومية 50 · الأسبوعية 350 · الشهرية 1,500 */
   scale:Object.freeze({ daily:1, weekly:7, monthly:30 }),
   odds:Object.freeze({ C:70, B:18, A:9, S:2.4, SS:0.6 }),   /* وزن/احتمال كل ندرة (%) — مجموعها 100، ومنها تُشتق أوزان econDefaults */
   markup:1.12, sellPercent:80, bypassPercent:135,   /* تكلفة تخطي العقوبة: كانت 90 وزادت 50% (90 × 1.5 = 135). هذا الرقم هو المصدر الوحيد لكل تكاليف التخطي (كوينز) وبطاقات التجاوز المشتقة منها */
@@ -13290,7 +14031,7 @@ function econDefaults(){
   return {
     rarities: [
       { id:'C',  name:'شائعة',      weight:od.C,  boxWeight:bo.C,  coinValue:25,   tone:'c',  order:1, enabled:true },
-      { id:'B',  name:'غير شائعة',  weight:od.B,  boxWeight:bo.B,  coinValue:60,   tone:'b',  order:2, enabled:true },
+      { id:'B',  name:'غير شائعة',  weight:od.B,  boxWeight:bo.B,  coinValue:50,   tone:'b',  order:2, enabled:true },
       { id:'A',  name:'نادرة',      weight:od.A,  boxWeight:bo.A,  coinValue:150,  tone:'a',  order:3, enabled:true },
       { id:'S',  name:'نادرة جداً', weight:od.S,  boxWeight:bo.S,  coinValue:375,  tone:'s',  order:4, enabled:true },
       { id:'SS', name:'أسطورية',    weight:od.SS, boxWeight:bo.SS, coinValue:1000, tone:'ss', order:5, enabled:true }
@@ -13385,7 +14126,7 @@ function econNormalizeItems(settings){
     takenR[id] = true;
     const rarity = (room !== 'learn' && rids.indexOf(x.rarity) !== -1) ? x.rarity : fallbackRarity;
     /* الأسعار من النموذج الثابت فقط: أي استثناء يدوي قديم (قيمة/سعر) يُصفَّر ولا يُحتسب */
-    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null, stickerId:codisStickerIdOk(x.stickerId),
+    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null, stickerId:codisStickerIdOk(x.stickerId), fin:x.fin,
       enabled:x.enabled !== false, room:room, createdAt:typeof x.createdAt === 'string' ? x.createdAt : now, updatedAt:typeof x.updatedAt === 'string' ? x.updatedAt : now };
   });
   settings.punishItems = settings.punishItems.filter(x=>x && typeof x === 'object' && typeof x.name === 'string' && x.name.trim()).map(x=>{
@@ -13397,6 +14138,7 @@ function econNormalizeItems(settings){
       enabled:x.enabled !== false, room:room, createdAt:typeof x.createdAt === 'string' ? x.createdAt : now, updatedAt:typeof x.updatedAt === 'string' ? x.updatedAt : now };
   });
   codisV34Seed(settings);   /* CODIS-V34: البطاقات الثابتة (آمن وقت التحميل: دوال فقط) */
+  codisFinReconcileItems(settings);   /* CODIS-FINANCE */
 }
 
 /* ترحيل واحد من قوائم النصوص القديمة (rewards/learnRewards/habitRewards + العقوبات + disabledItems) إلى كائنات. لا يُحذف نص: كل نص يصير كائناً */
@@ -13433,6 +14175,7 @@ function econNormalizeInventory(d){
       rarityOrder:econNum(x.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(x.room) !== -1 ? x.room : 'tasks', source:(x.source === 'store' || x.source === 'box') ? x.source : 'outcome',
       sourceRef:String(x.sourceRef || ''), scope:String(x.scope || ''), acquiredAt:iso(x.acquiredAt) || now, status:status, statusAt:iso(x.statusAt) || iso(x.acquiredAt) || now,
       coinValue:econCN(x.coinValue, 0, 0, 1000000), paid:(x.paid === null || x.paid === undefined) ? null : econCN(x.paid, 0, 0, 1000000) };
+    { const fn = codisFinItemOk(x.fin); if(fn) it.fin = fn; }   /* CODIS-FINANCE: لقطة نوع المكافأة وقيمتها الأصلية */
     if(status === 'sold'){ it.soldFor = econCN(x.soldFor, 0, 0, 1000000); it.sellTx = String(x.sellTx || ''); }
     return it;
   });
@@ -13553,7 +14296,8 @@ function econRarityById(id){ return econCfg().rarities.find(r=>r.id === id) || n
 function econPenaltyCost(item){ if(item && item.fixed && item.fixedCost > 0) return item.fixedCost; return econBypassFor(item.severity, econScopeOfRoom(item.room)); }
 /* السعر من النموذج الثابت حسب ندرة المكافأة وقائمتها (يومية/أسبوعية/شهرية) — لا استثناءات يدوية */
 const ECON_LEARN_COIN = 10;   /* غرفة الأستاذ: مكافأة بسيطة واحدة، أرخص من غرفة العمليات (25) وبلا درجات */
-function econEffCoin(item, rar){ if(item && item.fixed && item.fixedCoin > 0) return item.fixedCoin; if(item && item.room === 'learn') return ECON_LEARN_COIN; return econCoinFor(rar ? rar.id : item.rarity, econScopeOfRoom(item.room)); }
+function econEffCoin(item, rar){ if(item && item.fin) return codisFinItemCoin(item);   /* CODIS-FINANCE: قيمة دقيقة مشتقة (دينار ÷ سعر الصرف أو دقائق ÷ 2) */
+  if(item && item.fixed && item.fixedCoin > 0) return item.fixedCoin; if(item && item.room === 'learn') return ECON_LEARN_COIN; return econCoinFor(rar ? rar.id : item.rarity, econScopeOfRoom(item.room)); }
 function econAutoStore(coin){ return Math.round(Math.max(0, Number(coin) || 0) * econCfg().storeMarkup); }   /* قيمة الاستبدال × storeMarkup — بلا أي خصم */
 /* سعر المتجر = econAutoStore (بلا خصم). لم يعد مرتبطاً بقيمة الاستبدال كحدّ أدنى؛ منع الربح من الشراء ثم البيع صار بسقف قيمة البيع بما دُفع (انظر CodisInventory.sellValue) */
 function econEffStore(item, rar){
@@ -13750,13 +14494,14 @@ const CodisWallet = (function(){
   }
   /* معاملة: تعديلات الرصيد + حقول عناصر السجل تُحفظ معاً، وأي فشل (استثناء/رفض الحفظ) يُرجع كل شيء كما كان */
   function transact(entries, fn){
-    const w = data.wallet, st = JSON.stringify(data.economyState), inv = JSON.stringify(data.inventory), sv = JSON.stringify(silverW());
+    const w = data.wallet, st = JSON.stringify(data.economyState), inv = JSON.stringify(data.inventory), sv = JSON.stringify(silverW()), fz = JSON.stringify(data.finance || null);   /* CODIS-FINANCE */
     const snap = { b:w.balance, e:w.lifetimeEarned, s:w.lifetimeSpent, n:w.transactions.length, ents:(entries || []).map(e=>[e, Object.assign({}, e)]) };
     function rollback(){
       w.balance = snap.b; w.lifetimeEarned = snap.e; w.lifetimeSpent = snap.s; w.transactions.length = snap.n; w.silver = JSON.parse(sv);
       snap.ents.forEach(p=>{ Object.keys(p[0]).forEach(k=>{ delete p[0][k]; }); Object.assign(p[0], p[1]); });
       data.economyState = JSON.parse(st);
       data.inventory = JSON.parse(inv);   // الممتلكات جزء من نفس المعاملة: لا رصيد بلا مكافأة ولا مكافأة بلا رصيد
+      if(fz !== 'null') data.finance = JSON.parse(fz);   /* CODIS-FINANCE: الخصم المالي جزء من نفس المعاملة */
     }
     let res;
     try{ res = fn(); }catch(err){ console.error('economy transaction failed:', err); rollback(); return { ok:false, reason:'error' }; }
@@ -13811,6 +14556,7 @@ const CodisInventory = (function(){
       rarityTone:econTones().indexOf(o.rarityTone) !== -1 ? o.rarityTone : 'c', rarityOrder:econNum(o.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(o.room) !== -1 ? o.room : 'tasks',
       source:(o.source === 'store' || o.source === 'box') ? o.source : 'outcome', sourceRef:String(o.sourceRef || ''), scope:String(o.scope || ''), acquiredAt:now, status:'owned', statusAt:now,
       coinValue:econCN(o.coinValue, 0, 0, 1000000), paid:(o.paid === null || o.paid === undefined) ? null : econCN(o.paid, 0, 0, 1000000) };
+    { const fn = codisFinItemOk(o.fin); if(fn) it.fin = fn; }   /* CODIS-FINANCE */
     all().push(it);
     return it;
   }
@@ -14065,6 +14811,7 @@ const CodisEconomy = (function(){
       Object.assign(e, { item:r.reward ? r.reward.name : (r.genericName || 'مكافأة'), rewardId:r.reward ? r.reward.id : null, stickerId:r.reward ? codisStickerIdOk(r.reward.stickerId) : null, rarity:r.rarity.id, rarityName:r.rarity.name,
         rarityTone:r.rarity.tone, rarityOrder:r.rarity.order, odds:r.odds, coinValue:r.coinValue, storePrice:r.storePrice, coinsAwarded:0 });
       if(r.pity) e.pity = true;
+      if(r.reward && r.reward.fin){ const _fn = codisFinItemOk(r.reward.fin); if(_fn){ _fn.coin = r.coinValue; e.fin = _fn; } }   /* CODIS-FINANCE: نوع المكافأة وقيمتها الأصلية تُثبَّت مع النتيجة */
       if(r.adaptive) e.adaptive = r.adaptive;   // شفافية: الفترة وعدد المهام المكتملة ومقدار خفض C وقت السحب
     } else if(kind === 'neutral'){
       /* نتيجة محايدة (أسبوعي/شهري فقط): لا مكافأة ولا عقوبة ولا كوينز؛ تُحفظ لتبقى التقارير وعدّ الأسابيع، وتُحسم فوراً فلا تظهر كقرار معلّق */
@@ -14095,7 +14842,7 @@ const CodisEconomy = (function(){
         e.coinsAwarded = amount;
       } else {
         /* أخذ المكافأة: نسخة واحدة تُسجَّل بممتلكاته (لقطة وقت الحصول) ولا كوينز. المعرّف من النتيجة نفسها فلا تتكرر */
-        owned = CodisInventory.grant({ uid:'own|' + e.id, rewardId:e.rewardId, stickerId:e.stickerId, name:e.item, rarity:e.rarity, rarityName:e.rarityName, rarityTone:e.rarityTone, rarityOrder:e.rarityOrder,
+        owned = CodisInventory.grant({ uid:'own|' + e.id, rewardId:e.rewardId, stickerId:e.stickerId, fin:e.fin, name:e.item, rarity:e.rarity, rarityName:e.rarityName, rarityTone:e.rarityTone, rarityOrder:e.rarityOrder,
           room:e.room, source:'outcome', sourceRef:e.id, scope:e.scope, coinValue:e.coinValue });
         if(!owned) return { ok:false, reason:'inventory' };
       }
@@ -14294,7 +15041,7 @@ const CodisEconomy = (function(){
       const tx = CodisWallet.apply('PURCHASE_REWARD', -price, 'شراء مكافأة ' + item.rarity, 'store', 'purchase|' + item.id + '|' + econUid('p'), { rewardId:item.id, name:item.name, rarity:item.rarity });
       if(!tx) return { ok:false, reason:'tx' };
       /* الخصم والملكية معاً: لقطة الاسم/الندرة/قيمة الاستبدال وقت الشراء */
-      const owned = CodisInventory.grant({ uid:'own|store|' + tx.id, rewardId:item.id, stickerId:item.stickerId, name:item.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
+      const owned = CodisInventory.grant({ uid:'own|store|' + tx.id, rewardId:item.id, stickerId:item.stickerId, fin:item.fin, name:item.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
         room:item.room, source:'store', sourceRef:tx.id, coinValue:econEffCoin(item, rar), paid:price });
       return owned ? { ok:true, tx:tx, price:price, item:item, owned:owned } : { ok:false, reason:'inventory' };
     });
@@ -14375,6 +15122,15 @@ const CodisEconomy = (function(){
     const it = CodisInventory.get(uid);
     if(!it) return { ok:false, reason:'notowned' };
     if(it.status !== 'owned') return { ok:false, reason:it.status === 'sold' ? 'sold' : 'used' };
+    if(it.fin && it.fin.kind === 'financial'){   /* CODIS-FINANCE: الخصم المالي + حالة البطاقة + مرجع الربط = معاملة واحدة */
+      const res = CodisWallet.transact([], ()=>{
+        const rd = codisFinRedeemIn({ uid:uid, iqd:it.fin.iqd, name:it.name, coins:it.coinValue, rewardId:it.rewardId });
+        if(!rd.ok && rd.reason !== 'dup') return rd;   /* dup = خُصمت سابقاً (مزامنة): لا خصم ثانٍ، فقط نعلّم النسخة */
+        it.status = 'used'; it.statusAt = econNowIso(); return { ok:true, item:it, fin:rd.entry || null };
+      });
+      if(res && res.ok){ try{ finRefresh(); }catch(e){} }
+      return res;
+    }
     return CodisWallet.transact([], ()=>{ it.status = 'used'; it.statusAt = econNowIso(); return { ok:true, item:it }; });
   }
   return { create, daily, decideReward, decidePenalty, usePassCard, pending, voidIfPending, weeklyStats, weeklyFromArchive, monthStats, monthlyOutcome, processMonths, storePrice, purchase, sell, sellMany, sellPlan, dupPlan, markUsed };
@@ -14635,7 +15391,7 @@ const CodisBoxes = (function(){
   }
   function tier(id){ return tiers().find(t=>t.id === id) || null; }
   /* المكافآت المؤهّلة = نفس ما يعرضه المتجر للشراء (مفعّلة، ندرتها موجودة، سعرها > 0). لا تحوي الصناديق إطلاقاً */
-  function pool(){ return data.settings.rewardItems.filter(x=>x.enabled && !x.fixed && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0); }   /* الثابتة خارج البكجات: لا تمسّ نموذج الاحتمالات */
+  function pool(){ return data.settings.rewardItems.filter(x=>x.enabled && !x.fixed && !x.variantOf && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0); }   /* الثابتة خارج البكجات: لا تمسّ نموذج الاحتمالات */
   /* القيمة الفعلية للجائزة بالكوين: المكافأة = قيمة الاستبدال (نفس ما تُمنح به وتُباع بنسبتها)، وبطاقة التجاوز = سعرها الافتراضي (تكلفة تجاوز العقوبة المطابقة) */
   function valueOf(x){ return x.kind === 'cosmetic' ? CodisCosmetics.value(x.cosmeticId) : x.kind === 'pouch' ? CodisPouches.value(x.pouchType) : x.kind === 'pass' ? CodisPasses.price(x) : x.kind === 'holiday' ? CodisHolidayCards.price(x.cardKind) : econEffCoin(x, econRarityById(x.rarity)); }
   /* جوائز البكج = المكافآت المؤهّلة + بطاقات التجاوز الـ12 (تُصنَّف بقيمتها بنفس آلية الفئات). بلا مكافآت مؤهّلة يبقى البكج غير متاح كما كان — البطاقات وحدها لا تفتحه */
@@ -14769,7 +15525,7 @@ const CodisBoxes = (function(){
     } else if(r.holidayKind){   /* الجائزة بطاقة عطلة: تُمنح للمخزون الخاص بها (لا data.inventory.items)، معرّفها من البكج فلا تُمنح مرتين، ومنه يبدأ عدّ صلاحيتها إن كانت ذات صلاحية */
       holiday = CodisHolidayCards.grant({ uid:'hc|box|' + uid, kind:r.holidayKind, source:'box', sourceRef:uid, tier:t.id }); if(!holiday) return { ok:false, reason:'inventory' };
     } else {
-      o = CodisInventory.grant({ uid:'own|box|' + uid, rewardId:it.id, stickerId:it.stickerId, name:it.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
+      o = CodisInventory.grant({ uid:'own|box|' + uid, rewardId:it.id, stickerId:it.stickerId, fin:it.fin, name:it.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
         room:it.room, source:'box', sourceRef:uid, coinValue:econEffCoin(it, rar), paid:null });
       if(!o) return { ok:false, reason:'inventory' };
     }
@@ -14941,14 +15697,23 @@ function codisV34Seed(s){
 
 /* ---------- نتيجة ببطاقة من الكتالوج (المعرّف فريد من نفس سجل النتائج ⇒ لا تكرار) ----------
    الاسم والستيكر من عنصر الكتالوج الحي؛ القيمة من المخطط. كرت محذوف/معطّل ⇒ لا نتيجة ولا خصم. */
+/* مكافأة تلقائية موضوعة ببطاقة خاصة: تُختار بتجزئة معرّف النتيجة (ثابتة عند التحديث/المزامنة) من الكرت الأصلي + نسخه المفعّلة */
+function codisFinPickVariant(id, def, base){
+  try{
+    const vs = (data.settings.rewardItems || []).filter(x=>x && x.enabled !== false && x.variantOf === def.id && x.fin);
+    if(!vs.length) return base;
+    const all = [base].concat(vs.sort((a, b)=>a.id < b.id ? -1 : 1)); return all[parseInt(econHash(String(id)), 16) % all.length];
+  }catch(e){ return base; }
+}
 function codisFixedOutcome(id, kind, def, extra){
   const L = data.outcomeLedger, ex = L[id];
   if(ex){ if(ex.status === 'void'){ ex.status = 'pending'; ex.decision = null; saveData(); return { entry:ex, isNew:true }; } return { entry:ex, isNew:false }; }
   const it = codisCatalogItem(kind, def.id);
   if(!it || it.enabled === false) return { entry:null, isNew:false, disabled:true, missing:!it };
-  const rar = econCfg().rarities[0];
+  const rar = econCfg().rarities[0], vr = kind === 'reward' ? codisFinPickVariant(id, def, it) : it;   /* CODIS-FINANCE */
   const e = Object.assign({ id:id, room:'habits', kind:kind, scope:'habit', type:'habit_' + (kind === 'reward' ? 'reward' : 'punishment'), at:econNowIso(), status:'pending', decision:null, applied:true, celebrated:false, fixedId:def.id, periodic:def.tag, fixedLabel:def.label }, extra || {});
-  if(kind === 'reward') Object.assign(e, { item:it.name, rewardId:def.id, stickerId:codisStickerIdOk(it.stickerId), rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order, odds:null, coinValue:def.coin, storePrice:econEffStore(it, rar), coinsAwarded:0 });
+  if(kind === 'reward'){ Object.assign(e, { item:vr.name, rewardId:def.id, stickerId:codisStickerIdOk(vr.stickerId), rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order, odds:null, coinValue:vr.fin ? codisFinItemCoin(vr) : def.coin, storePrice:econEffStore(vr, rar), coinsAwarded:0 });
+    if(vr.fin){ const _fn = codisFinItemOk(vr.fin); if(_fn){ _fn.coin = codisFinItemCoin(vr); e.fin = _fn; e.variantId = vr.id; } } }
   else Object.assign(e, { item:it.name, punishId:def.id, severity:def.sev, bypassCost:econPenaltyCost(it), coinsSpent:0, noPass:def.group === 'event' });
   L[id] = e; saveData();
   return { entry:e, isNew:true };
@@ -15038,6 +15803,7 @@ function codisRptTag(kind, it){
   const sp = it.fixed ? codisSlotOf(it) : null;
   if(sp) return '<span class="rpt-tag cat-chip rpt-imp-' + escapeHtml(sp.imp || String(sp.sev || '').toLowerCase()) + '">' + escapeHtml(codisRptShort(sp)) + '</span>';
   if(kind === 'punish') return '<span class="rpt-tag sev-badge sev-' + it.severity + '">' + econSevLabel(it.severity) + '</span>';
+  if(it.variantOf){ const _d = codisFixedById(it.variantOf); return '<span class="rpt-tag cat-chip">' + escapeHtml(_d ? _d.label : 'تلقائية') + '</span>'; }   /* CODIS-FINANCE */
   if(it.room === 'habits') return '<span class="rpt-tag cat-chip rpt-none">بدون تصنيف</span>';   /* عنصر قديم بقائمة «الحدثية» قبل التصنيف: يُصنَّف من التعديل أو يُحذف */
   if(it.room === 'learn') return '';
   const rar = econRarityById(it.rarity) || econCfg().rarities[0];
@@ -15048,7 +15814,7 @@ function codisRptHtml(kind, it, val, meta, editor){
   const tog = isR ? 'econToggleReward' : 'econTogglePunish', del = isR ? 'econDeleteReward' : 'econDeletePunish', save = isR ? 'econSaveReward' : 'econSavePunish';
   return '<div class="eco-item rpt' + (it.enabled ? '' : ' is-off') + (ed ? ' is-editing' : '') + '" data-name="' + escapeHtml(codisNormText(it.name)) + '">' +
     '<button type="button" class="rpt-face" onclick="econEdit(\'' + id + '\')" aria-expanded="' + (ed ? 'true' : 'false') + '" aria-label="' + escapeHtml(it.name + (it.enabled ? '' : ' — معطّلة') + ' — ' + (ed ? 'إغلاق' : 'فتح')) + '">' +
-      '<span class="rpt-top">' + codisRptTag(kind, it) + (isR ? '<span class="rpt-stk">' + codisStickerThumbHtml(it.stickerId) + '</span>' + codisDurBadgeHtml(it.name) : '') + '</span>' +
+      '<span class="rpt-top">' + codisRptTag(kind, it) + (isR ? '<span class="rpt-stk">' + codisStickerThumbHtml(it.stickerId) + '</span>' + codisDurBadgeHtml(it) : '') + '</span>' +
       '<span class="eco-item-name rpt-name" dir="auto">' + escapeHtml(it.name) + '</span>' +
       '<span class="rpt-val">' + val + '</span>' + (it.enabled ? '' : '<span class="eco-off-tag rpt-off">معطّلة</span>') +
     '</button>' +
@@ -15063,7 +15829,7 @@ function econRewardRowHtml(it){
   const rar = econRarityById(it.rarity) || econCfg().rarities[0], coin = econEffCoin(it, rar), price = econEffStore(it, rar);
   const ed = econEditing === it.id;
   return codisRptHtml('reward', it, codisIcon('coin') + '<b>' + econFmt(coin) + '</b>',
-    '<span>استبدال <b>' + econFmt(coin) + '</b></span><span>متجر <b>' + econFmt(price) + '</b></span><span>بيع <b>' + econFmt(econSellValue(coin)) + '</b></span>',
+    codisFinMetaHtml(it) + '<span>استبدال <b>' + econFmt(coin) + '</b></span><span>متجر <b>' + econFmt(price) + '</b></span><span>بيع <b>' + econFmt(econSellValue(coin)) + '</b></span>',
     ed ? econRewardEditor('eco-edit-r', it) : '');
 }
 function econPunishRowHtml(it){
@@ -15090,6 +15856,7 @@ function rpuApplyView(){
   pg.dataset.view = rpuView;
   pg.querySelectorAll('.rpu-jump-btn').forEach(b=>{ const on = b.dataset.period === rpuView; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
   const ab = document.getElementById('rpu-all-btn'); if(ab){ const on = rpuView === 'all'; ab.classList.toggle('is-on', on); ab.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  const _au = document.getElementById('rpu-auto-btn'); if(_au) _au.hidden = rpKind === 'punish';   /* CODIS-FINANCE */
   const t = document.getElementById('rpu-all-t'); if(t) t.textContent = rpKind === 'punish' ? 'كل العقوبات' : 'كل المكافآت';
   const q = document.getElementById('rpu-q'); if(q) q.placeholder = rpKind === 'punish' ? 'ابحث باسم العقوبة…' : 'ابحث باسم المكافأة…';
   const box = document.getElementById('rpu-all'); if(box) box.hidden = rpuView !== 'all';
@@ -20548,7 +21315,8 @@ function dateForWeekDay(weekId, dayIdx, host){
 /* أقسام الأرشيف: أي قسم جديد يُضاف هنا سطر واحد فقط (id + label + empty + match) ويظهر زره تلقائياً. القسم fallback يستقبل كل ما لا يطابقه قسم آخر. */
 const ARCHIVE_SECTIONS = [
   { id:'plan',  label:'الخطط',   empty:'ماكو خطط مؤرشفة بعد',   match:e=>!isArchivedHabit(e), fallback:true },
-  { id:'habit', label:'العادات', empty:'ماكو عادات مؤرشفة بعد', match:e=>isArchivedHabit(e) }
+  { id:'habit', label:'العادات', empty:'ماكو عادات مؤرشفة بعد', match:e=>isArchivedHabit(e) },
+  { id:'reports', label:'التقارير', empty:'ماكو تقارير محفوظة بعد', match:()=>false, count:()=>econReportEntries().length, html:()=>econReportsListHtml() }   /* CODIS-FINANCE: التقارير الأسبوعية/الشهرية — مصدرها data.outcomeLedger */
 ];
 function archSectionOf(e){ return ARCHIVE_SECTIONS.find(s=>!s.fallback && s.match(e)) || ARCHIVE_SECTIONS.find(s=>s.fallback) || ARCHIVE_SECTIONS[0]; }
 let archiveFilter = 'plan';
@@ -20573,13 +21341,14 @@ function renderArchiveList(){
   const bar = document.getElementById('arch-filter-bar');
   if(bar){
     bar.innerHTML = ARCHIVE_SECTIONS.map(s=>{
-      const n = all.filter(e=>archSectionOf(e) === s).length;
+      const n = s.count ? s.count() : all.filter(e=>archSectionOf(e) === s).length;
       return '<button type="button" class="ios-row" onclick="archOpen(\'' + s.id + '\')"><span class="ios-row-icon tone-neutral"><svg data-icon="archive" data-size="md"></svg></span><span class="ios-row-title">' + s.label + '</span><span class="ios-row-trailing"><span class="ios-row-badge">' + n + '</span><svg class="ios-chevron" data-icon="forward"></svg></span></button>';
     }).join('');
     codisHydrateIcons(bar);
   }
   const clearBtn = document.getElementById('archive-clear-all'); if(clearBtn) clearBtn.style.display = all.length ? '' : 'none';
   const curSec = ARCHIVE_SECTIONS.find(s=>s.id === archiveFilter) || ARCHIVE_SECTIONS[0], list = all.filter(e => archSectionOf(e) === curSec);
+  if(curSec.html){ wrap.innerHTML = curSec.html(); return; }   /* CODIS-FINANCE */
   if(!list.length){
     wrap.innerHTML = '<div class="empty-inline">' + curSec.empty + '</div>';
     return;
@@ -20885,10 +21654,11 @@ document.addEventListener('keydown', ev=>{ if(ev.key === 'Escape') codisCloseRep
   }, { passive:false });
 })();
 document.addEventListener('click', ev=>{ if(ev.target && ev.target.id === 'report-overlay') codisCloseReport(); });
+function econReportEntries(){ const L = data.outcomeLedger; return Object.keys(L).map(k=>L[k]).filter(e=>e && e.report && (e.scope === 'weekly' || e.scope === 'monthly')).sort((a,b)=>a.at < b.at ? 1 : -1); }
 function econReportsListHtml(){
-  const L = data.outcomeLedger, ents = Object.keys(L).map(k=>L[k]).filter(e=>e.report && (e.scope === 'weekly' || e.scope === 'monthly')).sort((a,b)=>a.at < b.at ? 1 : -1);
+  const ents = econReportEntries();
   if(!ents.length) return '<div class="eco-empty">ما في تقارير بعد — تظهر هنا عند انتهاء أسبوع أو شهر.</div>';
-  return ents.slice(0, 40).map(e=>'<div class="rp-list-row"><span>' + (e.scope === 'monthly' ? 'شهر ' + escapeHtml(e.monthId) : 'أسبوع ' + escapeHtml(rpDate(e.weekId))) + ' <span class="rp-chip">' + (e.kind === 'reward' ? 'نجاح' : e.kind === 'neutral' ? 'محايد' : 'إخفاق') + ' · ' + (e.pct || 0) + '%</span></span><button type="button" class="btn btn-secondary rp-link-btn" onclick="codisOpenReport(\'' + escapeHtml(e.id).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + '\')">' + RP_PAPER + '<span>' + (e.scope === 'monthly' ? 'التقرير الشهري' : 'التقرير الأسبوعي') + '</span></button></div>').join('');
+  return '<div class="arch-rp-count" role="status">' + ents.length + ' تقرير محفوظ</div>' + ents.map(e=>'<div class="rp-list-row"><span>' + (e.scope === 'monthly' ? 'شهر ' + escapeHtml(e.monthId) : 'أسبوع ' + escapeHtml(rpDate(e.weekId))) + ' <span class="rp-chip">' + (e.kind === 'reward' ? 'نجاح' : e.kind === 'neutral' ? 'محايد' : 'إخفاق') + ' · ' + (e.pct || 0) + '%</span></span><button type="button" class="btn btn-secondary rp-link-btn" onclick="codisOpenReport(\'' + escapeHtml(e.id).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + '\')">' + RP_PAPER + '<span>' + (e.scope === 'monthly' ? 'التقرير الشهري' : 'التقرير الأسبوعي') + '</span></button></div>').join('');
 }
 
 function econTick(){
@@ -22644,7 +23414,7 @@ function closeOutcomeOverlay(){ CodisOutcomeUI.close(); }
 let settingsDailyRoom = 'tasks';
 let settingsRoom = 'tasks';   // غرفة قوائم المكافآت/العقوبات المعروضة بالإعدادات
 let econLogLimit = 40, econEditing = null, econStoreBusy = false;
-const ECON_PAGES = { 'eco-store':'econRenderStore', 'eco-log':'econRenderLog', 'account':'codisRenderAccountPage', 'acct-delete':'codisRenderAcctDeletePage' };
+const ECON_PAGES = { 'eco-store':'econRenderStore', 'eco-log':'econRenderLog', 'eco-fin':'finRender', 'account':'codisRenderAccountPage', 'acct-delete':'codisRenderAcctDeletePage' };
 function econSave(msg){ saveData(); if(msg){ codisSfx('success', { ctx:'settings' }); showToast(msg, 'var(--success)', 'check'); } }
 /* جدول أسعار للقراءة فقط: صفوف (معرّف، اسم) × أعمدة الفترات الثلاث */
 function econPriceTable(rows, fn){
@@ -22678,7 +23448,7 @@ function econRenderChip(){
   if(econChipLast !== null && econChipLast !== b && !window.CODIS_REDUCED_MOTION){ chip.classList.remove('is-bump'); void chip.offsetWidth; chip.classList.add('is-bump'); }
   econChipLast = b;
   const sb = CodisWallet.silverBalance(), se = document.getElementById('coin-chip-silver');
-  if(se){ se.hidden = !(sb > 0); se.innerHTML = ECON_SILVER_SVG + '<b>' + econFmt(sb) + '</b>'; if(sb > 0) chip.setAttribute('aria-label', 'رصيد الكوينز ' + econFmt(b) + ' ورصيد الفضة ' + econFmt(sb) + ' — افتح سجل الكوينز'); }
+  if(se){ se.hidden = false; se.innerHTML = ECON_SILVER_SVG + '<b>' + econFmt(sb) + '</b>'; chip.setAttribute('aria-label', 'رصيد الكوينز ' + econFmt(b) + ' ورصيد الفضة ' + econFmt(sb) + ' — افتح سجل الكوينز'); }   /* CODIS-FINANCE: سطران ثابتان */
 }
 /* المتجر طبقة كاملة الشاشة فوق الغرفة الحالية: لا انتقال إلى الإعدادات ولا تغيير للغرفة النشطة ولا لموضع التمرير؛ «رجوع» يغلق الطبقة فتبقى أنت بمكانك تماماً.
    (قسم المتجر يبقى داخل #page-settings حتى تبقى كل أنماطه، ويُعرض مؤقتاً كطبقة ثابتة) */
@@ -22751,7 +23521,7 @@ function econCloseStore(opts){
   codisSyncView();   /* إخفاء أقسام الإعدادات أثناء المتجر قد يقصّر الصفحة ويصفّر التمرير */
   if(!quiet && st.opener && st.opener.focus && document.contains(st.opener)){ try{ st.opener.focus({ preventScroll:true }); }catch(x){} }
 }
-document.addEventListener('keydown', ev=>{ if(ev.key === 'Escape' && econStoreSaved && !econDetailId && !econPackId && !econBoxState && !econBulkState && !dqState && !CodisMotion.isOpen(document.getElementById('codis-confirm-modal'))) econCloseStore(); });   /* Esc يغلق أعلى نافذة فقط (تفاصيل مكافأة/بكج، فتح بكج، تأكيد) ولا يسحب طبقة المتجر معها */
+document.addEventListener('keydown', ev=>{ if(ev.key === 'Escape' && econStoreSaved && !CodisFinUI.isOpen() && !econDetailId && !econPackId && !econBoxState && !econBulkState && !dqState && !CodisMotion.isOpen(document.getElementById('codis-confirm-modal'))) econCloseStore(); });   /* Esc يغلق أعلى نافذة فقط (تفاصيل مكافأة/بكج، فتح بكج، تأكيد) ولا يسحب طبقة المتجر معها */
 function econOpenPending(){ const p = CodisEconomy.pending()[0]; if(p){ codisSfx('open', { ctx:'outcome' }); CodisOutcomeUI.show(p.id); } }
 
 /* ---- المكافآت ---- */
@@ -23630,7 +24400,7 @@ function codisTimerBlocksSell(uid){
 try{ CodisLimits.reg('timer.sellActive', 'منع بيع مكافأة مؤقتها شغّال'); }catch(e){}
 function codisRewardTimerStart(uid){
   const it = CodisInventory.get(uid); if(!it || it.status !== 'owned') return { ok:false, reason:'notowned' };
-  const d = CodisDuration.parse(it.name); if(!d) return { ok:false, reason:'notimed' };
+  const d = codisDurOf(it); if(!d) return { ok:false, reason:'notimed' };
   return CodisTimers.start({ kind:'reward', ref:uid, label:it.name, minutes:d.min });
 }
 CodisTimers.on('reward', {
@@ -23650,11 +24420,11 @@ CodisTimers.on('task', {
 });
 const CODIS_TMR_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 9v4.2l2.6 1.6M9.5 2.8h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 const CODIS_PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>';
-function codisDurBadgeHtml(name){ const d = CodisDuration.parse(name); return d ? '<span class="dur-badge" title="مكافأة بمؤقت">' + CODIS_TMR_SVG + CodisDuration.label(d.min) + '</span>' : ''; }
+function codisDurBadgeHtml(x){ const d = (x && typeof x === 'object') ? codisDurOf(x) : CodisDuration.parse(x);   /* CODIS-FINANCE: عنصر ← النوع الصريح */ return d ? '<span class="dur-badge" title="مكافأة بمؤقت">' + CODIS_TMR_SVG + CodisDuration.label(d.min) + '</span>' : ''; }
 function codisOwnUseBtnHtml(it, uid, busy){
   const t = CodisTimers.active('reward', it.uid);
   if(t) return '<span class="chip-act tmr-chip is-run" role="timer" data-tmr-end="' + t.endsAt + '" data-tmr-total="' + (t.minutes * 60000) + '" aria-label="مؤقت المكافأة شغّال">' + CODIS_TMR_SVG + '<b data-tmr-left dir="ltr">' + CodisTimers.fmt(t.endsAt - CodisClock.now()) + '</b></span>';
-  const d = CodisDuration.parse(it.name);
+  const d = codisDurOf(it);
   return '<button type="button" class="btn btn-primary own-use own-go' + (d ? ' tmr-go' : '') + '" ' + (busy ? 'disabled aria-disabled="true"' : '') + ' onclick="econUse(\'' + uid + '\')">' + (d ? CODIS_PLAY_SVG + '<span>ابدأ · ' + CodisDuration.label(d.min) + '</span>' : codisIcon('check') + '<span>استخدام</span>') + '</button>';
 }
 function codisTaskTimerHtml(task){
@@ -24407,7 +25177,7 @@ const CodisBuyCine = (function(){
       const src = Array.prototype.find.call(document.querySelectorAll('#eco-store-body .shop-card'), c=>c.dataset.id === it.id);
       const sr = src ? (src.querySelector('.cflip') || src).getBoundingClientRect() : null;
       const origin = (sr && sr.width > 20 && sr.bottom > 0 && sr.top < innerHeight) ? sr : null;
-      const dur = CodisDuration.parse(r.owned.name);
+      const dur = codisDurOf(r.owned);
       const bx = document.body.getBoundingClientRect(), W = Math.round(Math.min(250, Math.min(innerWidth, bx.width || innerWidth) * .6, (innerHeight - 260) * .8));
       const root = document.createElement('div');
       root.className = 'bcx lv-' + lv + (reduced ? ' is-reduced' : ''); root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'حصلت على ' + r.owned.name);
@@ -24465,8 +25235,9 @@ const CodisBuyCine = (function(){
   function useNow(){
     if(!s || s.acting) return; s.acting = true;
     const uid = s.uid, it = CodisInventory.get(uid); let ok = false, msg = 'هذي المكافأة ما عدت بحوزتك', _sn = null, _d = null;   /* CODIS-USE-CINE */
+    if(it && it.status === 'owned' && it.fin && it.fin.kind === 'financial'){ close(()=>{ try{ econRenderAll(); }catch(e){} setTimeout(()=>{ econUse(uid); }, 140); }); return; }   /* CODIS-FINANCE: المالية لا تُخصم دون نافذة التأكيد — يُغلق المشهد ثم يُفتح مسار الاستخدام العادي */
     if(it && it.status === 'owned'){
-      const d = CodisDuration.parse(it.name); _sn = CodisUseCine.snap(it); _d = d;
+      const d = codisDurOf(it); _sn = CodisUseCine.snap(it); _d = d;
       if(d){ const rt = codisRewardTimerStart(uid); ok = rt.ok; msg = ok ? 'بدأ المؤقت: ' + CodisDuration.label(d.min) : 'تعذّر بدء المؤقت'; if(ok) CodisPush.nudge(); }
       else { const r2 = CodisEconomy.markUsed(uid); ok = !!(r2 && r2.ok); msg = ok ? 'انسجّلت كمستخدَمة' : (r2 && r2.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : 'تعذّر التنفيذ'); }
     }
@@ -24749,6 +25520,7 @@ function econSaveReward(id){
   const v = econReadReward('eco-edit-r'); if(!v) return;
   if(v.slot) return codisV35SaveSlot('reward', it, v);
   Object.assign(it, v, { updatedAt:econNowIso() });
+  if(it.fin){ const _c = codisFinCardById(it.fin.card); if(_c) codisFinApplyPlacement(it, _c); }   /* CODIS-FINANCE: تصنيف المكافأة التلقائية تحدده قيمتها لا التحرير اليدوي */
   econNormalizeItems(data.settings); econEditing = null;
   econSave('انحفظت المكافأة'); econRenderAll();
 }
@@ -25156,7 +25928,7 @@ function econStoreCardHtml(it, rar, bal, i){
   const back = codisCardBackHtml(it.name, [['الفئة', econCardName(it, rar)], ['القسم', econRoomLabel(it.room)], ['السعر', econCoin(price), '', true]], { tone:rar.tone, kind:wk ? 'weekly' : mo ? 'monthly' : 'reward', sticker:it.stickerId });   /* CODIS-PAPER-BACK */
   return '<div class="shop-card store-card st-tile rar-' + escapeHtml(rar.tone) + (ok ? '' : ' is-short') + '" style="--i:' + (i || 0) + '" role="listitem" data-id="' + id + '">' +
     codisFlipHtml('<span class="store-art is-card ' + kind + '">' + econStoreFaceHtml(it, rar, { price:price }) + '</span>', back, { cls:'store-open', label:it.name + ' — ' + econCardName(it, rar) + ' — ' + econFmt(price) + ' كوين' }) +
-    '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it.name) + '</div>' +
+    '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it) + '</div>' +
     '<div class="store-meta">' + buy + '</div></div>';
 }
 /* مجموعات السعر (عرض فقط): حدود عليا شاملة 0–300 · 301–800 · 801–2,000 · 2,001–5,000 · 5,001–40,000. أي سعر أعلى يلحق بالأخيرة فلا تسقط بطاقة، وكل بطاقة بمجموعة واحدة فقط */
@@ -25165,7 +25937,7 @@ function econPriceBand(p){ for(let i = 0; i < ECON_PRICE_BANDS.length; i++) if(p
 /* كل كروت المتجر بقائمة واحدة: المكافآت المفعّلة + بطاقات العطلة، بترتيب السعر تصاعدياً */
 function econStoreCardRows(){
   const H = CodisHolidayCards;
-  return data.settings.rewardItems.filter(x=>x.enabled && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0).map(it=>({ p:CodisEconomy.storePrice(it), n:it.name, it:it }))
+  return data.settings.rewardItems.filter(x=>x.enabled && !x.variantOf && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0).map(it=>({ p:CodisEconomy.storePrice(it), n:it.name, it:it }))
     .concat(H.kinds().map(k=>({ p:H.price(k), n:H.def(k).name, hk:k })))
     .sort((a,b)=>a.p - b.p || a.n.localeCompare(b.n, 'ar'));
 }
@@ -25229,7 +26001,7 @@ function econInventoryHtml(){
     owned.forEach((it, i)=>{
       const sv = CodisInventory.sellValue(it), busy = econSellBusy, can = sv > 0 && !codisTimerBlocksSell(it.uid), on = !!econSelSet[it.uid], uid = escapeHtml(it.uid);
       const art = econPackTileHtml({ id:it.uid, room:it.room, name:it.name, stickerId:it.stickerId, rewardId:it.rewardId }, { id:it.rarity, name:it.rarityName, tone:it.rarityTone, order:it.rarityOrder }).replace(' role="listitem"', '');   /* نفس بطاقة المتجر والبكج */
-      const cap = '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it.name) + '</div>';
+      const cap = '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it) + '</div>';
       if(sm){
         const inner = '<div class="own-art">' + art + (can ? '<span class="own-check" aria-hidden="true">' + (on ? ICONS.check : '') + '</span>' : '') + '</div>' + cap;
         html += '<div class="shop-card st-tile is-selectable' + (can ? '' : ' is-nosell') + (on ? ' is-sel' : '') + ' rar-' + escapeHtml(it.rarityTone) + '" data-uid="' + uid + '" style="--i:' + i + '" ' +
@@ -25978,7 +26750,7 @@ async function econUse(uid){
   try{
     const it = CodisInventory.get(uid);
     if(!it || it.status !== 'owned'){ codisSfx('invalid', { ctx:'unavailable' }); return; }
-    const _dur = CodisDuration.parse(it.name), _sn = CodisUseCine.snap(it);   /* CODIS-USE-CINE: لقطة العرض قبل أي تغيير بالحالة */
+    const _dur = codisDurOf(it), _sn = CodisUseCine.snap(it);   /* CODIS-USE-CINE: لقطة العرض قبل أي تغيير بالحالة */
     if(_dur){   /* CODIS-TIMERS: مكافأة ذات مدة ← مؤقت حقيقي مرتبط بالنسخة نفسها */
       const _run = CodisTimers.active('reward', uid);
       if(_run){ showToast('مؤقتها شغّال — باقي ' + CodisTimers.fmt(_run.endsAt - CodisClock.now()), 'var(--warning)'); return; }
@@ -25989,11 +26761,11 @@ async function econUse(uid){
       else { codisSfx('invalid', { ctx:'unavailable' }); showToast(rt.reason === 'save' ? 'تعذّر الحفظ — ما بدأ المؤقت' : 'تعذّر بدء المؤقت', 'var(--warning)'); }
       return;
     }
-    const ok = await codisConfirm(CodisCopy.useReward(it.name));
+    const ok = (it.fin && it.fin.kind === 'financial') ? await codisFinUseConfirm(it) : await codisConfirm(CodisCopy.useReward(it.name));   /* CODIS-FINANCE: مالية ← تأكيد صريح بالمبلغ والرصيد */
     if(!ok) return;
     const r = CodisEconomy.markUsed(uid);
     if(r.ok){ codisSfx('confirm', { ctx:'use' }); let _pl = false; try{ _pl = CodisUseCine.play(_sn, { timed:false }); }catch(e){} if(!_pl) showToast('انسجّلت كمستخدَمة', 'var(--success)', 'check'); }   /* CODIS-USE-CINE */
-    else { codisSfx('invalid', { ctx:'unavailable' }); showToast(r.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : 'تعذّر التنفيذ', 'var(--warning)'); }
+    else { codisSfx('invalid', { ctx:'unavailable' }); showToast(r.reason === 'save' ? 'تعذّر الحفظ — بقيت كما هي' : r.reason === 'funds' ? 'رصيدك المالي غير كافٍ — ما انخصم شيء وبقيت المكافأة بحوزتك' : r.reason === 'nosetup' ? 'أكمل إعداد الإدارة المالية أولاً' : 'تعذّر التنفيذ', 'var(--warning)'); }
   } finally { econSellBusy = false; econRenderAll(); }
 }
 
@@ -27189,7 +27961,6 @@ function econRenderLog(){
     if(txs.length > econLogLimit) html += '<button type="button" class="btn btn-secondary eco-full ecl-more" onclick="econShowMoreLog()">عرض المزيد · باقي ' + econFmt(txs.length - econLogLimit) + '</button>';
   }
   html += '</section>';
-  html += '<section class="ecl-sec" aria-labelledby="ecl-h-rp"><header class="ecl-sh"><h3 id="ecl-h-rp" class="ecl-h eco-sec-title">التقارير المحفوظة</h3></header><div class="settings-card ecl-card">' + econReportsListHtml() + '</div></section>';
   const up = CodisPasses.used().sort((a,b)=>a.usedAt < b.usedAt ? 1 : a.usedAt > b.usedAt ? -1 : 0).slice(0, 20);
   if(up.length) html += '<section class="ecl-sec" aria-labelledby="ecl-h-ps"><header class="ecl-sh"><h3 id="ecl-h-ps" class="ecl-h eco-sec-title">بطاقات التجاوز المستخدمة</h3><span class="ecl-n">' + econFmt(up.length) + '</span></header><div class="ios-list eco-log ecl-list">' + up.map(p=>'<div class="eco-log-row"><b class="eco-log-ico">' + ICONS.check + '</b><div class="eco-log-main"><span class="eco-log-reason">' + escapeHtml(CodisPasses.label(p)) + '</span>' +
     '<span class="eco-log-sub">' + (p.usedForName ? escapeHtml(p.usedForName) + ' · ' : '') + 'بدون كوينز · ' + escapeHtml(formatArDate(p.usedAt)) + '</span></div></div>').join('') + '</div></section>';
@@ -28102,6 +28873,7 @@ function codisBackLayer(){
   if(CodisCardPeek.isOpen()) return { act:CodisCardPeek.close, el:CodisCardPeek.el() };
   if(econBulkZoomEl) return { act:econBulkZoomClose, el:econBulkZoomEl };
   if(open('codis-confirm-modal')) return L('codis-confirm-modal', ()=>resolveCodisConfirm(false));   /* CODIS-CLARITY: التأكيد يعلو الأوراق */
+  if(CodisFinUI.isOpen()) return { act:CodisFinUI.closeTop, el:CodisFinUI.el() };   /* CODIS-FINANCE */
   if(stickerSheet) return { act:closeStickerPicker, el:stickerSheet.root };
   if(graceSheet) return { act:closeGraceSheet, el:graceSheet.root };
   if(CodisTaskFlow.doneEl()) return { act:CodisTaskFlow.closeDone, el:CodisTaskFlow.doneEl() };
@@ -29223,6 +29995,471 @@ function codisRenderAcctDeletePage(){
     if(!r.ok){ b.textContent = 'حذف الحساب نهائياً'; b.disabled = w.value.trim() !== 'حذف'; if(r.error){ er.textContent = r.error; er.hidden = false; } }
   });
 }
+/* CODIS-FINANCE: واجهة الإدارة المالية */
+/* ================= CODIS-FINANCE — الواجهة (3.28.0) =================
+   عرض وربط فقط: كل منطق مالي في v41_core.js (codisFin*). الصفحة طبقة «eco-fin» بنفس نظام طبقة المتجر/سجل الكوينز.
+   التواريخ والمواعيد بتوقيت بغداد الحقيقي؛ لا تمرّ بـCodisClock. */
+const FIN_RATES_NAMES = { 20:'الأول', 40:'الثاني', 80:'الثالث', 120:'الرابع', 160:'الخامس', 200:'السادس' };
+let finPeriod = 'month', finAllLimit = 40, finWiz = null, finSheets = [];
+const FIN_MONTHS = ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'];
+
+function finFmt(n){ return econFmt(n); }
+function finIqd(n){ return '<span class="fin-iqd" dir="ltr"><b>' + finFmt(n) + '</b><i>د.ع</i></span>'; }
+function finDateAr(key){ if(!codisFinDateOk(key)) return ''; const p = key.split('-').map(Number); return p[2] + ' ' + FIN_MONTHS[p[1] - 1] + ' ' + p[0]; }
+function finMonthAr(mk){ const p = String(mk).split('-').map(Number); return FIN_MONTHS[(p[1] || 1) - 1] + ' ' + p[0]; }
+function finCatName(id){ const f = codisFin(); const d = codisFinDefaultCats().concat(f.cats).find(c=>c.id === id); return d ? d.name : (id === 'rewards' ? 'مكافآت مالية' : 'أخرى'); }
+/* مبلغ من نص: أرقام عربية/فارسية وفواصل → عدد صحيح موجب، أو null (الدينار بلا كسور) */
+function finParseAmt(s){
+  let t = String(s == null ? '' : s).replace(/[٠-٩]/g, c=>String(c.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, c=>String(c.charCodeAt(0) - 1776)).replace(/[,٬،\s]/g, '');
+  if(!/^\d{1,13}$/.test(t)) return null; const n = parseInt(t, 10); return n > 0 ? n : null;
+}
+function finAmtInput(el){ const raw = el.value.replace(/[٠-٩]/g, c=>String(c.charCodeAt(0) - 1632)).replace(/[^\d]/g, '').slice(0, 13); el.value = raw ? raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''; }
+function finAmtOf(el){ return el ? finParseAmt(el.value) : null; }
+
+/* ---------- الأوراق السفلية (Sheets) ---------- */
+const CodisFinUI = (function(){
+  function isOpen(){ return finSheets.length > 0; }
+  function el(){ return finSheets.length ? finSheets[finSheets.length - 1].root : null; }
+  function close(s){
+    s = s || finSheets[finSheets.length - 1]; if(!s) return;
+    finSheets = finSheets.filter(x=>x !== s); s.root.classList.add('is-out');
+    const done = ()=>{ try{ s.root.remove(); }catch(e){} if(s.onClose) try{ s.onClose(); }catch(e){} try{ if(s.prev && s.prev.focus && document.contains(s.prev)) s.prev.focus({ preventScroll:true }); }catch(e){} };
+    if(window.CODIS_REDUCED_MOTION) done(); else setTimeout(done, 200);
+  }
+  function open(o){
+    const root = document.createElement('div'); root.className = 'fin-ov' + (o.cls ? ' ' + o.cls : '');
+    root.innerHTML = '<div class="fin-sheet" role="dialog" aria-modal="true" aria-label="' + escapeHtml(o.title || '') + '"><div class="fin-grab" aria-hidden="true"></div><header class="fin-sh"><h2>' + escapeHtml(o.title || '') + '</h2>' +
+      '<button type="button" class="fin-x" aria-label="إغلاق">' + codisIcon('close', { size:'md' }) + '</button></header><div class="fin-sb"></div></div>';
+    const s = { root:root, prev:document.activeElement, onClose:o.onClose };
+    root.addEventListener('mousedown', e=>{ if(e.target === root) close(s); });
+    root.querySelector('.fin-x').addEventListener('click', ()=>close(s));
+    root.querySelector('.fin-sb').innerHTML = o.body || '';
+    document.body.appendChild(root); finSheets.push(s);
+    codisHydrateIcons(root); codisSfx('open', { ctx:'sheet' });
+    requestAnimationFrame(()=>root.classList.add('is-in'));
+    setTimeout(()=>{ const f = root.querySelector('[data-autofocus]'); if(f) try{ f.focus({ preventScroll:true }); }catch(e){} }, 80);
+    if(o.mount) o.mount(root, s);
+    return s;
+  }
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && isOpen() && !CodisMotion.isOpen(document.getElementById('codis-confirm-modal'))){ e.preventDefault(); close(); } });
+  return { open:open, close:close, closeTop:()=>close(), isOpen:isOpen, el:el };
+})();
+function finBody(s){ return s.root.querySelector('.fin-sb'); }
+function finErr(root, msg){ const e = root.querySelector('.fin-err'); if(e){ e.textContent = msg || ''; e.hidden = !msg; if(msg) codisSfx('invalid', { ctx:'unavailable' }); } }
+
+/* ---------- الصفحة الرئيسية ---------- */
+function finOpen(){ econOpenLayer('eco-fin', finRender); }
+function finStats(f, from, to){
+  const o = { income:0, expense:0, salary:0, deposit:0, reward:0, byCat:{}, n:0 };
+  f.ledger.forEach(e=>{
+    if(e.type === 'OPENING_BALANCE') return; if(from && e.date < from) return; if(to && e.date > to) return; o.n++;
+    if(e.amount > 0){ o.income += e.amount; if(e.type === 'SALARY') o.salary += e.amount; else o.deposit += e.amount; }
+    else { const a = -e.amount; o.expense += a; if(e.type === 'REWARD_REDEMPTION') o.reward += a; const k = e.type === 'REWARD_REDEMPTION' ? 'rewards' : (e.cat || 'other'); o.byCat[k] = (o.byCat[k] || 0) + a; }
+  });
+  o.net = o.income - o.expense; return o;
+}
+function finWeekStart(key){ const p = key.split('-').map(Number), d = new Date(Date.UTC(p[0], p[1] - 1, p[2])); d.setUTCDate(d.getUTCDate() - d.getUTCDay()); return d.getUTCFullYear() + '-' + codisFinPad(d.getUTCMonth() + 1) + '-' + codisFinPad(d.getUTCDate()); }
+function finRange(period){
+  const t = codisFinToday();
+  if(period === 'day') return [t, t]; if(period === 'week') return [finWeekStart(t), t]; if(period === 'month') return [codisFinMonthOf(t) + '-01', t]; return [null, null];
+}
+function finTxRowHtml(r){
+  const e = r.e, up = e.amount > 0, ico = ({ OPENING_BALANCE:'flag', DEPOSIT:'plus', SALARY:'calendar', EXPENSE:'minus', REWARD_REDEMPTION:'gift' })[e.type] || 'coin';
+  return '<li class="fin-tx ' + (up ? 'is-up' : 'is-down') + '"><span class="fin-tx-ic" aria-hidden="true">' + (up ? '↓' : '↑') + '</span><div class="fin-tx-m"><b>' + escapeHtml(e.desc || codisFinTypeLabel(e.type)) + '</b>' +
+    '<small>' + escapeHtml(codisFinTypeLabel(e.type)) + (e.type === 'EXPENSE' ? ' · ' + escapeHtml(finCatName(e.cat)) : '') + (e.src && e.type === 'DEPOSIT' ? ' · ' + escapeHtml(e.src) : '') + ' · ' + escapeHtml(finDateAr(e.date)) + (e.type === 'SALARY' && e.due !== e.date ? '' : '') + '</small></div>' +
+    '<div class="fin-tx-a"><b dir="ltr" class="' + (up ? 'fin-up' : 'fin-down') + '">' + (up ? '+' : '−') + finFmt(Math.abs(e.amount)) + '</b><small dir="ltr">' + finFmt(r.bal) + '</small></div></li>';
+}
+function finRender(){
+  const box = document.getElementById('fin-body'); if(!box) return;
+  const f = codisFin();
+  if(!f.setup.done){ finRenderWizard(box); return; }
+  const bal = codisFinBalance(f), per = finRange(finPeriod), st = finStats(f, per[0], per[1]), run = codisFinRunning(f).reverse();
+  const ns = codisFinNextSalary(f), fx = codisFinFxStatus();
+  box.innerHTML =
+    '<div class="fin-card" role="group" aria-label="الرصيد المالي"><div class="fin-card-top"><span class="fin-card-brand">CODIS · محفظتي</span><span class="fin-card-chip" aria-hidden="true"></span></div>' +
+      '<div class="fin-card-lab">رصيدك الحالي</div><div class="fin-card-bal" dir="ltr"><b id="fin-bal">' + finFmt(bal) + '</b><span>د.ع</span></div>' +
+      '<div class="fin-card-foot"><span>الدينار العراقي · IQD</span><span>1 كوين = ' + finFmt(fx.rate || 0) + ' د.ع</span></div></div>' +
+    '<div class="fin-actions"><button type="button" class="fin-btn-main is-in" onclick="finDepositOpen()">' + codisIcon('plus') + '<span>إيداع</span></button><button type="button" class="fin-btn-main is-out" onclick="finExpenseOpen()">' + codisIcon('minus') + '<span>مصروف / سحب</span></button></div>' +
+    '<div class="fin-seg" role="tablist" aria-label="الفترة">' + [['day', 'اليوم'], ['week', 'الأسبوع'], ['month', 'الشهر'], ['all', 'الكل']].map(p=>'<button type="button" role="tab" class="' + (finPeriod === p[0] ? 'is-on' : '') + '" aria-selected="' + (finPeriod === p[0]) + '" onclick="finSetPeriod(\'' + p[0] + '\')">' + p[1] + '</button>').join('') + '</div>' +
+    '<div class="fin-sum"><div class="fin-sum-i is-in"><small>إجمالي الدخل</small>' + finIqd(st.income) + '</div><div class="fin-sum-i is-out"><small>إجمالي المصروفات</small>' + finIqd(st.expense) + '</div><div class="fin-sum-i is-net"><small>صافي الحركة</small>' + finIqd(st.net) + '</div></div>' +
+    (ns ? '<div class="fin-note">' + codisIcon('calendar') + '<span>الراتب القادم <b>' + finFmt(ns.amount) + '</b> د.ع — ' + escapeHtml(finDateAr(ns.due)) + '</span></div>' : '') +
+    '<section class="fin-sec"><header class="fin-sec-h"><h3>أحدث الحركات</h3>' + (run.length > 8 ? '<button type="button" class="fin-link" onclick="finAllTx()">كل الحركات (' + finFmt(run.length) + ')</button>' : '') + '</header>' +
+      (run.length ? '<ul class="fin-txs">' + run.slice(0, 8).map(finTxRowHtml).join('') + '</ul>' : '<div class="fin-empty">ماكو حركات بعد</div>') + '</section>' +
+    '<nav class="fin-rows" aria-label="أقسام الإدارة المالية">' +
+      finRowHtml('scale', 'سعر صرف الكوينز', '1 كوين = ' + finFmt(fx.rate || 0) + ' د.ع' + (fx.canChange ? '' : ' · تغيّر هذا الشهر'), 'finRateOpen()') +
+      finRowHtml('calendar', 'إدارة الراتب', f.work === 'employee' ? (f.salary.rules.length ? finFmt(f.salary.rules[f.salary.rules.length - 1].amount) + ' د.ع شهرياً' : 'غير مضبوط') : 'عمل حر — أدخل أرباحك بالإيداع', 'finSalaryOpen()') +
+      finRowHtml('user', 'ملفي المالي', (f.work === 'employee' ? 'موظف' : 'عمل حر') + (f.source ? ' · ' + f.source : ''), 'finProfileOpen()') +
+      finRowHtml('report', 'التقارير المالية', 'دخل · مصروفات · تصنيفات · رصيد', 'finReportsOpen()') +
+    '</nav>' +
+    (f.work === 'freelance' ? '' : '');
+  codisHydrateIcons(box);
+}
+function finRowHtml(ic, t, s, fn){ return '<button type="button" class="fin-row" onclick="' + fn + '"><span class="fin-row-ic">' + codisIcon(ic) + '</span><span class="fin-row-t"><b>' + t + '</b><small>' + escapeHtml(s) + '</small></span><svg class="ios-chevron fin-row-ch" data-icon="back" aria-hidden="true"></svg></button>'; }
+function finSetPeriod(p){ finPeriod = p; finRender(); }
+function finRefresh(){ try{ finRender(); }catch(e){ console.error('finRender', e); } try{ finTopbar(); }catch(e){} }
+function finAllTx(){
+  const run = codisFinRunning().reverse();
+  const s = CodisFinUI.open({ title:'كل الحركات', body:'<ul class="fin-txs" id="fin-all"></ul><button type="button" class="fin-more btn btn-secondary eco-full" hidden>عرض المزيد</button>', mount:(root)=>{
+    let n = 30; const ul = root.querySelector('#fin-all'), more = root.querySelector('.fin-more');
+    const paint = ()=>{ ul.innerHTML = run.slice(0, n).map(finTxRowHtml).join('') || '<li class="fin-empty">ماكو حركات</li>'; more.hidden = n >= run.length; more.textContent = 'عرض المزيد · باقي ' + finFmt(run.length - n); };
+    more.onclick = ()=>{ n += 40; paint(); }; paint();
+  } });
+  return s;
+}
+
+/* ---------- نماذج الإيداع والمصروف ---------- */
+function finFieldAmt(id, lab, val){ return '<label class="fin-f"><span>' + lab + '</span><div class="fin-amt"><input id="' + id + '" class="fin-in" inputmode="numeric" autocomplete="off" dir="ltr" placeholder="0" value="' + (val || '') + '" oninput="finAmtInput(this)" data-autofocus><i>د.ع</i></div></label>'; }
+function finDepositOpen(){
+  const f = codisFin(); if(!f.setup.done){ finRender(); return; }
+  const ref = codisFinUid('dep');
+  CodisFinUI.open({ title:'إيداع', body:
+    finFieldAmt('fd-amt', 'المبلغ بالدينار العراقي') +
+    '<label class="fin-f"><span>مصدر الدخل</span><input id="fd-src" class="fin-in" maxlength="80" placeholder="مثلاً: ربح مشروع، هدية، مبيعات" autocomplete="off"></label>' +
+    '<label class="fin-f"><span>اسم العملية</span><input id="fd-desc" class="fin-in" maxlength="120" placeholder="مثلاً: ربح صافٍ" autocomplete="off"></label>' +
+    '<label class="fin-f"><span>التاريخ</span><input id="fd-date" class="fin-in" type="date" value="' + codisFinToday() + '" max="' + codisFinToday() + '"></label>' +
+    '<label class="fin-f"><span>ملاحظات (اختياري)</span><textarea id="fd-note" class="fin-in" rows="2" maxlength="300"></textarea></label>' +
+    '<p class="fin-err" role="alert" hidden></p><button type="button" class="btn btn-primary eco-full fin-go" id="fd-go">تسجيل الإيداع</button>',
+    mount:(root, s)=>{
+      root.querySelector('#fd-go').onclick = ()=>{
+        const amt = finAmtOf(root.querySelector('#fd-amt')); if(!amt) return finErr(root, 'اكتب مبلغاً صحيحاً (دينار بلا كسور)');
+        const desc = root.querySelector('#fd-desc').value.trim() || root.querySelector('#fd-src').value.trim(); if(!desc) return finErr(root, 'اكتب اسم العملية أو مصدر الدخل');
+        const r = codisFinDepositNow({ amount:amt, desc:desc, src:root.querySelector('#fd-src').value, date:root.querySelector('#fd-date').value, note:root.querySelector('#fd-note').value, ref:ref });
+        if(!r.ok) return finErr(root, finFailText(r));
+        codisSfx('coins.take', { ctx:'deposit' }); CodisFinUI.close(s); showToast('تم الإيداع +' + finFmt(amt) + ' د.ع — رصيدك الآن ' + finFmt(r.balance) + ' د.ع', 'var(--success)', 'check'); finRefresh();
+      };
+    } });
+}
+function finFailText(r){
+  return ({ amount:'المبلغ غير صالح', date:'التاريخ غير صالح', future:'لا يمكن تسجيل عملية بتاريخ مستقبلي', desc:'اكتب الاسم', funds:'رصيدك لا يكفي — ينقصك ' + finFmt(r.need || 0) + ' د.ع (رصيدك ' + finFmt(r.balance || 0) + ')',
+    dup:'هذي العملية انسجّلت قبل', save:'تعذّر الحفظ — ما تغيّر شيء', error:'تعذّر التنفيذ — ما تغيّر شيء', nosetup:'أكمل إعداد الإدارة المالية أولاً', monthly:'سعر الصرف يتغيّر مرة واحدة بالشهر', rate:'سعر غير معتمد', same:'هذا هو السعر الحالي' })[r.reason] || 'تعذّر التنفيذ';
+}
+function finExpenseOpen(){
+  const f = codisFin(); if(!f.setup.done){ finRender(); return; }
+  const ref = codisFinUid('exp'), cats = codisFinDefaultCats().concat(f.cats); let sel = 'food';
+  CodisFinUI.open({ title:'تسجيل مصروف / سحب', body:
+    '<div class="fin-bal-line">رصيدك الحالي ' + finIqd(codisFinBalance(f)) + '</div>' +
+    '<label class="fin-f"><span>اسم المصروف</span><input id="fe-name" class="fin-in" maxlength="120" placeholder="مثلاً: مسواك، طماطم" autocomplete="off" data-autofocus></label>' +
+    finFieldAmt('fe-amt', 'المبلغ بالدينار العراقي').replace(' data-autofocus', '') +
+    '<div class="fin-f"><span>التصنيف</span><div class="fin-chips" id="fe-cats" role="radiogroup" aria-label="التصنيف"></div>' +
+      '<div class="fin-addcat"><input id="fe-newcat" class="fin-in" maxlength="40" placeholder="تصنيف جديد" autocomplete="off"><button type="button" class="btn btn-secondary" id="fe-addcat">إضافة</button></div></div>' +
+    '<label class="fin-f"><span>التاريخ</span><input id="fe-date" class="fin-in" type="date" value="' + codisFinToday() + '" max="' + codisFinToday() + '"></label>' +
+    '<label class="fin-f"><span>ملاحظات (اختياري)</span><textarea id="fe-note" class="fin-in" rows="2" maxlength="300"></textarea></label>' +
+    '<p class="fin-err" role="alert" hidden></p><button type="button" class="btn btn-primary eco-full fin-go" id="fe-go">تسجيل المصروف</button>',
+    mount:(root, s)=>{
+      const paintCats = ()=>{ const all = codisFinDefaultCats().concat(codisFin().cats); root.querySelector('#fe-cats').innerHTML = all.map(c=>'<button type="button" role="radio" aria-checked="' + (sel === c.id) + '" class="fin-chip' + (sel === c.id ? ' is-on' : '') + '" data-c="' + escapeHtml(c.id) + '">' + escapeHtml(c.name) + '</button>').join(''); };
+      paintCats();
+      root.querySelector('#fe-cats').onclick = e=>{ const b = e.target.closest('[data-c]'); if(!b) return; sel = b.dataset.c; paintCats(); };
+      root.querySelector('#fe-addcat').onclick = ()=>{
+        const nm = root.querySelector('#fe-newcat').value.trim(); if(!nm) return;
+        const id = 'c_' + (econHash(codisFinNormText(nm)) || '0').slice(0, 8);
+        const r = codisFinTx(()=>{ const ff = codisFin(); if(ff.cats.some(c=>c.id === id) || codisFinDefaultCats().some(c=>codisFinNormText(c.name) === codisFinNormText(nm))) return { ok:true, noop:true }; if(ff.cats.length >= 30) return { ok:false, reason:'full' }; ff.cats.push({ id:id, name:nm.slice(0, 40) }); return { ok:true }; });
+        if(!r.ok) return finErr(root, r.reason === 'full' ? 'وصلت حد التصنيفات المخصصة' : finFailText(r));
+        sel = id; root.querySelector('#fe-newcat').value = ''; paintCats(); finErr(root, '');
+      };
+      root.querySelector('#fe-go').onclick = ()=>{
+        const amt = finAmtOf(root.querySelector('#fe-amt')), name = root.querySelector('#fe-name').value.trim();
+        if(!name) return finErr(root, 'اكتب اسم المصروف'); if(!amt) return finErr(root, 'اكتب مبلغاً صحيحاً (دينار بلا كسور)');
+        const r = codisFinExpenseNow({ name:name, amount:amt, cat:sel, date:root.querySelector('#fe-date').value, note:root.querySelector('#fe-note').value, ref:ref });
+        if(!r.ok) return finErr(root, finFailText(r));
+        codisSfx('coins.take', { ctx:'expense' }); CodisFinUI.close(s); showToast('تم تسجيل المصروف −' + finFmt(amt) + ' د.ع — رصيدك الآن ' + finFmt(r.balance) + ' د.ع', 'var(--success)', 'check'); finRefresh();
+      };
+    } });
+}
+
+/* ---------- سعر الصرف ---------- */
+function finRateOptionsHtml(sel){
+  return '<div class="fin-rates" role="radiogroup" aria-label="سعر صرف الكوين">' + codisFinRates().map(r=>'<button type="button" role="radio" aria-checked="' + (sel === r) + '" class="fin-rate' + (sel === r ? ' is-on' : '') + '" data-r="' + r + '"><b>' + (FIN_RATES_NAMES[r]) + '</b>' +
+    '<span>1 كوين = <em dir="ltr">' + finFmt(r) + '</em> د.ع</span><span>25 كوين = <em dir="ltr">' + finFmt(r * 25) + '</em> د.ع</span></button>').join('') + '</div>';
+}
+function finRateOpen(){
+  const f = codisFin(), st = codisFinFxStatus(); let sel = f.fx.rate;
+  const noteHtml = '<p class="fin-hint">القيمة بالدينار هي الأصل: عند تغيير السعر تبقى قيمة كل مكافأة مالية بالدينار كما هي وتتغير قيمتها بالكوين وفئتها. <b>1 كوين = دقيقتان</b> ثابت ولا يتأثر بالسعر.</p>';
+  CodisFinUI.open({ title:'سعر صرف الكوينز', body:noteHtml + finRateOptionsHtml(sel) +
+    '<p class="fin-lock" ' + (st.canChange ? 'hidden' : '') + '>' + codisIcon('hourglass') + ' غيّرت السعر هذا الشهر — التغيير القادم متاح ابتداءً من <b>' + escapeHtml(finDateAr(st.nextAllowed)) + '</b></p>' +
+    '<p class="fin-err" role="alert" hidden></p><button type="button" class="btn btn-primary eco-full fin-go" id="fr-go" ' + (st.canChange ? '' : 'disabled') + '>تطبيق السعر</button>',
+    mount:(root, s)=>{
+      const pk = root.querySelector('.fin-rates');
+      pk.onclick = e=>{ const b = e.target.closest('[data-r]'); if(!b) return; sel = Number(b.dataset.r); pk.querySelectorAll('.fin-rate').forEach(x=>{ const on = Number(x.dataset.r) === sel; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on); }); };
+      root.querySelector('#fr-go').onclick = async ()=>{
+        if(sel === f.fx.rate) return finErr(root, 'هذا هو السعر الحالي');
+        const n = data.settings.rewardItems.filter(x=>x && x.fin && x.fin.kind === 'financial').length;
+        const ok = await codisConfirm({ title:'تغيير سعر الصرف؟', message:'تقدر تغيّر السعر مرة وحدة فقط بالشهر.', rows:[['السعر الحالي', '1 كوين = ' + finFmt(f.fx.rate) + ' د.ع'], ['السعر الجديد', '1 كوين = ' + finFmt(sel) + ' د.ع', true], ['مكافآت مالية يُعاد تسعيرها', finFmt(n)]],
+          detail:'قيمة المكافآت المالية بالدينار تبقى كما هي، وقيمتها بالكوين وفئتها تُعاد حسب السعر الجديد. السجلات القديمة لا تتغير.', icon:'scale', confirmText:'غيّر السعر', danger:false });
+        if(!ok) return;
+        const r = codisFinChangeRate(sel); if(!r.ok) return finErr(root, finFailText(r));
+        CodisFinUI.close(s); codisSfx('confirm', { ctx:'switch' });
+        showToast('السعر الآن 1 كوين = ' + finFmt(sel) + ' د.ع' + (r.repriced && r.repriced.moved ? ' — انتقلت ' + finFmt(r.repriced.moved) + ' مكافأة لفئة أنسب' : ''), 'var(--success)', 'check'); finRefresh(); try{ econRenderAll(); }catch(e){}
+      };
+    } });
+}
+
+/* ---------- الراتب ---------- */
+function finSalaryOpen(){
+  const f = codisFin(); if(f.work !== 'employee'){ return CodisFinUI.open({ title:'الدخل', body:'<p class="fin-hint">حسابك «عمل حر»: لا يُضاف راتب تلقائي. سجّل أرباحك الفعلية من زر <b>إيداع</b> وقت حصولك عليها.' + (f.avgIncome ? ' المتوسط التقديري الذي كتبته (' + finFmt(f.avgIncome) + ' د.ع) للعلم فقط ولا يُضاف للرصيد.' : '') + '</p>' }); }
+  const rules = f.salary.rules, cur = rules[rules.length - 1], ns = codisFinNextSalary(f), nextMonth = codisFinMonthStart(codisFinNextMonth(codisFinMonthOf(codisFinToday())));
+  const pays = codisFinSorted(f).filter(e=>e.type === 'SALARY').reverse().slice(0, 6);
+  CodisFinUI.open({ title:'إدارة الراتب', body:
+    '<div class="fin-note">' + codisIcon('calendar') + '<span>' + (cur ? 'الراتب الحالي <b>' + finFmt(cur.amount) + '</b> د.ع — يوم <b>' + cur.day + '</b> من كل شهر' : 'لا يوجد راتب مضبوط') + (ns ? '<br>الاستحقاق القادم: ' + escapeHtml(finDateAr(ns.due)) : '') + '</span></div>' +
+    '<h3 class="fin-sub">تعديل الراتب</h3><p class="fin-hint">التعديل يسري على الاستحقاقات من التاريخ الذي تختاره فقط؛ الرواتب المسجّلة سابقاً لا تتغير. اكتب 0 لإيقاف الراتب.</p>' +
+    finFieldAmt('fs-amt', 'الراتب الشهري الجديد', cur ? String(cur.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '').replace(' data-autofocus', '') +
+    '<label class="fin-f"><span>يوم نزول الراتب (1–31)</span><input id="fs-day" class="fin-in" type="number" min="1" max="31" inputmode="numeric" value="' + (cur ? cur.day : 1) + '" dir="ltr"></label>' +
+    '<label class="fin-f"><span>يسري من تاريخ</span><input id="fs-from" class="fin-in" type="date" min="' + codisFinToday() + '" value="' + nextMonth + '"></label>' +
+    '<p class="fin-err" role="alert" hidden></p><button type="button" class="btn btn-primary eco-full fin-go" id="fs-go">حفظ التعديل</button>' +
+    (pays.length ? '<h3 class="fin-sub">آخر الرواتب</h3><ul class="fin-txs">' + pays.map(e=>finTxRowHtml({ e:e, bal:0 }).replace(/<small dir="ltr">[^<]*<\/small>/, '')).join('') + '</ul>' : ''),
+    mount:(root, s)=>{
+      root.querySelector('#fs-go').onclick = ()=>{
+        const raw = root.querySelector('#fs-amt').value.replace(/[^\d٠-٩]/g, ''), amt = raw === '' ? null : (finParseAmt(raw) === null ? (/^[0٠]+$/.test(raw) ? 0 : null) : finParseAmt(raw));
+        if(amt === null) return finErr(root, 'اكتب راتباً صحيحاً (أو 0 للإيقاف)');
+        const r = codisFinSetSalary({ amount:amt, day:Number(root.querySelector('#fs-day').value), from:root.querySelector('#fs-from').value });
+        if(!r.ok) return finErr(root, ({ day:'اليوم بين 1 و31', past:'التاريخ لا يكون في الماضي' })[r.reason] || finFailText(r));
+        CodisFinUI.close(s); codisSfx('confirm', { ctx:'switch' }); showToast('انحفظ تعديل الراتب' + (r.added ? ' (+' + r.added + ' استحقاق)' : ''), 'var(--success)', 'check'); finRefresh();
+      };
+    } });
+}
+
+/* ---------- الملف المالي ---------- */
+function finProfileOpen(){
+  const f = codisFin(); let work = f.work || 'freelance'; const nextMonth = codisFinMonthStart(codisFinNextMonth(codisFinMonthOf(codisFinToday())));
+  CodisFinUI.open({ title:'ملفي المالي', body:
+    '<div class="fin-f"><span>طبيعة العمل</span><div class="fin-chips" id="fp-work" role="radiogroup" aria-label="طبيعة العمل"></div></div>' +
+    '<div id="fp-emp" hidden>' + (f.salary.rules.length ? '<p class="fin-hint">الراتب يُعدَّل من «إدارة الراتب».</p>' :
+      finFieldAmt('fp-amt', 'الراتب الشهري').replace(' data-autofocus', '') + '<label class="fin-f"><span>يوم نزول الراتب (1–31)</span><input id="fp-day" class="fin-in" type="number" min="1" max="31" dir="ltr" value="5"></label>' +
+      '<label class="fin-f"><span>يسري من تاريخ</span><input id="fp-from" class="fin-in" type="date" min="' + codisFinToday() + '" value="' + nextMonth + '"></label>') + '</div>' +
+    '<div id="fp-free" hidden><label class="fin-f"><span>طبيعة مصدر الدخل</span><input id="fp-src" class="fin-in" maxlength="80" value="' + escapeHtml(f.source) + '"></label>' +
+      '<label class="fin-f"><span>متوسط الدخل التقديري (للعلم فقط)</span><div class="fin-amt"><input id="fp-avg" class="fin-in" inputmode="numeric" dir="ltr" value="' + (f.avgIncome ? String(f.avgIncome).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '') + '" oninput="finAmtInput(this)"><i>د.ع</i></div></label></div>' +
+    '<p class="fin-err" role="alert" hidden></p><button type="button" class="btn btn-primary eco-full fin-go" id="fp-go">حفظ</button>',
+    mount:(root, s)=>{
+      const paint = ()=>{ root.querySelector('#fp-work').innerHTML = [['employee', 'موظف'], ['freelance', 'عمل حر']].map(w=>'<button type="button" role="radio" aria-checked="' + (work === w[0]) + '" class="fin-chip' + (work === w[0] ? ' is-on' : '') + '" data-w="' + w[0] + '">' + w[1] + '</button>').join(''); root.querySelector('#fp-emp').hidden = work !== 'employee'; root.querySelector('#fp-free').hidden = work === 'employee'; };
+      paint(); root.querySelector('#fp-work').onclick = e=>{ const b = e.target.closest('[data-w]'); if(b){ work = b.dataset.w; paint(); } };
+      root.querySelector('#fp-go').onclick = ()=>{
+        const o = { work:work, source:(root.querySelector('#fp-src') || {}).value, avg:finAmtOf(root.querySelector('#fp-avg')) };
+        if(work === 'employee' && !f.salary.rules.length) o.salary = { amount:finAmtOf(root.querySelector('#fp-amt')), day:Number(root.querySelector('#fp-day').value), from:root.querySelector('#fp-from').value };
+        const r = codisFinSetProfile(o); if(!r.ok) return finErr(root, ({ amount:'اكتب راتباً ويوماً صحيحين', date:'التاريخ غير صالح', past:'التاريخ لا يكون في الماضي' })[r.reason] || finFailText(r));
+        CodisFinUI.close(s); codisSfx('confirm', { ctx:'switch' }); showToast('انحفظ ملفك المالي', 'var(--success)', 'check'); finRefresh();
+      };
+    } });
+}
+
+/* ---------- التقارير المالية ---------- */
+function finSparkSvg(vals){
+  if(vals.length < 2) return '';
+  const W = 300, H = 70, mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), rg = (mx - mn) || 1;
+  const pts = vals.map((v, i)=>(i / (vals.length - 1) * W).toFixed(1) + ',' + (H - 6 - (v - mn) / rg * (H - 12)).toFixed(1)).join(' ');
+  return '<svg class="fin-spark" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="تسلسل الرصيد عبر الزمن"><polyline points="' + pts + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>';
+}
+function finReportsOpen(){
+  const f = codisFin(), v = codisFinVerify(f), run = codisFinRunning(f), t = codisFinToday();
+  const rows = [['اليوم', finRange('day')], ['هذا الأسبوع', finRange('week')], ['هذا الشهر', finRange('month')], ['الكل', [null, null]]];
+  const cat = finStats(f, finRange('month')[0], t), cats = Object.keys(cat.byCat).map(k=>[k, cat.byCat[k]]).sort((a, b)=>b[1] - a[1]), tot = cat.expense || 1;
+  const mx = Math.max.apply(null, cats.map(c=>c[1]).concat([1]));
+  CodisFinUI.open({ title:'التقارير المالية', cls:'is-wide', body:
+    '<div class="fin-tbl" role="table" aria-label="الدخل والمصروفات"><div class="fin-tr fin-th" role="row"><span></span><span>دخل</span><span>مصروف</span><span>صافي</span></div>' +
+      rows.map(r=>{ const s = finStats(f, r[1][0], r[1][1]); return '<div class="fin-tr" role="row"><span>' + r[0] + '</span><span class="fin-up" dir="ltr">' + finFmt(s.income) + '</span><span class="fin-down" dir="ltr">' + finFmt(s.expense) + '</span><b dir="ltr">' + finFmt(s.net) + '</b></div>'; }).join('') + '</div>' +
+    '<h3 class="fin-sub">المصروفات حسب التصنيف — هذا الشهر</h3>' + (cats.length ? '<ul class="fin-bars">' + cats.map(c=>'<li><div><span>' + escapeHtml(finCatName(c[0])) + '</span><b dir="ltr">' + finFmt(c[1]) + '</b></div><i style="--w:' + Math.round(c[1] / mx * 100) + '%" aria-hidden="true"></i><small>' + Math.round(c[1] / tot * 100) + '%</small></li>').join('') + '</ul>' : '<div class="fin-empty">ماكو مصروفات هذا الشهر</div>') +
+    '<h3 class="fin-sub">مصروفات المكافآت المالية</h3><p class="fin-hint">الإجمالي: ' + finIqd(finStats(f, null, null).reward) + ' · هذا الشهر: ' + finIqd(cat.reward) + '</p>' +
+    '<h3 class="fin-sub">تسلسل الرصيد</h3>' + (run.length > 1 ? finSparkSvg(run.slice(-60).map(r=>r.bal)) : '<div class="fin-empty">يلزم حركتان على الأقل</div>') +
+    '<h3 class="fin-sub">الرواتب والإيداعات</h3>' + (function(){ const l = run.filter(r=>r.e.type === 'SALARY' || r.e.type === 'DEPOSIT').reverse().slice(0, 12); return l.length ? '<ul class="fin-txs">' + l.map(finTxRowHtml).join('') + '</ul>' : '<div class="fin-empty">ماكو رواتب أو إيداعات بعد</div>'; })() +
+    '<h3 class="fin-sub">تحقق الدفتر</h3><div class="fin-verify ' + (v.ok ? 'is-ok' : 'is-bad') + '" role="status"><span dir="ltr">' + finFmt(v.opening) + ' + ' + finFmt(v.deposits + v.salary) + ' − ' + finFmt(v.expenses) + ' − ' + finFmt(v.redemptions) + ' = ' + finFmt(v.expected) + '</span><b>' + (v.ok ? 'يطابق الرصيد المعروض ✓' : 'عدم تطابق!') + '</b></div>' });
+}
+
+/* ---------- التهيئة الأولية (استبيان متتابع) ---------- */
+function finWizNew(){
+  return { step:0, work:null, source:'', avg:'', opening:'', salary:'', day:'5', start:codisFinToday(), rate:null, err:'' };
+}
+function finRenderWizard(box){
+  if(!finWiz) finWiz = finWizNew(); const w = finWiz, steps = 4;
+  const bar = '<div class="fin-prog" role="progressbar" aria-valuemin="1" aria-valuemax="' + steps + '" aria-valuenow="' + (w.step + 1) + '"><i style="--p:' + ((w.step + 1) / steps * 100) + '%"></i></div><div class="fin-prog-t">الخطوة ' + (w.step + 1) + ' من ' + steps + '</div>';
+  let h = '';
+  if(w.step === 0){
+    h = '<h2 class="fin-wq">هل أنت موظف أم تعمل عملاً حراً (كاسب)؟</h2><div class="fin-opts">' +
+      '<button type="button" class="fin-opt' + (w.work === 'employee' ? ' is-on' : '') + '" onclick="finWizSet(\'work\',\'employee\')">' + codisIcon('calendar', { size:'lg' }) + '<b>موظف</b><small>راتب شهري بتاريخ ثابت</small></button>' +
+      '<button type="button" class="fin-opt' + (w.work === 'freelance' ? ' is-on' : '') + '" onclick="finWizSet(\'work\',\'freelance\')">' + codisIcon('star', { size:'lg' }) + '<b>عمل حر</b><small>دخل غير منتظم تسجّله بنفسك</small></button></div>';
+  } else if(w.step === 1){
+    const common = '<label class="fin-f"><span>رصيدك المالي الحالي الذي تريد البدء منه (اكتب 0 إن لم يكن لديك)</span><div class="fin-amt"><input id="fw-open" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="0" value="' + escapeHtml(w.opening) + '" oninput="finAmtInput(this);finWiz.opening=this.value"><i>د.ع</i></div></label>';
+    if(w.work === 'employee') h = '<h2 class="fin-wq">بيانات الراتب</h2>' +
+      '<label class="fin-f"><span>الراتب الشهري</span><div class="fin-amt"><input id="fw-sal" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="600,000" value="' + escapeHtml(w.salary) + '" oninput="finAmtInput(this);finWiz.salary=this.value"><i>د.ع</i></div></label>' +
+      '<label class="fin-f"><span>يوم نزول الراتب من كل شهر (1–31)</span><input id="fw-day" class="fin-in" type="number" min="1" max="31" inputmode="numeric" dir="ltr" value="' + escapeHtml(w.day) + '" oninput="finWiz.day=this.value"></label>' +
+      '<label class="fin-f"><span>تاريخ بداية الاستحقاق</span><input id="fw-start" class="fin-in" type="date" value="' + escapeHtml(w.start) + '" onchange="finWiz.start=this.value;finWizPreview()"></label><p class="fin-hint" id="fw-prev"></p>' + common;
+    else h = '<h2 class="fin-wq">بيانات دخلك</h2>' +
+      '<label class="fin-f"><span>طبيعة مصدر الدخل</span><input id="fw-src" class="fin-in" maxlength="80" placeholder="مثلاً: مبيعات، تصميم، توصيل" autocomplete="off" value="' + escapeHtml(w.source) + '" oninput="finWiz.source=this.value"></label>' +
+      '<label class="fin-f"><span>متوسط الدخل التقديري (اختياري)</span><div class="fin-amt"><input id="fw-avg" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="—" value="' + escapeHtml(w.avg) + '" oninput="finAmtInput(this);finWiz.avg=this.value"><i>د.ع</i></div></label>' +
+      '<p class="fin-hint">المتوسط للعلم فقط ولا يُضاف للرصيد أبداً. تسجّل أرباحك الفعلية بالإيداع حين تحصل عليها.</p>' + common;
+  } else if(w.step === 2){
+    h = '<h2 class="fin-wq">كم قيمة الكوين بالدينار؟</h2><p class="fin-hint">تقدر تغيّره لاحقاً مرة وحدة بالشهر. <b>1 كوين = دقيقتان</b> ثابتة دائماً.</p>' + finRateOptionsHtml(w.rate);
+  } else {
+    const sal = w.work === 'employee' ? finParseAmt(w.salary) : null;
+    h = '<h2 class="fin-wq">مراجعة الإعدادات</h2><dl class="fin-review"><div><dt>طبيعة العمل</dt><dd>' + (w.work === 'employee' ? 'موظف' : 'عمل حر') + '</dd></div>' +
+      '<div><dt>الرصيد الافتتاحي</dt><dd dir="ltr">' + finFmt(finParseAmt(w.opening) || 0) + ' د.ع</dd></div>' +
+      (w.work === 'employee' ? '<div><dt>الراتب</dt><dd dir="ltr">' + finFmt(sal || 0) + ' د.ع</dd></div><div><dt>يوم الاستحقاق</dt><dd>' + escapeHtml(String(w.day)) + ' من كل شهر</dd></div><div><dt>بداية الاستحقاق</dt><dd>' + escapeHtml(finDateAr(w.start)) + '</dd></div>' : '<div><dt>مصدر الدخل</dt><dd>' + escapeHtml(w.source || '—') + '</dd></div>' + (finParseAmt(w.avg) ? '<div><dt>المتوسط التقديري</dt><dd dir="ltr">' + finFmt(finParseAmt(w.avg)) + ' د.ع</dd></div>' : '')) +
+      '<div><dt>سعر الكوين</dt><dd dir="ltr">1 كوين = ' + finFmt(w.rate) + ' د.ع</dd></div></dl>';
+  }
+  box.innerHTML = '<div class="fin-wiz">' + bar + h + '<p class="fin-err" role="alert"' + (w.err ? '' : ' hidden') + '>' + escapeHtml(w.err) + '</p>' +
+    '<div class="fin-wbtns">' + (w.step > 0 ? '<button type="button" class="btn btn-secondary" onclick="finWizBack()">السابق</button>' : '<span></span>') +
+    '<button type="button" class="btn btn-primary" onclick="finWizNext()">' + (w.step === 3 ? 'تأكيد وإنشاء المحفظة' : 'التالي') + '</button></div></div>';
+  codisHydrateIcons(box); if(w.step === 1) finWizPreview();
+  if(w.step === 2){ const pk = box.querySelector('.fin-rates'); if(pk) pk.onclick = e=>{ const b = e.target.closest('[data-r]'); if(!b) return; finWiz.rate = Number(b.dataset.r); finWiz.err = ''; finRenderWizard(box); }; }
+}
+function finWizSet(k, v){ finWiz[k] = v; finWiz.err = ''; finRender(); }
+function finWizPreview(){
+  const el = document.getElementById('fw-prev'); if(!el || !finWiz) return;
+  const day = codisFinInt(finWiz.day, 1, 31), st = finWiz.start; if(!day || !codisFinDateOk(st)){ el.textContent = ''; return; }
+  let mk = codisFinMonthOf(st), g = 0; while(g++ < 3 && codisFinDueOf(mk, day) < st) mk = codisFinNextMonth(mk);
+  el.textContent = 'أول راتب يُضاف يوم ' + finDateAr(codisFinDueOf(mk, day)) + (codisFinDueOf(mk, day) <= codisFinToday() ? ' (مستحق الآن ويُضاف عند التأكيد)' : '') + '.';
+}
+function finWizBack(){ if(finWiz && finWiz.step > 0){ finWiz.step--; finWiz.err = ''; finRender(); } }
+function finWizNext(){
+  const w = finWiz; w.err = '';
+  if(w.step === 0){ if(!w.work) w.err = 'اختر طبيعة عملك'; }
+  else if(w.step === 1){
+    const open = String(w.opening).trim() === '' ? null : (/^[0٠,\s]+$/.test(w.opening) ? 0 : finParseAmt(w.opening));
+    if(open === null) w.err = 'اكتب رصيدك الحالي (أو 0 إن لم يكن لديك رصيد)';
+    else if(w.work === 'employee'){
+      if(!finParseAmt(w.salary)) w.err = 'اكتب قيمة الراتب الشهري'; else if(!codisFinInt(w.day, 1, 31)) w.err = 'يوم الراتب بين 1 و31'; else if(!codisFinDateOk(w.start)) w.err = 'اختر تاريخ بداية صحيحاً';
+    }
+  } else if(w.step === 2){ if(!w.rate) w.err = 'اختر سعر الكوين'; }
+  if(w.err){ codisSfx('invalid', { ctx:'unavailable' }); finRender(); return; }
+  if(w.step < 3){ w.step++; finRender(); return; }
+  const open = /^[0٠,\s]*$/.test(w.opening) ? 0 : finParseAmt(w.opening);
+  const r = codisFinSetupNow({ work:w.work, source:w.source, avg:finParseAmt(w.avg), opening:open, salary:w.work === 'employee' ? { amount:finParseAmt(w.salary), day:codisFinInt(w.day, 1, 31), from:w.start } : null, rate:w.rate });
+  if(!r.ok){ w.err = finFailText(r); finRender(); return; }
+  finWiz = null; codisSfx('confirm', { ctx:'switch' }); showToast('تم إنشاء محفظتك المالية' + (r.added ? ' — أُضيف ' + finFmt(r.added) + ' راتب مستحق' : ''), 'var(--success)', 'check'); finRefresh();
+}
+/* إنشاء المحفظة: دفعة واحدة (رصيد افتتاحي + قاعدة راتب + سعر ابتدائي) ثم تعويض ما حلّ استحقاقه */
+function codisFinSetupNow(o){
+  const f = codisFin(); if(f.setup.done) return { ok:false, reason:'dup' };
+  if(o.work !== 'employee' && o.work !== 'freelance') return { ok:false, reason:'amount' };
+  const open = codisFinInt(o.opening, 0, 1e12); if(open === null) return { ok:false, reason:'amount' };
+  if(codisFinRates().indexOf(o.rate) === -1) return { ok:false, reason:'rate' };
+  if(o.work === 'employee'){ const s = o.salary || {}; if(codisFinInt(s.amount, 1, 1e12) === null || codisFinInt(s.day, 1, 31) === null || !codisFinDateOk(s.from)) return { ok:false, reason:'amount' }; }
+  return codisFinTx(()=>{
+    const now = codisFinIso(), today = codisFinToday();
+    f.work = o.work; f.source = String(o.source || '').trim().slice(0, 80); f.avgIncome = o.avg ? codisFinInt(o.avg, 0, 1e12) : null;
+    if(!codisFinPush(f, { id:'open', ref:'open', type:'OPENING_BALANCE', amount:open, cur:'IQD', desc:'رصيد افتتاحي', cat:'', src:'opening', date:today, at:now })) return { ok:false, reason:'dup' };
+    if(o.work === 'employee') f.salary.rules.push({ id:codisFinUid('rule'), amount:o.salary.amount, day:o.salary.day, from:o.salary.from, createdAt:now });
+    f.fx = { rate:o.rate, setAt:now }; f.fxLog.push({ id:codisFinUid('fx'), kind:'initial', from:null, to:o.rate, at:now, month:codisFinMonthOf(today) });
+    f.setup = { done:true, doneAt:now };
+    const added = codisFinCatchUpIn(f);
+    return { ok:true, added:added.reduce((s, e)=>s + e.amount, 0), count:added.length };
+  });
+}
+
+/* ---------- الشريط العلوي ---------- */
+function finTopbar(){ const b = document.getElementById('fin-btn'); if(!b) return; const need = !codisFin().setup.done; b.classList.toggle('needs-setup', need); b.setAttribute('aria-label', need ? 'الإدارة المالية — أكمل الإعداد' : 'الإدارة المالية'); }
+
+/* ---------- المتابعة: راتب مستحق · عودة للتطبيق · اتصال ---------- */
+let finLastTick = 0;
+function codisFinTick(){
+  try{
+    if(typeof data === 'undefined' || !data || !data.finance) return;
+    finTopbar();
+    const f = codisFin(); if(!f.setup.done) return;
+    const n = codisFinCatchUp();
+    if(n > 0){ showToast(n === 1 ? 'وصل راتبك — انضاف لمحفظتك المالية' : 'انضافت ' + n + ' رواتب مستحقة لمحفظتك المالية', 'var(--success)', 'check'); }
+    if(n > 0 && econPageVisible('settings-page-eco-fin')) finRender();
+    finLastTick = Date.now();
+  }catch(e){ console.error('codisFinTick', e); }
+}
+(function(){
+  try{
+    document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'visible') codisFinTick(); });
+    window.addEventListener('focus', codisFinTick); window.addEventListener('online', codisFinTick);
+    setInterval(codisFinTick, 60000); setTimeout(codisFinTick, 1500);
+  }catch(e){}
+})();
+
+/* ================= الإضافة التلقائية للمكافآت (مالية / وقتية) ================= */
+let finAuto = null;
+function finAutoOpen(){
+  finAuto = { step:0, kind:null, name:'', iqd:'', min:'', cardId:null, err:'' };
+  const s = CodisFinUI.open({ title:'إضافة مكافأة تلقائية', cls:'is-wide', body:'<div id="fa-root"></div>', mount:(root)=>{ finAutoPaint(root); }, onClose:()=>{ finAuto = null; } });
+  return s;
+}
+function finAutoPaint(root){
+  const a = finAuto; if(!a) return; const b = root.querySelector('#fa-root'), f = codisFin();
+  let h = '<div class="fin-prog" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + (a.step + 1) + '"><i style="--p:' + ((a.step + 1) / 3 * 100) + '%"></i></div>';
+  if(a.step === 0){
+    h += '<h3 class="fin-wq">ما نوع المكافأة؟</h3><div class="fin-opts">' +
+      '<button type="button" class="fin-opt' + (a.kind === 'financial' ? ' is-on' : '') + '" onclick="finAutoSet(\'kind\',\'financial\')">' + codisIcon('coin', { size:'lg' }) + '<b>مكافأة مالية</b><small>شي تشتريه بفلوسك الحقيقية</small></button>' +
+      '<button type="button" class="fin-opt' + (a.kind === 'time' ? ' is-on' : '') + '" onclick="finAutoSet(\'kind\',\'time\')">' + codisIcon('hourglass', { size:'lg' }) + '<b>مكافأة وقتية</b><small>وقت راحة أو متعة بمؤقت</small></button></div>';
+  } else if(a.step === 1){
+    h += '<label class="fin-f"><span>اسم المكافأة</span><input id="fa-name" class="fin-in" maxlength="120" autocomplete="off" placeholder="' + (a.kind === 'financial' ? 'مثلاً: لفة شاورما' : 'مثلاً: مشاهدة مباراة') + '" value="' + escapeHtml(a.name) + '" oninput="finAuto.name=this.value;finAutoCalc()" data-autofocus></label>';
+    if(a.kind === 'financial'){
+      h += f.setup.done ? '<label class="fin-f"><span>قيمتها الحقيقية بالدينار العراقي</span><div class="fin-amt"><input id="fa-iqd" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="2,000" value="' + escapeHtml(a.iqd) + '" oninput="finAmtInput(this);finAuto.iqd=this.value;finAutoCalc()"><i>د.ع</i></div></label>' :
+        '<p class="fin-lock">' + codisIcon('hourglass') + ' المكافآت المالية تحتاج إعداد الإدارة المالية أولاً (الرصيد وسعر الكوين). <button type="button" class="fin-link" onclick="CodisFinUI.close();finOpen()">افتح الإدارة المالية</button></p>';
+    } else h += '<label class="fin-f"><span>مدة المكافأة بالدقائق</span><div class="fin-amt"><input id="fa-min" class="fin-in" type="number" min="1" max="1440" inputmode="numeric" dir="ltr" placeholder="90" value="' + escapeHtml(a.min) + '" oninput="finAuto.min=this.value;finAutoCalc()"><i>دقيقة</i></div></label>';
+    h += '<div class="fin-calc" id="fa-calc" aria-live="polite"></div>';
+  } else {
+    const c = finAutoCalc(true);
+    h += '<h3 class="fin-wq">المراجعة</h3>' + (c.html || '');
+  }
+  h += '<p class="fin-err" role="alert"' + (a.err ? '' : ' hidden') + '>' + escapeHtml(a.err) + '</p><div class="fin-wbtns">' + (a.step > 0 ? '<button type="button" class="btn btn-secondary" onclick="finAutoBack()">السابق</button>' : '<span></span>') +
+    '<button type="button" class="btn btn-primary" id="fa-next" onclick="finAutoNext()">' + (a.step === 2 ? 'حفظ المكافأة' : 'التالي') + '</button></div>';
+  b.innerHTML = h; codisHydrateIcons(b);
+  if(a.step === 1) finAutoCalc();
+  if(a.step === 2){ b.querySelectorAll('[data-card]').forEach(x=>{ x.onclick = ()=>{ finAuto.cardId = x.dataset.card; finAutoPaint(root); }; }); }
+}
+function finAutoSet(k, v){ finAuto[k] = v; finAuto.err = ''; finAutoPaint(CodisFinUI.el()); }
+function finAutoBack(){ if(finAuto.step > 0){ finAuto.step--; finAuto.err = ''; finAutoPaint(CodisFinUI.el()); } }
+/* الحساب والتصنيف: يُرجع { ok, coin, cls, html } ويحدّث سطر الحساب بالخطوة 1 */
+function finAutoCalc(full){
+  const a = finAuto; if(!a) return {}; const f = codisFin();
+  let coin = null, line = '', iqd = null, min = null;
+  if(a.kind === 'financial'){ iqd = finParseAmt(a.iqd); if(iqd && f.fx.rate){ coin = codisFinCoinOfIqd(iqd, f.fx.rate); line = finFmt(iqd) + ' ÷ ' + finFmt(f.fx.rate) + ' = <b>' + finFmt(coin) + '</b> كوين'; } }
+  else { min = codisFinInt(a.min, 1, 1440); if(min){ coin = codisFinCoinOfMinutes(min); line = finFmt(min) + ' دقيقة ÷ 2 = <b>' + finFmt(coin) + '</b> كوين'; } }
+  const name = String(a.name || '').trim(); let cls = null, warn = '';
+  if(coin !== null){ cls = codisFinClassify(name || '—', coin); if(!cls.ok) warn = cls.reason === 'low' ? 'القيمة أقل من الحد الأدنى (10 كوين' + (a.kind === 'financial' ? ' = ' + finFmt(10 * f.fx.rate) + ' د.ع بالسعر الحالي' : ' = 20 دقيقة') + ')' : cls.reason === 'high' ? 'القيمة أعلى من الحد الأقصى (30,000 كوين)' : 'لا توجد بطاقة مناسبة لهذي القيمة'; }
+  const el = document.getElementById('fa-calc'); if(el && !full) el.innerHTML = line ? '<span>' + line + '</span>' + (warn ? '<em class="fin-bad">' + warn + '</em>' : '') : '';
+  const o = { coin:coin, cls:cls, warn:warn, iqd:iqd, min:min, line:line };
+  if(full){
+    if(!cls || !cls.ok) { o.html = '<p class="fin-bad">' + (warn || 'أكمل البيانات') + '</p>'; return o; }
+    const cand = cls.candidates, pick = cand.find(c=>c.card.id === a.cardId) || (cls.ambiguous ? null : cls.best);
+    if(pick && !a.cardId) a.cardId = pick.card.id;
+    o.pick = pick;
+    o.html = '<div class="fin-calc"><span>' + escapeHtml(name) + ' — ' + line + '</span></div>' +
+      (cls.ambiguous ? '<p class="fin-hint">اسم المكافأة ما يكفي لتحديد نوعها بثقة — اختر الوجهة المناسبة:</p>' : '<p class="fin-hint">الوجهة المقترحة حسب المعنى والسعر معاً' + (cls.domains.length ? ' (' + cls.domains.map(d=>escapeHtml(d.label)).join('، ') + ')' : '') + ':</p>') +
+      '<div class="fin-dests" role="radiogroup" aria-label="الوجهة">' + cand.map(c=>'<button type="button" role="radio" aria-checked="' + (pick && pick.card.id === c.card.id) + '" class="fin-dest' + (pick && pick.card.id === c.card.id ? ' is-on' : '') + '" data-card="' + c.card.id + '"><b>' + escapeHtml(c.card.name) + '</b><small>' + econRoomLabel(c.card.room) + ' · نطاق ' + finFmt(c.card.min) + '–' + finFmt(c.card.max) + ' كوين</small></button>').join('') + '</div>' +
+      '<p class="fin-hint">القيمة المحفوظة بالضبط: <b>' + finFmt(coin) + '</b> كوين' + (a.kind === 'financial' ? ' (القيمة الأصلية ' + finFmt(iqd) + ' د.ع ثابتة وتتغير قيمتها بالكوين مع سعر الصرف)' : ' (' + finFmt(min) + ' دقيقة بمؤقت حقيقي عند الاستخدام)') + '.</p>';
+  }
+  return o;
+}
+function finAutoNext(){
+  const a = finAuto, root = CodisFinUI.el(); a.err = '';
+  if(a.step === 0){ if(!a.kind) a.err = 'اختر نوع المكافأة'; }
+  else if(a.step === 1){
+    const c = finAutoCalc();
+    if(!String(a.name).trim()) a.err = 'اكتب اسم المكافأة'; else if(a.kind === 'financial' && !codisFin().setup.done) a.err = 'أكمل إعداد الإدارة المالية أولاً';
+    else if(c.coin === null) a.err = a.kind === 'financial' ? 'اكتب القيمة بالدينار' : 'اكتب المدة بالدقائق'; else if(c.warn) a.err = c.warn;
+  } else {
+    const c = finAutoCalc(true); if(!c.pick){ a.err = 'اختر وجهة المكافأة'; }
+    else {
+      const r = codisFinCreateReward({ name:a.name, kind:a.kind, iqd:finParseAmt(a.iqd), minutes:codisFinInt(a.min, 1, 1440), cardId:c.pick.card.id });
+      if(!r.ok){ a.err = ({ name:'اكتب الاسم', kind:'اختر النوع', nosetup:'أكمل إعداد الإدارة المالية أولاً', amount:'القيمة غير صالحة', low:'القيمة أقل من 10 كوين', high:'القيمة أعلى من 30,000 كوين', range:'القيمة خارج نطاق البطاقة', save:'تعذّر الحفظ — ما انضافت', error:'تعذّر التنفيذ' })[r.reason] || 'تعذّر التنفيذ'; }
+      else { CodisFinUI.close(); codisSfx('success', { ctx:'settings' }); showToast('انضافت «' + r.item.name + '» (' + finFmt(r.coin) + ' كوين) إلى ' + r.card.name, 'var(--success)', 'check'); try{ econRenderAll(); }catch(e){} return; }
+    }
+  }
+  if(a.err){ codisSfx('invalid', { ctx:'unavailable' }); finAutoPaint(root); return; }
+  a.step++; finAutoPaint(root);
+}
+
+/* ---------- استخدام مكافأة مالية: تأكيد صريح قبل أي خصم ---------- */
+async function codisFinUseConfirm(it){
+  const f = codisFin();
+  if(!f.setup.done){ codisSfx('invalid', { ctx:'funds' }); showToast('أكمل إعداد الإدارة المالية أولاً حتى يُخصم المبلغ من محفظتك', 'var(--warning)'); return false; }
+  const iqd = it.fin.iqd, bal = codisFinBalance(f);
+  if(bal < iqd && !CodisLimits.bypass('fin.nonnegative')){ codisSfx('invalid', { ctx:'funds' }); showToast('رصيدك المالي غير كافٍ — ينقصك ' + finFmt(iqd - bal) + ' دينار، والمكافأة تبقى بحوزتك', 'var(--warning)'); return false; }
+  return await codisConfirm({ title:'تستخدم «' + it.name + '»؟', message:'يتسحب ' + finFmt(iqd) + ' دينار من محفظتك المالية.',
+    rows:[['رصيدك الحالي', finFmt(bal) + ' د.ع'], ['قيمة المكافأة', finFmt(iqd) + ' د.ع', true], ['رصيدك بعد الخصم', finFmt(bal - iqd) + ' د.ع']],
+    detail:'يُسجَّل الخصم وتُعلَّم المكافأة كمستخدَمة معاً، ولا يتكرر الخصم.', icon:'check', confirmText:'استخدم واخصم', danger:false });
+}
+/* سطر «القيمة الحقيقية/المدة» لصف المكافأة بالإعدادات */
+function codisFinMetaHtml(it){
+  if(!it || !it.fin) return '';
+  return it.fin.kind === 'financial' ? '<span>القيمة الحقيقية <b>' + finFmt(it.fin.iqd) + '</b> د.ع</span>' : '<span>المدة <b>' + finFmt(it.fin.minutes) + '</b> دقيقة</span>';
+}
+
+/* حدود المستخدم المالية تمرّ عبر CodisLimits فيبقى حساب المطوّر بلا قيود */
+try{ CodisLimits.reg('fin.nonnegative', 'الإنفاق المالي (مصروف/استخدام مكافأة) لا يتجاوز الرصيد'); CodisLimits.reg('fin.fxMonthly', 'تغيير سعر صرف الكوينز مرة واحدة بالشهر'); }catch(e){}
+
 CodisAccount.init();
 
 </script>
