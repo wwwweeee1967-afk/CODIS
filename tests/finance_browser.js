@@ -18,10 +18,10 @@
   const own = (cat, uid)=>CodisWallet.transact([], ()=>{ const r = rarOf(cat), it = CodisInventory.grant({ uid:uid, rewardId:cat.id, name:cat.name, rarity:r.id, rarityName:r.name, rarityTone:r.tone, rarityOrder:r.order, room:cat.room, source:'outcome', sourceRef:uid, scope:'daily', coinValue:codisFinItemCoin(cat), fin:cat.fin }); return it ? { ok:true, item:it } : { ok:false, reason:'inventory' }; });
 
   /* ===== H0: المصفوفة ===== */
-  const mc = codisFinMatrixCheck(); T('matrix: 23 cards, refs match model, no gap 10..30000', mc.ok, mc.problems.join(' | '));
-  eq('matrix: count', codisFinCards().length, 23);
+  const mc = codisFinMatrixCheck(); T('matrix: 25 cards, refs match model, no gap 10..30000', mc.ok, mc.problems.join(' | '));
+  eq('matrix: count', codisFinCards().length, 25);
   const C = id=>codisFinCardById(id);
-  eq('range: learn 10–12.5', [C('learn').min, C('learn').max], [10, 12.5]);
+  eq('range: learn bronze 10–12.5 (open top)', [C('learn_bronze').min, C('learn_bronze').max], [10, 12.5]); eq('range: learn silver 12.5–20', [C('learn_silver').min, C('learn_silver').max], [12.5, 20]); eq('range: learn gold 20–30', [C('learn_gold').min, C('learn_gold').max], [20, 30]);
   eq('range: station7 12.5–18.75', [C('fx_station7').min, C('fx_station7').max], [12.5, 18.75]);
   eq('range: event normal 18.75–37.5', [C('fx_rs_normal').min, C('fx_rs_normal').max], [18.75, 37.5]);
   eq('range: event important 37.5–50', [C('fx_rs_important').min, C('fx_rs_important').max], [37.5, 50]);
@@ -44,7 +44,7 @@
   T('18,750 shared by monthly S and SS', codisFinCardsFor(18750).map(c=>c.id).sort().join() === 'monthly_S,monthly_SS', codisFinCardsFor(18750).map(c=>c.id).join());
   T('below 10 / above 30,000 refused', codisFinClassify('x', 9.99).reason === 'low' && codisFinClassify('x', 30000.01).reason === 'high');
   { const c = codisFinClassify('لفة شاورما', 25); T('shawarma 25 → daily C (food) not event card', c.ok && c.best.card.id === 'daily_C' && !c.ambiguous, c.best && c.best.card.id); near('shawarma exact 25 kept (not 30/37.5)', c.coin, 25); }
-  { const c = codisFinClassify('الاستماع للموسيقى', 10); T('music 10 → professor room', c.ok && c.best.card.id === 'learn', c.best && c.best.card.id); }
+  { const c = codisFinClassify('الاستماع للموسيقى', 10); T('music 10 → professor room', c.ok && c.best.card.id === 'learn_bronze', c.best && c.best.card.id); }
   { const c = codisFinClassify('كلشي مبهم', 25); T('unknown name with several rooms → ambiguous with suggestions', c.ok && c.ambiguous && c.suggestions.length >= 1); }
   { const c = codisFinClassify('سفرة شمال', 7000); T('trip 7000 → monthly/weekly card by meaning+price', c.ok && c.best.card.id === 'weekly_SS' || c.best.card.id === 'monthly_A', c.best.card.id); }
 

@@ -1,0 +1,18 @@
+/* CODIS-TEACHER-TIERS (3.29.0): هوية البرونزية/الفضية/الذهبية — ألوان فقط (بطاقة الأستاذ نفسها صور مُلوَّنة من الأصل) */
+.rar-badge.rar-bronze{ --rar:#e2a56f; --rar-bg:rgba(176,108,56,.18); --rar-edge:rgba(205,127,50,.6); }
+.rar-badge.rar-silver{ --rar:#dfe5ee; --rar-bg:rgba(190,200,214,.16); --rar-edge:rgba(206,214,226,.6); }
+.rar-badge.rar-gold{ --rar:#ffd978; --rar-bg:rgba(255,200,80,.18); --rar-edge:#ffd978; box-shadow:0 0 12px rgba(255,200,80,.30); }
+html[data-theme="paper"] .rar-badge.rar-bronze{ --rar:#7a4519; --rar-bg:rgba(176,108,56,.14); }
+html[data-theme="paper"] .rar-badge.rar-silver{ --rar:#4b5565; --rar-bg:rgba(120,132,150,.14); --rar-edge:rgba(100,112,130,.55); }
+html[data-theme="paper"] .rar-badge.rar-gold{ --rar:#6b4a06; --rar-bg:rgba(214,160,40,.18); --rar-edge:#b8851a; box-shadow:none; }
+.rwc-bronze{ --rwc-ink:#e2a56f; --rwc-glow:rgba(205,127,50,.45); }
+.rwc-silver{ --rwc-ink:#dfe5ee; --rwc-glow:rgba(206,214,226,.45); }
+.rwc-gold{ --rwc-ink:#ffd978; --rwc-glow:rgba(255,217,120,.7); }
+.outcome-card.is-card.rar-bronze{ --oc:#cd7f32; --oc-deep:#1c130b; --oc-glow:rgba(205,127,50,.30); }
+.outcome-card.is-card.rar-silver{ --oc:#c5ccd6; --oc-deep:#14171c; --oc-glow:rgba(197,204,214,.30); }
+.outcome-card.is-card.rar-gold{ --oc:#ffcf5e; --oc-deep:#1d1507; --oc-glow:rgba(255,207,94,.42); }
+.scx-teacher.scx-t-bronze{ --rwc-glow:rgba(205,127,50,.45); }
+.scx-teacher.scx-t-silver{ --rwc-glow:rgba(206,214,226,.45); }
+.scx-teacher.scx-t-gold{ --rwc-glow:rgba(255,217,120,.65); }
+.scx-tag{ position:absolute; left:50%; top:2.1%; transform:translateX(-50%); z-index:3; pointer-events:none; padding:.2em 1.6em; border-radius:99px; font-size:3.3cqw; line-height:1.3; font-weight:800; letter-spacing:.22em; text-transform:uppercase; white-space:nowrap; direction:ltr; background:rgba(14,12,20,.78); border:1px solid currentColor; }
+.scx-t-bronze .scx-tag{ color:#e8b184; } .scx-t-silver .scx-tag{ color:#e6ebf3; } .scx-t-gold .scx-tag{ color:#ffe08a; }
