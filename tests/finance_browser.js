@@ -183,9 +183,9 @@
     CodisTimers.cancel && CodisTimers.cancel(t && t.id); }
   { const c = codisFinCoinOfMinutes(90); codisFinChangeRate(160); near('F: rate change leaves time value 45', econEffCoin(itT, rarOf(itT)), c); }
   codisFin().fx.rate = 40;   /* (اختبار) إعادة السعر لتجربة حدود القيمة */
-  T('F: financial value limits (min 10 coins) enforced', mkR({ name:'رخيصة', kind:'financial', iqd:100 }).reason === 'low');
+  T('F: financial value limits (min 1 coin — CODIS-V44) enforced', mkR({ name:'رخيصة', kind:'financial', iqd:20 }).reason === 'low');
   T('F: max 30,000 coins enforced', mkR({ name:'غالية جداً', kind:'financial', iqd:6000001 }).reason === 'high', mkR({ name:'غالية جداً', kind:'financial', iqd:6000001 }).reason);
-  T('F: time below 20 min refused (<10 coins)', mkR({ name:'قصيرة', kind:'time', minutes:10 }).reason === 'low');
+  T('F: time below 2 min refused (<1 coin — CODIS-V44)', mkR({ name:'قصيرة', kind:'time', minutes:1 }).reason === 'low');
   { const r = mkR({ name:'تمام', kind:'time', minutes:30 }); near('F: 30 min → 15 coins', r.coin, 15); }
   T('F: financial needs finance setup', (()=>{ const k = data.finance.setup.done; data.finance.setup.done = false; const r = mkR({ name:'x', kind:'financial', iqd:2000 }); data.finance.setup.done = k; return r.reason === 'nosetup'; })());
   { const dup = mkR({ name:'لفة شاورما', kind:'financial', iqd:1000 }), dup2 = mkR({ name:'لفة شاورما', kind:'financial', iqd:1000 }); T('F: same name twice → distinct ids', dup.ok && dup2.ok && dup.item.id !== dup2.item.id); }

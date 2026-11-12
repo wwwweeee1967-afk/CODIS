@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.30.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.31.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -11553,6 +11553,65 @@ html[data-theme="dark"] .sidebar::before{ background:linear-gradient(90deg, tran
 .toast{ bottom:calc(var(--nav-h) + var(--nav-lift) + 14px); }
 @media (prefers-reduced-motion:reduce){ .fa-type, .rpu-bk{ transition:none; } }
 </style>
+<style id="codis-v44-css">
+/* CODIS-V44: الصندوق المجاني — متجر + مشهد الفتح + قسم الإدارة. رموز التصميم فقط (يعمل بالمظهرين)، حركة transform/opacity فقط */
+#eco-store-body .st-free{ --pt-rgb:150,108,28; }
+.fb-card{ position:relative; width:100%; display:flex; align-items:center; gap:14px; padding:12px 14px; min-height:84px; border-radius:var(--r-lg); border:1px dashed rgb(var(--gold-rgb) / .62); background:linear-gradient(135deg, rgb(var(--gold-rgb) / .13), var(--mat-panel-fill, var(--glass)) 62%); color:var(--text); font:inherit; text-align:start; cursor:pointer; overflow:hidden; box-shadow:var(--mat-panel-shadow, none); transition:transform var(--dur-fast, .16s) var(--ease-spring, ease); -webkit-tap-highlight-color:transparent; }
+.fb-card:active{ transform:scale(.985); }
+.fb-card:focus-visible{ outline:2px solid rgb(var(--gold-rgb)); outline-offset:3px; }
+.fb-card[disabled]{ opacity:.6; pointer-events:none; }
+.fb-card .fb-art{ flex:none; width:64px; height:60px; display:grid; place-items:center; }
+.fb-card .fb-txt{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.fb-card .fb-txt b{ font-size:16px; font-weight:800; line-height:1.35; }
+.fb-card .fb-txt small{ font-size:12px; line-height:1.5; color:var(--text-2); }
+.fb-cta{ flex:none; padding:7px 16px; border-radius:var(--r-full); background:rgb(var(--gold-rgb) / .9); color:#2b1d03; font-size:13.5px; font-weight:800; line-height:1.4; }
+.fb-svg{ width:100%; height:100%; display:block; overflow:visible; }
+.fb-svg .fb-body rect{ fill:#b9812f; stroke:#4b3210; stroke-width:2.2; }
+.fb-svg .fb-lid rect{ fill:#d29a43; stroke:#4b3210; stroke-width:2.2; }
+.fb-svg .fb-rib{ fill:#a13b2f !important; }
+.fb-svg .fb-seam{ stroke:#4b3210; stroke-width:1.6; fill:none; opacity:.55; }
+.fb-svg .fb-bow{ fill:#c34a3b; stroke:#4b3210; stroke-width:2; stroke-linejoin:round; }
+.fb-svg .fb-glow{ opacity:0; }
+.fb-svg .fb-glow ellipse{ fill:rgb(255 214 120 / .75); }
+.fb-svg .fb-lid{ transform-origin:60px 56px; transform-box:view-box; }
+/* مشهد الفتح */
+.fb-ov{ position:fixed; inset:0; z-index:760; display:grid; place-items:center; align-content:center; padding:18px 16px calc(18px + env(safe-area-inset-bottom, 0px)); background:rgb(18 12 4 / .72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); overflow-y:auto; animation:fbIn .22s ease-out both; }
+.fb-stage{ width:min(100%, 360px); display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; color:#fff; }
+.fb-box{ width:min(54vw, 190px); aspect-ratio:120 / 110; }
+.fb-box.is-shake{ animation:fbShake .5s ease-in-out infinite; }
+.fb-box.is-open .fb-lid{ transform:translateY(-34px) rotate(-14deg); transition:transform .5s cubic-bezier(.2,.9,.3,1.15); }
+.fb-box.is-open .fb-glow{ opacity:1; transition:opacity .45s ease-out; }
+.fb-box.is-open{ transform:scale(.8); transform-origin:50% 100%; transition:transform .5s ease-out; }
+.fb-rev{ display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; }
+.fb-rev[hidden]{ display:none; }
+.fb-rev.is-on{ animation:fbUp .5s cubic-bezier(.2,.9,.3,1.05) both; }
+.fb-kick{ font-size:14px; font-weight:700; color:rgb(255 225 150); }
+.fb-cardwrap{ width:min(56vw, 210px, 38vh); }
+.fb-stage.is-done .fb-box{ display:none; }
+.fb-cardwrap .store-art{ display:block; width:100%; }
+.fb-name{ font-size:18px; font-weight:800; line-height:1.4; overflow-wrap:anywhere; }
+.fb-val{ display:inline-flex; align-items:center; gap:8px; font-size:15px; }
+.fb-val em{ font-style:normal; font-size:12px; opacity:.8; }
+.fb-note{ margin:0; font-size:12.5px; line-height:1.6; opacity:.85; }
+.fb-ok{ min-width:160px; margin-top:4px; }
+.fb-ov.is-calm, .fb-ov.is-calm *{ animation:none !important; transition:none !important; }
+@keyframes fbIn{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes fbUp{ from{ opacity:0; transform:translateY(22px) scale(.96); } to{ opacity:1; transform:none; } }
+@keyframes fbShake{ 0%,100%{ transform:rotate(0); } 20%{ transform:rotate(-4deg) translateY(-2px); } 40%{ transform:rotate(4deg); } 60%{ transform:rotate(-3deg) translateY(-2px); } 80%{ transform:rotate(3deg); } }
+@media (prefers-reduced-motion:reduce){ .fb-ov, .fb-ov *{ animation:none !important; transition:none !important; } }
+/* قسم الإدارة */
+#settings-page-rewards .rpu-free{ margin-top:var(--sp-lg, 16px); border-style:dashed; border-color:rgb(var(--gold-rgb) / .55); }
+#settings-page-rewards .rpu-free .rpu-h{ color:var(--text); }
+.rpu-fadd{ flex:none; min-height:40px; display:inline-flex; align-items:center; gap:6px; padding:0 14px; border-radius:var(--r-full); border:1px solid rgb(var(--gold-rgb) / .6); background:rgb(var(--gold-rgb) / .12); color:var(--text); font:inherit; font-size:var(--fs-sub); font-weight:700; cursor:pointer; transition:transform var(--dur-fast) var(--ease); }
+.fgc .rwc-stage{ position:relative; container-type:inline-size; }
+.fgc .fgc-art{ position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none; }
+.fgc .fgc-tag{ position:absolute; top:5.6%; inset-inline:0; margin-inline:auto; width:max-content; max-width:80%; padding:.8cqw 4cqw; border-radius:999px; background:#1f5d63; color:#fff3d0; font-size:5.2cqw; font-weight:800; line-height:1.4; white-space:nowrap; box-shadow:0 1px 0 rgb(0 0 0 / .25); }
+.fgc .fgc-stk{ position:absolute; left:6%; top:14%; width:30%; aspect-ratio:1; object-fit:contain; transform:rotate(-8deg); filter:drop-shadow(0 2px 3px rgb(60 36 8 / .35)); pointer-events:none; }
+.fgc .scx-name{ color:#3b2606; }
+.fgc .scx-coin{ background:rgb(200 146 58 / .2); border-color:rgb(110 79 23 / .55); color:#3b2606; }
+.rpu-fadd:active{ transform:scale(var(--press)); }
+.rpu-fadd:focus-visible{ outline:2px solid rgb(var(--gold-rgb)); outline-offset:2px; }
+</style>
 <script>
 /* CODIS-V33: long-press on content must not open the browser's selection / image menu (inputs and editable text keep theirs) */
 document.addEventListener('contextmenu', function(e){
@@ -12120,6 +12179,14 @@ document.addEventListener('selectstart', function(e){
           <div class="rpu-month" data-month></div>
           <p class="rpu-note" data-note="monthly"></p>
           <div class="eco-list rpu-list" id="reward-list-monthly"></div>
+        </section>
+        <section class="rpu-sec rpu-free" id="rpu-r-free" data-period="daily" aria-labelledby="rpu-r-free-h">
+          <header class="rpu-head">
+            <span class="rpu-ico" aria-hidden="true"><svg data-icon="star" data-size="md"></svg></span>
+            <div class="rpu-ht"><h3 class="rpu-h" id="rpu-r-free-h">مكافآت الصندوق المجاني</h3><span class="rpu-sub" data-count></span></div>
+            <button type="button" class="rpu-fadd" onclick="codisFreeAdd()"><svg class="rpu-plus" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>إضافة مكافأة</span></button>
+          </header>
+          <div class="eco-list rpu-list" id="free-list"></div>
         </section>
       </div>
       <div class="rpu-block is-punish" id="rp-punish-block" style="display:none;">
@@ -13268,7 +13335,8 @@ function codisFinCards(){
   L.forEach(c=>{ c.reversed = c.ref === c.max && c.min !== c.max; Object.freeze(c); });
   return (codisFinCards.c = Object.freeze(L));
 }
-function codisFinCardById(id){ if(id === 'learn') id = 'learn_bronze'; return codisFinCards().find(c=>c.id === id) || null; }   /* CODIS-TEACHER-TIERS: المعرّف القديم 'learn' = البرونزية */
+function codisFinCardById(id){ if(id === 'free_box') return codisFreeCard();   /* CODIS-V44: كرت الصندوق المجاني خارج المصفوفة */
+  if(id === 'learn') id = 'learn_bronze'; return codisFinCards().find(c=>c.id === id) || null; }   /* CODIS-TEACHER-TIERS: المعرّف القديم 'learn' = البرونزية */
 function codisFinInRange(c, coin){ const v = Math.round(Number(coin) * 100) / 100; return v >= c.min - 1e-9 && (c.maxOpen ? v < c.max - 1e-9 : v <= c.max + 1e-9); }   /* CODIS-TEACHER-TIERS: برونزية/فضية الأستاذ حدّها الأعلى مفتوح فلا غموض عند 12.5 و20 */
 function codisFinCardsFor(coin){ return codisFinCards().filter(c=>codisFinInRange(c, coin)); }
 /* فحص المصفوفة: 23 بطاقة · المراجع تطابق النموذج · لا فجوة بين 10 و30,000 */
@@ -13395,6 +13463,7 @@ function codisDurOf(it){
 }
 /* حقول التموضع للبطاقة: كتالوج عادي ← room/rarity · كرت خاص ← variantOf */
 function codisFinPlacement(card){
+  if(card.free) return { room:'tasks', rarity:econCfg().rarities[0].id, variantOf:null, weight:0 };   /* CODIS-V44: علامة freebox تُخرجه من كل سحوبات الغرف */
   if(card.fixed) return { room:'habits', rarity:econCfg().rarities[0].id, variantOf:card.fixedId, weight:0 };
   if(card.room === 'learn') return { room:'learn', rarity:card.rarity || 'bronze', variantOf:null, weight:10 };
   return { room:card.room, rarity:card.rarity, variantOf:null, weight:10 };
@@ -13404,6 +13473,7 @@ function codisFinApplyPlacement(item, card){
   item.room = p.room; item.rarity = p.rarity; item.weight = p.weight;
   if(p.variantOf){ item.variantOf = p.variantOf; item.fixed = false; const d = codisFixedById(p.variantOf); if(d){ item.cardKind = 'special'; item.cardGroup = d.group; item.stationPeriod = d.period || null; item.habitImp = d.imp || null; } }
   else { delete item.variantOf; delete item.cardKind; delete item.cardGroup; delete item.stationPeriod; delete item.habitImp; }
+  if(card.free) item.freebox = true; else delete item.freebox;   /* CODIS-V44 */
   if(item.fin) item.fin.card = card.id;
 }
 /* يُستدعى من econNormalizeItems: يتحقق من حقول العنصر التلقائي ويشتق الباقي (آمن وقت التحميل) */
@@ -13411,8 +13481,11 @@ function codisFinReconcileItems(s){
   try{
     (s.rewardItems || []).forEach(it=>{
       if(!it || typeof it !== 'object') return;
+      if(it.freebox !== true) delete it.freebox;   /* CODIS-V44 */
       it.fin = codisFinItemOk(it.fin) || undefined; if(it.fin === undefined) delete it.fin;
-      if(!it.fin){ delete it.variantOf; return; }
+      if(!it.fin){ delete it.variantOf; delete it.freebox; return; }   /* CODIS-V44 */
+      if(it.fin.card === 'free_box'){ it.freebox = true; it.room = 'tasks'; it.weight = 0; delete it.variantOf; return; }   /* CODIS-V44: آمن وقت التحميل (لا يقرأ data) */
+      delete it.freebox;
       if(it.fin.card === 'learn'){ it.fin.card = 'learn_' + codisTeacherTierForCoin(it.fin.coin); }   /* CODIS-TEACHER-TIERS: ترحيل المعرّف القديم مرة واحدة (بعدها لا يطابق) */
       const card = codisFinCardById(it.fin.card);
       if(card && card.room === 'learn'){ it.room = 'learn'; it.rarity = card.rarity; delete it.variantOf; }
@@ -13432,7 +13505,7 @@ function codisFinCreateReward(o){
     iqd = codisFinInt(o.iqd, 1, 1e12); if(iqd === null) return { ok:false, reason:'amount' };
     coin = codisFinCoinOfIqd(iqd, f.fx.rate);
   } else { minutes = codisFinInt(o.minutes, 1, 1440); if(minutes === null) return { ok:false, reason:'amount' }; coin = codisFinCoinOfMinutes(minutes); }
-  const cls = codisFinClassify(name, coin); if(!cls.ok) return { ok:false, reason:cls.reason, coin:coin, min:codisFinMinCoin(), max:codisFinMaxCoin() };
+  const cls = codisFinClassifyAuto(name, coin); if(!cls.ok) return { ok:false, reason:cls.reason, coin:coin, min:codisFinMinCoin(), max:codisFinMaxCoin() };
   let pick = cls.best;
   if(o.cardId){ pick = cls.candidates.find(c=>c.card.id === o.cardId); if(!pick) return { ok:false, reason:'range', coin:coin }; }
   else if(cls.ambiguous && !o.force) return { ok:false, reason:'ambiguous', coin:coin, suggestions:cls.suggestions };
@@ -13441,6 +13514,7 @@ function codisFinCreateReward(o){
   const dom = cls.domains.length ? cls.domains[0].dom : '';
   const item = { id:id, name:name, rarity:p.rarity, weight:p.weight, coinValue:null, storePrice:null, stickerId:codisStickerIdOk(o.stickerId), enabled:true, room:p.room, createdAt:now, updatedAt:now,
     fin:{ v:1, kind:kind, card:card.id, dom:dom, coin:coin } };
+  if(card.free) item.freebox = true;   /* CODIS-V44 */
   if(kind === 'financial') item.fin.iqd = iqd; else item.fin.minutes = minutes;
   return codisFinTx(()=>{
     data.settings.rewardItems.push(item);
@@ -13457,6 +13531,7 @@ function codisFinReprice(){
   data.settings.rewardItems.forEach(it=>{
     if(!it || !it.fin || it.fin.kind !== 'financial') return;
     const coin = codisFinCoinOfIqd(it.fin.iqd, rate); it.fin.coin = coin; res.items++;
+    if(it.fin.card === 'free_box'){ if(codisFinInRange(codisFreeCard(), coin)) delete it.fin.oor; else { it.fin.oor = true; res.oor++; } return; }   /* CODIS-V44: لا تنتقل لبطاقة أخرى؛ خارج 1–10 تُستبعد من السحب فقط */
     const cur = cardOf(it.fin);
     if(cur && codisFinInRange(cur, coin)){ delete it.fin.oor; return; }
     const cls = codisFinClassify(it.name, Math.max(codisFinMinCoin(), Math.min(codisFinMaxCoin(), coin)));
@@ -14295,7 +14370,7 @@ function econNormalizeItems(settings){
     takenR[id] = true;
     const rarity = room === 'learn' ? (codisTeacherTierOk(x.rarity) || 'bronze') : (rids.indexOf(x.rarity) !== -1 ? x.rarity : fallbackRarity);   /* CODIS-TEACHER-TIERS: الأستاذ = برونزية/فضية/ذهبية؛ القديم بلا معرّف درجة ← برونزية (تطبيع قابل للتكرار بلا أثر) */
     /* الأسعار من النموذج الثابت فقط: أي استثناء يدوي قديم (قيمة/سعر) يُصفَّر ولا يُحتسب */
-    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null, stickerId:codisStickerIdOk(x.stickerId), fin:x.fin,
+    return { id:id, name:name, rarity:rarity, weight:econNum(x.weight, 10, 0, 1000000), coinValue:null, storePrice:null, stickerId:codisStickerIdOk(x.stickerId), fin:x.fin, freebox:x.freebox === true ? true : undefined,
       enabled:x.enabled !== false, room:room, createdAt:typeof x.createdAt === 'string' ? x.createdAt : now, updatedAt:typeof x.updatedAt === 'string' ? x.updatedAt : now };
   });
   settings.punishItems = settings.punishItems.filter(x=>x && typeof x === 'object' && typeof x.name === 'string' && x.name.trim()).map(x=>{
@@ -14341,7 +14416,7 @@ function econNormalizeInventory(d){
     const status = ['owned','sold','used'].indexOf(x.status) !== -1 ? x.status : 'owned';
     const it = { uid:x.uid, rewardId:(typeof x.rewardId === 'string' && x.rewardId) ? x.rewardId : null, stickerId:codisStickerIdOk(x.stickerId), name:x.name.trim().slice(0,120),
       rarity:String(x.rarity || '').slice(0,8), rarityName:String(x.rarityName || x.rarity || '').slice(0,24), rarityTone:codisToneOk(x.rarityTone),
-      rarityOrder:econNum(x.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(x.room) !== -1 ? x.room : 'tasks', source:(x.source === 'store' || x.source === 'box') ? x.source : 'outcome',
+      rarityOrder:econNum(x.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(x.room) !== -1 ? x.room : 'tasks', source:(x.source === 'store' || x.source === 'box' || x.source === 'free') ? x.source : 'outcome',
       sourceRef:String(x.sourceRef || ''), scope:String(x.scope || ''), acquiredAt:iso(x.acquiredAt) || now, status:status, statusAt:iso(x.statusAt) || iso(x.acquiredAt) || now,
       coinValue:econCN(x.coinValue, 0, 0, 1000000), paid:(x.paid === null || x.paid === undefined) ? null : econCN(x.paid, 0, 0, 1000000) };
     { const fn = codisFinItemOk(x.fin); if(fn) it.fin = fn; }   /* CODIS-FINANCE: لقطة نوع المكافأة وقيمتها الأصلية */
@@ -14440,7 +14515,8 @@ function econNormalizeAll(d){
     recent:(Array.isArray(st.recent) ? st.recent : []).filter(x=>x && typeof x.id === 'string').map(x=>({ id:x.id, room:String(x.room || '') })).slice(0, 100),
     recentPen:(Array.isArray(st.recentPen) ? st.recentPen : []).filter(x=>typeof x === 'string').slice(0, 8),
     nextMonth:/^\d{4}-(0[1-9]|1[0-2])$/.test(String(st.nextMonth || '')) ? st.nextMonth : cur,
-    periodLists:st.periodLists === true
+    periodLists:st.periodLists === true,
+    freeBox:codisFreeBoxNorm(st.freeBox)   /* CODIS-V44 */
   };
   econMigratePeriodLists(d);
   econNormalizeInventory(d);
@@ -14516,7 +14592,7 @@ const CodisRewardEngine = (function(){
     for(let i=rows.length-1;i>=0;i--) if(ws[i] > 0) return rows[i];
     return null;
   }
-  function poolOf(room){ return data.settings.rewardItems.filter(x=>x.enabled && x.room === room && !x.fixed); }
+  function poolOf(room){ return data.settings.rewardItems.filter(x=>x.enabled && x.room === room && !x.fixed && !x.freebox); }   /* CODIS-V44: مكافآت الصندوق المجاني خارج السحوبات */
   function usableRarities(){ const all = econCfg().rarities, en = all.filter(r=>r.enabled); return en.length ? en : all; }
   /* حماية الحظ: لا ترفع الاحتمال الأساسي إلا بمعامل محدود (maxMultiplier ≤ 3) وبعد startAfter محاولات بلا ندرة عالية — ولا تضمن شيئاً */
   function pityState(){
@@ -14757,7 +14833,7 @@ const CodisInventory = (function(){
     const now = econNowIso();
     const it = { uid:o.uid, rewardId:o.rewardId || null, stickerId:codisStickerIdOk(o.stickerId), name:String(o.name || 'مكافأة').slice(0,120), rarity:String(o.rarity || ''), rarityName:String(o.rarityName || o.rarity || ''),
       rarityTone:codisToneOk(o.rarityTone), rarityOrder:econNum(o.rarityOrder, 1, 1, 99, true), room:econListIds().indexOf(o.room) !== -1 ? o.room : 'tasks',
-      source:(o.source === 'store' || o.source === 'box') ? o.source : 'outcome', sourceRef:String(o.sourceRef || ''), scope:String(o.scope || ''), acquiredAt:now, status:'owned', statusAt:now,
+      source:(o.source === 'store' || o.source === 'box' || o.source === 'free') ? o.source : 'outcome', sourceRef:String(o.sourceRef || ''), scope:String(o.scope || ''), acquiredAt:now, status:'owned', statusAt:now,
       coinValue:econCN(o.coinValue, 0, 0, 1000000), paid:(o.paid === null || o.paid === undefined) ? null : econCN(o.paid, 0, 0, 1000000) };
     { const fn = codisFinItemOk(o.fin); if(fn) it.fin = fn; }   /* CODIS-FINANCE */
     all().push(it);
@@ -14765,6 +14841,224 @@ const CodisInventory = (function(){
   }
   return { get, owned, closed, sellValue, grant, all };
 })();
+
+/* ================= CODIS-V44 (3.31.0): الصندوق المجاني + كرت مكافآت الصندوق المجاني =================
+   • كرت مالي واحد مستقل `free_box` (1–10 كوين) خارج مصفوفة الـ25 (codisFinCards/codisFinMatrixCheck/codisFinClassify لم تُمس).
+   • مكافآت الصندوق = عناصر عادية في data.settings.rewardItems بعلامة `freebox:true` (+ fin.card = 'free_box'): تبقى قابلة للشراء الفردي
+     وتستعمل المخزون والتطبيع نفسهما، لكنها خارج poolOf(غرف النتائج اليومية) وخارج CodisBoxes.pool وخارج قوائم الغرف/الفترات.
+   • حالة المطالبة data.economyState.freeBox = { at:ISO آخر مطالبة ناجحة, n:عدد } داخل لقطة CodisWallet.transact (ذرّية مع منح المخزون).
+   • كل ما قبل `const CodisFreeBox` function declarations آمنة وقت التحميل (لا تقرأ const ولا data). */
+
+function codisFreeCard(){
+  if(codisFreeCard.c) return codisFreeCard.c;
+  return (codisFreeCard.c = Object.freeze({ id:'free_box', name:'كرت مكافآت الصندوق المجاني', room:'tasks', rarity:null, scope:'free', roomKey:'free', ref:1, min:1, max:10, maxOpen:false, fixed:false, fixedId:null, type:'free', free:true, reversed:false }));
+}
+/* حالة المطالبة المخزّنة: آمنة وقت التحميل (تُستدعى من econNormalizeAll) */
+function codisFreeBoxNorm(v){
+  try{
+    const o = { at:'', n:0 };
+    if(v && typeof v === 'object' && !Array.isArray(v)){
+      if(typeof v.at === 'string' && v.at.length <= 40 && isFinite(Date.parse(v.at))) o.at = v.at;
+      const n = Number(v.n); if(isFinite(n) && n >= 0 && n <= 1e6) o.n = Math.floor(n);
+    }
+    return o;
+  }catch(e){ return { at:'', n:0 }; }
+}
+/* تصنيف المكافآت التلقائية: codisFinClassify كما هي، ثم يُلحَق الكرت المجاني (1–10) كخيار صريح أخير.
+   بلا تغيير على best/ambiguous/suggestions حين توجد بطاقات عادية (قيمة 10 بالضبط تتداخل مع برونزية الأستاذ فتبقى الأفضلية للعادية ويختار المستخدم المجاني صراحةً).
+   قيمة 1 ≤ v < 10 لم يكن لها بطاقة (reason low): الآن وجهتها الوحيدة الكرت المجاني. */
+function codisFinClassifyAuto(name, coin){
+  const c = Math.round(Number(coin) * 100) / 100, fc = codisFreeCard(), base = codisFinClassify(name, coin);
+  if(!isFinite(c) || !codisFinInRange(fc, c)) return base;
+  const cand = { card:fc, sem:0, fit:1, score:0 };
+  if(base.ok) return Object.assign({}, base, { candidates:base.candidates.concat([cand]) });
+  if(base.reason === 'low') return { ok:true, coin:c, domains:[], candidates:[cand], best:cand, ambiguous:false, suggestions:[cand] };
+  return base;
+}
+
+const CodisFreeBox = (function(){
+  const DAY = 86400000;
+  let busy = false;
+  try{ CodisLimits.reg('freebox.cooldown', 'مهلة الصندوق المجاني (مطالبة واحدة كل 24 ساعة)'); }catch(e){}
+  function st(){
+    const e = data.economyState;
+    if(!e.freeBox || typeof e.freeBox !== 'object') e.freeBox = { at:'', n:0 };
+    return e.freeBox;
+  }
+  /* المكافآت المؤهلة: مفعّلة + علامة الصندوق + كرت free_box + قيمتها الحالية داخل 1–10. بلا تكرار معرّف */
+  function pool(){
+    const fc = codisFreeCard(), seen = {}, out = [];
+    (data.settings.rewardItems || []).forEach(x=>{
+      if(!x || !x.freebox || x.enabled === false || !x.fin || x.fin.card !== 'free_box' || x.fin.oor || seen[x.id]) return;
+      if(!econRarityById(x.rarity)) return;
+      if(!codisFinInRange(fc, codisFinItemCoin(x))) return;
+      seen[x.id] = true; out.push(x);
+    });
+    return out.sort((a, b)=>(a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  }
+  /* آخر مطالبة بالملّي ثانية: المخزّنة، وأحدث نسخة مصدرها 'free' بالمخزون (تحمي من تعارض دمج الأجهزة)، ولا تتجاوز «الآن» (ساعة مُقدَّمة خطأً لا تقفل أكثر من 24 ساعة) */
+  function lastMs(now){
+    let m = Date.parse(st().at); if(!isFinite(m)) m = 0;
+    ((data.inventory && data.inventory.items) || []).forEach(x=>{ if(x && x.source === 'free'){ const a = Date.parse(x.acquiredAt); if(isFinite(a) && a > m) m = a; } });
+    return Math.min(m, now);
+  }
+  function status(){
+    const now = CodisClock.now(), last = lastMs(now), next = last ? last + DAY : 0;
+    const free = CodisLimits.bypass('freebox.cooldown');
+    const ready = !last || now >= next || free, n = pool().length;
+    return { ready:ready, empty:n === 0, poolN:n, last:last, next:next, waitMs:ready ? 0 : Math.max(0, next - now), now:now };
+  }
+  /* مطالبة واحدة: السحب متساوٍ بين المؤهّلة (CodisRewardEngine.pick بوزن 1 لكل سجل — لا قيمة ولا ندرة ولا وزن)، والمنح + تسجيل المطالبة بمعاملة واحدة */
+  function claim(){
+    if(busy) return { ok:false, reason:'busy' };
+    busy = true;
+    try{
+      const s0 = status(); if(!s0.ready) return { ok:false, reason:'wait', nextAt:s0.next };
+      const rows = pool(); if(!rows.length) return { ok:false, reason:'empty' };
+      const pick = CodisRewardEngine.pick(rows, ()=>1);
+      if(!pick) return { ok:false, reason:'empty' };
+      const res = CodisWallet.transact([], ()=>{
+        const s1 = status(); if(!s1.ready) return { ok:false, reason:'wait', nextAt:s1.next };
+        const rar = econRarityById(pick.rarity); if(!rar) return { ok:false, reason:'empty' };
+        const f = st(), at = econNowIso(), coin = econEffCoin(pick, rar);
+        /* المعرّف مشتق من المطالبة السابقة: جهازان بنفس الحالة ينتجان المعرّف نفسه فيُدمجان بنسخة واحدة */
+        const owned = CodisInventory.grant({ uid:'own|free|' + (f.at || '0'), rewardId:pick.id, stickerId:pick.stickerId, fin:pick.fin, name:pick.name, rarity:rar.id, rarityName:rar.name, rarityTone:rar.tone, rarityOrder:rar.order,
+          room:pick.room, source:'free', sourceRef:'freebox', scope:'', coinValue:coin, paid:null });
+        if(!owned) return { ok:false, reason:'inventory' };
+        f.at = at; f.n = (f.n | 0) + 1;
+        return { ok:true, owned:owned, item:pick, rarity:rar, coin:coin, at:at };
+      });
+      return res;
+    }catch(e){ console.error('freebox claim', e); return { ok:false, reason:'error' }; }
+    finally{ busy = false; }
+  }
+  return { status, pool, claim, DAY };
+})();
+
+function codisFreeBoxFmtWait(ms){
+  const m = Math.max(1, Math.ceil(ms / 60000)), h = Math.floor(m / 60), r = m % 60;
+  return h ? (h + ' ساعة' + (r ? ' و' + r + ' دقيقة' : '')) : (m + ' دقيقة');
+}
+let codisFbTimer = 0;
+/* ---------- المتجر: بطاقة الصندوق (تظهر فقط حين يكون متاحاً) ---------- */
+function codisFreeBoxSig(){ try{ return CodisFreeBox.status().ready ? 1 : 0; }catch(e){ return 0; } }
+function codisFreeBoxArt(){
+  return '<svg class="fb-svg" viewBox="0 0 120 110" aria-hidden="true" focusable="false">' +
+    '<g class="fb-glow"><ellipse cx="60" cy="58" rx="46" ry="30"/></g>' +
+    '<g class="fb-body"><rect x="20" y="52" width="80" height="48" rx="5"/><rect x="54" y="52" width="12" height="48" class="fb-rib"/><path d="M20 62h80" class="fb-seam"/></g>' +
+    '<g class="fb-lid"><rect x="14" y="36" width="92" height="20" rx="5"/><rect x="54" y="36" width="12" height="20" class="fb-rib"/>' +
+    '<path d="M60 36c-10-16-28-12-22-3 3 4 14 4 22 3zM60 36c10-16 28-12 22-3-3 4-14 4-22 3z" class="fb-bow"/></g></svg>';
+}
+function codisFreeBoxStoreHtml(){
+  let s; try{ s = CodisFreeBox.status(); }catch(e){ return ''; }
+  if(!s.ready) return '';
+  return '<section class="st-part st-free" id="eco-free" aria-labelledby="fb-h"><header class="st-part-head"><h4 class="st-part-title" id="fb-h">الصندوق المجاني</h4></header>' +
+    '<button type="button" class="fb-card" id="fb-card" onclick="codisFreeBoxOpen()" aria-label="الصندوق المجاني — اضغط لفتحه وخذ مكافأة"><span class="fb-art">' + codisFreeBoxArt() + '</span>' +
+    '<span class="fb-txt"><b>هديتك جاهزة</b><small>مكافأة عشوائية مجانية — بلا أي كوينز</small></span><span class="fb-cta">افتحه</span></button></section>';
+}
+/* عند فتح المتجر والصندوق غير متاح: مؤقّت واحد يعيد الرسم لحظة عودته (لا مؤقّت متكرر) */
+function codisFreeBoxSchedule(){
+  try{
+    clearTimeout(codisFbTimer); codisFbTimer = 0;
+    const s = CodisFreeBox.status(); if(s.ready || !s.waitMs) return;
+    codisFbTimer = setTimeout(()=>{ codisFbTimer = 0; try{ if(document.getElementById('eco-store-body') && document.getElementById('eco-store-body').firstElementChild) econRenderStore(); }catch(e){} }, Math.min(s.waitMs + 400, 2147000000));
+  }catch(e){}
+}
+/* ---------- فتح الصندوق: المطالبة تُنفَّذ فور الضغط (فتح الصفحة لا يعيد إتاحته)، والمشهد عرض فقط ---------- */
+let codisFbOpening = false;
+function codisFreeBoxClose(){
+  const ov = document.getElementById('fb-ov'); if(ov) ov.remove();
+  codisFbOpening = false;
+  try{ econRenderStore(); }catch(e){}
+}
+function codisFreeBoxMsg(reason, r){
+  return ({ wait:'الصندوق المجاني يرجع بعد ' + codisFreeBoxFmtWait((r && r.nextAt ? r.nextAt - CodisClock.now() : 0)), empty:'ماكو مكافآت مفعّلة بالصندوق المجاني حالياً — أضف مكافأة من الإعدادات ← المكافآت', save:'تعذّر الحفظ — ما انفتح الصندوق وتقدر تحاول مرة ثانية', inventory:'تعذّر إضافة المكافأة — ما انفتح الصندوق وتقدر تحاول مرة ثانية', busy:'', error:'تعذّر فتح الصندوق — حاول مرة ثانية' })[reason] || 'تعذّر فتح الصندوق';
+}
+function codisFreeBoxOpen(){
+  if(codisFbOpening) return;
+  codisFbOpening = true;
+  const btn = document.getElementById('fb-card'); if(btn){ btn.disabled = true; btn.setAttribute('aria-disabled', 'true'); }
+  let r; try{ r = CodisFreeBox.claim(); }catch(e){ console.error(e); r = { ok:false, reason:'error' }; }
+  if(!r.ok){
+    codisFbOpening = false;
+    if(btn){ btn.disabled = false; btn.removeAttribute('aria-disabled'); }
+    codisSfx('invalid', { ctx:'unavailable' }); const m = codisFreeBoxMsg(r.reason, r); if(m) showToast(m, 'var(--warning)');
+    if(r.reason === 'wait') { try{ econRenderStore(); }catch(e){} }
+    return;
+  }
+  const rar = r.rarity, it = r.item, calm = (typeof econCalm === 'function') && econCalm();
+  const kind = (econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) ? 'is-dl' : 'is-plain';
+  const ov = document.createElement('div'); ov.id = 'fb-ov'; ov.className = 'fb-ov' + (calm ? ' is-calm' : ''); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'فتح الصندوق المجاني');
+  ov.innerHTML = '<div class="fb-stage"><div class="fb-box is-shake" id="fb-box">' + codisFreeBoxArt() + '</div>' +
+    '<div class="fb-rev" id="fb-rev" hidden><span class="fb-kick">مبروك — هذي هديتك</span><div class="fb-cardwrap"><span class="store-art is-card ' + kind + '">' + econStoreFaceHtml(it, rar, { price:r.coin }) + '</span></div>' +
+    '<b class="fb-name" dir="auto">' + escapeHtml(it.name) + '</b><span class="fb-val">' + econCoin(r.coin) + '<em>قيمة المكافأة</em></span>' +
+    '<p class="fb-note" role="status">انضافت لـ«بحوزتك» — بلا أي خصم كوينز. يرجع الصندوق بعد 24 ساعة.</p>' +
+    '<button type="button" class="btn btn-primary fb-ok" onclick="codisFreeBoxClose()">تمام</button></div></div>';
+  (document.getElementById('settings-page-eco-store') || document.body).appendChild(ov);
+  codisHydrateIcons(ov);
+  codisSfx('open', { ctx:'select' }); codisHaptic([12, 40, 18]);
+  const show = ()=>{ const b = document.getElementById('fb-box'), v = document.getElementById('fb-rev'); if(!b || !v) return; b.classList.remove('is-shake'); b.classList.add('is-open'); codisSfx('success', { ctx:'settings' });
+    setTimeout(()=>{ const v2 = document.getElementById('fb-rev'); if(v2){ const stg = v2.closest('.fb-stage'); if(stg) stg.classList.add('is-done'); v2.hidden = false; v2.classList.add('is-on'); try{ codisFitLazy(v2); }catch(e){} const ok = v2.querySelector('.fb-ok'); if(ok) try{ ok.focus({ preventScroll:true }); }catch(e){} } }, calm ? 0 : 520); };
+  setTimeout(show, calm ? 0 : 700);
+  showToast('انضافت «' + it.name + '» لممتلكاتك', 'var(--success)', 'check');
+}
+
+/* ---------- الإعدادات: قسم «مكافآت الصندوق المجاني» (أسفل أقسام المكافآت اليومية) ---------- */
+function codisFreeMgmtRender(){
+  const list = document.getElementById('free-list'); if(!list) return;
+  const items = (data.settings.rewardItems || []).filter(x=>x && x.freebox).sort((a, b)=>econEffCoin(a, econRarityById(a.rarity) || econCfg().rarities[0]) - econEffCoin(b, econRarityById(b.rarity) || econCfg().rarities[0]) || String(a.name).localeCompare(String(b.name), 'ar'));
+  list.innerHTML = items.length ? items.map(econRewardRowHtml).join('') : '<div class="eco-empty">ماكو مكافآت بالصندوق المجاني بعد</div>';
+  const on = items.filter(x=>x.enabled).length, c = document.querySelector('#rpu-r-free [data-count]');
+  if(c) c.textContent = items.length ? ('العدد ' + items.length + (on < items.length ? ' · ' + (items.length - on) + ' معطّلة' : '')) : 'فارغ';
+}
+function codisFreeAdd(){ finAutoOpen({ free:true }); }
+
+/* ================= بطاقة الصندوق المجاني (وجه خاص مرسوم بالكود، لا يستعمل بطاقة اليومي) =================
+   تُعرَف أي مكافأة بكرت free_box (علامة freebox بالكتالوج، أو fin.card على نسخة المخزون، أو مصدر 'free') ببطاقتها هذه
+   في المتجر والمعاينة والتفاصيل والبكج/المخزون وشاشة الفتح. 4:5 بنفس إطار البطاقات الموحّد ولوحة الاسم/القيمة نفسها (scx-plate) فتعمل ملاءمة النص. */
+function codisIsFreeReward(e){
+  try{
+    if(!e) return false;
+    if(e.freebox === true || e.free === true || e.source === 'free') return true;
+    if(e.fin && e.fin.card === 'free_box') return true;
+    if(e.rewardId && data && data.settings){ const c = data.settings.rewardItems.find(x=>x && x.id === e.rewardId); return !!(c && c.freebox); }
+  }catch(x){}
+  return false;
+}
+function codisFreeGiftArt(){
+  if(codisFreeGiftArt.c) return codisFreeGiftArt.c;
+  let dots = '', conf = '';
+  for(let i = 0; i < 40; i++){ dots += '<circle cx="' + (24 + (i % 8) * 50) + '" cy="' + (30 + Math.floor(i / 8) * 54) + '" r="1.6"/>'; }
+  const C = ['#b8412f', '#1f6a70', '#c8923a', '#7a4fa0'];
+  [[62,92,-20],[338,84,18],[46,196,30],[352,188,-35],[92,300,15],[318,296,-12],[148,64,40],[258,70,-25],[70,150,0],[332,142,0],[120,118,0],[286,112,0]].forEach((p, i)=>{
+    conf += (i < 8 ? '<rect x="' + (p[0] - 7) + '" y="' + (p[1] - 3) + '" width="14" height="6" rx="1.5" transform="rotate(' + p[2] + ' ' + p[0] + ' ' + p[1] + ')" fill="' + C[i % 4] + '"/>' : '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4.5" fill="' + C[i % 4] + '"/>');
+  });
+  return (codisFreeGiftArt.c = '<svg class="rwc-art fgc-art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' +
+    '<defs><linearGradient id="fgcBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8ecce"/><stop offset="1" stop-color="#ead29b"/></linearGradient>' +
+    '<radialGradient id="fgcRay" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff3bf" stop-opacity=".95"/><stop offset="1" stop-color="#f0c866" stop-opacity="0"/></radialGradient></defs>' +
+    '<rect width="400" height="500" rx="20" fill="url(#fgcBg)"/><g fill="#a77a2a" opacity=".22">' + dots + '</g>' +
+    '<circle cx="200" cy="262" r="150" fill="url(#fgcRay)"/>' + conf +
+    '<ellipse cx="200" cy="392" rx="104" ry="11" fill="#5b3a0a" opacity=".22"/>' +
+    '<rect x="112" y="268" width="176" height="122" rx="8" fill="#d09a45" stroke="#4b3210" stroke-width="3.5"/>' +
+    '<rect x="100" y="228" width="200" height="46" rx="8" fill="#e2ae56" stroke="#4b3210" stroke-width="3.5"/>' +
+    '<rect x="186" y="228" width="28" height="162" fill="#b43d2e" stroke="#4b3210" stroke-width="3"/>' +
+    '<path d="M112 306h176" stroke="#4b3210" stroke-width="2" opacity=".35"/>' +
+    '<path d="M200 228c-14-40-52-34-42-12 7 14 26 14 42 12zM200 228c14-40 52-34 42-12-7 14-26 14-42 12z" fill="#c34a3b" stroke="#4b3210" stroke-width="3.5" stroke-linejoin="round"/>' +
+    '<circle cx="200" cy="228" r="9" fill="#a8362a" stroke="#4b3210" stroke-width="3"/>' +
+    '<rect x="8" y="8" width="384" height="484" rx="18" fill="none" stroke="#6e4f17" stroke-width="3.5"/>' +
+    '<rect x="20" y="20" width="360" height="460" rx="11" fill="none" stroke="#c8923a" stroke-width="1.6" stroke-dasharray="7 5"/>' +
+    '<rect x="40" y="396" width="320" height="72" rx="10" fill="#fff6dc" stroke="#6e4f17" stroke-width="2.5"/>' +
+    '<path d="M52 408h296M52 456h296" stroke="#c8923a" stroke-width="1.2" opacity=".7"/></svg>');
+}
+function codisFreeGiftCardHtml(name, coin, o){
+  o = o || {}; coin = econC(Math.max(0, Number(coin) || 0)); name = String(name || '');
+  let stk = ''; try{ const u = codisStickerList(o.stickerId).filter(x=>CodisStickers.url(x))[0]; if(u) stk = '<img class="fgc-stk" src="' + escapeHtml(CodisStickers.url(u)) + '" alt="" draggable="false">'; }catch(e){}
+  return (o.plain ? '<div class="rwc-wrap is-on">' : '<div class="rv rwc-wrap" data-s="1">') + '<div class="rwc scx scx-free fgc rwc-c" role="img" aria-label="' + escapeHtml(o.label || ('الصندوق المجاني — ' + name + (coin > 0 ? ' — ' + econFmt(coin) : ''))) + '">' +
+    '<div class="rwc-stage" style="--ar:.8;--ar-css:4 / 5">' + codisFreeGiftArt() + '<span class="fgc-tag" aria-hidden="true">الصندوق المجاني</span>' + stk +
+    '<div class="rwc-slot scx-plate" style="left:10%;top:79.2%;width:80%;height:14.4%;"><span class="scx-row"><span class="scx-name" dir="auto">' + escapeHtml(name) + '</span>' +
+    (coin > 0 ? '<span class="scx-coin">' + codisIcon('coin') + '<b>' + econFmt(coin) + '</b></span>' : '') + '</span></div></div></div></div>';
+}
+
 
 /* ================= بطاقات تجاوز العقوبة الحصرية (Penalty Pass Cards) — 12 بطاقة =================
    • 12 بطاقة مستقلة = 4 فترات (يومية · أسبوعية · شهرية · عادة) × 3 شدّات (خفيفة · متوسطة · قوية)، لكل منها شعارها وهويتها (CODIS_PASS_ART) والنصوص كلها من البيانات.
@@ -15594,7 +15888,7 @@ const CodisBoxes = (function(){
   }
   function tier(id){ return tiers().find(t=>t.id === id) || null; }
   /* المكافآت المؤهّلة = نفس ما يعرضه المتجر للشراء (مفعّلة، ندرتها موجودة، سعرها > 0). لا تحوي الصناديق إطلاقاً */
-  function pool(){ return data.settings.rewardItems.filter(x=>x.enabled && !x.fixed && !x.variantOf && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0); }   /* الثابتة خارج البكجات: لا تمسّ نموذج الاحتمالات */
+  function pool(){ return data.settings.rewardItems.filter(x=>x.enabled && !x.fixed && !x.variantOf && !x.freebox && econRarityById(x.rarity) && CodisEconomy.storePrice(x) > 0); }   /* CODIS-V44: خارج البكجات المدفوعة */   /* الثابتة خارج البكجات: لا تمسّ نموذج الاحتمالات */
   /* القيمة الفعلية للجائزة بالكوين: المكافأة = قيمة الاستبدال (نفس ما تُمنح به وتُباع بنسبتها)، وبطاقة التجاوز = سعرها الافتراضي (تكلفة تجاوز العقوبة المطابقة) */
   function valueOf(x){ return x.kind === 'cosmetic' ? CodisCosmetics.value(x.cosmeticId) : x.kind === 'pouch' ? CodisPouches.value(x.pouchType) : x.kind === 'pass' ? CodisPasses.price(x) : x.kind === 'holiday' ? CodisHolidayCards.price(x.cardKind) : econEffCoin(x, econRarityById(x.rarity)); }
   /* جوائز البكج = المكافآت المؤهّلة + بطاقات التجاوز الـ12 (تُصنَّف بقيمتها بنفس آلية الفئات). بلا مكافآت مؤهّلة يبقى البكج غير متاح كما كان — البطاقات وحدها لا تفتحه */
@@ -16006,6 +16300,7 @@ function codisRptTag(kind, it){
   const sp = it.fixed ? codisSlotOf(it) : null;
   if(sp) return '<span class="rpt-tag cat-chip rpt-imp-' + escapeHtml(sp.imp || String(sp.sev || '').toLowerCase()) + '">' + escapeHtml(codisRptShort(sp)) + '</span>';
   if(kind === 'punish') return '<span class="rpt-tag sev-badge sev-' + it.severity + '">' + econSevLabel(it.severity) + '</span>';
+  if(it.freebox) return '<span class="rpt-tag cat-chip">صندوق مجاني</span>';   /* CODIS-V44 */
   if(it.variantOf){ const _d = codisFixedById(it.variantOf); return '<span class="rpt-tag cat-chip">' + escapeHtml(_d ? _d.label : 'تلقائية') + '</span>'; }   /* CODIS-FINANCE */
   if(it.room === 'habits') return '<span class="rpt-tag cat-chip rpt-none">بدون تصنيف</span>';   /* عنصر قديم بقائمة «الحدثية» قبل التصنيف: يُصنَّف من التعديل أو يُحذف */
   if(it.room === 'learn'){ const _t = codisTeacherTierById(codisTeacherTierOf(it)); return '<span class="rpt-tag rar-badge rar-' + _t.tone + '" title="' + _t.ar + '"><b>' + _t.en + '</b><span>' + _t.ar + '</span></span>'; }   /* CODIS-TEACHER-TIERS */
@@ -16163,7 +16458,7 @@ function rpuAfterFill(kind, n){
 function rpuRenderAll(){
   const box = document.getElementById('rpu-all-list'); if(!box) return;
   if(rpuView !== 'all'){ box.innerHTML = ''; return; }
-  const isP = rpKind === 'punish', all = isP ? data.settings.punishItems : data.settings.rewardItems, row = isP ? econPunishRowHtml : econRewardRowHtml;
+  const isP = rpKind === 'punish', all = (isP ? data.settings.punishItems : data.settings.rewardItems).filter(x=>!(x && x.freebox)), row = isP ? econPunishRowHtml : econRewardRowHtml;
   const rank = r=>{ const x = econRarityById(r); return x ? x.order : 99; }, sv = econSeverities();
   const sortFn = isP ? (a, b)=>sv.indexOf(a.severity) - sv.indexOf(b.severity) || a.name.localeCompare(b.name, 'ar') : (a, b)=>rank(a.rarity) - rank(b.rarity) || a.name.localeCompare(b.name, 'ar');
   const names = { tasks:'غرفة العمليات', learn:'غرفة الأستاذ', habits:'غرفة التأديب', weekly:'الأسبوعية', monthly:'الشهرية' };
@@ -22213,6 +22508,7 @@ function codisUseRewardCard(e){ return !!e && e.kind === 'reward' && e.scope !==
    بدون o يبقى الناتج مطابقاً تماماً لما يُعرض بعد إكمال المهام */
 function codisRewardCardHtml(e, o){
   o = o || {};
+  if(codisIsFreeReward(e)) return codisFreeGiftCardHtml(e.item || e.name, (o.price !== undefined ? o.price : e.coinValue), { plain:o.plain, label:o.label, stickerId:e.stickerId });   /* CODIS-V44 */
   if(codisIsTeacherReward(e)) return codisSpecialCardHtml('teacher', { name:e.item, coin:(o.price !== undefined ? o.price : e.coinValue), plain:o.plain, label:o.label, stickerId:e.stickerId, tier:codisTeacherTierOf(e) });   /* غرفة الأستاذ: بطاقتها المستقلة */
   const k = codisCardKey(e), S = CODIS_CARD_SLOTS[k], tone = k.toLowerCase();
   const coin = econC(Math.max(0, Number(o.price !== undefined ? o.price : e.coinValue) || 0));
@@ -23733,7 +24029,7 @@ function econRenderAll(){
 }
 function econRenderHome(){
   const set = (id, v)=>{ const el = document.getElementById(id); if(el) el.textContent = v; };
-  set('home-reward-count', data.settings.rewardItems.length);
+  set('home-reward-count', data.settings.rewardItems.filter(x=>!(x && x.freebox)).length);
   set('home-punish-count', data.settings.punishItems.length);
   set('home-wallet-balance', econFmt(data.wallet.balance));
   econRenderChip();
@@ -23793,7 +24089,7 @@ function econOpenLayer(secId, render){
 function econStoreSig(){
   let adm = false; try{ adm = CodisAccount.isAdmin(); }catch(e){}
   return [window.__codisSaveN || 0, CodisClock.date().toDateString(), Math.floor(CodisClock.now() / 600000), econClosedOpen, econClosedView, econSelMode, Object.keys(econSelSet || {}).length,
-    econOwnOpen, econBusyId, econStoreBusy, econSellBusy, econSilverBusy, data.wallet.balance, adm, innerWidth].join('|');
+    econOwnOpen, codisFreeBoxSig(), econBusyId, econStoreBusy, econSellBusy, econSilverBusy, data.wallet.balance, adm, innerWidth].join('|');
 }
 function econStoreReopen(){
   const box = document.getElementById('eco-store-body');
@@ -25840,7 +26136,7 @@ function econEdit(id){ if(rpuSel.on){ rpuSelToggle(id); return; }   /* CODIS-V43
 /* CODIS-CLARITY: صف مكافأة (نفس الحقول والأزرار) */
 /* CODIS-CLARITY: كل قائمة تُرسم بقسمها: اليومية لغرفة settingsDailyRoom، والأسبوعية والشهرية دائماً — نفس التصفية بـ room */
 function rpuFill(kind, rowHtml, sortFn, emptyFor){
-  const all = kind === 'punish' ? data.settings.punishItems : data.settings.rewardItems, n = { daily:0, weekly:0, monthly:0 }, perRoom = {};
+  const all = (kind === 'punish' ? data.settings.punishItems : data.settings.rewardItems).filter(x=>!(x && x.freebox)), n = { daily:0, weekly:0, monthly:0 }, perRoom = {};
   all.forEach(x=>{ const p = econScopeOfRoom(x.room); n[p] = (n[p] || 0) + 1; perRoom[x.room] = (perRoom[x.room] || 0) + 1; });
   [['daily', settingsDailyRoom, ''], ['weekly', 'weekly', '-weekly'], ['monthly', 'monthly', '-monthly']].forEach(([p, room, suf])=>{
     const list = document.getElementById(kind + '-list' + suf); if(!list) return;
@@ -25853,6 +26149,7 @@ function rpuFill(kind, rowHtml, sortFn, emptyFor){
   });
   const blk = document.getElementById('rp-' + kind + '-block');
   if(blk && blk.style.display !== 'none') document.querySelectorAll('#settings-page-rewards [data-jn]').forEach(b=>{ b.textContent = n[b.dataset.jn] || 0; });
+  try{ if(kind !== 'punish') codisFreeMgmtRender(); }catch(e){}   /* CODIS-V44 */
   try{ rpuAfterFill(kind, n); }catch(e){}
   return n;
 }
@@ -25860,7 +26157,7 @@ function econRenderRewards(){
   const list = document.getElementById('reward-list'); if(!list) return;
   codisV35Cat('reward');
   if(econRoomIds().indexOf(settingsRoom) !== -1) settingsDailyRoom = settingsRoom;
-  const cnt = document.getElementById('reward-count'); if(cnt) cnt.innerText = data.settings.rewardItems.filter(x=>x.room === settingsDailyRoom).length;
+  const cnt = document.getElementById('reward-count'); if(cnt) cnt.innerText = data.settings.rewardItems.filter(x=>x.room === settingsDailyRoom && !x.freebox).length;
   econSyncPeriodUI();
   const addBox = document.getElementById('reward-add-box');
   if(addBox && !addBox.dataset.ready){ addBox.innerHTML = econRewardEditor('eco-new-r', null) + '<button type="button" class="btn btn-primary eco-full" onclick="econAddReward()">إضافة المكافأة</button>'; addBox.dataset.ready = '1'; }
@@ -26027,6 +26324,7 @@ let econBusyId = null, econSellBusy = false, econSelMode = false, econSelSet = {
 function econSourceLabel(it){
   if(it.source === 'store') return 'من المتجر';
   if(it.source === 'box') return 'من بكج';
+  if(it.source === 'free') return 'من الصندوق المجاني';   /* CODIS-V44 */
   return ({ daily:'نتيجة يومية', weekly:'نتيجة أسبوعية', monthly:'نتيجة شهرية', habit:'محطة عادة' })[it.scope] || 'نتيجة مكافأة';
 }
 function econChips(opts, cur, fn, label){
@@ -26052,6 +26350,7 @@ function econStoreArtAr(it, rar){
 /* وجه البطاقة داخل الإطار الموحّد 4:5 (يومي/أسبوعي/شهري/الأستاذ/بلا صورة) — المصدر الواحد للمتجر والتفاصيل */
 function econStoreFaceHtml(it, rar, o){
   o = o || {};
+  if(codisIsFreeReward(it)){ let _c = 0; try{ _c = it.fin ? codisFinItemCoin(it) : (it.rewardId ? econEffCoin(data.settings.rewardItems.find(x=>x && x.id === it.rewardId) || {}, rar) : 0); }catch(e){} return codisFreeGiftCardHtml(it.name, (o.price !== undefined && o.price !== 0) ? o.price : _c, { plain:true, label:o.label, stickerId:it.stickerId }); }   /* CODIS-V44 */
   { const sp = codisSlotOf(it); if(sp) return codisHabitSpecialCardHtml({ kind:'reward', scope:'habit', fixedId:sp.id, item:it.name, coinValue:sp.coin, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label }); }
   if(econStoreMonthlyKey(it, rar)) return codisMonthlyCardHtml({ kind:'reward', scope:'monthly', room:it.room, rarityTone:rar.tone, item:it.name, rarityName:rar.name, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label });
   if(econStoreWeeklyKey(it, rar)) return codisWeeklyCardHtml({ kind:'reward', scope:'weekly', room:it.room, rarityTone:rar.tone, item:it.name, stickerId:it.stickerId }, { plain:true, price:o.price, label:o.label });
@@ -26231,7 +26530,7 @@ function econStoreCardHtml(it, rar, bal, i){
   const kind = wk ? 'is-wk' : mo ? 'is-mo' : (econStoreHasArt(it) && codisCardKey({ rarityTone:rar.tone })) ? 'is-dl' : 'is-plain';
   const buy = '<button type="button" class="btn ' + (ok ? 'btn-primary' : 'btn-secondary') + ' shop-buy' + (busy ? ' is-busy' : '') + '" ' + (ok && !busy ? '' : 'disabled aria-disabled="true"') +
     ' aria-label="' + escapeHtml('شراء ' + it.name + ' — ' + econFmt(price) + ' كوين' + (ok ? '' : ' — ينقصك ' + econFmt(price - bal))) + '" onclick="econBuy(\'' + id + '\')">' + (busy ? 'جارٍ الشراء…' : ok ? econCoin(price) : 'ينقصك ' + econFmt(price - bal)) + '</button>';
-  const back = codisCardBackHtml(it.name, [['الفئة', econCardName(it, rar)], ['القسم', econRoomLabel(it.room)], ['السعر', econCoin(price), '', true]], { tone:rar.tone, kind:wk ? 'weekly' : mo ? 'monthly' : 'reward', sticker:it.stickerId });   /* CODIS-PAPER-BACK */
+  const back = codisCardBackHtml(it.name, [['الفئة', it.freebox ? 'كرت الصندوق المجاني' : econCardName(it, rar)], ['القسم', it.freebox ? 'الصندوق المجاني' : econRoomLabel(it.room)], ['السعر', econCoin(price), '', true]], { tone:rar.tone, kind:wk ? 'weekly' : mo ? 'monthly' : 'reward', sticker:it.stickerId });   /* CODIS-PAPER-BACK */
   return '<div class="shop-card store-card st-tile rar-' + escapeHtml(rar.tone) + (ok ? '' : ' is-short') + '" style="--i:' + (i || 0) + '" role="listitem" data-id="' + id + '">' +
     codisFlipHtml('<span class="store-art is-card ' + kind + '">' + econStoreFaceHtml(it, rar, { price:price }) + '</span>', back, { cls:'store-open', label:it.name + ' — ' + econCardName(it, rar) + ' — ' + econFmt(price) + ' كوين' }) +
     '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it) + '</div>' +
@@ -26306,7 +26605,7 @@ function econInventoryHtml(){
       '</div>' : '') + '</div><div class="shop-grid" role="list">';
     owned.forEach((it, i)=>{
       const sv = CodisInventory.sellValue(it), busy = econSellBusy, can = sv > 0 && !codisTimerBlocksSell(it.uid), on = !!econSelSet[it.uid], uid = escapeHtml(it.uid);
-      const art = econPackTileHtml({ id:it.uid, room:it.room, name:it.name, stickerId:it.stickerId, rewardId:it.rewardId }, { id:it.rarity, name:it.rarityName, tone:it.rarityTone, order:it.rarityOrder }).replace(' role="listitem"', '');   /* نفس بطاقة المتجر والبكج */
+      const art = econPackTileHtml({ id:it.uid, room:it.room, name:it.name, stickerId:it.stickerId, rewardId:it.rewardId, fin:it.fin, source:it.source }, { id:it.rarity, name:it.rarityName, tone:it.rarityTone, order:it.rarityOrder }).replace(' role="listitem"', '');   /* نفس بطاقة المتجر والبكج */
       const cap = '<div class="st-cap"><span class="shop-name" dir="auto">' + escapeHtml(it.name) + '</span>' + codisDurBadgeHtml(it) + '</div>';
       if(sm){
         const inner = '<div class="own-art">' + art + (can ? '<span class="own-check" aria-hidden="true">' + (on ? ICONS.check : '') + '</span>' : '') + '</div>' + cap;
@@ -26487,11 +26786,11 @@ function econRenderStore(){
   if(vlt && vwrap && vlt.parentNode !== vwrap) vwrap.appendChild(vlt);   /* يخرج قبل استبدال المحتوى فيبقى العنصر نفسه بمستمعاته */
   CodisArt.set(box, ()=>'<div class="settings-card eco-balance' + (tick ? ' is-tick' : '') + '"><span class="eco-balance-main"><span class="eco-lab">رصيدك</span>' + econCoin(bal) + econSilverLine() + '</span>' +
     '<button type="button" class="eco-hist-btn" aria-expanded="' + (econClosedOpen ? 'true' : 'false') + '" aria-controls="eco-closed-panel" title="المباعة والمستخدمة" onclick="econToggleClosed()">' + codisIcon('archive') + '<span class="sr">المباعة والمستخدمة</span>' + (nClosed ? '<span class="eco-hist-n" aria-hidden="true">' + econFmt(nClosed) + '</span>' : '') + '</button></div>' +
-    econStoreNavHtml() + (econClosedOpen ? econClosedPanelHtml() : '') + econBoxesHtml() + econCosmeticsShopHtml() + econShopHtml() + econOwnSheetHtml(), { thumbs:true });
+    econStoreNavHtml() + (econClosedOpen ? econClosedPanelHtml() : '') + codisFreeBoxStoreHtml() + econBoxesHtml() + econCosmeticsShopHtml() + econShopHtml() + econOwnSheetHtml(), { thumbs:true });
   /* حركة الدخول مرة واحدة عند فتح المتجر (لا تتكرر مع كل إعادة رسم بعد شراء/تصفية) */
   const bal0 = box.querySelector('.eco-balance'); if(vlt && bal0) bal0.appendChild(vlt);
   box.classList.toggle('is-enter', !econCalm() && Date.now() - econStoreEnterAt < 700);
-  codisFitLazy(box); codisWatchRewardCards(box);
+  codisFitLazy(box); codisWatchRewardCards(box); codisFreeBoxSchedule();   /* CODIS-V44 */
   econVaultSync(); econStoreNavBind(); econStoreNavSync();
   box._codisSig = econStoreSig(); CodisCrumb.mark('store:built', box.getElementsByTagName('*').length); CodisCrumb.settle(2000);
   if(ownKeep){ const os = document.getElementById('eco-own-sheet'); if(os) os.scrollTop = ownKeep; }
@@ -30678,9 +30977,9 @@ function codisFinTick(){
    الخطوات: 0 اختيار النوع · 1 التفاصيل (اسم + قيمة/مدة + ستيكر اختياري) · 2 المراجعة والوجهة. بعد الحفظ الناجح: يرجع للخطوة 1 بنفس النوع وحقول فارغة. */
 let finAuto = null;
 function finAutoBlank(kind){ return { step:kind ? 1 : 0, kind:kind || null, name:'', iqd:'', min:'', stickerId:'', cardId:null, err:'', busy:false, saved:0, flash:'', lockUntil:0 }; }
-function finAutoOpen(){
-  finAuto = finAutoBlank();
-  return CodisFinUI.open({ title:'إضافة مكافأة تلقائية', cls:'is-wide fa-ov', body:'<div id="fa-root"></div>', mount:(root)=>{ finAutoPaint(root); }, onClose:()=>{ finAuto = null; } });
+function finAutoOpen(o){
+  finAuto = finAutoBlank(); if(o && o.free) finAuto.free = true;   /* CODIS-V44 */
+  return CodisFinUI.open({ title:(o && o.free) ? 'إضافة مكافأة للصندوق المجاني' : 'إضافة مكافأة تلقائية', cls:'is-wide fa-ov', body:'<div id="fa-root"></div>', mount:(root)=>{ finAutoPaint(root); }, onClose:()=>{ finAuto = null; } });
 }
 /* الستيكر يعيش بحقل مخفي (#fa-sticker) يكتبه codisSetSticker — يُقرأ للحالة قبل أي إعادة رسم أو حفظ */
 function finAutoSync(){ const h = document.getElementById('fa-sticker'); if(h && finAuto) finAuto.stickerId = codisStickerIdOk(h.value) || ''; }
@@ -30725,7 +31024,9 @@ function finAutoCalc(full){
   if(a.kind === 'financial'){ iqd = finParseAmt(a.iqd); if(iqd && f.fx.rate){ coin = codisFinCoinOfIqd(iqd, f.fx.rate); line = finFmt(iqd) + ' ÷ ' + finFmt(f.fx.rate) + ' = <b>' + finFmt(coin) + '</b> كوين'; } }
   else { min = codisFinInt(a.min, 1, 1440); if(min){ coin = codisFinCoinOfMinutes(min); line = finFmt(min) + ' دقيقة ÷ 2 = <b>' + finFmt(coin) + '</b> كوين'; } }
   const name = String(a.name || '').trim(); let cls = null, warn = '';
-  if(coin !== null){ cls = codisFinClassify(name || '—', coin); if(!cls.ok) warn = cls.reason === 'low' ? 'القيمة أقل من الحد الأدنى (10 كوين' + (a.kind === 'financial' ? ' = ' + finFmt(10 * f.fx.rate) + ' د.ع بالسعر الحالي' : ' = 20 دقيقة') + ')' : cls.reason === 'high' ? 'القيمة أعلى من الحد الأقصى (30,000 كوين)' : 'لا توجد بطاقة مناسبة لهذي القيمة'; }
+  if(coin !== null){ cls = codisFinClassifyAuto(name || '—', coin);
+    if(a.free){ const _fc = cls.ok ? cls.candidates.filter(c=>c.card.free) : []; cls = _fc.length ? Object.assign({}, cls, { candidates:_fc, best:_fc[0], ambiguous:false, suggestions:_fc }) : { ok:false, reason:'freeRange', coin:coin }; }   /* CODIS-V44 */
+    if(!cls.ok) warn = cls.reason === 'freeRange' ? 'قيمة مكافآت الصندوق المجاني من 1 إلى 10 كوينز' + (a.kind === 'financial' ? ' (' + finFmt(f.fx.rate) + '–' + finFmt(10 * f.fx.rate) + ' د.ع بالسعر الحالي)' : ' (من دقيقتين إلى 20 دقيقة)') : cls.reason === 'low' ? 'القيمة أقل من الحد الأدنى (كوين واحد' + (a.kind === 'financial' ? ' = ' + finFmt(f.fx.rate) + ' د.ع بالسعر الحالي' : ' = دقيقتان') + ')' : cls.reason === 'high' ? 'القيمة أعلى من الحد الأقصى (30,000 كوين)' : 'لا توجد بطاقة مناسبة لهذي القيمة'; }
   const el = document.getElementById('fa-calc'); if(el && !full) el.innerHTML = line ? '<span>' + line + '</span>' + (warn ? '<em class="fin-bad">' + warn + '</em>' : '') : '';
   { /* معاينة الستيكر على الوجهة الأرجح (حقول مخفية يقرؤها codisStickerPreviewHtml) */
     const best = cls && cls.ok ? cls.best.card : null, set = (id, v)=>{ const e = document.getElementById(id); if(e) e.value = v; };
@@ -30740,7 +31041,7 @@ function finAutoCalc(full){
     const stk = codisStickerList(a.stickerId).filter(x=>CodisStickers.url(x)).slice(0, CODIS_STICKER_MAX).map(x=>'<img src="' + escapeHtml(CodisStickers.url(x)) + '" alt="" draggable="false">').join('');
     o.html = '<div class="fa-sum"><div class="fa-sum-m"><b dir="auto">' + escapeHtml(name) + '</b><span>' + line + '</span></div>' + (stk ? '<div class="fa-sum-s" aria-label="الستيكر">' + stk + '</div>' : '') + '</div>' +
       '<p class="fin-hint fa-q">' + (cls.ambiguous ? 'وين تريد المكافأة تظهر لك؟' : 'الوجهة المقترحة حسب المعنى والسعر معاً' + (cls.domains.length ? ' (' + cls.domains.map(d=>escapeHtml(d.label)).join('، ') + ')' : '') + ':') + '</p>' +
-      '<div class="fin-dests" role="radiogroup" aria-label="الوجهة">' + cand.map(c=>'<button type="button" role="radio" aria-checked="' + (pick && pick.card.id === c.card.id) + '" class="fin-dest' + (pick && pick.card.id === c.card.id ? ' is-on' : '') + '" data-card="' + c.card.id + '"><b>' + escapeHtml(c.card.name) + '</b><small>' + econRoomLabel(c.card.room) + ' · نطاق ' + finFmt(c.card.min) + '–' + finFmt(c.card.max) + ' كوين</small></button>').join('') + '</div>';
+      '<div class="fin-dests" role="radiogroup" aria-label="الوجهة">' + cand.map(c=>'<button type="button" role="radio" aria-checked="' + (pick && pick.card.id === c.card.id) + '" class="fin-dest' + (pick && pick.card.id === c.card.id ? ' is-on' : '') + '" data-card="' + c.card.id + '"><b>' + escapeHtml(c.card.name) + '</b><small>' + (c.card.free ? 'الصندوق المجاني' : econRoomLabel(c.card.room)) + ' · نطاق ' + finFmt(c.card.min) + '–' + finFmt(c.card.max) + ' كوين</small></button>').join('') + '</div>';
   }
   return o;
 }
@@ -30760,7 +31061,7 @@ function finAutoNext(){
       let r; try{ r = codisFinCreateReward({ name:a.name, kind:a.kind, iqd:finParseAmt(a.iqd), minutes:codisFinInt(a.min, 1, 1440), cardId:c.pick.card.id, stickerId:a.stickerId || null }); }
       catch(e){ console.error('finAuto save', e); r = { ok:false, reason:'error' }; }
       finally{ a.busy = false; }
-      if(!r.ok){ a.err = ({ name:'اكتب الاسم', kind:'اختر النوع', nosetup:'أكمل إعداد الإدارة المالية أولاً', amount:'القيمة غير صالحة', low:'القيمة أقل من 10 كوين', high:'القيمة أعلى من 30,000 كوين', range:'القيمة خارج نطاق البطاقة', save:'تعذّر الحفظ — ما انضافت', error:'تعذّر التنفيذ' })[r.reason] || 'تعذّر التنفيذ'; }
+      if(!r.ok){ a.err = ({ name:'اكتب الاسم', kind:'اختر النوع', nosetup:'أكمل إعداد الإدارة المالية أولاً', amount:'القيمة غير صالحة', low:'القيمة أقل من كوين واحد', high:'القيمة أعلى من 30,000 كوين', range:'القيمة خارج نطاق البطاقة', save:'تعذّر الحفظ — ما انضافت', error:'تعذّر التنفيذ' })[r.reason] || 'تعذّر التنفيذ'; }
       else {   /* نجاح فعلي: الآن فقط تُفرَّغ الحقول ويبقى النوع */
         const nm = r.item.name; a.saved++; a.flash = 'انضافت «' + nm + '» (' + finFmt(r.coin) + ' كوين) إلى ' + r.card.name + ' — تقدر تضيف التالية'; a.lockUntil = Date.now() + 500;
         a.name = ''; a.iqd = ''; a.min = ''; a.stickerId = ''; a.cardId = null; a.err = ''; a.step = 1;

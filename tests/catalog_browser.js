@@ -108,7 +108,7 @@
   { const pg = document.getElementById('settings-page-rewards'), vis = sel=>[...document.querySelectorAll(sel)].filter(x=>getComputedStyle(x).display !== 'none' && !x.closest('[hidden]') && getComputedStyle(x.closest('.rpu-block') || x).display !== 'none');
     const dupIds = ()=>{ const s = {}; let d = 0; document.querySelectorAll('[id]').forEach(e=>{ if(s[e.id]) d++; s[e.id] = 1; }); return d; };
     rpOpenHub('reward'); await sleep(50);
-    T('hub opens on the daily page only', pg.dataset.view === 'daily' && vis('#rp-reward-block .rpu-sec').map(s=>s.dataset.period).join() === 'daily');
+    T('hub opens on the daily page only', pg.dataset.view === 'daily' && vis('#rp-reward-block .rpu-sec:not(.rpu-free)').map(s=>s.dataset.period).join() === 'daily');   /* CODIS-V44: قسم الصندوق المجاني يلي صفحة اليومي بآخرها */
     setSettingsPeriod('weekly'); await sleep(20); T('weekly = its own page', vis('#rp-reward-block .rpu-sec').map(s=>s.dataset.period).join() === 'weekly');
     setSettingsPeriod('monthly'); await sleep(20); T('monthly = its own page with the month card', vis('#rp-reward-block .rpu-sec').map(s=>s.dataset.period).join() === 'monthly' && !!vis('#rpu-r-monthly [data-month] button').length);
     /* typed text survives switching pages */
