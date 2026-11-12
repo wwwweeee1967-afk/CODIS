@@ -29,7 +29,7 @@
 <meta name="theme-color" content="#E9E0CD">
 <meta name="color-scheme" content="light">
 <!-- CODIS accounts (Supabase). Fill ONLY the public values: Project URL + anon/publishable key. NEVER put service_role / secret keys here. -->
-<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.29.0">
+<!-- CODIS-BUTTER --><!-- CODIS-CRUMBS --><!-- CODIS-RAYS --><meta name="codis-version" content="3.30.0">
 <meta name="codis-supabase-url" content="https://hkrqiqzkkjmokjabovpq.supabase.co">
 <meta name="codis-supabase-key" content="sb_publishable_G123qtyvcj8rlVtJHgHIDw_5Y2DKazO">
 <title>CODIS</title>
@@ -11445,6 +11445,114 @@ html[data-theme="paper"] .rar-badge.rar-gold{ --rar:#6b4a06; --rar-bg:rgba(214,1
 .scx-tag{ position:absolute; left:50%; top:2.1%; transform:translateX(-50%); z-index:3; pointer-events:none; padding:.2em 1.6em; border-radius:99px; font-size:3.3cqw; line-height:1.3; font-weight:800; letter-spacing:.22em; text-transform:uppercase; white-space:nowrap; direction:ltr; background:rgba(14,12,20,.78); border:1px solid currentColor; }
 .scx-t-bronze .scx-tag{ color:#e8b184; } .scx-t-silver .scx-tag{ color:#e6ebf3; } .scx-t-gold .scx-tag{ color:#ffe08a; }
 </style>
+<style id="codis-v43-css">
+/* CODIS-V43 (3.30.0): إدارة المكافآت · الإضافة التلقائية · التحديد الجماعي · أيقونة الوقت · الشريط السفلي الزجاجي */
+
+/* ---------- ملاحظات الأقسام: فارغة = لا مساحة ---------- */
+.rpu-note:empty{ display:none; }
+
+/* ---------- ترتيب قسم المكافآت (بعد حذف أزرار الإضافة المنفصلة) ---------- */
+#settings-page-rewards .rpu-head{ align-items:center; gap:12px; }
+#settings-page-rewards .rpu-sec{ display:grid; gap:12px; }
+#settings-page-rewards .rpu-sec > *{ min-width:0; }
+#settings-page-rewards .rpu-auto-btn{ margin-bottom:8px; }
+#settings-page-rewards .rpu-list{ gap:10px; }
+
+/* ---------- أيقونة المكافأة الوقتية: السبب = صف .rpt-top كان nowrap بعرض البلاطة؛ ستيكر + ندرة + «ساعة و١٠ دقائق» أعرض من البلاطة فيفيض الشارة خارجها (يظهر بالهاتف الضيق).
+   الإصلاح بنيوي: التفاف الصف + عناصر لا تنكمش (الستيكر كان ينكمش 22→16px) + شارة بأيقونة ثابتة المقاس ومحاذاة وسط ===== */
+.rpt-top{ flex-wrap:wrap; row-gap:4px; column-gap:4px; }
+.rpt-top > *{ flex:none; max-width:100%; min-width:0; }
+.rpt-stk{ flex:none; }
+.rpt-stk .stk-mini{ flex:none; }
+.dur-badge{ flex:none; box-sizing:border-box; max-width:100%; display:inline-flex; align-items:center; justify-content:center; gap:4px; line-height:1.4; min-height:20px; vertical-align:middle; }
+.dur-badge svg{ flex:none; width:11px; height:11px; display:block; overflow:visible; }
+.rpt-top .dur-badge{ line-height:1.4; padding:1px 7px; }
+
+/* ---------- نافذة الإضافة التلقائية ---------- */
+.stk-ov{ z-index:700; }   /* منتقي الستيكرات يعلو نافذة الإضافة (fin-ov = 690) */
+.fa-ov .fin-sb{ gap:14px; padding:6px 18px 20px; }
+.fa-prog{ display:grid; gap:6px; }
+.fa-types{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fa-type{ display:grid; justify-items:center; align-content:start; gap:8px; min-height:148px; padding:18px 12px 16px; border-radius:20px; border:1.5px solid var(--fin-line); background:var(--fin-paper2); color:var(--fin-ink); font:inherit; text-align:center; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:transform .12s ease, border-color .15s ease, background-color .15s ease; }
+.fa-type:active{ transform:scale(.97); }
+.fa-type-ic{ width:48px; height:48px; border-radius:50%; display:grid; place-items:center; background:color-mix(in srgb, var(--fin-brass) 16%, transparent); color:var(--fin-brass); }
+.fa-type b{ font-size:16px; }
+.fa-type small{ font-size:12px; line-height:1.55; color:var(--fin-ink2); }
+.fa-type.is-on{ border-color:var(--fin-brass); box-shadow:0 0 0 1px var(--fin-brass) inset; background:color-mix(in srgb, var(--fin-brass) 13%, var(--fin-paper2)); }
+.fa-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:40px; }
+.fa-kind{ display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background:var(--fin-chip); color:var(--fin-ink); font-size:14px; }
+.fa-kind .ico, .fa-kind svg{ color:var(--fin-brass); }
+.fa-n{ font-style:normal; font-size:12px; color:var(--fin-ink2); padding-inline-start:8px; border-inline-start:1px solid var(--fin-line); }
+.fa-ok{ display:flex; align-items:flex-start; gap:8px; margin:0; padding:10px 12px; border-radius:12px; background:color-mix(in srgb, var(--fin-green, #2f8f5b) 14%, transparent); color:var(--fin-ink); font-size:13.5px; line-height:1.55; font-weight:700; }
+.fa-ok .ico, .fa-ok svg{ flex:none; color:var(--fin-green, #2f8f5b); }
+.fa-stk .stk-row{ display:flex; align-items:stretch; gap:8px; }
+.fa-stk .stk-pick{ flex:1 1 auto; min-width:0; }
+.fa-foot{ position:sticky; bottom:0; padding-top:4px; }
+.fa-foot .btn{ min-height:50px; flex:1 1 0; }
+.fa-sum{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border-radius:14px; border:1px solid var(--fin-line); background:var(--fin-paper); }
+.fa-sum-m{ display:grid; gap:4px; min-width:0; } .fa-sum-m b{ font-size:16px; overflow-wrap:anywhere; } .fa-sum-m span{ font-size:13px; color:var(--fin-ink2); }
+.fa-sum-s{ display:flex; flex:none; } .fa-sum-s img{ width:34px; height:34px; object-fit:contain; margin-inline-start:-8px; }
+.fa-q{ font-weight:700; color:var(--fin-ink); }
+.fin-dest{ min-height:56px; }
+@media (max-width:359px){ .fa-types{ grid-template-columns:1fr; } .fa-type{ min-height:0; grid-template-columns:auto 1fr; text-align:start; justify-items:start; align-items:center; } .fa-type-ic{ grid-row:span 2; } }
+
+/* ---------- التحديد والحذف الجماعي ---------- */
+.rpu-bulk{ display:grid; gap:8px; margin:0 0 12px; }
+.rpu-bk{ min-height:44px; padding:0 14px; border-radius:var(--r-full); border:1px solid var(--glass-border); background:var(--glass); color:var(--text); font:inherit; font-size:var(--fs-sub); font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.rpu-bk:active{ transform:scale(var(--press)); }
+.rpu-bk[disabled]{ opacity:.45; cursor:not-allowed; }
+.rpu-bk-main{ justify-self:start; border-color:var(--aqua-a40); background:var(--aqua-a08); color:var(--aqua); }
+.rpu-bk.is-danger{ border-color:rgb(190 60 60 / .5); color:#a3302f; background:rgb(190 60 60 / .08); }
+html[data-theme="dark"] .rpu-bk.is-danger{ color:#ff8f8c; background:rgb(255 120 120 / .1); }
+.rpu-bk.is-all{ font-weight:800; }
+.rpu-bk-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.rpu-bk-row .rpu-bk{ flex:1 1 auto; }
+.rpu-bk-info{ display:flex; align-items:baseline; gap:6px; color:var(--text-2); font-size:var(--fs-sub); } .rpu-bk-info b{ font-size:20px; color:var(--text); font-variant-numeric:tabular-nums; }
+.rpu-bk-note{ margin:0; font-size:var(--fs-caption); line-height:1.6; color:var(--text-3); }
+.rpt-chk{ position:absolute; z-index:2; top:8px; inset-inline-start:8px; width:28px; height:28px; padding:0; border-radius:9px; border:1.5px solid var(--glass-border-strong, var(--glass-border)); background:var(--glass-strong, var(--glass)); color:transparent; display:grid; place-items:center; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.rpt-chk svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.rpt-chk.is-on{ background:var(--aqua); border-color:var(--aqua); color:var(--on-aqua, #fff); }
+#settings-page-rewards .rpu-list .rpt.is-sel{ border-color:var(--aqua); box-shadow:0 0 0 1px var(--aqua) inset; }
+
+/* ---------- الشريط السفلي: زجاج عائم أنحف ---------- */
+:root{
+  --nav-h:62px;
+  --nav-lift:max(10px, calc(var(--safe-b) - 12px));   /* السبب القديم: bottom = 10px + كامل safe-area (34px على iPhone) = 44px؛ الآن 10px للكمبيوتر و22px عند وجود مؤشر Home */
+  --pad-bottom:calc(var(--nav-h) + var(--nav-lift) + 28px);
+}
+.sidebar{
+  inset-inline:14px; bottom:var(--nav-lift); padding:5px; gap:2px; border-radius:26px;
+  --dock-cell:21px;
+  background:linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .12) 58%), rgb(248 243 233 / .5);
+  border:1px solid rgb(255 255 255 / .62);
+  box-shadow:0 12px 30px -10px rgb(40 30 10 / .34), 0 2px 8px rgb(40 30 10 / .10), inset 0 1px 0 rgb(255 255 255 / .85), inset 0 -1px 0 rgb(255 255 255 / .2);
+  -webkit-backdrop-filter:blur(22px) saturate(1.7); backdrop-filter:blur(22px) saturate(1.7);
+}
+html[data-theme="dark"] .sidebar{
+  background:linear-gradient(180deg, rgb(255 255 255 / .14), rgb(255 255 255 / .03) 58%), rgb(20 25 33 / .52);
+  border-color:rgb(255 255 255 / .18);
+  box-shadow:0 14px 32px -10px rgb(0 0 0 / .65), 0 2px 8px rgb(0 0 0 / .3), inset 0 1px 0 rgb(255 255 255 / .24), inset 0 -1px 0 rgb(255 255 255 / .05);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .sidebar{ background:rgb(246 240 228 / .96); } html[data-theme="dark"] .sidebar{ background:rgb(20 25 33 / .96); }
+}
+.sidebar::before{ inset:0 10% auto; background:linear-gradient(90deg, transparent, rgb(255 255 255 / .9) 30%, rgb(255 255 255 / .55) 70%, transparent); }
+html[data-theme="dark"] .sidebar::before{ background:linear-gradient(90deg, transparent, rgb(255 255 255 / .5) 30%, rgb(255 255 255 / .3) 70%, transparent); }
+.sidebar::after{ display:none; }
+.navbtn{ height:50px; padding:4px 2px; gap:2px; }
+.navicon{ width:22px; height:22px; --ctx-ico-n:20; }
+.nav-indicator{ --dock-inset:2px; }
+@media (max-width:374px){
+  :root{ --nav-h:68px; }
+  .navbtn{ height:56px; padding-top:6px; gap:2px; line-height:1.1; }
+}
+@media (max-height:500px) and (orientation:landscape){
+  :root{ --nav-h:52px; }
+  .sidebar{ padding:3px; } .navbtn{ height:44px; min-height:44px; }
+}
+.toast{ bottom:calc(var(--nav-h) + var(--nav-lift) + 14px); }
+@media (prefers-reduced-motion:reduce){ .fa-type, .rpu-bk{ transition:none; } }
+</style>
 <script>
 /* CODIS-V33: long-press on content must not open the browser's selection / image menu (inputs and editable text keep theirs) */
 document.addEventListener('contextmenu', function(e){
@@ -11990,11 +12098,9 @@ document.addEventListener('selectstart', function(e){
           <header class="rpu-head">
             <span class="rpu-ico" aria-hidden="true"><svg data-icon="calendar" data-size="md"></svg></span>
             <div class="rpu-ht"><h3 class="rpu-h" id="rpu-r-daily-h">المكافآت اليومية</h3><span class="rpu-sub" data-count></span></div>
-            <button type="button" class="rpu-add" aria-expanded="false" onclick="rpuAdd('reward','daily')"><svg class="rpu-plus" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>إضافة مكافأة</span></button>
           </header>
           <div class="arch-filter room-sel" role="group" aria-label="القسم اليومي"><button type="button" class="arch-filter-btn is-on" data-room="tasks" aria-pressed="true" onclick="setSettingsRoom('tasks')">غرفة العمليات<span class="arch-filter-n"></span></button><button type="button" class="arch-filter-btn" data-room="learn" aria-pressed="false" onclick="setSettingsRoom('learn')">غرفة الأستاذ<span class="arch-filter-n"></span></button><button type="button" class="arch-filter-btn" data-room="habits" aria-pressed="false" onclick="setSettingsRoom('habits')">غرفة التأديب<span class="arch-filter-n"></span></button></div>
           <p class="rpu-note" data-note="daily"></p>
-          <div class="rpu-add-slot"></div>
           <div class="eco-list rpu-list" id="reward-list"></div>
           <div class="cat-box" id="reward-cat" hidden></div>
         </section>
@@ -12002,21 +12108,17 @@ document.addEventListener('selectstart', function(e){
           <header class="rpu-head">
             <span class="rpu-ico" aria-hidden="true"><svg data-icon="report" data-size="md"></svg></span>
             <div class="rpu-ht"><h3 class="rpu-h" id="rpu-r-weekly-h">المكافآت الأسبوعية</h3><span class="rpu-sub" data-count></span></div>
-            <button type="button" class="rpu-add" aria-expanded="false" onclick="rpuAdd('reward','weekly')"><svg class="rpu-plus" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>إضافة مكافأة</span></button>
           </header>
           <p class="rpu-note" data-note="weekly"></p>
-          <div class="rpu-add-slot"></div>
           <div class="eco-list rpu-list" id="reward-list-weekly"></div>
         </section>
         <section class="rpu-sec" id="rpu-r-monthly" data-period="monthly" aria-labelledby="rpu-r-monthly-h">
           <header class="rpu-head">
             <span class="rpu-ico" aria-hidden="true"><svg data-icon="star" data-size="md"></svg></span>
             <div class="rpu-ht"><h3 class="rpu-h" id="rpu-r-monthly-h">المكافآت الشهرية</h3><span class="rpu-sub" data-count></span></div>
-            <button type="button" class="rpu-add" aria-expanded="false" onclick="rpuAdd('reward','monthly')"><svg class="rpu-plus" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span>إضافة مكافأة</span></button>
           </header>
           <div class="rpu-month" data-month></div>
           <p class="rpu-note" data-note="monthly"></p>
-          <div class="rpu-add-slot"></div>
           <div class="eco-list rpu-list" id="reward-list-monthly"></div>
         </section>
       </div>
@@ -12065,7 +12167,7 @@ document.addEventListener('selectstart', function(e){
         <label class="rpu-find"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input type="search" id="rpu-q" placeholder="ابحث بالاسم…" aria-label="ابحث بالاسم" autocomplete="off" enterkeyhint="search" oninput="rpuFind()"><button type="button" class="rpu-find-x" aria-label="مسح البحث" onclick="rpuFindClear()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button></label>
         <div class="rpu-all-list" id="rpu-all-list"></div>
       </section>
-      <div hidden id="rpu-stash"><div id="reward-add-box"></div><div id="punish-add-box"></div></div>
+      <div hidden id="rpu-stash"><div id="punish-add-box"></div></div>
     </div>
 
     <!-- ACCOUNT-PAGES -->
@@ -15913,7 +16015,7 @@ function codisRptTag(kind, it){
 function codisRptHtml(kind, it, val, meta, editor){
   const ed = econEditing === it.id, id = escapeHtml(it.id), isR = kind === 'reward';
   const tog = isR ? 'econToggleReward' : 'econTogglePunish', del = isR ? 'econDeleteReward' : 'econDeletePunish', save = isR ? 'econSaveReward' : 'econSavePunish';
-  return '<div class="eco-item rpt' + (it.enabled ? '' : ' is-off') + (ed ? ' is-editing' : '') + '" data-name="' + escapeHtml(codisNormText(it.name)) + '">' +
+  return '<div class="eco-item rpt' + (it.enabled ? '' : ' is-off') + (ed ? ' is-editing' : '') + (rpuSel.on && rpuView === 'all' && rpuSel.ids[it.id] ? ' is-sel' : '') + '" data-id="' + escapeHtml(it.id) + '" data-name="' + escapeHtml(codisNormText(it.name)) + '">' + rpuSelHtml(it.id) +
     '<button type="button" class="rpt-face" onclick="econEdit(\'' + id + '\')" aria-expanded="' + (ed ? 'true' : 'false') + '" aria-label="' + escapeHtml(it.name + (it.enabled ? '' : ' — معطّلة') + ' — ' + (ed ? 'إغلاق' : 'فتح')) + '">' +
       '<span class="rpt-top">' + codisRptTag(kind, it) + (isR ? '<span class="rpt-stk">' + codisStickerThumbHtml(it.stickerId) + '</span>' + codisDurBadgeHtml(it) : '') + '</span>' +
       '<span class="eco-item-name rpt-name" dir="auto">' + escapeHtml(it.name) + '</span>' +
@@ -15942,8 +16044,96 @@ function econPunishRowHtml(it){
 /* ---------- صفحة المكافآت/العقوبات: صفحات مستقلة (يومية · أسبوعية · شهرية · الكل) بدل التمرير بين الأقسام ----------
    الحالة واجهة فقط (لا تُحفظ). القوائم الأصلية تبقى كما هي؛ في «الكل» تُفرَّغ قوائم الفترات حتى لا يتكرر محرّر التعديل (لا IDs مكررة). */
 var rpuView = 'daily';
+/* ================= CODIS-V43: التحديد والحذف الجماعي (صفحة «كل المكافآت/العقوبات») =================
+   يحذف تعريفات الكتالوج فقط (data.settings.rewardItems / punishItems) بحفظ واحد وإعادة رسم واحدة.
+   لا يمس: سجل النتائج (outcomeLedger) · المخزون (inventory) · المحفظة/سجل الكوينز · الإدارة المالية · العقوبات المحسومة. */
+var rpuSel = { on:false, ids:{} };   /* حالة واجهة فقط — لا تُحفظ */
+function rpuSelCount(){ return Object.keys(rpuSel.ids).length; }
+function rpuSelReset(){ rpuSel.on = false; rpuSel.ids = {}; }
+/* عناصر محمية من الحذف: لا يوجد فعلياً (كروت الكتالوج الثابتة تُحذف أصلاً بالحذف الفردي) — نقطة واحدة تُعدَّل إن ظهر ما يجب حمايته */
+function rpuProtected(it){ return false; }
+function rpuKindItems(){ return rpKind === 'punish' ? data.settings.punishItems : data.settings.rewardItems; }
+function rpuSelHtml(id){
+  if(!rpuSel.on || rpuView !== 'all') return '';
+  const on = !!rpuSel.ids[id];
+  return '<button type="button" class="rpt-chk' + (on ? ' is-on' : '') + '" role="checkbox" aria-checked="' + (on ? 'true' : 'false') + '" aria-label="تحديد" onclick="rpuSelToggle(\'' + escapeHtml(id) + '\')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></svg></button>';
+}
+function rpuVisibleTiles(){ return Array.prototype.slice.call(document.querySelectorAll('#rpu-all-list .rpu-all-grp:not([hidden]) .rpt:not([hidden])')); }
+function rpuSelToggle(id){
+  if(!rpuSel.on) return;
+  if(rpuSel.ids[id]) delete rpuSel.ids[id]; else rpuSel.ids[id] = true;
+  codisSfx('open', { ctx:'select' }); rpuSelSync();
+}
+function rpuSelSync(){   /* تحديث بالمكان بلا إعادة رسم القائمة */
+  document.querySelectorAll('#rpu-all-list .rpt[data-id]').forEach(t=>{
+    const on = !!rpuSel.ids[t.dataset.id]; t.classList.toggle('is-sel', on);
+    const c = t.querySelector('.rpt-chk'); if(c){ c.classList.toggle('is-on', on); c.setAttribute('aria-checked', on ? 'true' : 'false'); }
+  });
+  rpuBulkPaint();
+}
+function rpuSelMode(){
+  rpuSel.on = !rpuSel.on; if(!rpuSel.on) rpuSel.ids = {};
+  econEditing = null; codisSfx(rpuSel.on ? 'open' : 'close', { ctx:'editor' }); rpuRenderAll();
+}
+function rpuSelAll(){
+  const tiles = rpuVisibleTiles(); if(!tiles.length) return;
+  const all = tiles.every(t=>rpuSel.ids[t.dataset.id]);
+  tiles.forEach(t=>{ if(all) delete rpuSel.ids[t.dataset.id]; else rpuSel.ids[t.dataset.id] = true; });
+  codisSfx('open', { ctx:'select' }); rpuSelSync();
+}
+function rpuBulkPaint(){
+  const box = document.getElementById('rpu-all-list'); if(!box || !box.parentNode) return;
+  let bar = document.getElementById('rpu-bulk');
+  if(!bar){ bar = document.createElement('div'); bar.id = 'rpu-bulk'; bar.className = 'rpu-bulk'; box.parentNode.insertBefore(bar, box); }
+  const isP = rpKind === 'punish', total = rpuKindItems().length, q = (document.getElementById('rpu-q') || {}).value, searching = !!(q && q.trim());
+  const vis = rpuVisibleTiles(), sel = rpuSelCount(), allVis = vis.length > 0 && vis.every(t=>rpuSel.ids[t.dataset.id]);
+  if(!rpuSel.on){
+    bar.innerHTML = '<button type="button" class="rpu-bk rpu-bk-main" onclick="rpuSelMode()"' + (total ? '' : ' disabled aria-disabled="true"') + '>' + codisIcon('check') + '<span>تحديد</span></button>';
+    return;
+  }
+  bar.innerHTML = '<div class="rpu-bk-info" role="status" aria-live="polite"><b>' + finFmt(sel) + '</b><span>محدد' + (searching ? ' · الظاهر ' + finFmt(vis.length) : '') + '</span></div>' +
+    '<div class="rpu-bk-row">' +
+    '<button type="button" class="rpu-bk" onclick="rpuSelAll()"' + (vis.length ? '' : ' disabled aria-disabled="true"') + '><span>' + (allVis ? 'إلغاء تحديد الكل' : (searching ? 'تحديد كل الظاهر' : 'تحديد الكل')) + '</span></button>' +
+    '<button type="button" class="rpu-bk is-danger" onclick="rpuDelSelected()"' + (sel ? '' : ' disabled aria-disabled="true"') + '><span>حذف المحدد' + (sel ? ' (' + finFmt(sel) + ')' : '') + '</span></button>' +
+    '<button type="button" class="rpu-bk is-danger is-all" onclick="rpuDelAll()"' + (total ? '' : ' disabled aria-disabled="true"') + '><span>حذف الكل</span></button>' +
+    '<button type="button" class="rpu-bk" onclick="rpuSelMode()"><span>إلغاء</span></button></div>' +
+    (searching ? '<p class="rpu-bk-note">«تحديد الكل» يشمل نتائج البحث الظاهرة فقط. «حذف الكل» يشمل كل ' + (isP ? 'العقوبات' : 'المكافآت') + ' بكل الأقسام.</p>' : '');
+}
+/* الحذف الفعلي: تعريفات الكتالوج فقط، حفظ واحد، تراجع كامل عند فشل الحفظ. يُرجع عدد المحذوف */
+function rpuBulkDelete(ids){
+  const key = rpKind === 'punish' ? 'punishItems' : 'rewardItems', set = {}; (ids || []).forEach(i=>{ set[i] = true; });
+  const snap = data.settings[key], keep = [], gone = [];
+  snap.forEach(x=>{ if(x && set[x.id] && !rpuProtected(x)) gone.push(x); else keep.push(x); });
+  if(!gone.length) return { ok:true, removed:0, skipped:0 };
+  data.settings[key] = keep;
+  if(!saveData()){ data.settings[key] = snap; return { ok:false, reason:'save', removed:0 }; }
+  econEditing = null; rpuSelReset();
+  try{ econRenderAll(); }catch(e){ console.error('rpuBulkDelete render', e); }
+  return { ok:true, removed:gone.length, skipped:Object.keys(set).length - gone.length };
+}
+async function rpuDelSelected(){
+  const live = {}; rpuKindItems().forEach(x=>{ if(x) live[x.id] = x; });
+  const ids = Object.keys(rpuSel.ids).filter(i=>live[i] && !rpuProtected(live[i])), isP = rpKind === 'punish';
+  if(!ids.length){ showToast('ما حددت شي', 'var(--warning)'); return; }
+  const ok = await codisConfirm({ title:'حذف ' + finFmt(ids.length) + (isP ? ' عقوبة؟' : ' مكافأة؟'), message:'تنحذف ' + finFmt(ids.length) + (isP ? ' عقوبة محددة من قائمة العقوبات.' : ' مكافأة محددة من قائمة المكافآت.') + (isP ? '' : ' مكافآتك السابقة ومخزونك وسجل كوينزك يبقون محفوظين.'), detail:'الحذف نهائي ولا يمكن التراجع عنه.', irreversible:true, icon:'trash', confirmText:'حذف ' + finFmt(ids.length) });
+  if(!ok) return;
+  const r = rpuBulkDelete(ids);
+  if(!r.ok){ codisSfx('invalid', { ctx:'unavailable' }); showToast('تعذّر الحفظ — ما انحذف شي', 'var(--warning)'); return; }
+  codisSfx('task.delete', { ctx:'card' }); showToast('انحذفت ' + finFmt(r.removed) + (isP ? ' عقوبة' : ' مكافأة'), 'var(--success)', 'check');
+}
+async function rpuDelAll(){
+  const isP = rpKind === 'punish', all = rpuKindItems().filter(x=>x), del = all.filter(x=>!rpuProtected(x)), prot = all.length - del.length;
+  if(!all.length){ showToast(isP ? 'ماكو عقوبات لتنحذف' : 'ماكو مكافآت لتنحذف', 'var(--warning)'); return; }
+  if(!del.length){ showToast('كل العناصر محمية — ما انحذف شي', 'var(--warning)'); return; }
+  const ok = await codisConfirm({ title:isP ? 'حذف كل العقوبات؟' : 'حذف كل المكافآت؟', message:'تنحذف ' + finFmt(del.length) + (isP ? ' عقوبة' : ' مكافأة') + ' من كل الأقسام: العمليات · الأستاذ · التأديب · الأسبوعية · الشهرية.' + (prot ? ' (' + finFmt(prot) + ' عناصر محمية تبقى)' : '') + (isP ? '' : ' مكافآتك السابقة ومخزونك وسجل كوينزك يبقون محفوظين.'), detail:'الحذف نهائي ولا يمكن التراجع عنه.', irreversible:true, icon:'trash', confirmText:'حذف الكل (' + finFmt(del.length) + ')' });
+  if(!ok) return;
+  const r = rpuBulkDelete(del.map(x=>x.id));
+  if(!r.ok){ codisSfx('invalid', { ctx:'unavailable' }); showToast('تعذّر الحفظ — ما انحذف شي', 'var(--warning)'); return; }
+  codisSfx('task.delete', { ctx:'card' }); showToast('انحذفت ' + finFmt(r.removed) + (isP ? ' عقوبة' : ' مكافأة') + (prot ? ' — وبقيت ' + finFmt(prot) + ' محمية' : ''), 'var(--success)', 'check');
+}
 function setSettingsPeriod(p){
   if(['daily', 'weekly', 'monthly', 'all'].indexOf(p) === -1) return;
+  if(p !== 'all') rpuSelReset();   /* CODIS-V43 */
   const was = rpuView; rpuView = p;
   if(p !== 'all') settingsRoom = p === 'daily' ? settingsDailyRoom : p;
   econEditing = null; if(was !== p) codisSfx('press', { ctx:'tab' });
@@ -15993,6 +16183,7 @@ function rpuFind(){
   let none = box.querySelector('.rpu-nomatch');
   if(q && !any){ if(!none){ none = document.createElement('div'); none.className = 'eco-empty rpu-nomatch'; box.appendChild(none); } none.textContent = 'ما لكينا شي بهالاسم'; }
   else if(none) none.remove();
+  rpuBulkPaint();   /* CODIS-V43: شريط التحديد يتبع الظاهر بعد البحث */
 }
 function rpuFindClear(){ const q = document.getElementById('rpu-q'); if(!q) return; q.value = ''; rpuFind(); try{ q.focus({ preventScroll:true }); }catch(e){} }
 /* ترتيب قائمة غرفة التأديب: بترتيب المخطط (محطة 7 أيام · محطة شهرية · حدثية) ثم الأهمية؛ غير المصنّفة أخيراً */
@@ -25644,7 +25835,8 @@ async function econDeleteReward(id){
   codisSfx('task.delete', { ctx:'card' }); data.settings.rewardItems = data.settings.rewardItems.filter(x=>x.id !== id); if(econEditing === id) econEditing = null;
   econSave(); econRenderAll();
 }
-function econEdit(id){ econEditing = (econEditing === id) ? null : id; codisSfx(econEditing ? 'open' : 'close', { ctx:'editor' }); econRenderRewards(); econRenderPunish(); }
+function econEdit(id){ if(rpuSel.on){ rpuSelToggle(id); return; }   /* CODIS-V43: بوضع التحديد النقر يحدّد */
+  econEditing = (econEditing === id) ? null : id; codisSfx(econEditing ? 'open' : 'close', { ctx:'editor' }); econRenderRewards(); econRenderPunish(); }
 /* CODIS-CLARITY: صف مكافأة (نفس الحقول والأزرار) */
 /* CODIS-CLARITY: كل قائمة تُرسم بقسمها: اليومية لغرفة settingsDailyRoom، والأسبوعية والشهرية دائماً — نفس التصفية بـ room */
 function rpuFill(kind, rowHtml, sortFn, emptyFor){
@@ -25774,7 +25966,7 @@ function rpuAddDone(kind){
   rpuSyncAddButtons();
 }
 function rpOpenHub(kind){
-  rpKind = kind === 'punish' ? 'punish' : 'reward'; econEditing = null;
+  rpKind = kind === 'punish' ? 'punish' : 'reward'; econEditing = null; rpuSelReset();   /* CODIS-V43 */
   ['reward', 'punish'].forEach(k=>{ if(rpuAdding[k]) rpuAdd(k, rpuAdding[k]); });
   settingsRoom = settingsDailyRoom; rpuView = 'daily'; econRenderRewards(); econRenderPunish(); codisSfx('open', { ctx:'settings' });
   CodisMotion.settingsGo(document.getElementById('settings-page-rewards'), 1);
@@ -25783,6 +25975,7 @@ function rpOpenHub(kind){
 function rpOpenLeaf(period){ rpOpenHub(rpKind); if(period && period !== 'daily') setTimeout(()=>setSettingsPeriod(period), 380); }
 function econRpNote(room){ return econRpNoteFor(room || settingsRoom); }   /* CODIS-CLARITY: ملاحظة لقسم بعينه */
 function econRpNoteFor(settingsRoom){
+  if(rpKind !== 'punish') return '';   /* CODIS-V43: لا عبارات توضيحية بأقسام المكافآت (العقوبات كما هي) */
   if(settingsRoom === 'weekly') return 'الأسبوعية: تُحسم بنهاية خطة الأسبوع في غرفة التخطيط حسب إنجاز XP الأسبوعي.';
   if(settingsRoom === 'monthly') return 'الشهرية: تُحسم تلقائياً بعد إكمال أربعة أسابيع من الشهر (أو بنهايته)، وتنطي النتيجة مكافأة أو عقوبة مع التقرير.';
   if(settingsRoom === 'habits') return 'غرفة التأديب: مكافآت وعقوبات العادات (المحطة · الحدثية) — تُصنَّف بأهمية العادة: عادية · مهمة · حرجة، لا بالندرة.';
@@ -30480,39 +30673,51 @@ function codisFinTick(){
   }catch(e){}
 })();
 
-/* ================= الإضافة التلقائية للمكافآت (مالية / وقتية) ================= */
+/* ================= CODIS-V43: إضافة المكافآت التلقائية — جلسة إضافة واحدة تتكرر =================
+   النوعان `time` و`financial` كما هما؛ التخزين كله عبر codisFinCreateReward (فيه codisFinTx) بلا أي مسار ثانٍ.
+   الخطوات: 0 اختيار النوع · 1 التفاصيل (اسم + قيمة/مدة + ستيكر اختياري) · 2 المراجعة والوجهة. بعد الحفظ الناجح: يرجع للخطوة 1 بنفس النوع وحقول فارغة. */
 let finAuto = null;
+function finAutoBlank(kind){ return { step:kind ? 1 : 0, kind:kind || null, name:'', iqd:'', min:'', stickerId:'', cardId:null, err:'', busy:false, saved:0, flash:'', lockUntil:0 }; }
 function finAutoOpen(){
-  finAuto = { step:0, kind:null, name:'', iqd:'', min:'', cardId:null, err:'' };
-  const s = CodisFinUI.open({ title:'إضافة مكافأة تلقائية', cls:'is-wide', body:'<div id="fa-root"></div>', mount:(root)=>{ finAutoPaint(root); }, onClose:()=>{ finAuto = null; } });
-  return s;
+  finAuto = finAutoBlank();
+  return CodisFinUI.open({ title:'إضافة مكافأة تلقائية', cls:'is-wide fa-ov', body:'<div id="fa-root"></div>', mount:(root)=>{ finAutoPaint(root); }, onClose:()=>{ finAuto = null; } });
 }
+/* الستيكر يعيش بحقل مخفي (#fa-sticker) يكتبه codisSetSticker — يُقرأ للحالة قبل أي إعادة رسم أو حفظ */
+function finAutoSync(){ const h = document.getElementById('fa-sticker'); if(h && finAuto) finAuto.stickerId = codisStickerIdOk(h.value) || ''; }
+function finAutoKindLabel(k){ return k === 'financial' ? 'مكافأة مالية' : 'مكافأة وقتية'; }
 function finAutoPaint(root){
-  const a = finAuto; if(!a) return; const b = root.querySelector('#fa-root'), f = codisFin();
-  let h = '<div class="fin-prog" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + (a.step + 1) + '"><i style="--p:' + ((a.step + 1) / 3 * 100) + '%"></i></div>';
+  const a = finAuto; if(!a) return; const b = root.querySelector('#fa-root'); if(!b) return; const f = codisFin();
+  const bar = '<div class="fa-prog"><div class="fin-prog" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="' + (a.step + 1) + '"><i style="--p:' + ((a.step + 1) / 3 * 100) + '%"></i></div><span class="fin-prog-t">الخطوة ' + (a.step + 1) + ' من 3</span></div>';
+  let h = bar, foot = '';
   if(a.step === 0){
-    h += '<h3 class="fin-wq">ما نوع المكافأة؟</h3><div class="fin-opts">' +
-      '<button type="button" class="fin-opt' + (a.kind === 'financial' ? ' is-on' : '') + '" onclick="finAutoSet(\'kind\',\'financial\')">' + codisIcon('coin', { size:'lg' }) + '<b>مكافأة مالية</b><small>شي تشتريه بفلوسك الحقيقية</small></button>' +
-      '<button type="button" class="fin-opt' + (a.kind === 'time' ? ' is-on' : '') + '" onclick="finAutoSet(\'kind\',\'time\')">' + codisIcon('hourglass', { size:'lg' }) + '<b>مكافأة وقتية</b><small>وقت راحة أو متعة بمؤقت</small></button></div>';
+    h += '<h3 class="fin-wq">ما نوع المكافأة التي تريد إضافتها؟</h3><div class="fa-types" role="group" aria-label="نوع المكافأة">' +
+      '<button type="button" class="fa-type' + (a.kind === 'time' ? ' is-on' : '') + '" onclick="finAutoPick(\'time\')"><span class="fa-type-ic" aria-hidden="true">' + codisIcon('hourglass', { size:'lg' }) + '</span><b>مكافأة وقتية</b><small>مدة زمنية بالدقائق، ويشتغل لها مؤقت عند الاستخدام</small></button>' +
+      '<button type="button" class="fa-type' + (a.kind === 'financial' ? ' is-on' : '') + '" onclick="finAutoPick(\'financial\')"><span class="fa-type-ic" aria-hidden="true">' + codisIcon('coin', { size:'lg' }) + '</span><b>مكافأة مالية</b><small>قيمة حقيقية بالدينار العراقي تُخصم من محفظتك المالية</small></button></div>';
   } else if(a.step === 1){
-    h += '<label class="fin-f"><span>اسم المكافأة</span><input id="fa-name" class="fin-in" maxlength="120" autocomplete="off" placeholder="' + (a.kind === 'financial' ? 'مثلاً: لفة شاورما' : 'مثلاً: مشاهدة مباراة') + '" value="' + escapeHtml(a.name) + '" oninput="finAuto.name=this.value;finAutoCalc()" data-autofocus></label>';
+    h += '<div class="fa-top"><span class="fa-kind">' + codisIcon(a.kind === 'financial' ? 'coin' : 'hourglass') + '<b>' + finAutoKindLabel(a.kind) + '</b>' + (a.saved ? '<i class="fa-n">أُضيف ' + finFmt(a.saved) + '</i>' : '') + '</span></div>';
+    if(a.flash) h += '<p class="fa-ok" role="status">' + codisIcon('check') + '<span>' + escapeHtml(a.flash) + '</span></p>';
+    h += '<label class="fin-f"><span>اسم المكافأة</span><input id="fa-name" class="fin-in" maxlength="120" autocomplete="off" enterkeyhint="next" placeholder="' + (a.kind === 'financial' ? 'مثلاً: لفة شاورما' : 'مثلاً: مشاهدة مباراة') + '" value="' + escapeHtml(a.name) + '" oninput="finAuto.name=this.value;finAutoCalc()"></label>';
     if(a.kind === 'financial'){
-      h += f.setup.done ? '<label class="fin-f"><span>قيمتها الحقيقية بالدينار العراقي</span><div class="fin-amt"><input id="fa-iqd" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="2,000" value="' + escapeHtml(a.iqd) + '" oninput="finAmtInput(this);finAuto.iqd=this.value;finAutoCalc()"><i>د.ع</i></div></label>' :
+      h += f.setup.done ? '<label class="fin-f"><span>قيمتها بالدينار العراقي</span><div class="fin-amt"><input id="fa-iqd" class="fin-in" inputmode="numeric" dir="ltr" autocomplete="off" placeholder="2,000" value="' + escapeHtml(a.iqd) + '" oninput="finAmtInput(this);finAuto.iqd=this.value;finAutoCalc()"><i>د.ع</i></div></label>' :
         '<p class="fin-lock">' + codisIcon('hourglass') + ' المكافآت المالية تحتاج إعداد الإدارة المالية أولاً (الرصيد وسعر الكوين). <button type="button" class="fin-link" onclick="CodisFinUI.close();finOpen()">افتح الإدارة المالية</button></p>';
     } else h += '<label class="fin-f"><span>مدة المكافأة بالدقائق</span><div class="fin-amt"><input id="fa-min" class="fin-in" type="number" min="1" max="1440" inputmode="numeric" dir="ltr" placeholder="90" value="' + escapeHtml(a.min) + '" oninput="finAuto.min=this.value;finAutoCalc()"><i>دقيقة</i></div></label>';
-    h += '<div class="fin-calc" id="fa-calc" aria-live="polite"></div>';
+    h += '<div class="fin-f fa-stk"><span>الستيكر <em>اختياري</em></span>' + codisStickerRowHtml('fa', a.stickerId) + '</div>' +
+      '<input type="hidden" id="fa-room" value="tasks"><input type="hidden" id="fa-rarity" value="C"><input type="hidden" id="fa-trarity" value="bronze">' +
+      '<div class="fin-calc" id="fa-calc" aria-live="polite"></div>';
   } else {
     const c = finAutoCalc(true);
     h += '<h3 class="fin-wq">المراجعة</h3>' + (c.html || '');
   }
-  h += '<p class="fin-err" role="alert"' + (a.err ? '' : ' hidden') + '>' + escapeHtml(a.err) + '</p><div class="fin-wbtns">' + (a.step > 0 ? '<button type="button" class="btn btn-secondary" onclick="finAutoBack()">السابق</button>' : '<span></span>') +
-    '<button type="button" class="btn btn-primary" id="fa-next" onclick="finAutoNext()">' + (a.step === 2 ? 'حفظ المكافأة' : 'التالي') + '</button></div>';
-  b.innerHTML = h; codisHydrateIcons(b);
-  if(a.step === 1) finAutoCalc();
+  h += '<p class="fin-err" role="alert"' + (a.err ? '' : ' hidden') + '>' + escapeHtml(a.err) + '</p>';
+  foot = '<div class="fin-wbtns fa-foot">' + (a.step > 0 ? '<button type="button" class="btn btn-secondary" onclick="finAutoBack()">' + (a.step === 1 ? 'تغيير النوع' : 'السابق') + '</button>' : '<span></span>') +
+    (a.step === 0 ? '' : '<button type="button" class="btn btn-primary" id="fa-next" onclick="finAutoNext()"' + (a.busy ? ' disabled aria-disabled="true"' : '') + '>' + (a.step === 2 ? 'حفظ المكافأة' : 'التالي') + '</button>') + '</div>';
+  b.innerHTML = h + foot; codisHydrateIcons(b);
+  if(a.step === 1){ finAutoCalc(); setTimeout(()=>{ const i = b.querySelector('#fa-name'); if(i && finAuto === a && !a.name) try{ i.focus({ preventScroll:true }); }catch(e){} }, 60); }
   if(a.step === 2){ b.querySelectorAll('[data-card]').forEach(x=>{ x.onclick = ()=>{ finAuto.cardId = x.dataset.card; finAutoPaint(root); }; }); }
 }
-function finAutoSet(k, v){ finAuto[k] = v; finAuto.err = ''; finAutoPaint(CodisFinUI.el()); }
-function finAutoBack(){ if(finAuto.step > 0){ finAuto.step--; finAuto.err = ''; finAutoPaint(CodisFinUI.el()); } }
+function finAutoPick(kind){ const a = finAuto; if(!a) return; finAutoSync(); a.kind = kind; a.step = 1; a.err = ''; a.cardId = null; codisSfx('open', { ctx:'select' }); finAutoPaint(CodisFinUI.el()); }
+function finAutoSet(k, v){ finAutoSync(); finAuto[k] = v; finAuto.err = ''; finAutoPaint(CodisFinUI.el()); }
+function finAutoBack(){ const a = finAuto; if(!a || a.step <= 0 || a.busy) return; finAutoSync(); a.step--; a.err = ''; a.flash = ''; finAutoPaint(CodisFinUI.el()); }
 /* الحساب والتصنيف: يُرجع { ok, coin, cls, html } ويحدّث سطر الحساب بالخطوة 1 */
 function finAutoCalc(full){
   const a = finAuto; if(!a) return {}; const f = codisFin();
@@ -30522,36 +30727,50 @@ function finAutoCalc(full){
   const name = String(a.name || '').trim(); let cls = null, warn = '';
   if(coin !== null){ cls = codisFinClassify(name || '—', coin); if(!cls.ok) warn = cls.reason === 'low' ? 'القيمة أقل من الحد الأدنى (10 كوين' + (a.kind === 'financial' ? ' = ' + finFmt(10 * f.fx.rate) + ' د.ع بالسعر الحالي' : ' = 20 دقيقة') + ')' : cls.reason === 'high' ? 'القيمة أعلى من الحد الأقصى (30,000 كوين)' : 'لا توجد بطاقة مناسبة لهذي القيمة'; }
   const el = document.getElementById('fa-calc'); if(el && !full) el.innerHTML = line ? '<span>' + line + '</span>' + (warn ? '<em class="fin-bad">' + warn + '</em>' : '') : '';
+  { /* معاينة الستيكر على الوجهة الأرجح (حقول مخفية يقرؤها codisStickerPreviewHtml) */
+    const best = cls && cls.ok ? cls.best.card : null, set = (id, v)=>{ const e = document.getElementById(id); if(e) e.value = v; };
+    set('fa-room', best && !best.fixed ? best.room : 'tasks'); set('fa-rarity', best && !best.fixed && best.room !== 'learn' && best.rarity ? best.rarity : 'C'); set('fa-trarity', best && best.room === 'learn' ? best.rarity : 'bronze');
+  }
   const o = { coin:coin, cls:cls, warn:warn, iqd:iqd, min:min, line:line };
   if(full){
-    if(!cls || !cls.ok) { o.html = '<p class="fin-bad">' + (warn || 'أكمل البيانات') + '</p>'; return o; }
+    if(!cls || !cls.ok){ o.html = '<p class="fin-bad">' + (warn || 'أكمل البيانات') + '</p>'; return o; }
     const cand = cls.candidates, pick = cand.find(c=>c.card.id === a.cardId) || (cls.ambiguous ? null : cls.best);
     if(pick && !a.cardId) a.cardId = pick.card.id;
     o.pick = pick;
-    o.html = '<div class="fin-calc"><span>' + escapeHtml(name) + ' — ' + line + '</span></div>' +
-      (cls.ambiguous ? '<p class="fin-hint">اسم المكافأة ما يكفي لتحديد نوعها بثقة — اختر الوجهة المناسبة:</p>' : '<p class="fin-hint">الوجهة المقترحة حسب المعنى والسعر معاً' + (cls.domains.length ? ' (' + cls.domains.map(d=>escapeHtml(d.label)).join('، ') + ')' : '') + ':</p>') +
-      '<div class="fin-dests" role="radiogroup" aria-label="الوجهة">' + cand.map(c=>'<button type="button" role="radio" aria-checked="' + (pick && pick.card.id === c.card.id) + '" class="fin-dest' + (pick && pick.card.id === c.card.id ? ' is-on' : '') + '" data-card="' + c.card.id + '"><b>' + escapeHtml(c.card.name) + '</b><small>' + econRoomLabel(c.card.room) + ' · نطاق ' + finFmt(c.card.min) + '–' + finFmt(c.card.max) + ' كوين</small></button>').join('') + '</div>' +
-      '<p class="fin-hint">القيمة المحفوظة بالضبط: <b>' + finFmt(coin) + '</b> كوين' + (a.kind === 'financial' ? ' (القيمة الأصلية ' + finFmt(iqd) + ' د.ع ثابتة وتتغير قيمتها بالكوين مع سعر الصرف)' : ' (' + finFmt(min) + ' دقيقة بمؤقت حقيقي عند الاستخدام)') + '.</p>';
+    const stk = codisStickerList(a.stickerId).filter(x=>CodisStickers.url(x)).slice(0, CODIS_STICKER_MAX).map(x=>'<img src="' + escapeHtml(CodisStickers.url(x)) + '" alt="" draggable="false">').join('');
+    o.html = '<div class="fa-sum"><div class="fa-sum-m"><b dir="auto">' + escapeHtml(name) + '</b><span>' + line + '</span></div>' + (stk ? '<div class="fa-sum-s" aria-label="الستيكر">' + stk + '</div>' : '') + '</div>' +
+      '<p class="fin-hint fa-q">' + (cls.ambiguous ? 'وين تريد المكافأة تظهر لك؟' : 'الوجهة المقترحة حسب المعنى والسعر معاً' + (cls.domains.length ? ' (' + cls.domains.map(d=>escapeHtml(d.label)).join('، ') + ')' : '') + ':') + '</p>' +
+      '<div class="fin-dests" role="radiogroup" aria-label="الوجهة">' + cand.map(c=>'<button type="button" role="radio" aria-checked="' + (pick && pick.card.id === c.card.id) + '" class="fin-dest' + (pick && pick.card.id === c.card.id ? ' is-on' : '') + '" data-card="' + c.card.id + '"><b>' + escapeHtml(c.card.name) + '</b><small>' + econRoomLabel(c.card.room) + ' · نطاق ' + finFmt(c.card.min) + '–' + finFmt(c.card.max) + ' كوين</small></button>').join('') + '</div>';
   }
   return o;
 }
 function finAutoNext(){
-  const a = finAuto, root = CodisFinUI.el(); a.err = '';
+  const a = finAuto, root = CodisFinUI.el(); if(!a || !root || a.busy || Date.now() < a.lockUntil) return;
+  finAutoSync(); a.err = '';
   if(a.step === 0){ if(!a.kind) a.err = 'اختر نوع المكافأة'; }
   else if(a.step === 1){
     const c = finAutoCalc();
     if(!String(a.name).trim()) a.err = 'اكتب اسم المكافأة'; else if(a.kind === 'financial' && !codisFin().setup.done) a.err = 'أكمل إعداد الإدارة المالية أولاً';
     else if(c.coin === null) a.err = a.kind === 'financial' ? 'اكتب القيمة بالدينار' : 'اكتب المدة بالدقائق'; else if(c.warn) a.err = c.warn;
   } else {
-    const c = finAutoCalc(true); if(!c.pick){ a.err = 'اختر وجهة المكافأة'; }
+    const c = finAutoCalc(true);
+    if(!c.pick){ a.err = 'اختر وجهة المكافأة'; }
     else {
-      const r = codisFinCreateReward({ name:a.name, kind:a.kind, iqd:finParseAmt(a.iqd), minutes:codisFinInt(a.min, 1, 1440), cardId:c.pick.card.id });
+      a.busy = true; const btn = document.getElementById('fa-next'); if(btn){ btn.disabled = true; btn.setAttribute('aria-disabled', 'true'); }
+      let r; try{ r = codisFinCreateReward({ name:a.name, kind:a.kind, iqd:finParseAmt(a.iqd), minutes:codisFinInt(a.min, 1, 1440), cardId:c.pick.card.id, stickerId:a.stickerId || null }); }
+      catch(e){ console.error('finAuto save', e); r = { ok:false, reason:'error' }; }
+      finally{ a.busy = false; }
       if(!r.ok){ a.err = ({ name:'اكتب الاسم', kind:'اختر النوع', nosetup:'أكمل إعداد الإدارة المالية أولاً', amount:'القيمة غير صالحة', low:'القيمة أقل من 10 كوين', high:'القيمة أعلى من 30,000 كوين', range:'القيمة خارج نطاق البطاقة', save:'تعذّر الحفظ — ما انضافت', error:'تعذّر التنفيذ' })[r.reason] || 'تعذّر التنفيذ'; }
-      else { CodisFinUI.close(); codisSfx('success', { ctx:'settings' }); showToast('انضافت «' + r.item.name + '» (' + finFmt(r.coin) + ' كوين) إلى ' + r.card.name, 'var(--success)', 'check'); try{ econRenderAll(); }catch(e){} return; }
+      else {   /* نجاح فعلي: الآن فقط تُفرَّغ الحقول ويبقى النوع */
+        const nm = r.item.name; a.saved++; a.flash = 'انضافت «' + nm + '» (' + finFmt(r.coin) + ' كوين) إلى ' + r.card.name + ' — تقدر تضيف التالية'; a.lockUntil = Date.now() + 500;
+        a.name = ''; a.iqd = ''; a.min = ''; a.stickerId = ''; a.cardId = null; a.err = ''; a.step = 1;
+        codisSfx('success', { ctx:'settings' }); showToast('انضافت «' + nm + '»', 'var(--success)', 'check');
+        finAutoPaint(root); try{ econRenderAll(); }catch(e){ console.error(e); } return;
+      }
     }
   }
   if(a.err){ codisSfx('invalid', { ctx:'unavailable' }); finAutoPaint(root); return; }
-  a.step++; finAutoPaint(root);
+  a.step++; a.flash = ''; finAutoPaint(root);
 }
 
 /* ---------- استخدام مكافأة مالية: تأكيد صريح قبل أي خصم ---------- */

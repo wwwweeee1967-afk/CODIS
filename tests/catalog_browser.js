@@ -1,6 +1,8 @@
 /* CODIS-V35 catalog test — evaluate in the page (guest). Mutates local test data only.
    TEST=tests/catalog_browser.js node tools/prof/cdp.mjs http://127.0.0.1:8766/app/CODIS_FINAL.html tools/prof/s_evaltest.mjs --cpu 1 */
 (async function(){
+  /* 3.30.0: نموذج الإضافة اليدوي أُزيل من الواجهة (الإضافة الجديدة تلقائية فقط)؛ الاختبار يركّبه كأداة لاختبار المحرر/الستيكر/الحفظ */
+  const legacyAdd = (period)=>{ let h = document.getElementById('reward-add-box'); if(!h){ h = document.createElement('div'); h.id = 'reward-add-box'; h.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(h); } h.innerHTML = econRewardEditor('eco-new-r', null) + '<button type="button" class="btn btn-primary eco-full" onclick="econAddReward()">إضافة المكافأة</button>'; h.dataset.ready = '1'; const sel = document.getElementById('eco-new-r-room'); sel.value = period === 'daily' ? settingsDailyRoom : period; econRewardRarityChanged('eco-new-r'); };
   const out = [], T = (n, ok, i)=>out.push({ name:n, ok:!!ok, info:i === undefined ? '' : String(i) });
   const sleep = ms=>new Promise(r=>setTimeout(r, ms));
   const L = ()=>data.outcomeLedger, key = (...a)=>a.join('|'), bal = ()=>CodisWallet.balance();
@@ -45,7 +47,7 @@
   setSettingsRoom('habits');
   ri('fx_rs_critical') || 0;
   data.settings.rewardItems = data.settings.rewardItems.filter(x=>x.id !== 'fx_rs_critical'); econRenderAll();
-  rpuAdd('reward', 'daily'); await sleep(30);
+  legacyAdd('daily'); await sleep(30);
   const g = id=>document.getElementById('eco-new-r-' + id);
   T('place picker visible for discipline room', g('place-wrap') && !g('place-wrap').hidden);
   T('rarity hidden + room switcher hidden in discipline add form', g('rarity-wrap').style.display === 'none' && getComputedStyle(g('room').closest('.eco-field')).display === 'none');
@@ -58,11 +60,11 @@
   g('name').value = 'حرجة جديدة'; g('sticker').value = codisStickerIdOk('pizza') || '';
   econAddReward(); await sleep(30);
   T('added event card recreates canonical id with chosen name', ri('fx_rs_critical') && ri('fx_rs_critical').name === 'حرجة جديدة' && ri('fx_rs_critical').fixedCoin === 125 && ri('fx_rs_critical').room === 'habits');
-  rpuAdd('reward', 'daily'); g('place').value = 'event'; g('imp').value = 'critical'; codisV35PlaceSync('eco-new-r', 'reward'); g('name').value = 'نسخة ثانية'; econAddReward(); await sleep(20);
+  legacyAdd('daily'); g('place').value = 'event'; g('imp').value = 'critical'; codisV35PlaceSync('eco-new-r', 'reward'); g('name').value = 'نسخة ثانية'; econAddReward(); await sleep(20);
   T('adding an existing slot never duplicates', data.settings.rewardItems.filter(x=>x.id === 'fx_rs_critical').length === 1 && ri('fx_rs_critical').name === 'حرجة جديدة');
   rpuAddDone('reward');
   /* Ostaz room = regular rewards only, no catalog UI */
-  rpuAddDone('reward'); setSettingsRoom('learn'); rpuAdd('reward', 'daily'); await sleep(20); T('Ostaz room has no catalog/place picker', document.getElementById('reward-cat').hidden && document.getElementById('eco-new-r-place-wrap').hidden); g('name').value = 'مكافأة أستاذ عادية'; econAddReward(); await sleep(20); setSettingsRoom('habits');
+  rpuAddDone('reward'); setSettingsRoom('learn'); legacyAdd('daily'); await sleep(20); T('Ostaz room has no catalog/place picker', document.getElementById('reward-cat').hidden && document.getElementById('eco-new-r-place-wrap').hidden); g('name').value = 'مكافأة أستاذ عادية'; econAddReward(); await sleep(20); setSettingsRoom('habits');
   { const r = data.settings.rewardItems.find(x=>x.name === 'مكافأة أستاذ عادية'); T('regular Ostaz reward unaffected', r && r.room === 'learn' && !r.fixed && r.weight > 0); }
   /* edit / toggle / delete */
   econEdit('fx_rs_normal'); await sleep(20);
@@ -110,7 +112,7 @@
     setSettingsPeriod('weekly'); await sleep(20); T('weekly = its own page', vis('#rp-reward-block .rpu-sec').map(s=>s.dataset.period).join() === 'weekly');
     setSettingsPeriod('monthly'); await sleep(20); T('monthly = its own page with the month card', vis('#rp-reward-block .rpu-sec').map(s=>s.dataset.period).join() === 'monthly' && !!vis('#rpu-r-monthly [data-month] button').length);
     /* typed text survives switching pages */
-    setSettingsPeriod('daily'); setSettingsRoom('tasks'); rpuAdd('reward', 'daily'); document.getElementById('eco-new-r-name').value = 'نص محفوظ'; setSettingsPeriod('weekly'); setSettingsPeriod('daily');
+    setSettingsPeriod('daily'); setSettingsRoom('tasks'); legacyAdd('daily'); document.getElementById('eco-new-r-name').value = 'نص محفوظ'; setSettingsPeriod('weekly'); setSettingsPeriod('daily');
     T('add-form text survives page switches', document.getElementById('eco-new-r-name').value === 'نص محفوظ'); rpuAddDone('reward');
     setSettingsPeriod('all'); await sleep(30);
     const grps = [...document.querySelectorAll('#rpu-all-list .rpu-all-grp')].map(g=>g.dataset.g);

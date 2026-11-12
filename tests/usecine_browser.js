@@ -2,6 +2,9 @@
    Covers: level boundaries · paid/coinValue/invalid price · scene only after a successful use · cancel · save failure · double tap · timed reward ·
    reduced motion · cleanup/no leftovers · all nine levels render · name safety (escaping) · wallet unchanged by the scene. */
 (async function(){ try{
+  /* 3.30.0: نموذج الإضافة اليدوي أُزيل من الواجهة (الإضافة الجديدة تلقائية فقط)؛ الاختبار يركّبه كأداة لاختبار المحرر/الستيكر/الحفظ */
+  const legacyAdd = (period)=>{ let h = document.getElementById('reward-add-box'); if(!h){ h = document.createElement('div'); h.id = 'reward-add-box'; h.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(h); } h.innerHTML = econRewardEditor('eco-new-r', null) + '<button type="button" class="btn btn-primary eco-full" onclick="econAddReward()">إضافة المكافأة</button>'; h.dataset.ready = '1'; const sel = document.getElementById('eco-new-r-room'); sel.value = period === 'daily' ? settingsDailyRoom : period; econRewardRarityChanged('eco-new-r'); };
+  legacyAdd('daily');
   const out = [], T = (n, ok, i)=>out.push({ name:n, ok:!!ok, info:i === undefined ? '' : i }), sleep = ms=>new Promise(r=>setTimeout(r, ms));
   const errs = []; window.addEventListener('error', e=>errs.push(String(e.message)));
   let confirmAnswer = true; codisConfirm = async()=>confirmAnswer;

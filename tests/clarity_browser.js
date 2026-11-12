@@ -2,6 +2,8 @@
    Run: serve the project root over http, open app/CODIS_FINAL.html on a FRESH origin, continue as guest, then evaluate this file in the page
    (it mutates local test data only). Returns {passed, failed, results[]}. */
 (async function(){
+  /* 3.30.0: نموذج الإضافة اليدوي أُزيل من الواجهة (الإضافة الجديدة تلقائية فقط)؛ الاختبار يركّبه كأداة لاختبار المحرر/الستيكر/الحفظ */
+  const legacyAdd = (period)=>{ let h = document.getElementById('reward-add-box'); if(!h){ h = document.createElement('div'); h.id = 'reward-add-box'; h.style.cssText = 'position:fixed;left:-9999px;top:0'; document.body.appendChild(h); } h.innerHTML = econRewardEditor('eco-new-r', null) + '<button type="button" class="btn btn-primary eco-full" onclick="econAddReward()">إضافة المكافأة</button>'; h.dataset.ready = '1'; const sel = document.getElementById('eco-new-r-room'); sel.value = period === 'daily' ? settingsDailyRoom : period; econRewardRarityChanged('eco-new-r'); };
   const out = [], T = (name, ok, info)=>out.push({ name, ok:!!ok, info:info === undefined ? '' : String(info) });
   const sleep = ms=>new Promise(r=>setTimeout(r, ms));
   const realConfirm = codisConfirm; codisConfirm = async()=>true; CodisOutcomeUI.show = ()=>{}; CodisOutcomeUI.enqueue = ()=>{};
@@ -23,7 +25,7 @@
     setSettingsRoom('learn'); await sleep(50);
     T('daily room switch filters daily list only', cnt('reward-list') === R.filter(x=>x.room === 'learn').length && cnt('reward-list-weekly') === R.filter(x=>x.room === 'weekly').length);
     T('monthly settlement card present', !!document.querySelector('#rpu-r-monthly [data-month] button'));
-    document.querySelector('#rpu-r-weekly .rpu-add').click(); await sleep(50);
+    legacyAdd('weekly'); await sleep(50);
     T('weekly add form targets weekly', document.getElementById('eco-new-r-room').value === 'weekly');
     document.getElementById('eco-new-r-name').value = 'clarity-weekly'; document.querySelector('#reward-add-box .btn-primary').click(); await sleep(100);
     const nw = R.find(x=>x.name === 'clarity-weekly');

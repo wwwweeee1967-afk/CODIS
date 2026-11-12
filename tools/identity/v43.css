@@ -1,0 +1,106 @@
+/* CODIS-V43 (3.30.0): إدارة المكافآت · الإضافة التلقائية · التحديد الجماعي · أيقونة الوقت · الشريط السفلي الزجاجي */
+
+/* ---------- ملاحظات الأقسام: فارغة = لا مساحة ---------- */
+.rpu-note:empty{ display:none; }
+
+/* ---------- ترتيب قسم المكافآت (بعد حذف أزرار الإضافة المنفصلة) ---------- */
+#settings-page-rewards .rpu-head{ align-items:center; gap:12px; }
+#settings-page-rewards .rpu-sec{ display:grid; gap:12px; }
+#settings-page-rewards .rpu-sec > *{ min-width:0; }
+#settings-page-rewards .rpu-auto-btn{ margin-bottom:8px; }
+#settings-page-rewards .rpu-list{ gap:10px; }
+
+/* ---------- أيقونة المكافأة الوقتية: السبب = صف .rpt-top كان nowrap بعرض البلاطة؛ ستيكر + ندرة + «ساعة و١٠ دقائق» أعرض من البلاطة فيفيض الشارة خارجها (يظهر بالهاتف الضيق).
+   الإصلاح بنيوي: التفاف الصف + عناصر لا تنكمش (الستيكر كان ينكمش 22→16px) + شارة بأيقونة ثابتة المقاس ومحاذاة وسط ===== */
+.rpt-top{ flex-wrap:wrap; row-gap:4px; column-gap:4px; }
+.rpt-top > *{ flex:none; max-width:100%; min-width:0; }
+.rpt-stk{ flex:none; }
+.rpt-stk .stk-mini{ flex:none; }
+.dur-badge{ flex:none; box-sizing:border-box; max-width:100%; display:inline-flex; align-items:center; justify-content:center; gap:4px; line-height:1.4; min-height:20px; vertical-align:middle; }
+.dur-badge svg{ flex:none; width:11px; height:11px; display:block; overflow:visible; }
+.rpt-top .dur-badge{ line-height:1.4; padding:1px 7px; }
+
+/* ---------- نافذة الإضافة التلقائية ---------- */
+.stk-ov{ z-index:700; }   /* منتقي الستيكرات يعلو نافذة الإضافة (fin-ov = 690) */
+.fa-ov .fin-sb{ gap:14px; padding:6px 18px 20px; }
+.fa-prog{ display:grid; gap:6px; }
+.fa-types{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fa-type{ display:grid; justify-items:center; align-content:start; gap:8px; min-height:148px; padding:18px 12px 16px; border-radius:20px; border:1.5px solid var(--fin-line); background:var(--fin-paper2); color:var(--fin-ink); font:inherit; text-align:center; cursor:pointer; -webkit-tap-highlight-color:transparent; transition:transform .12s ease, border-color .15s ease, background-color .15s ease; }
+.fa-type:active{ transform:scale(.97); }
+.fa-type-ic{ width:48px; height:48px; border-radius:50%; display:grid; place-items:center; background:color-mix(in srgb, var(--fin-brass) 16%, transparent); color:var(--fin-brass); }
+.fa-type b{ font-size:16px; }
+.fa-type small{ font-size:12px; line-height:1.55; color:var(--fin-ink2); }
+.fa-type.is-on{ border-color:var(--fin-brass); box-shadow:0 0 0 1px var(--fin-brass) inset; background:color-mix(in srgb, var(--fin-brass) 13%, var(--fin-paper2)); }
+.fa-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:40px; }
+.fa-kind{ display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background:var(--fin-chip); color:var(--fin-ink); font-size:14px; }
+.fa-kind .ico, .fa-kind svg{ color:var(--fin-brass); }
+.fa-n{ font-style:normal; font-size:12px; color:var(--fin-ink2); padding-inline-start:8px; border-inline-start:1px solid var(--fin-line); }
+.fa-ok{ display:flex; align-items:flex-start; gap:8px; margin:0; padding:10px 12px; border-radius:12px; background:color-mix(in srgb, var(--fin-green, #2f8f5b) 14%, transparent); color:var(--fin-ink); font-size:13.5px; line-height:1.55; font-weight:700; }
+.fa-ok .ico, .fa-ok svg{ flex:none; color:var(--fin-green, #2f8f5b); }
+.fa-stk .stk-row{ display:flex; align-items:stretch; gap:8px; }
+.fa-stk .stk-pick{ flex:1 1 auto; min-width:0; }
+.fa-foot{ position:sticky; bottom:0; padding-top:4px; }
+.fa-foot .btn{ min-height:50px; flex:1 1 0; }
+.fa-sum{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border-radius:14px; border:1px solid var(--fin-line); background:var(--fin-paper); }
+.fa-sum-m{ display:grid; gap:4px; min-width:0; } .fa-sum-m b{ font-size:16px; overflow-wrap:anywhere; } .fa-sum-m span{ font-size:13px; color:var(--fin-ink2); }
+.fa-sum-s{ display:flex; flex:none; } .fa-sum-s img{ width:34px; height:34px; object-fit:contain; margin-inline-start:-8px; }
+.fa-q{ font-weight:700; color:var(--fin-ink); }
+.fin-dest{ min-height:56px; }
+@media (max-width:359px){ .fa-types{ grid-template-columns:1fr; } .fa-type{ min-height:0; grid-template-columns:auto 1fr; text-align:start; justify-items:start; align-items:center; } .fa-type-ic{ grid-row:span 2; } }
+
+/* ---------- التحديد والحذف الجماعي ---------- */
+.rpu-bulk{ display:grid; gap:8px; margin:0 0 12px; }
+.rpu-bk{ min-height:44px; padding:0 14px; border-radius:var(--r-full); border:1px solid var(--glass-border); background:var(--glass); color:var(--text); font:inherit; font-size:var(--fs-sub); font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:6px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.rpu-bk:active{ transform:scale(var(--press)); }
+.rpu-bk[disabled]{ opacity:.45; cursor:not-allowed; }
+.rpu-bk-main{ justify-self:start; border-color:var(--aqua-a40); background:var(--aqua-a08); color:var(--aqua); }
+.rpu-bk.is-danger{ border-color:rgb(190 60 60 / .5); color:#a3302f; background:rgb(190 60 60 / .08); }
+html[data-theme="dark"] .rpu-bk.is-danger{ color:#ff8f8c; background:rgb(255 120 120 / .1); }
+.rpu-bk.is-all{ font-weight:800; }
+.rpu-bk-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.rpu-bk-row .rpu-bk{ flex:1 1 auto; }
+.rpu-bk-info{ display:flex; align-items:baseline; gap:6px; color:var(--text-2); font-size:var(--fs-sub); } .rpu-bk-info b{ font-size:20px; color:var(--text); font-variant-numeric:tabular-nums; }
+.rpu-bk-note{ margin:0; font-size:var(--fs-caption); line-height:1.6; color:var(--text-3); }
+.rpt-chk{ position:absolute; z-index:2; top:8px; inset-inline-start:8px; width:28px; height:28px; padding:0; border-radius:9px; border:1.5px solid var(--glass-border-strong, var(--glass-border)); background:var(--glass-strong, var(--glass)); color:transparent; display:grid; place-items:center; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.rpt-chk svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.rpt-chk.is-on{ background:var(--aqua); border-color:var(--aqua); color:var(--on-aqua, #fff); }
+#settings-page-rewards .rpu-list .rpt.is-sel{ border-color:var(--aqua); box-shadow:0 0 0 1px var(--aqua) inset; }
+
+/* ---------- الشريط السفلي: زجاج عائم أنحف ---------- */
+:root{
+  --nav-h:62px;
+  --nav-lift:max(10px, calc(var(--safe-b) - 12px));   /* السبب القديم: bottom = 10px + كامل safe-area (34px على iPhone) = 44px؛ الآن 10px للكمبيوتر و22px عند وجود مؤشر Home */
+  --pad-bottom:calc(var(--nav-h) + var(--nav-lift) + 28px);
+}
+.sidebar{
+  inset-inline:14px; bottom:var(--nav-lift); padding:5px; gap:2px; border-radius:26px;
+  --dock-cell:21px;
+  background:linear-gradient(180deg, rgb(255 255 255 / .42), rgb(255 255 255 / .12) 58%), rgb(248 243 233 / .5);
+  border:1px solid rgb(255 255 255 / .62);
+  box-shadow:0 12px 30px -10px rgb(40 30 10 / .34), 0 2px 8px rgb(40 30 10 / .10), inset 0 1px 0 rgb(255 255 255 / .85), inset 0 -1px 0 rgb(255 255 255 / .2);
+  -webkit-backdrop-filter:blur(22px) saturate(1.7); backdrop-filter:blur(22px) saturate(1.7);
+}
+html[data-theme="dark"] .sidebar{
+  background:linear-gradient(180deg, rgb(255 255 255 / .14), rgb(255 255 255 / .03) 58%), rgb(20 25 33 / .52);
+  border-color:rgb(255 255 255 / .18);
+  box-shadow:0 14px 32px -10px rgb(0 0 0 / .65), 0 2px 8px rgb(0 0 0 / .3), inset 0 1px 0 rgb(255 255 255 / .24), inset 0 -1px 0 rgb(255 255 255 / .05);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .sidebar{ background:rgb(246 240 228 / .96); } html[data-theme="dark"] .sidebar{ background:rgb(20 25 33 / .96); }
+}
+.sidebar::before{ inset:0 10% auto; background:linear-gradient(90deg, transparent, rgb(255 255 255 / .9) 30%, rgb(255 255 255 / .55) 70%, transparent); }
+html[data-theme="dark"] .sidebar::before{ background:linear-gradient(90deg, transparent, rgb(255 255 255 / .5) 30%, rgb(255 255 255 / .3) 70%, transparent); }
+.sidebar::after{ display:none; }
+.navbtn{ height:50px; padding:4px 2px; gap:2px; }
+.navicon{ width:22px; height:22px; --ctx-ico-n:20; }
+.nav-indicator{ --dock-inset:2px; }
+@media (max-width:374px){
+  :root{ --nav-h:68px; }
+  .navbtn{ height:56px; padding-top:6px; gap:2px; line-height:1.1; }
+}
+@media (max-height:500px) and (orientation:landscape){
+  :root{ --nav-h:52px; }
+  .sidebar{ padding:3px; } .navbtn{ height:44px; min-height:44px; }
+}
+.toast{ bottom:calc(var(--nav-h) + var(--nav-lift) + 14px); }
+@media (prefers-reduced-motion:reduce){ .fa-type, .rpu-bk{ transition:none; } }
